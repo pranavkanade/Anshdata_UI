@@ -6,7 +6,7 @@ class App extends Component {
     state = {
         isAuthenticated: !!localStorage.getItem("AnshdataUser"),
         navEventKey: "home",
-        AnshdataUser: null
+        AnshdataUser: JSON.parse(localStorage.getItem("AnshdataUser"))
     };
 
     handleNavbarTransition = eventKey => {

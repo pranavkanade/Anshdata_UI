@@ -130,84 +130,64 @@ class AuthForm extends Component {
         );
     };
 
-    signupHandler = event => {
+    signupHandler = async event => {
         event.preventDefault();
         const signupData = this.getSignupData();
         console.log("[Auth] : Signup Handler");
         // console.log(signupData);
-        fetch("http://127.0.0.1:8000/api/user/signup/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(signupData)
-        })
-            .then(res => res.json())
-            .then(jsonData => {
-                //This means that one has signed up;
-                localStorage.setItem("AnshdataUser", JSON.stringify(jsonData));
-                const loginData = this.getLoginData();
-                fetch("http://127.0.0.1:8000/api/user/login/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(loginData)
-                })
-                    .then(res => res.json())
-                    .then(jsonData => {
-                        let AnshdataUser = JSON.parse(
-                            localStorage.getItem("AnshdataUser")
-                        );
-                        AnshdataUser["token"] = jsonData.token;
-                        localStorage.setItem(
-                            "AnshdataUser",
-                            JSON.stringify(AnshdataUser)
-                        );
-                        // console.log(AnshdataUser);
-                    });
-            });
-        const AnshdataUser = JSON.parse(localStorage.getItem("AnshdataUser"));
-        console.log("[Auth] Trying to log AnshdataUser");
-        console.log(AnshdataUser.username);
-    };
-
-    loginHandler = event => {
-        event.preventDefault();
+        const siginupRes = await fetch(
+            "http://127.0.0.1:8000/api/user/signup/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(signupData)
+            }
+        );
+        //This means that one has signed up;
+        localStorage.setItem(
+            "AnshdataUser",
+            JSON.stringify(await siginupRes.json())
+        );
         const loginData = this.getLoginData();
-        console.log("[Auth] : Login Handler");
-        // console.log(loginData);
-        fetch("http://127.0.0.1:8000/api/user/login/", {
+
+        const loginRes = await fetch("http://127.0.0.1:8000/api/user/login/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(loginData)
-        })
-            .then(res => res.json())
-            .then(jsonData => {
-                let AnshdataToken = jsonData.token;
-                fetch("http://127.0.0.1:8000/api/user/me/", {
-                    headers: {
-                        Authorization: `JWT ${AnshdataToken}`
-                    }
-                })
-                    .then(res => res.json())
-                    .then(jsonData => {
-                        // NOTE: Here assume no error will occur
-                        // console.log(jsonData);
-                        let AnshdataUser = jsonData[0]; // we get list so ..
-                        AnshdataUser["token"] = AnshdataToken;
-                        localStorage.setItem(
-                            "AnshdataUser",
-                            JSON.stringify(AnshdataUser)
-                        );
-                        // console.log(AnshdataUser);
-                    });
-            });
-        const AnshdataUser = JSON.parse(localStorage.getItem("AnshdataUser"));
-        console.log("[Auth] Trying to log AnshdataUser");
-        console.log(AnshdataUser);
+        });
+        let AnshdataUser = JSON.parse(localStorage.getItem("AnshdataUser"));
+        AnshdataUser["token"] = (await loginRes.json()).token;
+        localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
+    };
+
+    loginHandler = async event => {
+        event.preventDefault();
+        const loginData = this.getLoginData();
+        console.log("[Auth] : Login Handler");
+
+        const loginRes = await fetch("http://127.0.0.1:8000/api/user/login/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(loginData)
+        });
+
+        let AnshdataToken = (await loginRes.json()).token;
+        const userRes = await fetch("http://127.0.0.1:8000/api/user/me/", {
+            headers: {
+                Authorization: `JWT ${AnshdataToken}`
+            }
+        });
+        // NOTE: Here assume no error will occur
+        // we get list so ..
+        let AnshdataUser = (await userRes.json())[0];
+        AnshdataUser["token"] = AnshdataToken;
+        localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
     };
 
     componentWillUnmount = () => {
