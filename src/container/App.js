@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Head from "next/head";
+import Router from "next/router";
 
 import Navbar from "../Components/Navbar/Navbar";
 import AuthForm from "../Components/AuthForm/Auth";
@@ -34,6 +35,7 @@ class App extends Component {
   logoutHandler = event => {
     localStorage.removeItem("AnshdataUser");
     this.navHandler("home");
+    Router.push("/");
   };
 
   renderAuthForm = () => {
@@ -75,8 +77,11 @@ class App extends Component {
           navHandler={this.navHandler}
           logoutHandler={this.logoutHandler}
           activeItem={this.state.navEventKey}
+          isAuthenticated={this.state.isAuthenticated}
+          user={this.state.AnshdataUser}
         />
         {this.renderAuthForm()}
+        {this.props.children}
       </div>
     );
   }

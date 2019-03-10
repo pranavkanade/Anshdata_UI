@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import Router from "next/router";
 
 import {
   Form,
-  Button,
   Modal,
   Menu,
   Segment,
@@ -164,16 +164,32 @@ class AuthForm extends Component {
             </Grid.Row>
             <Grid.Row columns={4} verticalAlign="middle" textAlign="center">
               <Grid.Column>
-                <Icon name="facebook square" size="big" />
+                <Image
+                  src="/static/images/signin_logo/facebook.svg"
+                  size="mini"
+                  centered
+                />
               </Grid.Column>
               <Grid.Column>
-                <Icon name="google" size="big" />
+                <Image
+                  src="/static/images/signin_logo/github.svg"
+                  size="mini"
+                  centered
+                />
               </Grid.Column>
               <Grid.Column>
-                <Icon name="twitter" size="big" />
+                <Image
+                  src="/static/images/signin_logo/search.svg"
+                  size="mini"
+                  centered
+                />
               </Grid.Column>
               <Grid.Column>
-                <Icon name="github" size="big" />
+                <Image
+                  src="/static/images/signin_logo/twitter.svg"
+                  size="mini"
+                  centered
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -216,6 +232,7 @@ class AuthForm extends Component {
     AnshdataUser["token"] = (await loginRes.json()).token;
     localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
     this.close();
+    Router.push("/");
   };
 
   loginHandler = async event => {
@@ -243,6 +260,7 @@ class AuthForm extends Component {
     AnshdataUser["token"] = AnshdataToken;
     localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
     this.close();
+    Router.push("/");
   };
 
   componentWillUnmount = () => {
