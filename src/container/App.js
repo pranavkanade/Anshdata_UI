@@ -1,65 +1,85 @@
 import React, { Component } from "react";
+import Head from "next/head";
+
 import Navbar from "../Components/Navbar/Navbar";
 import AuthForm from "../Components/AuthForm/Auth";
 
 class App extends Component {
-    state = {
-        isAuthenticated: !!localStorage.getItem("AnshdataUser"),
-        navEventKey: "home",
-        AnshdataUser: JSON.parse(localStorage.getItem("AnshdataUser"))
-    };
+  state = {
+    navEventKey: "home",
+    preNavEventKey: "home"
+  };
 
-    handleNavbarTransition = eventKey => {
-        this.setState({ navEventKey: eventKey });
-    };
+  // handleNavbarTransition
+  navHandler = eventKey => {
+    const preNav = this.state.navEventKey;
+    this.setState({ navEventKey: eventKey, preNavEventKey: preNav });
+  };
 
-    renderNavEvent = () => {
-        switch (this.state.navEventKey) {
-            case "signup":
-            case "signin":
-                this.renderAuthForm();
-                break;
-            default:
-                return null;
-        }
-    };
+  resetNav = eventKey => {
+    const preNav = this.state.preNavEventKey;
+    this.setState({ navEventKey: preNav, preNavEventKey: eventKey });
+  };
 
-    logoutHandler = event => {
-        localStorage.removeItem("AnshdataUser");
-        this.setState({ navEventKey: "home" });
-    };
-
-    renderAuthForm = () => {
-        if (
-            this.state.navEventKey === "signup" ||
-            this.state.navEventKey === "signin"
-        ) {
-            return <AuthForm formType={this.state.navEventKey} />;
-        }
+  renderNavEvent = () => {
+    switch (this.state.navEventKey) {
+      case "signin":
+        this.renderAuthForm();
+        break;
+      default:
         return null;
-    };
-
-    getUser = () => {
-        return JSON.parse(localStorage.getItem("AnshdataUser"));
-    };
-
-    componentDidMount = () => {
-        const AnshdataUser = this.getUser();
-        console.log("[App.js] Trying to log AnshdataUser");
-        console.log(AnshdataUser);
-    };
-
-    render() {
-        return (
-            <div className="App">
-                <Navbar
-                    navHandler={this.handleNavbarTransition}
-                    logoutHandler={this.logoutHandler}
-                />
-                {this.renderAuthForm()}
-            </div>
-        );
     }
+  };
+
+  logoutHandler = event => {
+    localStorage.removeItem("AnshdataUser");
+    this.navHandler("home");
+  };
+
+  renderAuthForm = () => {
+    if (this.state.navEventKey === "signin") {
+      return (
+        <AuthForm formType={this.state.navEventKey} resetNav={this.resetNav} />
+      );
+    }
+    return null;
+  };
+
+  getUser = () => {
+    return JSON.parse(localStorage.getItem("AnshdataUser"));
+  };
+
+  componentDidMount = () => {
+    const AnshdataUser = this.getUser();
+    console.log("[App.js] Trying to log AnshdataUser");
+    console.log(AnshdataUser);
+    const isAuthenticated = !!localStorage.getItem("AnshdataUser");
+    const user = JSON.parse(localStorage.getItem("AnshdataUser"));
+    this.setState({
+      isAuthenticated: isAuthenticated,
+      AnshdataUser: user
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Head>
+          <title>Anshdata</title>
+          <link
+            rel="stylesheet"
+            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+          />
+        </Head>
+        <Navbar
+          navHandler={this.navHandler}
+          logoutHandler={this.logoutHandler}
+          activeItem={this.state.navEventKey}
+        />
+        {this.renderAuthForm()}
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -1,62 +1,45 @@
 import React from "react";
-import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
-import StyleClasses from "./Navbar.modules.css";
+import Link from "next/link";
 
-const navbar = props => {
-    return (
-        <Navbar bg="dark" variant="dark">
-            <Container>
-                <Row>
-                    <Col>
-                        <Navbar.Brand href="#home">AnshData</Navbar.Brand>
-                    </Col>
-                    <Col className={StyleClasses.Options}>
-                        <Nav className="mr-auto">
-                            <Nav.Link
-                                href="#home"
-                                onSelect={ek => props.navHandler(ek)}
-                                eventKey="home">
-                                Home
-                            </Nav.Link>
-                            <Nav.Link
-                                href="#catalog"
-                                onSelect={ek => props.navHandler(ek)}
-                                eventKey="courses">
-                                Courses
-                            </Nav.Link>
-                            <Nav.Link
-                                href="#signup"
-                                onSelect={ek => props.navHandler(ek)}
-                                eventKey="signup">
-                                SignUp
-                            </Nav.Link>
-                            <Nav.Link
-                                href="#signin"
-                                onSelect={ek => props.navHandler(ek)}
-                                eventKey="signin">
-                                SignIn
-                            </Nav.Link>
-                            <Nav.Link
-                                href="#logout"
-                                onSelect={ek => props.logoutHandler(ek)}
-                                eventKey="logout">
-                                SignOut
-                            </Nav.Link>
-                        </Nav>
-                    </Col>
-                </Row>
-            </Container>
-        </Navbar>
-    );
+// import { Navbar, Nav, Container, NavbarBrand } from "react-bootstrap";
+import { Button, Menu, Container } from "semantic-ui-react";
+import StyleClasses from "./Navbar.css";
+
+const navBar = props => {
+  const activeItem = props.activeItem;
+  return (
+    <Menu secondary size="huge" attached pointing>
+      <Container fluid>
+        <Menu.Item header>Anshdata</Menu.Item>
+        <Menu.Menu position="right">
+          <Menu.Item
+            name="Explore"
+            active={activeItem === "explore"}
+            onClick={() => props.navHandler("explore")}
+          />
+          <Menu.Item
+            name="Blog"
+            active={activeItem === "blog"}
+            onClick={() => props.navHandler("blog")}
+          />
+          <Menu.Item
+            name="Forum"
+            active={activeItem === "forum"}
+            onClick={() => props.navHandler("forum")}
+          />
+          <Menu.Item>
+            <Button
+              color="violet"
+              content="Sign In"
+              active={activeItem === "signin"}
+              onClick={() => props.navHandler("signin")}
+              inverted
+            />
+          </Menu.Item>
+        </Menu.Menu>
+      </Container>
+    </Menu>
+  );
 };
 
-export default navbar;
-
-// <Form inline>
-// <FormControl
-//     type="text"
-//     placeholder="Search"
-//     className="mr-sm-2"
-// />
-// <Button variant="outline-info">Search</Button>
-// </Form>
+export default navBar;
