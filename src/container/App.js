@@ -38,8 +38,13 @@ class App extends Component {
     // will be unset automatically on rerender
   };
 
+  hideAuthFormHandler = () => {
+    this.setState({ attemptingSignIn: false });
+  };
+
   logoutHandler = event => {
     localStorage.removeItem("AnshdataUser");
+    this.hideAuthFormHandler();
     this.reloadOnAuthEvent();
   };
 
@@ -75,7 +80,10 @@ class App extends Component {
           user={this.state.AnshdataUser}
         />
         {this.state.attemptingSignIn ? (
-          <AuthForm reloadOnAuthEvent={this.reloadOnAuthEvent} />
+          <AuthForm
+            reloadOnAuthEvent={this.reloadOnAuthEvent}
+            hideAuthFormHandler={this.hideAuthFormHandler}
+          />
         ) : null}
         {this.props.children}
       </div>
