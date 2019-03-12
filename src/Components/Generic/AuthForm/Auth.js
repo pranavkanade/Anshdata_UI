@@ -80,6 +80,10 @@ class AuthForm extends Component {
     // this.setState({ formType: this.props.formType });
   };
 
+  componentWillUnmount = () => {
+    this.props.hideAuthFormHandler();
+  };
+
   handleItemClick = tabKey => {
     this.setState({ formType: tabKey });
   };

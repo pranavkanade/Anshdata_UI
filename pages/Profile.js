@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import App from "../src/container/App";
+import ProfilePlugin from "../src/Components/Plugins/Profile/Profile";
 
 class Dashboard extends Component {
   render() {
     return (
       <App page="Profile">
-        <div>
-          <h3>This is Profile page of Current User</h3>
-        </div>
+        <ProfilePlugin />
       </App>
     );
   }
