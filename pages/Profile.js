@@ -4,7 +4,7 @@ import App from "../src/container/App";
 class Dashboard extends Component {
   render() {
     return (
-      <App>
+      <App page="Profile">
         <div>
           <h3>This is Profile page of Current User</h3>
         </div>

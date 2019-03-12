@@ -15,6 +15,12 @@ import {
 
 import StyleClasses from "./Auth.css";
 
+const URLS = {
+  USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
+  USERLOGIN: "http://127.0.0.1:8000/api/user/login/",
+  GETUSER: "http://127.0.0.1:8000/api/user/me/"
+};
+
 class AuthForm extends Component {
   state = {
     username: "",
@@ -67,11 +73,11 @@ class AuthForm extends Component {
 
   close = () => {
     this.setState({ shouldOpen: false, formType: "" });
-    this.props.resetNav("signin");
   };
 
   componentDidMount = () => {
-    this.setState({ formType: this.props.formType });
+    // TODO: do some thing here but this is not needed
+    // this.setState({ formType: this.props.formType });
   };
 
   handleItemClick = tabKey => {
@@ -149,6 +155,8 @@ class AuthForm extends Component {
       </Form>
     );
 
+    // TODO: Break down this function in small pieces
+
     const addGrid = form => {
       if (this.state.formType === "signin") {
         return (
@@ -163,6 +171,9 @@ class AuthForm extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row columns={4} verticalAlign="middle" textAlign="center">
+              {/* TODO: Add auth mechanism for all of the following
+                Also convert it into list of items and them map the output
+            */}
               <Grid.Column>
                 <Image
                   src="/static/images/signin_logo/facebook.svg"
@@ -207,7 +218,7 @@ class AuthForm extends Component {
     const signupData = this.getSignupData();
     console.log("[Auth] : Signup Handler");
     console.log(signupData);
-    const siginupRes = await fetch("http://127.0.0.1:8000/api/user/signup/", {
+    const siginupRes = await fetch(URLS.USERSIGNUP, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -221,7 +232,7 @@ class AuthForm extends Component {
     );
     const loginData = this.getLoginData();
 
-    const loginRes = await fetch("http://127.0.0.1:8000/api/user/login/", {
+    const loginRes = await fetch(URLS.USERLOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -232,7 +243,7 @@ class AuthForm extends Component {
     AnshdataUser["token"] = (await loginRes.json()).token;
     localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
     this.close();
-    Router.push("/");
+    this.props.reloadOnAuthEvent();
   };
 
   loginHandler = async event => {
@@ -240,7 +251,7 @@ class AuthForm extends Component {
     const loginData = this.getLoginData();
     console.log("[Auth] : Login Handler");
     console.log(loginData);
-    const loginRes = await fetch("http://127.0.0.1:8000/api/user/login/", {
+    const loginRes = await fetch(URLS.USERLOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -249,7 +260,7 @@ class AuthForm extends Component {
     });
 
     let AnshdataToken = (await loginRes.json()).token;
-    const userRes = await fetch("http://127.0.0.1:8000/api/user/me/", {
+    const userRes = await fetch(URLS.GETUSER, {
       headers: {
         Authorization: `JWT ${AnshdataToken}`
       }
@@ -260,7 +271,7 @@ class AuthForm extends Component {
     AnshdataUser["token"] = AnshdataToken;
     localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
     this.close();
-    Router.push("/");
+    this.props.reloadOnAuthEvent();
   };
 
   componentWillUnmount = () => {

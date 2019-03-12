@@ -7,59 +7,52 @@ import AuthForm from "../Components/AuthForm/Auth";
 
 class App extends Component {
   state = {
-    navEventKey: "home",
-    preNavEventKey: "home"
+    navEventKey: "Home",
+    attemptingSignIn: false,
+    isAuthenticated: false,
+    AnshdataUser: null
+  };
+
+  setUserData = () => {
+    const rawUserData = localStorage.getItem("AnshdataUser");
+    const isAuthenticated = !!rawUserData;
+    const user = JSON.parse(rawUserData);
+    this.setState({
+      isAuthenticated: isAuthenticated,
+      AnshdataUser: user
+    });
+  };
+
+  reloadOnAuthEvent = () => {
+    this.setUserData();
   };
 
   // handleNavbarTransition
   navHandler = eventKey => {
     const preNav = this.state.navEventKey;
-    this.setState({ navEventKey: eventKey, preNavEventKey: preNav });
+    this.setState({ navEventKey: eventKey });
   };
 
-  resetNav = eventKey => {
-    const preNav = this.state.preNavEventKey;
-    this.setState({ navEventKey: preNav, preNavEventKey: eventKey });
-  };
-
-  renderNavEvent = () => {
-    switch (this.state.navEventKey) {
-      case "signin":
-        this.renderAuthForm();
-        break;
-      default:
-        return null;
-    }
+  showAuthFormHandler = () => {
+    this.setState({ attemptingSignIn: true });
+    // will be unset automatically on rerender
   };
 
   logoutHandler = event => {
     localStorage.removeItem("AnshdataUser");
-    this.navHandler("home");
-    Router.push("/");
-  };
-
-  renderAuthForm = () => {
-    if (this.state.navEventKey === "signin") {
-      return (
-        <AuthForm formType={this.state.navEventKey} resetNav={this.resetNav} />
-      );
-    }
-    return null;
-  };
-
-  getUser = () => {
-    return JSON.parse(localStorage.getItem("AnshdataUser"));
+    this.reloadOnAuthEvent();
   };
 
   componentDidMount = () => {
-    const AnshdataUser = this.getUser();
-    console.log("[App.js] Trying to log AnshdataUser");
-    console.log(AnshdataUser);
-    const isAuthenticated = !!localStorage.getItem("AnshdataUser");
-    const user = JSON.parse(localStorage.getItem("AnshdataUser"));
+    console.log("[App.js] Component Did Mount");
+    console.log(this.state);
+    // If we already have the authenticated user's info loaded in state
+    // No need to fetch again from localStorage
+    if (!this.state.isAuthenticated) {
+      this.setUserData();
+    }
     this.setState({
-      isAuthenticated: isAuthenticated,
-      AnshdataUser: user
+      navEventKey: this.props.page
     });
   };
 
@@ -75,12 +68,15 @@ class App extends Component {
         </Head>
         <Navbar
           navHandler={this.navHandler}
+          showAuthFormHandler={this.showAuthFormHandler}
           logoutHandler={this.logoutHandler}
           activeItem={this.state.navEventKey}
           isAuthenticated={this.state.isAuthenticated}
           user={this.state.AnshdataUser}
         />
-        {this.renderAuthForm()}
+        {this.state.attemptingSignIn ? (
+          <AuthForm reloadOnAuthEvent={this.reloadOnAuthEvent} />
+        ) : null}
         {this.props.children}
       </div>
     );

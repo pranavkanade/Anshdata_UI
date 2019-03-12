@@ -12,15 +12,54 @@ import {
 } from "semantic-ui-react";
 import StyleClasses from "./Navbar.css";
 
-const renderAuthMenuItem = (props, activeItem) => {
+const renderUserInfoPopup = props => {
+  return (
+    <Popup
+      className={StyleClasses.UserInfoPopup}
+      basic
+      trigger={
+        <Image
+          src="/static/images/avatar/female_1.png"
+          size="mini"
+          style={{ maxWidth: "85%" }} // TODO: Avoid doing this (make it centred)
+        />
+      }
+      on="click"
+      position="bottom right">
+      <Image src="/static/images/avatar/female_1.png" size="small" centered />
+      <Card>
+        <Card.Content>
+          <Card.Header>{props.user.username}</Card.Header>
+          <Card.Meta>
+            <span className="email">{props.user.email}</span>
+          </Card.Meta>
+          {props.user.is_producer ? (
+            <Card.Description>Keep creating more content!!</Card.Description>
+          ) : null}
+        </Card.Content>
+        <Card.Content extra>
+          {/* NOTE: if u want 2 sty on page whr u r b4 logout remove below
+              link */}
+          <Link href="/">
+            <Button basic onClick={props.logoutHandler}>
+              Sign Out
+            </Button>
+          </Link>
+          <Button basic>Setting</Button>
+        </Card.Content>
+      </Card>
+    </Popup>
+  );
+};
+
+const renderAuthMenuItem = props => {
   if (!props.isAuthenticated) {
     return (
       <Menu.Item>
         <Button
           color="violet"
           content="Sign In"
-          active={activeItem === "signin"}
-          onClick={() => props.navHandler("signin")}
+          onClick={props.showAuthFormHandler}
           inverted
         />
       </Menu.Item>
@@ -28,83 +67,46 @@ const renderAuthMenuItem = (props, activeItem) => {
   } else {
     return (
       <Menu.Item className={StyleClasses.UserMenuItem}>
-        <Popup
-          className={StyleClasses.UserInfoPopup}
-          basic
-          trigger={
-            <Image
-              src="/static/images/avatar/female_1.png"
-              size="mini"
-              style={{ maxWidth: "85%" }} // TODO: Avoid doing this (make it centred)
-            />
-          }
-          on="click"
-          position="bottom right">
-          <Image
-            src="/static/images/avatar/female_1.png"
-            size="small"
-            centered
-          />
-          <Card>
-            <Card.Content>
-              <Card.Header>{props.user.username}</Card.Header>
-              <Card.Meta>
-                <span className="email">{props.user.email}</span>
-              </Card.Meta>
-              {props.user.is_producer ? (
-                <Card.Description>
-                  Keep creating more content!!
-                </Card.Description>
-              ) : null}
-            </Card.Content>
-            <Card.Content extra>
-              <Link href="/">
-                <Button basic onClick={props.logoutHandler}>
-                  Sign Out
-                </Button>
-              </Link>
-              <Button basic>Setting</Button>
-            </Card.Content>
-          </Card>
-        </Popup>
+        {renderUserInfoPopup(props)}
       </Menu.Item>
     );
   }
 };
 
+const menus = ["Profile", "Dashboard", "Explore", "Blog", "Forum"];
+
+const renderNavMenus = props => {
+  return menus.map((m, i) => {
+    return (
+      <Link href={"/".concat(m)} key={i}>
+        <Menu.Item
+          as="div"
+          name={m}
+          active={props.activeItem === m}
+          onClick={() => props.navHandler(m)}>
+          <a>{m}</a>
+        </Menu.Item>
+      </Link>
+    );
+  });
+};
+
 const navBar = props => {
-  const activeItem = props.activeItem;
   return (
     <Menu secondary size="massive" attached pointing>
       <Container fluid>
         <Link href="/">
-          <Menu.Item as="div" header>
+          <Menu.Item
+            className={StyleClasses.MenuHead}
+            as="div"
+            header
+            onClick={() => props.navHandler("Home")}>
             <a>Anshdata</a>
           </Menu.Item>
         </Link>
         <Menu.Menu className={StyleClasses.Menu} position="right">
-          <Menu.Item
-            as="div"
-            name="Explore"
-            active={activeItem === "explore"}
-            onClick={() => props.navHandler("explore")}>
-            <a>Explore</a>
-          </Menu.Item>
-          <Menu.Item
-            as="div"
-            name="Blog"
-            active={activeItem === "blog"}
-            onClick={() => props.navHandler("blog")}>
-            <a>Blog</a>
-          </Menu.Item>
-          <Menu.Item
-            as="div"
-            name="Forum"
-            active={activeItem === "forum"}
-            onClick={() => props.navHandler("forum")}>
-            <a>Forum</a>
-          </Menu.Item>
-          {renderAuthMenuItem(props, activeItem)}
+          {renderNavMenus(props)}
+          {renderAuthMenuItem(props)}
         </Menu.Menu>
       </Container>
     </Menu>
