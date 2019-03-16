@@ -5,6 +5,8 @@ import Router from "next/router";
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import AuthForm from "../Components/Generic/AuthForm/Auth";
 
+import StyleClasses from "./App.scss";
+
 class App extends Component {
   state = {
     navEventKey: "Home",
@@ -63,7 +65,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className={StyleClasses.App}>
         <Head>
           <title>Anshdata</title>
           <link
@@ -85,7 +87,7 @@ class App extends Component {
             hideAuthFormHandler={this.hideAuthFormHandler}
           />
         ) : null}
-        {this.props.children}
+        <div className={StyleClasses.plugin}>{this.props.children}</div>
       </div>
     );
   }

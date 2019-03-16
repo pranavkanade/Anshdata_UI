@@ -1,0 +1,128 @@
+.dashboard {
+  margin-top: 7.5vh;
+}
+.banner {
+  width: 100%;
+  margin-top: 0px;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0em;
+}
+
+.hero {
+  text-align: center;
+  height: 9vh;
+  background-image: linear-gradient(62deg, #f5fcfb 0%, #053969 100%);
+}
+
+.second {
+  background-color: #f5fcfb;
+  /* background-image: linear-gradient(32deg, #58abf8 0%, aquamarine 100%); */
+  height: 90vh;
+}
+
+.third {
+  text-align: center;
+  background-color: rgb(181, 247, 227);
+  background-image: linear-gradient(
+    62deg,
+    #71b5f5 0%,
+    rgb(181, 247, 227) 100%
+  );
+  height: 82vh;
+}
+
+.fourth {
+  text-align: center;
+  background-color: rgb(211, 224, 220);
+  height: 62vh;
+}
+
+.pushable {
+  height: inherit;
+}
+
+.sidebar {
+  text-align: center;
+  padding-top: 8vh;
+  margin-top: 0%;
+  background-color: #053969;
+}
+
+.sidebar a {
+  color: white;
+  font-size: medium;
+  text-align: justify;
+}
+
+.sidebarMenu:hover {
+  cursor: pointer;
+  transform: scale3d(1.2);
+}
+
+.sidebarMenuIcon:hover {
+  cursor: pointer;
+  transform: scale3d(1.2);
+}
+
+.content {
+  height: inherit;
+}
+
+.menuButton {
+  padding-top: 1em;
+  padding-left: 2em;
+}
+
+.overviewCardGroup {
+  padding-top: 5vh;
+  text-align: center;
+}
+.overviewCard {
+  text-align: center;
+  width: 35vh;
+  height: 30vh;
+  padding-left: 5vh;
+  padding-right: 5vh;
+}
+
+.overviewCard:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+// TODO: Use following two classes for creation of cards
+// <div className={StyleClasses.container}>
+// <div className={StyleClasses.card} />
+// </div>
+
+.container {
+  width: 75px;
+  height: 100px;
+  &:hover {
+    .card {
+      transform: translateY(-7.5%) translateX(-25%);
+    }
+
+    ~ .container > .card {
+      transform: translateX(16.666%);
+    }
+  }
+  &:not(:first-child) {
+    .card {
+      box-shadow: -34px 7px 49px -2px rgba(0, 0, 0, 0.32);
+    }
+  }
+}
+.card {
+  display: flex;
+  will-change: transform;
+  transform: rotate(0.01deg);
+  border-radius: 0.5rem;
+  width: 15vh;
+  height: 20vh;
+  background-color: white;
+  transition: 0.175s cubic-bezier(0.39, 0.575, 0.565, 1);
+  overflow: hidden;
+}
