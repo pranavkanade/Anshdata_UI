@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Head from "next/head";
-import Router from "next/router";
 
-import Navbar from "../Components/Generic/Navbar/Navbar";
-import AuthForm from "../Components/Generic/AuthForm/Auth";
+import Navbar from "../Components/Util/Navbar/Navbar";
+import AuthForm from "../Components/Util/AuthForm/Auth";
 
 import StyleClasses from "./App.scss";
 
@@ -31,7 +30,6 @@ class App extends Component {
 
   // handleNavbarTransition
   navHandler = eventKey => {
-    const preNav = this.state.navEventKey;
     this.setState({ navEventKey: eventKey });
   };
 
@@ -72,6 +70,16 @@ class App extends Component {
             rel="stylesheet"
             href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
           />
+
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+          />
+          <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+          />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" />
         </Head>
         <Navbar
           navHandler={this.navHandler}

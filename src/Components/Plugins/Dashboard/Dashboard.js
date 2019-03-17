@@ -1,16 +1,8 @@
-import React, { useState, Component } from "react";
-import {
-  Sidebar,
-  Grid,
-  Menu,
-  Segment,
-  Icon,
-  Header,
-  Container,
-  Image,
-  Card,
-  Button
-} from "semantic-ui-react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { Component } from "react";
+import { Sidebar, Icon, Header, Container } from "semantic-ui-react";
+
+import Gcard from "../../Generic/Card";
 
 import StyleClasses from "./Dashboard.scss";
 
@@ -19,6 +11,10 @@ class DashboardPlugin extends Component {
     sidebarVisible: false,
     currentView: "Overview",
     overViewStat: [
+      {
+        label: "Overview",
+        count: 1389
+      },
       {
         label: "New Students",
         count: 203
@@ -53,32 +49,93 @@ class DashboardPlugin extends Component {
 
   renderOverViewStats = () => {
     return (
-      <Card.Group as="div" className={StyleClasses.overviewCardGroup}>
+      <div className="row">
         {this.state.overViewStat.map((s, i) => {
+          return <Gcard title={s.label} content={s.count} />;
+        })}
+      </div>
+    );
+  };
+
+  renderOverviewGraphsSegment = () => {
+    return (
+      <div class={"card " + StyleClasses.second} as="div">
+        <div class="card-title">
+          <Icon name="bar chart" />
+          Project each of the above cards across the user's timeline.
+        </div>
+      </div>
+    );
+  };
+
+  renderExtaStatsSegment = () => {
+    return (
+      <div className={"card " + StyleClasses.third}>
+        <span className="card-title">
+          More stats about the property selected above
+        </span>
+      </div>
+    );
+  };
+
+  renderTrends = () => {
+    const trends = [
+      {
+        color: "blue darken-2",
+        title: "React: The complete Guide",
+        textColor: "grey-text text-lighten-5"
+      },
+      {
+        color: "grey darken-4",
+        title: "Next.js: Zero to Hero",
+        textColor: "grey-text text-lighten-5"
+      },
+      {
+        color: "light-green lighten-2",
+        title: "Machine Learning: Stanford University"
+      },
+      {
+        color: "red lighten-3",
+        title: "UI/UX: Beginner"
+      }
+    ];
+    return (
+      <div class="row center-align">
+        {trends.map((m, i) => {
           return (
-            <div className={StyleClasses.overviewCard}>
-              <Card raised as="div" fluid>
-                <Card.Content extra>{s.label}</Card.Content>
-                <Card.Content header={s.count} centered />
-              </Card>
+            <div className="col s3">
+              <div
+                className={
+                  "card z-depth-5 " + m.color + " " + StyleClasses.trend
+                }>
+                <h2 className={"card-title " + m.textColor}>{m.title}</h2>
+              </div>
             </div>
           );
         })}
-      </Card.Group>
+      </div>
+    );
+  };
+
+  renderTrendsSegment = () => {
+    return (
+      <div className={"card " + StyleClasses.fourth}>
+        <span className="card-title">
+          Display all the current trends on the platform
+        </span>
+        {this.renderTrends()}
+      </div>
     );
   };
 
   renderOverview = () => {
     return (
       <>
-        <Header as="h3">This is Overview</Header>
+        <h4>This is Overview</h4>
         {this.renderOverViewStats()}
-        <Segment as="div" placeholder>
-          <Header icon>
-            <Icon name="bar chart" />
-            Project each of the above cards across the users timeline.
-          </Header>
-        </Segment>
+        {this.renderOverviewGraphsSegment()}
+        {this.renderExtaStatsSegment()}
+        {this.renderTrendsSegment()}
       </>
     );
   };
@@ -114,10 +171,15 @@ class DashboardPlugin extends Component {
         break;
     }
     return (
-      <Segment basic as="div" size="massive">
-        <Icon name="list" onClick={this.showSidebarHandler} />
+      <div className={StyleClasses.banner}>
+        <i
+          className="material-icons medium"
+          onClick={this.showSidebarHandler}
+          style={{ fontSize: "35px" }}>
+          menu
+        </i>
         {content}
-      </Segment>
+      </div>
     );
   };
 
@@ -125,44 +187,39 @@ class DashboardPlugin extends Component {
     const menuItems = [
       {
         name: "Overview",
-        icon: "chart line"
+        icon: "graphic_eq"
       },
       {
         name: "Courses",
-        icon: "home"
+        icon: "featured_play_list"
       },
       {
         name: "Forum",
-        icon: "comments"
+        icon: "forum"
       },
       {
         name: "Blog",
-        icon: "pencil alternate"
+        icon: "format_align_left"
       }
     ];
     return (
       <Sidebar
         className={StyleClasses.sidebar}
-        as="div"
+        as="aside"
         animation="push"
         visible={this.state.sidebarVisible}>
-        <Menu vertical icon="labeled" borderless secondary>
+        <ul className={"sidenav sidenav-fixed " + StyleClasses.sidebarMenu}>
           {menuItems.map((m, i) => {
             return (
-              <Menu.Item
-                as="div"
-                key={i}
-                className={StyleClasses.sidebarMenu}
-                onClick={() => this.viewChangeHandler(m.name)}>
+              <li key={i} onClick={() => this.viewChangeHandler(m.name)}>
                 <a>
-                  <Icon name={m.icon} inverted size="large" />
-
-                  {m.name}
+                  <i className="material-icons">{m.icon}</i>
+                  <span>{m.name}</span>
                 </a>
-              </Menu.Item>
+              </li>
             );
           })}
-        </Menu>
+        </ul>
       </Sidebar>
     );
   };
@@ -170,12 +227,10 @@ class DashboardPlugin extends Component {
   render() {
     return (
       <Container fluid className={StyleClasses.dashboard}>
-        <div className={StyleClasses.second}>
-          <Sidebar.Pushable as="div" className={StyleClasses.pushable}>
-            {this.renderSidebar()}
-            <Sidebar.Pusher>{this.renderPusherContent()}</Sidebar.Pusher>
-          </Sidebar.Pushable>
-        </div>
+        <Sidebar.Pushable as="div">
+          {this.renderSidebar()}
+          <Sidebar.Pusher>{this.renderPusherContent()}</Sidebar.Pusher>
+        </Sidebar.Pushable>
       </Container>
     );
   }
