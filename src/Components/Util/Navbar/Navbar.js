@@ -10,7 +10,7 @@ import {
   Card,
   Image
 } from "semantic-ui-react";
-import StyleClasses from "./Navbar.css";
+import StyleClasses from "./Navbar.scss";
 
 const renderUserInfoPopup = props => {
   return (

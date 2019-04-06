@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Head from "next/head";
 import Router from "next/router";
 
-import Navbar from "../Components/Generic/Navbar/Navbar";
-import AuthForm from "../Components/Generic/AuthForm/Auth";
+import Navbar from "../Components/Util/Navbar/Navbar";
+import AuthForm from "../Components/Util/AuthForm/Auth";
 
 class App extends Component {
   state = {
