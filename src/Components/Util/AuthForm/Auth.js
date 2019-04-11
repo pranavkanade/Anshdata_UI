@@ -276,16 +276,6 @@ class AuthForm extends Component {
     this.props.reloadOnAuthEvent();
   };
 
-  componentWillUnmount = () => {
-    this.setState({
-      username: "",
-      email: "",
-      password: "",
-      isProducer: false,
-      shouldOpen: true
-    });
-  };
-
   render() {
     return (
       <div>

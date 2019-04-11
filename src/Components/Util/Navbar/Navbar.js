@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 
 // import { Navbar, Nav, Container, NavbarBrand } from "react-bootstrap";
@@ -73,12 +73,12 @@ const renderAuthMenuItem = props => {
   }
 };
 
-const menus = ["Profile", "Dashboard", "Explore", "Blog", "Forum"];
+const menus = ["Profile", "Dashboard", "Courses", "Blog", "Forum"];
 
 const renderNavMenus = props => {
   return menus.map((m, i) => {
     return (
-      <Link href={"/".concat(m)} key={i}>
+      <Link href={"/".concat(m.toLowerCase())} key={i}>
         <Menu.Item
           as="div"
           name={m}
@@ -93,8 +93,8 @@ const renderNavMenus = props => {
 
 const navBar = props => {
   return (
-    <Menu secondary size="massive" attached pointing>
-      <Container fluid>
+    <Menu secondary size="large" as="div" className={StyleClasses.Navbar}>
+      <Container>
         <Link href="/">
           <Menu.Item
             className={StyleClasses.MenuHead}
