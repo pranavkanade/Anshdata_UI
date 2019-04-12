@@ -1,0 +1,27 @@
+{
+  "name": "anshdata",
+  "version": "0.1.0",
+  "private": true,
+  "description": "frontend prototype",
+  "scripts": {
+    "dev": "next",
+    "start": "next start",
+    "build": "next build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pskanade/Anshdata_UI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pskanade/Anshdata_UI/issues"
+  },
+  "homepage": "https://github.com/pskanade/Anshdata_UI#readme",
+  "dependencies": {
+    "@atlaskit/page": "^9.0.3",
+    "next": "^8.0.4",
+    "next-routes": "^1.4.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "semantic-ui-react": "^0.86.0"
+  }
+}
