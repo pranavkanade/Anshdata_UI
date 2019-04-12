@@ -1,10 +1,11 @@
 import React from "react";
 import App from "../src/Containers/App";
+import Courses from "../src/Components/Plugins/Courses/Courses";
 
 const courses = () => {
   return (
     <App page={"Courses"}>
-      <h4>This is courses page</h4>
+      <Courses />
     </App>
   );
 };
