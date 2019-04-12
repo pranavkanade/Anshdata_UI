@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Form, Modal, Menu, Segment, Grid, Header } from "semantic-ui-react";
+import { Form, Modal, Menu, Segment, Grid } from "semantic-ui-react";
 
 const URLS = {
   USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",

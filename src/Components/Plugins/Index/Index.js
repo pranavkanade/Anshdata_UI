@@ -1,12 +1,26 @@
-import React from 'react';
+import React from "react";
+import Link from "next/link";
+import { Container, Grid, Button } from "semantic-ui-react";
 
-
-const index = (props) => {
+const index = props => {
   return (
-    <div className={"IndexPlugin"}>
-      <h4>This is index plugin</h4>
-    </div>
-  )
-}
+    <Container as="div" className={"IndexPlugin"}>
+      <Grid>
+        <Grid.Row columns={3}>
+          <Grid.Column />
+          <Grid.Column>
+            <Link href="/courses">
+              <Button color="instagram">Start Exploring</Button>
+            </Link>
+            <Link href="/contribute">
+              <Button color="teal">Contribute Now</Button>
+            </Link>
+          </Grid.Column>
+          <Grid.Column />
+        </Grid.Row>
+      </Grid>
+    </Container>
+  );
+};
 
 export default index;
