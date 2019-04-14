@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Container, Grid, Card } from "semantic-ui-react";
+import { Container, Grid, Card, Button } from "semantic-ui-react";
+import enrollEventHandler from "../../../Actions/Enroll";
 
 const URLS = {
   LIST_COURSE: "http://127.0.0.1:8000/api/course/"
@@ -10,10 +11,10 @@ class Courses extends Component {
     courses: []
   };
 
-  renderCoursesList = courses => {
-    return this.state.courses.map((course, idx) => {
+  renderCoursesList = () => {
+    return this.state.courses.map(course => {
       return (
-        <Card key={idx}>
+        <Card key={course["id"]} fluid href="#">
           <Card.Content
             header={course["title"]}
             meta={"Author : " + course.author.username}
@@ -21,6 +22,14 @@ class Courses extends Component {
           <Card.Description>
             {"Enrollment Count : " + course.num_of_enrollments}
           </Card.Description>
+          <Card.Content extra>
+            <Button
+              floated="right"
+              color="blue"
+              onClick={() => enrollEventHandler(course["id"])}>
+              Enroll
+            </Button>
+          </Card.Content>
         </Card>
       );
     });
@@ -61,21 +70,21 @@ class Courses extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    console.log("[Coures.js] component did mount", this.state);
+    console.log("[Courses.js] component did mount", this.state);
     this.getCourseList();
   }
 
   componentWillUnmount() {
-    console.log("[App.js] component will unmount");
+    console.log("[courses.js] component will unmount");
   }
 
   shouldComponentUpdate() {
-    console.log("[App.js] should component Update");
+    console.log("[Courses.js] should component Update");
     return true;
   }
 
   componentDidUpdate() {
-    console.log("[App.js] component did update");
+    console.log("[Courses.js] component did update");
   }
 }
 
