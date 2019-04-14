@@ -10,7 +10,7 @@ import {
   Card,
   Image
 } from "semantic-ui-react";
-import StyleClasses from "./Navbar.css";
+import StyleClasses from "./Navbar.scss";
 
 const renderUserInfoPopup = props => {
   return (
@@ -57,10 +57,9 @@ const renderAuthMenuItem = props => {
     return (
       <Menu.Item>
         <Button
-          color="violet"
+          color="blue"
           content="Sign In"
           onClick={props.showAuthFormHandler}
-          inverted
         />
       </Menu.Item>
     );
@@ -80,6 +79,7 @@ const renderNavMenus = props => {
     return (
       <Link href={"/".concat(m)} key={i}>
         <Menu.Item
+          className={StyleClasses.item}
           as="div"
           name={m}
           active={props.activeItem === m}
@@ -93,23 +93,21 @@ const renderNavMenus = props => {
 
 const navBar = props => {
   return (
-    <Menu secondary size="massive" attached pointing>
-      <Container fluid>
-        <Link href="/">
-          <Menu.Item
-            className={StyleClasses.MenuHead}
-            as="div"
-            header
-            onClick={() => props.navHandler("Home")}>
-            <a>Anshdata</a>
-          </Menu.Item>
-        </Link>
-        <Menu.Menu className={StyleClasses.Menu} position="right">
-          {renderNavMenus(props)}
-          {renderAuthMenuItem(props)}
-        </Menu.Menu>
-      </Container>
-    </Menu>
+    <div className={StyleClasses.navbar}>
+      <Menu as="div" fixed="top" stackable secondary borderless>
+        <Container fluid>
+          <Link href="/">
+            <Menu.Item className={StyleClasses.MenuHead} as="div" header>
+              <a onClick={() => props.navHandler("Home")}>Anshdata</a>
+            </Menu.Item>
+          </Link>
+          <Menu.Menu className={StyleClasses.Menu} position="right">
+            {renderNavMenus(props)}
+            {renderAuthMenuItem(props)}
+          </Menu.Menu>
+        </Container>
+      </Menu>
+    </div>
   );
 };
 

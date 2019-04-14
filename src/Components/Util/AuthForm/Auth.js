@@ -13,7 +13,7 @@ import {
   Image
 } from "semantic-ui-react";
 
-import StyleClasses from "./Auth.css";
+import StyleClasses from "./Auth.scss";
 
 const URLS = {
   USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",

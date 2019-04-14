@@ -1,0 +1,77 @@
+.navbar {
+  width: 100%;
+  margin-top: 0px;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 7.5vh;
+  background-image: linear-gradient(62deg, #f5fcfb 0%, #053969 100%);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+.Options {
+  align-items: flex-end;
+}
+
+.authButton:hover {
+  background-color: linear-gradient(62deg, #3fffef 0%, #58abf8 100%);
+  color: black;
+  cursor: pointer;
+}
+
+.MenuHead a {
+  margin: 0px 12px 0px 120px;
+  font-size: 3.3vh;
+  color: black;
+}
+
+.MenuHead a:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.Menu {
+  margin-top: 0px;
+  vertical-align: middle;
+  font-size: 2.3vh;
+}
+
+.item {
+  transition: transform 0.5s;
+}
+
+.item a {
+  color: white;
+}
+
+.item:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.item:hover a {
+  /* color: black; */
+}
+
+.ProfilePic {
+  max-width: 50%;
+}
+
+@keyframes showing {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(3);
+    -webkit-transform: scale(1);
+  }
+}
+
+.UserInfoPopup {
+  animation: showing 300ms ease-in-out;
+  text-align: center;
+}
