@@ -13,7 +13,6 @@ class Auth extends Component {
     username: "",
     email: "",
     password: "",
-    isProducer: false,
     shouldOpen: true,
     formType: "signin"
   };
@@ -32,11 +31,6 @@ class Auth extends Component {
     });
   };
 
-  checkboxChangeHandler = () => {
-    const isProducer = this.state.isProducer;
-    this.setState({ isProducer: !isProducer });
-  };
-
   renderEmailField = isSignup => {
     if (isSignup) {
       return (
@@ -50,21 +44,6 @@ class Auth extends Component {
             onChange={event => this.changeHandler(event)}
           />
         </Form.Field>
-      );
-    } else {
-      return null;
-    }
-  };
-
-  renderCheckboxField = isSignup => {
-    if (isSignup) {
-      return (
-        <Form.Checkbox
-          label="Create Producer's account"
-          name="isProducer"
-          checked={this.state.isProducer}
-          onClick={this.checkboxChangeHandler}
-        />
       );
     } else {
       return null;
@@ -106,8 +85,6 @@ class Auth extends Component {
                   onChange={event => this.changeHandler(event)}
                 />
               </Form.Field>
-              {this.renderCheckboxField(isSignup)}
-
               <Form.Button type="submit" size="large" color="violet" inverted>
                 {isSignup ? "Sign Up" : "Sign In"}
               </Form.Button>
@@ -191,47 +168,54 @@ class Auth extends Component {
   };
 
   getSignupData = () => {
-    let data = { ...this.state };
-    data["isProducer"] = this.state.isProducer === "on" ? true : false;
+    const data = { ...this.state };
     return data;
   };
 
   getSignInData = () => {
-    return {
-      username: this.state.username,
-      password: this.state.password
-    };
+    const data = { ...this.state };
+    return data;
   };
 
   signupHandler = async event => {
     console.log("[Auth.js] Sign Up Handler", this.state);
     event.preventDefault();
-    const signupData = this.getSignupData();
-    console.log("[Auth.js] : Sign Up Data", signupData);
-    const siginupRes = await fetch(URLS.USERSIGNUP, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(signupData)
-    });
-    //This means that one has signed up;
-    localStorage.setItem(
-      "AnshdataUser",
-      JSON.stringify((await siginupRes.json())["user"])
-    );
-    const signinData = this.getSignInData();
-    console.log("[Auth.js] Sign In Data", signinData);
-    const loginRes = await fetch(URLS.USERLOGIN, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(signinData)
-    });
-    let AnshdataUser = JSON.parse(localStorage.getItem("AnshdataUser"));
-    AnshdataUser["token"] = (await loginRes.json()).token;
-    localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
+
+    try {
+      const signupData = this.getSignupData();
+      console.log("[Auth.js] : Sign Up Data", signupData);
+      const siginupRes = await fetch(URLS.USERSIGNUP, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(signupData)
+      });
+      const data = await siginupRes.json();
+      console.log("signup data : ", data);
+      localStorage.setItem("AnshdataUser", JSON.stringify(data));
+    } catch (err) {
+      console.log("[Auth.js] SIGNUP ERR : ", err);
+      this.close();
+      return;
+    }
+
+    try {
+      const signinData = this.getSignInData();
+      console.log("[Auth.js] Sign In Data", signinData);
+      const loginRes = await fetch(URLS.USERLOGIN, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(signinData)
+      });
+      let AnshdataUser = JSON.parse(localStorage.getItem("AnshdataUser"));
+      AnshdataUser["token"] = (await loginRes.json()).token;
+      localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
+    } catch (err) {
+      console.log("[Auth.js] SIGNIN ERR : ", err);
+    }
     this.close();
     this.props.reloadOnAuthEvent();
   };
@@ -239,27 +223,31 @@ class Auth extends Component {
   signinHandler = async event => {
     console.log("[Auth.js] Log In Handler", this.state);
     event.preventDefault();
-    const signinData = this.getSignInData();
-    console.log("[Auth] : Sign In Handler", signinData);
-    const loginRes = await fetch(URLS.USERLOGIN, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(signinData)
-    });
+    try {
+      const signinData = this.getSignInData();
+      console.log("[Auth] : Sign In Handler", signinData);
+      const loginRes = await fetch(URLS.USERLOGIN, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(signinData)
+      });
 
-    let AnshdataToken = (await loginRes.json()).token;
-    const userRes = await fetch(URLS.GETUSER, {
-      headers: {
-        Authorization: `JWT ${AnshdataToken}`
-      }
-    });
-    // NOTE: Here assume no error will occur
-    // we get list so ..
-    let AnshdataUser = (await userRes.json())[0];
-    AnshdataUser["token"] = AnshdataToken;
-    localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
+      let AnshdataToken = (await loginRes.json()).token;
+      const userRes = await fetch(URLS.GETUSER, {
+        headers: {
+          Authorization: `JWT ${AnshdataToken}`
+        }
+      });
+      // NOTE: Here assume no error will occur
+      // we get list so ..
+      let AnshdataUser = (await userRes.json())[0];
+      AnshdataUser["token"] = AnshdataToken;
+      localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
+    } catch (err) {
+      console.log("[Auth.js] SIGNIN ERR : ", err);
+    }
     this.close();
     this.props.reloadOnAuthEvent();
   };

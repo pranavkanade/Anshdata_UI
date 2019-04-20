@@ -17,9 +17,16 @@ class App extends Component {
   };
 
   authEventHandler = () => {
+    console.log("[App.js] auth Event handler");
     const rawUserData = localStorage.getItem("AnshdataUser");
-    const isAuthenticated = !!rawUserData;
-    const user = JSON.parse(rawUserData);
+    let isAuthenticated = !!rawUserData;
+    let user;
+    try {
+      user = JSON.parse(rawUserData);
+    } catch (err) {
+      user = null;
+      isAuthenticated = false;
+    }
     this.setState({
       isAuthenticated: isAuthenticated,
       AnshdataUser: user
