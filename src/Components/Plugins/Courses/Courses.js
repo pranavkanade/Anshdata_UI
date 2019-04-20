@@ -37,18 +37,16 @@ class Courses extends Component {
 
   getCourseList = async () => {
     console.log("[Courses.js] get courses");
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
-    await fetch(URLS.LIST_COURSE, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
-      }
-    })
-      .then(response => response.json())
-      .then(data => this.setState({ courses: data }));
+    try {
+      await fetch(URLS.LIST_COURSE, {
+        method: "GET"
+      })
+        .then(response => response.json())
+        .then(data => this.setState({ courses: data }));
+    } catch (err) {
+      // This means we are dealing with anonymous user
+      console.log(err);
+    }
   };
 
   render() {
