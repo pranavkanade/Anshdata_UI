@@ -50,21 +50,25 @@ class CourseContribution extends Component {
 
   createCourse = async () => {
     console.log("[Course.js] Create Course clicked");
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
-    const courseData = this.getNewCourseData();
-    const createCourseRes = await fetch(URLS.CREATE_COURSE, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
-      },
-      body: JSON.stringify(courseData)
-    });
-    let newCourse = await createCourseRes.json();
-    console.log("Newly Created Course", newCourse);
-    Router.push("/courses");
+    try {
+      const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
+        "token"
+      ];
+      const courseData = this.getNewCourseData();
+      const createCourseRes = await fetch(URLS.CREATE_COURSE, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${AnshdataToken}`
+        },
+        body: JSON.stringify(courseData)
+      });
+      let newCourse = await createCourseRes.json();
+      console.log("Newly Created Course", newCourse);
+      Router.push("/courses");
+    } catch (err) {
+      console.log("[Course.js] user is not logged in : ", err);
+    }
   };
 
   renderCategoryChoise = () => {
@@ -129,11 +133,12 @@ class CourseContribution extends Component {
   };
 
   renderForm = () => {
+    // TODO: Add button to send it for review
+    // TODO: Add a muted button to publish the courses
     return (
       <>
         <h4>Create New Course</h4>
         <Form onSubmit={this.createCourse}>
-          {this.renderCategoryChoise()}
           <Form.Input
             label="Course Title"
             placeholder="Zero to 'HERO' !!"
@@ -148,6 +153,7 @@ class CourseContribution extends Component {
             name="subject"
             onChange={event => this.changeHandler(event)}
           />
+          {this.renderCategoryChoise()}
           {this.renderCreditPointsChoise()}
           <Form.TextArea
             label="Course Description"
@@ -156,8 +162,8 @@ class CourseContribution extends Component {
             name="description"
             onChange={event => this.changeHandler(event)}
           />
-          <Form.Button type="submit" color="twitter">
-            Create Course
+          <Form.Button type="submit" color="teal" size="big">
+            Save
           </Form.Button>
         </Form>
       </>
@@ -181,18 +187,23 @@ class CourseContribution extends Component {
   // The component management functions
   getCategoryList = async () => {
     console.log("[Course.js] get categories");
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
-    await fetch(URLS.LIST_CATS, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
-      }
-    })
-      .then(response => response.json())
-      .then(data => this.setState({ catList: data }));
+    try {
+      const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
+        "token"
+      ];
+      await fetch(URLS.LIST_CATS, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${AnshdataToken}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => this.setState({ catList: data }));
+    } catch (err) {
+      console.log("[Course.js] user is not logged in : ", err);
+      return [];
+    }
   };
 
   componentDidMount() {

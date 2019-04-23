@@ -9,14 +9,13 @@ const contribute = props => {
         <Grid.Row columns={3}>
           <Grid.Column width="4" />
           <Grid.Column width="8">
-            <Link href="/contrib/course">
-              <Button color="twitter">Add New Course</Button>
+            <Link href="/contrib">
+              <Button color="twitter">Contribute to Course Work</Button>
             </Link>
             <Link href="/contribute">
-              <Button color="teal">Add New Assignment</Button>
-            </Link>
-            <Link href="/contribute">
-              <Button color="facebook">Review Solutions</Button>
+              <Button color="facebook">
+                Contribute by Reviewing Solutions
+              </Button>
             </Link>
           </Grid.Column>
           <Grid.Column width="4" />
