@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Menu, Container, Button } from "semantic-ui-react";
 
-const menus = ["Courses"];
+const menus = ["Courses", "Contribute"];
 
 const renderAuthMenuItem = props => {
   if (!props.isAuthenticated) {
