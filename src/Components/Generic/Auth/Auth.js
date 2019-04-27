@@ -112,6 +112,8 @@ class Auth extends Component {
           size="tiny"
           dimmer="blurring"
           open={this.state.shouldOpen}
+          closeOnDimmerClick={false}
+          closeOnEscape={false}
           onClose={this.close}
           centered>
           <Modal.Header>
