@@ -55,11 +55,27 @@ class Contrib extends Component {
               </Label>
               <Button
                 floated="right"
+                color="red"
+                onClick={() => {
+                  console.log("[Contirb.js] Delete button clicked");
+                }}>
+                Delete
+              </Button>
+              <Button
+                floated="right"
                 color="blue"
                 onClick={() => {
                   console.log("[Contirb.js] Modify button clicked");
                 }}>
                 Modify
+              </Button>
+              <Button
+                floated="right"
+                color="olive"
+                onClick={() => {
+                  console.log("[Contirb.js] Publish button clicked");
+                }}>
+                Publish
               </Button>
             </Card.Content>
           </Card>
