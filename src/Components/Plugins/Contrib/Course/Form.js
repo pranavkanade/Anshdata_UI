@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Container, Grid, Form, Dropdown } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Form,
+  Dropdown,
+  Divider,
+  Segment,
+  Header
+} from "semantic-ui-react";
 import Router from "next/router";
 
 const URLS = {
@@ -7,7 +15,7 @@ const URLS = {
   LIST_CATS: "http://127.0.0.1:8000/api/plat/cat/"
 };
 
-class CourseContribution extends Component {
+class CourseContributionForm extends Component {
   state = {
     title: "",
     subject: "",
@@ -18,6 +26,7 @@ class CourseContribution extends Component {
   };
 
   creditSelectionHandler = (event, { value }) => {
+    console.log("[Course/Form.js] creaditSelection ", value);
     this.setState({ creditPoints: value });
   };
 
@@ -28,7 +37,7 @@ class CourseContribution extends Component {
   changeHandler = event => {
     const name = event.target.name;
     const value = event.target.value;
-    // console.log("[Course.js] onChangeHandler");
+    // console.log("[Course/Form.js] onChangeHandler");
     // console.log(name, value);
     this.setState(prevstate => {
       const newState = { ...prevstate };
@@ -43,13 +52,13 @@ class CourseContribution extends Component {
       subject: this.state.subject,
       category: this.state.category,
       isPublished: this.state.isPublished,
-      creditPoints: this.state.creditPoints,
+      credit_points: String(this.state.creditPoints),
       description: this.state.description
     };
   };
 
   createCourse = async () => {
-    console.log("[Course.js] Create Course clicked");
+    console.log("[Course/Form.js] Create Course clicked");
     try {
       const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
         "token"
@@ -65,9 +74,10 @@ class CourseContribution extends Component {
       });
       let newCourse = await createCourseRes.json();
       console.log("Newly Created Course", newCourse);
-      Router.push("/courses");
+      this.props.onSaveHandler(newCourse);
+      // Router.push("/contrib/course");
     } catch (err) {
-      console.log("[Course.js] user is not logged in : ", err);
+      console.log("[Course/Form.js] user is not logged in : ", err);
     }
   };
 
@@ -88,16 +98,15 @@ class CourseContribution extends Component {
 
     return (
       <>
-        <br />
+        <Header size="tiny">Category</Header>
         <Dropdown
           placeholder="Select Category"
           clearable
+          fluid
           options={catOptions}
           selection
           onChange={this.categorySelectionHandler}
         />
-        <br />
-        <br />
       </>
     );
   };
@@ -118,16 +127,15 @@ class CourseContribution extends Component {
 
     return (
       <>
-        <br />
+        <Header size="tiny">Credit Points</Header>
         <Dropdown
           placeholder="Credit Points"
           clearable
+          fluid
           options={options}
           selection
           onChange={this.creditSelectionHandler}
         />
-        <br />
-        <br />
       </>
     );
   };
@@ -137,56 +145,74 @@ class CourseContribution extends Component {
     // TODO: Add a muted button to publish the courses
     return (
       <>
-        <h4>Create New Course</h4>
-        <Form onSubmit={this.createCourse}>
-          <Form.Input
-            label="Course Title"
-            placeholder="Zero to 'HERO' !!"
-            value={this.state.title}
-            name="title"
-            onChange={event => this.changeHandler(event)}
-          />
-          <Form.Input
-            label="Subject"
-            placeholder="Computer Science"
-            value={this.state.subject}
-            name="subject"
-            onChange={event => this.changeHandler(event)}
-          />
-          {this.renderCategoryChoise()}
-          {this.renderCreditPointsChoise()}
-          <Form.TextArea
-            label="Course Description"
-            placeholder="Describe your course in short..."
-            value={this.state.description}
-            name="description"
-            onChange={event => this.changeHandler(event)}
-          />
-          <Form.Button type="submit" color="teal" size="big">
-            Save
-          </Form.Button>
-        </Form>
+        <Segment basic>
+          <Form onSubmit={this.createCourse}>
+            <Header size="tiny">Course Title</Header>
+            <Form.Input
+              placeholder="Zero to 'HERO' !!"
+              value={this.state.title}
+              name="title"
+              size="large"
+              onChange={event => this.changeHandler(event)}
+            />
+            <Header size="tiny">Subject</Header>
+            <Form.Input
+              placeholder="Computer Science"
+              size="large"
+              value={this.state.subject}
+              name="subject"
+              onChange={event => this.changeHandler(event)}
+            />
+            <Grid>
+              <Grid.Row columns={2}>
+                <Grid.Column>{this.renderCategoryChoise()}</Grid.Column>
+                <Grid.Column>{this.renderCreditPointsChoise()}</Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <Header size="tiny">Course Description</Header>
+            <Form.TextArea
+              placeholder="Describe your course in short..."
+              value={this.state.description}
+              name="description"
+              onChange={event => this.changeHandler(event)}
+            />
+            <Divider hidden />
+            <Grid>
+              <Grid.Row columns={2}>
+                <Grid.Column />
+                <Grid.Column>
+                  <Form.Button type="submit" color="twitter" fluid size="big">
+                    Save
+                  </Form.Button>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Form>
+        </Segment>
       </>
     );
   };
 
   render() {
     return (
-      <Container as="div" className={"ContribCoursePlugin"}>
+      <>
+        <Header dividing size="huge">
+          Create New Course
+        </Header>
         <Grid>
           <Grid.Row columns={3}>
-            <Grid.Column width="4" />
-            <Grid.Column width="8">{this.renderForm()}</Grid.Column>
-            <Grid.Column width="4" />
+            <Grid.Column width="1" />
+            <Grid.Column width="13">{this.renderForm()}</Grid.Column>
+            <Grid.Column width="2" />
           </Grid.Row>
         </Grid>
-      </Container>
+      </>
     );
   }
 
   // The component management functions
   getCategoryList = async () => {
-    console.log("[Course.js] get categories");
+    console.log("[Course/Form.js] get categories");
     try {
       const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
         "token"
@@ -201,15 +227,15 @@ class CourseContribution extends Component {
         .then(response => response.json())
         .then(data => this.setState({ catList: data }));
     } catch (err) {
-      console.log("[Course.js] user is not logged in : ", err);
+      console.log("[Course/Form.js] user is not logged in : ", err);
       return [];
     }
   };
 
   componentDidMount() {
-    console.log("[Course.js] component did mount");
+    console.log("[Course/Form.js] component did mount");
     this.getCategoryList();
   }
 }
 
-export default CourseContribution;
+export default CourseContributionForm;

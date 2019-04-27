@@ -1,6 +1,6 @@
 import React from "react";
 import App from "../../src/Containers/App";
-import Course from "../../src/Components/Plugins/Contrib/Course/Course";
+import Course from "../../src/Components/Plugins/Contrib/Course";
 
 const contribCourse = () => {
   return (
