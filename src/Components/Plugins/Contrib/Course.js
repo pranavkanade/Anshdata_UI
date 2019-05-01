@@ -4,6 +4,7 @@ import Router from "next/router";
 import CourseForm from "./Course/Form";
 import CourseRender from "./Course/Render";
 import ModuleForm from "./Module/Form";
+import LessonForm from "./Lesson/Form";
 import ModuleRender from "./Module/Render";
 import Toolbar from "./Toolbar";
 
@@ -64,7 +65,24 @@ class CourseContribution extends Component {
         />
       );
     } else if (btn === "lesson") {
-      return null;
+      // TODO: Send list of modules here
+      // const course = {
+      //   id: 10,
+      //   author: 1,
+      //   title: "Course 10",
+      //   subject: "Mathematics",
+      //   category: 1,
+      //   is_published: false,
+      //   credit_points: 5,
+      //   description: "Test course 6"
+      // };
+      return (
+        <LessonForm
+          open={true}
+          closeHandler={this.closeHandler}
+          course={this.state.course}
+        />
+      );
     } else if (btn === "assignment") {
       return null;
     }
@@ -112,6 +130,8 @@ class CourseContribution extends Component {
 
   componentDidUpdate() {
     // TODO: Here fetch the course here and then everytime fill the renders from here
+    // TODO: pull list of modules here so that it can be passed to where ever is needed. Fetch this everytime we create a module
+    // TODO: This is to be stored in contrib state by redux
   }
 }
 
