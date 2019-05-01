@@ -72,6 +72,7 @@ class ModuleForm extends Component {
               />
               <Header size="tiny">Module Description</Header>
               <Form.TextArea
+                rows={6}
                 placeholder="Describe purpose of this module in short..."
                 value={this.state.description}
                 name="description"
@@ -79,6 +80,7 @@ class ModuleForm extends Component {
               />
               <Header size="tiny">{"References (Help)"}</Header>
               <Form.TextArea
+                rows={6}
                 placeholder="Add references .."
                 value={this.state.references}
                 name="references"

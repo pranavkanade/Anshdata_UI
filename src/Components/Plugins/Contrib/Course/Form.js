@@ -171,6 +171,7 @@ class CourseContributionForm extends Component {
             </Grid>
             <Header size="tiny">Course Description</Header>
             <Form.TextArea
+              rows={10}
               placeholder="Describe your course in short..."
               value={this.state.description}
               name="description"
@@ -214,14 +215,10 @@ class CourseContributionForm extends Component {
   getCategoryList = async () => {
     console.log("[Course/Form.js] get categories");
     try {
-      const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-        "token"
-      ];
       await fetch(URLS.LIST_CATS, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${AnshdataToken}`
+          "Content-Type": "application/json"
         }
       })
         .then(response => response.json())

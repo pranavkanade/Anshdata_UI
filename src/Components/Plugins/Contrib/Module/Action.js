@@ -3,7 +3,7 @@ const URLS = {
 };
 
 const createModuleHandler = async modData => {
-  console.log("[Module/Action.js] enroll in a course: ", modData);
+  console.log("[Module/Action.js] create new module: ", modData);
   try {
     const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
       "token"
