@@ -4,6 +4,7 @@ import Router from "next/router";
 import CourseForm from "./Course/Form";
 import CourseRender from "./Course/Render";
 import ModuleForm from "./Module/Form";
+import ModuleRender from "./Module/Render";
 import LessonForm from "./Lesson/Form";
 import AssignmentForm from "./Assignment/Form";
 import Toolbar from "./Toolbar";
@@ -15,7 +16,9 @@ class CourseContribution extends Component {
     shouldOpenAddModule: false,
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
-    elementBeingAdded: ""
+    elementBeingAdded: "",
+    modules: [],
+    newModule: {}
   };
 
   courseSaveHandler = course => {
@@ -42,14 +45,26 @@ class CourseContribution extends Component {
     });
   };
 
-  addNewHandler = btn => {
+  addNewHandler = (btn, moduleId = 0) => {
     console.log("[Contrib/Course.js] Add New Clicked : ", btn);
+    // TODO: fetch the module data here and then pass on to the form
     if (btn === "module") {
       this.setState({ shouldOpenAddModule: true, elementBeingAdded: btn });
     } else if (btn === "lesson") {
       this.setState({ shouldOpenAddLesson: true, elementBeingAdded: btn });
     } else if (btn === "assignment") {
       this.setState({ shouldOpenAddAssignment: true, elementBeingAdded: btn });
+    }
+  };
+
+  newModuleSaveHandler = module => {
+    console.log("[Contrib/Course.js] New module has been saved");
+    this.setState({
+      newModule: module
+    });
+
+    if (this.state.course.id) {
+      this.getModule(this.state.course.id);
     }
   };
 
@@ -62,6 +77,7 @@ class CourseContribution extends Component {
           open={true}
           closeHandler={this.closeHandler}
           course={this.state.course}
+          onSaveHandler={this.newModuleSaveHandler}
         />
       );
     } else if (btn === "lesson") {
@@ -90,6 +106,35 @@ class CourseContribution extends Component {
     return null;
   };
 
+  renderModule = mod => {
+    return (
+      <ModuleRender
+        module={mod}
+        key={mod.id}
+        addHandler={this.addNewHandler}
+      />
+    );
+  };
+
+  renderModules = () => {
+    if (this.state.modules.length === 0) {
+      return null;
+    }
+    const modules = this.state.modules;
+    return (
+      <Grid>
+        <Grid.Row columns={2}>
+          <Grid.Column width="2" />
+          <Grid.Column width="13">
+            {modules.map(mod => {
+              return this.renderModule(mod);
+            })}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    );
+  };
+
   render() {
     return (
       <Container>
@@ -101,6 +146,7 @@ class CourseContribution extends Component {
               <Segment basic>
                 {this.renderCourseForm()}
                 {this.renderCourse()}
+                {this.renderModules()}
                 {this.renderAddNewForm()}
               </Segment>
             </Grid.Column>
@@ -113,9 +159,39 @@ class CourseContribution extends Component {
     );
   }
 
+  getModule = async crsId => {
+    const GET_COURSE_MODULES = `http://127.0.0.1:8000/api/course/${crsId}/min/mod/`;
+
+    console.log("[Contrib/Action.js] get newly created modules: ", crsId);
+    try {
+      await fetch(GET_COURSE_MODULES, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => {
+          console.log(response);
+          return response.json();
+        })
+        .then(data => {
+          console.log(`Modules of the course with id ${crsId} `, data);
+          this.setState({
+            modules: data
+          });
+        });
+    } catch (err) {
+      console.log(
+        "[Contrib/Action.js] Error when getting list of modules : ",
+        err
+      );
+    }
+  };
+
   componentDidUpdate() {
     // TODO: Here fetch the course here and then everytime fill the renders from here
     // TODO: pull list of modules here so that it can be passed to where ever is needed. Fetch this everytime we create a module
+    console.log("[Contrib/Course.js] state : ", this.state);
     // TODO: This is to be stored in contrib state by redux
   }
 }

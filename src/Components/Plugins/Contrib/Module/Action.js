@@ -2,7 +2,7 @@ const URLS = {
   POST_CREATE_MODULE: "http://127.0.0.1:8000/api/course/mod/"
 };
 
-const createModuleHandler = async modData => {
+const createModuleHandler = async (onSaveHandler, modData) => {
   console.log("[Module/Action.js] create new module: ", modData);
   try {
     const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
@@ -23,6 +23,7 @@ const createModuleHandler = async modData => {
       })
       .then(data => {
         console.log("Module Created ", data);
+        onSaveHandler(data);
       });
   } catch (err) {
     console.log("[Module/Action.js] Error when creating a module : ", err);
