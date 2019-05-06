@@ -16,14 +16,14 @@ class ModuleForm extends Component {
     shouldOpen: false,
     title: "",
     description: "",
-    references: ""
+    reference: ""
   };
 
   changeHandler = event => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log("[Module/Form.js] onChangeHandler");
-    console.log(name, value);
+    // console.log("[Module/Form.js] onChangeHandler");
+    // console.log(name, value);
     this.setState(prevstate => {
       const newState = { ...prevstate };
       newState[name] = value;
@@ -35,11 +35,11 @@ class ModuleForm extends Component {
     console.log("[Module/Form.js] Create Module clicked");
     const moduleData = {
       title: this.state.title,
-      descriptoin: this.state.description,
-      references: this.state.references,
+      description: this.state.description,
+      reference: this.state.reference,
       course: this.props.course.id
     };
-    createModuleHandler(moduleData);
+    createModuleHandler(this.props.onSaveHandler, moduleData);
     this.props.closeHandler();
   };
 
@@ -82,8 +82,8 @@ class ModuleForm extends Component {
               <Form.TextArea
                 rows={6}
                 placeholder="Add references .."
-                value={this.state.references}
-                name="references"
+                value={this.state.reference}
+                name="reference"
                 onChange={event => this.changeHandler(event)}
               />
               <Divider hidden />
