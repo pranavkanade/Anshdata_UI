@@ -38,7 +38,7 @@ class LessonForm extends Component {
     console.log("[Lesson/Form.js] Create Lesson clicked");
     const lessonData = {
       title: this.state.title,
-      descriptoin: this.state.description,
+      description: this.state.description,
       lecture: this.state.lecture,
       module: this.state.module
     };
