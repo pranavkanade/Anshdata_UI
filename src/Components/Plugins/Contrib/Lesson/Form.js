@@ -25,8 +25,8 @@ class LessonForm extends Component {
   changeHandler = event => {
     const name = event.target.name;
     const value = event.target.value;
-    console.log("[Lesson/Form.js] onChangeHandler");
-    console.log(name, value);
+    // console.log("[Lesson/Form.js] onChangeHandler");
+    // console.log(name, value);
     this.setState(prevstate => {
       const newState = { ...prevstate };
       newState[name] = value;
