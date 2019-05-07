@@ -23,7 +23,9 @@ const courseRender = props => {
           <Grid.Column>
             <Segment color="violet" attached>
               <Header>Category</Header>
-              <Header.Subheader>{props.course.category}</Header.Subheader>
+              <Header.Subheader>
+                {props.course.category.title}
+              </Header.Subheader>
             </Segment>
           </Grid.Column>
           <Grid.Column>
