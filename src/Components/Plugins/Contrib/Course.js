@@ -111,6 +111,7 @@ class CourseContribution extends Component {
       <ModuleRender
         module={mod}
         key={mod.id}
+        type="edit"
         addHandler={this.addNewHandler}
       />
     );
