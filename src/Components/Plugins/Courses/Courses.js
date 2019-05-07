@@ -33,12 +33,12 @@ class Courses extends Component {
             <span>{course.description}</span>
           </Segment>
           <Segment basic>
-            <Label as="a" color="grey" image>
+            <Label color="grey" image>
               <img src="https://react.semantic-ui.com/images/avatar/small/veronika.jpg" />
               {course.author.username}
               <Label.Detail>Author</Label.Detail>
             </Label>
-            <Label as="a" color="olive" icon>
+            <Label color="olive">
               <Icon name="dollar" />
               {course.credit_points}
               <Label.Detail>Credit Points</Label.Detail>
