@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { Container, Grid, Card, Button } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Card,
+  Button,
+  Header,
+  Segment,
+  Label,
+  Statistic,
+  Icon,
+  Divider
+} from "semantic-ui-react";
 import enrollEventHandler from "../../../Actions/Enroll";
 
 const URLS = {
@@ -12,25 +23,45 @@ class Courses extends Component {
   };
 
   renderCoursesList = () => {
+    // TODO: showcase these according to different categories
     return this.state.courses.map(course => {
       return (
-        <Card key={course["id"]} fluid href="#">
-          <Card.Content
-            header={course["title"]}
-            meta={"Author : " + course.author.username}
-          />
-          <Card.Description>
-            {"Enrollment Count : " + course.num_of_enrollments}
-          </Card.Description>
-          <Card.Content extra>
-            <Button
-              floated="right"
-              color="blue"
-              onClick={() => enrollEventHandler(course["id"])}>
-              Enroll
-            </Button>
-          </Card.Content>
+        // <Grid.Column width="4">
+        <Card key={course["id"]} raised href="#">
+          <Segment basic padded>
+            <Header size="large">{course.title}</Header>
+            <span>{course.description}</span>
+          </Segment>
+          <Segment basic>
+            <Label as="a" color="grey" image>
+              <img src="https://react.semantic-ui.com/images/avatar/small/veronika.jpg" />
+              {course.author.username}
+              <Label.Detail>Author</Label.Detail>
+            </Label>
+            <Label as="a" color="olive" icon>
+              <Icon name="dollar" />
+              {course.credit_points}
+              <Label.Detail>Credit Points</Label.Detail>
+            </Label>
+          </Segment>
+          <Segment basic>
+            <Label basic color="teal" size="large">
+              {course.subject}
+            </Label>
+            <Label basic color="violet" size="large">
+              {course.category.title}
+            </Label>
+          </Segment>
+          <Button
+            color="facebook"
+            onClick={() => enrollEventHandler(course["id"])}
+            attached="bottom"
+            fluid
+            size="large">
+            Enroll
+          </Button>
         </Card>
+        // </Grid.Column>
       );
     });
   };
@@ -51,17 +82,13 @@ class Courses extends Component {
 
   render() {
     return (
-      <Container as="div" className={"CoursesPlugin"}>
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column width="4" />
-            <Grid.Column width="8">
-              <h4>Courses List</h4>
-              {this.renderCoursesList()}
-            </Grid.Column>
-            <Grid.Column width="4" />
-          </Grid.Row>
-        </Grid>
+      <Container className={"CoursesPlugin"}>
+        <br />
+        <Header as={Grid.Column} dividing size="huge">
+          Courses List
+        </Header>
+        <br />
+        <Card.Group itemsPerRow={3}>{this.renderCoursesList()}</Card.Group>
       </Container>
     );
   }
