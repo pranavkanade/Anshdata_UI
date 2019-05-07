@@ -1,6 +1,5 @@
 const routes = require("next-routes")();
 
-routes
-  .add("/", "/");
+routes.add("/", "/").add("/courses/:id", "/courses/detailed");
 
 module.exports = routes;
