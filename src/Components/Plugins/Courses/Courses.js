@@ -7,9 +7,7 @@ import {
   Header,
   Segment,
   Label,
-  Statistic,
-  Icon,
-  Divider
+  Icon
 } from "semantic-ui-react";
 import enrollEventHandler from "../../../Actions/Enroll";
 
@@ -26,8 +24,7 @@ class Courses extends Component {
     // TODO: showcase these according to different categories
     return this.state.courses.map(course => {
       return (
-        // <Grid.Column width="4">
-        <Card key={course["id"]} raised href="#">
+        <Card key={course["id"]} raised href={`/courses/${course["id"]}`}>
           <Segment basic padded>
             <Header size="large">{course.title}</Header>
             <span>{course.description}</span>
@@ -61,7 +58,6 @@ class Courses extends Component {
             Enroll
           </Button>
         </Card>
-        // </Grid.Column>
       );
     });
   };
