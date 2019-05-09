@@ -10,7 +10,7 @@ const renderEditButtons = props => {
         color="teal"
         name="module"
         onClick={event => {
-          props.addHandler(event.target.name, props.module.id);
+          props.addHandler(event.target.name, props.module.id, null);
         }}>
         Edit Module
       </Button>
@@ -19,7 +19,7 @@ const renderEditButtons = props => {
         color="orange"
         name="lesson"
         onClick={event => {
-          props.addHandler(event.target.name, props.module.id);
+          props.addHandler(event.target.name, props.module.id, null);
         }}>
         Add Lesson
       </Button>
@@ -28,7 +28,7 @@ const renderEditButtons = props => {
         color="violet"
         name="assignment"
         onClick={event => {
-          props.addHandler(event.target.name, props.module.id);
+          props.addHandler(event.target.name, props.module.id, null);
         }}>
         Add Assignment
       </Button>

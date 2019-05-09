@@ -12,7 +12,11 @@ const renderEditButtons = props => {
         color="teal"
         name="lesson"
         onClick={event => {
-          props.addHandler(event.target.name, props.lesson.id);
+          props.addHandler(
+            event.target.name,
+            props.lesson.module,
+            props.lesson.id
+          );
         }}>
         Edit Lesson
       </Button>
@@ -21,26 +25,22 @@ const renderEditButtons = props => {
         color="violet"
         name="assignment"
         onClick={event => {
-          props.addHandler(event.target.name, props.lesson.id);
+          props.addHandler(
+            event.target.name,
+            props.lesson.module,
+            props.lesson.id
+          );
         }}>
         Add Assignment
       </Button>
     </Button.Group>
   );
 };
-const renderAssignments = assignments => {
-  if (assignments === null) {
-    return null;
-  }
-
-  return assignments.map(assign => {
-    return <Assignment assignment={assign} type="detail" />;
-  });
-};
 
 const lessonRender = props => {
   return (
     <>
+      <br />
       <Segment attached raised>
         <Header size="small">{props.lesson.title}</Header>
         <Label basic size="small" color="blue">
@@ -50,7 +50,6 @@ const lessonRender = props => {
         </Label>
       </Segment>
       {props.type !== "detail" ? renderEditButtons(props) : null}
-      {renderAssignments(props.lesson.assignments)}
     </>
   );
 };
