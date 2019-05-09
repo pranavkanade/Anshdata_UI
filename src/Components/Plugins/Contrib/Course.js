@@ -1,39 +1,21 @@
 import React, { Component } from "react";
 import { Grid, Segment, Container, Divider } from "semantic-ui-react";
-import Router from "next/router";
 import CourseForm from "./Course/Form";
-import CourseRender from "./Course/Render";
 import ModuleForm from "./Module/Form";
-import ModuleRender from "./Module/Render";
 import LessonForm from "./Lesson/Form";
 import AssignmentForm from "./Assignment/Form";
 import Toolbar from "./Toolbar";
+import DetailedCourse from "../Courses/Detailed";
 
 class CourseContribution extends Component {
   state = {
-    isCourseSaved: false,
-    course: {},
+    courseId: this.props.courseId,
+    course: null,
     shouldOpenAddModule: false,
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
     elementBeingAdded: "",
-    modules: [],
-    newModule: {}
-  };
-
-  courseSaveHandler = course => {
-    console.log("[Contrib/Course.js] Course has been saved");
-    this.setState({
-      isCourseSaved: !this.state.isCourseSaved,
-      course: course
-    });
-  };
-
-  renderCourseForm = () => {
-    if (!this.state.isCourseSaved) {
-      return <CourseForm onSaveHandler={this.courseSaveHandler} />;
-    }
-    return null;
+    newEleId: null
   };
 
   closeHandler = () => {
@@ -45,27 +27,59 @@ class CourseContribution extends Component {
     });
   };
 
-  addNewHandler = (btn, moduleId = 0) => {
-    console.log("[Contrib/Course.js] Add New Clicked : ", btn);
+  onSaveHandler = eleId => {
+    console.log("new element ", eleId);
+    this.setState({ newEleId: eleId });
+  };
+
+  setCourseValue = course => {
+    this.setState({ course });
+  };
+
+  courseSaveHandler = course => {
+    console.log("[Contrib/Course.js] Course has been saved");
+    this.setState({
+      courseId: course.id
+    });
+  };
+
+  addNewHandler = (btn, moduleId, lessonId) => {
+    console.log(
+      "[Contrib/Course.js] Add New Clicked : ",
+      btn,
+      moduleId,
+      lessonId
+    );
     // TODO: fetch the module data here and then pass on to the form
     if (btn === "module") {
-      this.setState({ shouldOpenAddModule: true, elementBeingAdded: btn });
+      this.setState({
+        shouldOpenAddModule: true,
+        elementBeingAdded: btn,
+        moduleId,
+        lessonId
+      });
     } else if (btn === "lesson") {
-      this.setState({ shouldOpenAddLesson: true, elementBeingAdded: btn });
+      this.setState({
+        shouldOpenAddLesson: true,
+        elementBeingAdded: btn,
+        moduleId,
+        lessonId
+      });
     } else if (btn === "assignment") {
-      this.setState({ shouldOpenAddAssignment: true, elementBeingAdded: btn });
+      this.setState({
+        shouldOpenAddAssignment: true,
+        elementBeingAdded: btn,
+        moduleId,
+        lessonId
+      });
     }
   };
 
-  newModuleSaveHandler = module => {
-    console.log("[Contrib/Course.js] New module has been saved");
-    this.setState({
-      newModule: module
-    });
-
-    if (this.state.course.id) {
-      this.getModule(this.state.course.id);
+  renderCourseForm = () => {
+    if (this.state.courseId === undefined) {
+      return <CourseForm onSaveHandler={this.courseSaveHandler} />;
     }
+    return null;
   };
 
   renderAddNewForm = () => {
@@ -77,7 +91,7 @@ class CourseContribution extends Component {
           open={true}
           closeHandler={this.closeHandler}
           course={this.state.course}
-          onSaveHandler={this.newModuleSaveHandler}
+          onSaveHandler={this.onSaveHandler}
         />
       );
     } else if (btn === "lesson") {
@@ -85,7 +99,9 @@ class CourseContribution extends Component {
         <LessonForm
           open={true}
           closeHandler={this.closeHandler}
+          moduleId={this.state.moduleId}
           course={this.state.course}
+          onSaveHandler={this.onSaveHandler}
         />
       );
     } else if (btn === "assignment") {
@@ -93,46 +109,25 @@ class CourseContribution extends Component {
         <AssignmentForm
           open={true}
           closeHandler={this.closeHandler}
+          moduleId={this.state.moduleId}
+          lessonId={this.state.lessonId}
           course={this.state.course}
+          onSaveHandler={this.onSaveHandler}
         />
       );
     }
   };
 
-  renderCourse = () => {
-    if (this.state.isCourseSaved) {
-      return <CourseRender course={this.state.course} />;
-    }
-    return null;
-  };
-
-  renderModule = mod => {
+  renderDetailedCourse = courseId => {
+    // TODO: Add an edit handler too
     return (
-      <ModuleRender
-        module={mod}
-        key={mod.id}
-        type="edit"
+      <DetailedCourse
+        courseId={courseId}
+        viewType={"mod"}
         addHandler={this.addNewHandler}
+        setCourse={this.setCourseValue}
+        newEleId={this.state.newEleId}
       />
-    );
-  };
-
-  renderModules = () => {
-    if (this.state.modules.length === 0) {
-      return null;
-    }
-    const modules = this.state.modules;
-    return (
-      <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column width="2" />
-          <Grid.Column width="13">
-            {modules.map(mod => {
-              return this.renderModule(mod);
-            })}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
     );
   };
 
@@ -146,9 +141,10 @@ class CourseContribution extends Component {
             <Grid.Column width="13">
               <Segment basic>
                 {this.renderCourseForm()}
-                {this.renderCourse()}
-                {this.renderModules()}
                 {this.renderAddNewForm()}
+                {this.state.courseId !== undefined
+                  ? this.renderDetailedCourse(this.state.courseId)
+                  : null}
               </Segment>
             </Grid.Column>
             <Grid.Column width="3">
@@ -160,36 +156,7 @@ class CourseContribution extends Component {
     );
   }
 
-  getModule = async crsId => {
-    const GET_COURSE_MODULES = `http://127.0.0.1:8000/api/course/${crsId}/min/mod/`;
-
-    console.log("[Contrib/Action.js] get newly created modules: ", crsId);
-    try {
-      await fetch(GET_COURSE_MODULES, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => {
-          console.log(response);
-          return response.json();
-        })
-        .then(data => {
-          console.log(`Modules of the course with id ${crsId} `, data);
-          this.setState({
-            modules: data
-          });
-        });
-    } catch (err) {
-      console.log(
-        "[Contrib/Action.js] Error when getting list of modules : ",
-        err
-      );
-    }
-  };
-
-  componentDidUpdate() {
+  componentDidMount() {
     // TODO: Here fetch the course here and then everytime fill the renders from here
     // TODO: pull list of modules here so that it can be passed to where ever is needed. Fetch this everytime we create a module
     console.log("[Contrib/Course.js] state : ", this.state);

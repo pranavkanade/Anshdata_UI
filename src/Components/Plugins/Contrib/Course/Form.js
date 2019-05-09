@@ -75,7 +75,7 @@ class CourseContributionForm extends Component {
       let newCourse = await createCourseRes.json();
       console.log("Newly Created Course", newCourse);
       this.props.onSaveHandler(newCourse);
-      // Router.push("/contrib/course");
+      Router.push(`/contrib/course/${newCourse.id}`);
     } catch (err) {
       console.log("[Course/Form.js] user is not logged in : ", err);
     }
