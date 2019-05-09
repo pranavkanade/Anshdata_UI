@@ -9,7 +9,8 @@ import {
   Label,
   Icon
 } from "semantic-ui-react";
-import enrollEventHandler from "../../../Actions/Enroll";
+import CoursesList from "../../Generic/Assets/CoursesList";
+import { courseListType } from "../../../globals";
 
 const URLS = {
   LIST_COURSE: "http://127.0.0.1:8000/api/course/"
@@ -18,48 +19,6 @@ const URLS = {
 class Courses extends Component {
   state = {
     courses: []
-  };
-
-  renderCoursesList = () => {
-    // TODO: showcase these according to different categories
-    return this.state.courses.map(course => {
-      return (
-        <Card key={course["id"]} raised href={`/courses/${course["id"]}`}>
-          <Segment basic padded>
-            <Header size="large">{course.title}</Header>
-            <span>{course.description}</span>
-          </Segment>
-          <Segment basic>
-            <Label color="grey" image>
-              <img src="https://react.semantic-ui.com/images/avatar/small/veronika.jpg" />
-              {course.author.username}
-              <Label.Detail>Author</Label.Detail>
-            </Label>
-            <Label color="olive">
-              <Icon name="dollar" />
-              {course.credit_points}
-              <Label.Detail>Credit Points</Label.Detail>
-            </Label>
-          </Segment>
-          <Segment basic>
-            <Label basic color="teal" size="large">
-              {course.subject}
-            </Label>
-            <Label basic color="violet" size="large">
-              {course.category.title}
-            </Label>
-          </Segment>
-          <Button
-            color="facebook"
-            onClick={() => enrollEventHandler(course["id"])}
-            attached="bottom"
-            fluid
-            size="large">
-            Enroll
-          </Button>
-        </Card>
-      );
-    });
   };
 
   getCourseList = async () => {
@@ -84,7 +43,12 @@ class Courses extends Component {
           Courses List
         </Header>
         <br />
-        <Card.Group itemsPerRow={3}>{this.renderCoursesList()}</Card.Group>
+        <Card.Group itemsPerRow={3}>
+          <CoursesList
+            courses={this.state.courses}
+            courseListType={courseListType.OVERVIEW}
+          />
+        </Card.Group>
       </Container>
     );
   }

@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import Link from "next/link";
-import { Container, Grid, Button, Card, Label } from "semantic-ui-react";
-import Router from "next/router";
+import {
+  Container,
+  Grid,
+  Button,
+  Card,
+  Label,
+  Header
+} from "semantic-ui-react";
+import CoursesList from "../../Generic/Assets/CoursesList";
+import { courseListType } from "../../../globals";
 
 const URLS = {
   LIST_DRAFTED_COURSES: "http://127.0.0.1:8000/api/course/drafts/"
@@ -38,57 +46,6 @@ class Contrib extends Component {
     }
   };
 
-  renderCoursesList = () => {
-    // TODO: Add more coure details
-    try {
-      return this.state.courses.map(course => {
-        return (
-          <Card key={course["id"]} fluid>
-            <Card.Content
-              header={course["title"]}
-              meta={"Author : " + course.author["username"]}
-            />
-            <Card.Description>{course["description"]}</Card.Description>
-            <Card.Content extra>
-              <Label color="orange" ribbon>
-                {course.category["title"]}
-              </Label>
-              <Button
-                floated="right"
-                color="red"
-                onClick={() => {
-                  console.log("[Contirb.js] Delete button clicked");
-                }}>
-                Delete
-              </Button>
-              <Button
-                floated="right"
-                color="blue"
-                onClick={() => {
-                  console.log("[Contirb.js] Modify button clicked");
-                }}>
-                Modify
-              </Button>
-              <Button
-                floated="right"
-                color="olive"
-                onClick={() => {
-                  console.log("[Contirb.js] Publish button clicked");
-                }}>
-                Publish
-              </Button>
-            </Card.Content>
-          </Card>
-        );
-      });
-    } catch (err) {
-      console.log(
-        "[Contrib.js] courses are set to null : ",
-        this.state.courses
-      );
-    }
-  };
-
   // TODO: Add a tab of all the courses that are pending for the review
   // A tab for courses that are ready to publish
   render() {
@@ -106,17 +63,17 @@ class Contrib extends Component {
             </Grid.Column>
             <Grid.Column width="3" />
           </Grid.Row>
-          <Grid.Row columns={3}>
-            <Grid.Column width="3" />
-            <Grid.Column width="10">
-              <h2>List of drafted courses</h2>
-              <hr />
-              <br />
-              {this.renderCoursesList()}
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Column width="3" />
         </Grid>
+        <Header dividing size="large">
+          List of drafted courses
+        </Header>
+        <br />
+        <Card.Group itemsPerRow={3}>
+          <CoursesList
+            courses={this.state.courses}
+            courseListType={courseListType.MODIFY}
+          />
+        </Card.Group>
       </Container>
     );
   }
