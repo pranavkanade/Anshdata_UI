@@ -18,10 +18,10 @@ const renderEnrollButton = course => {
 
 const renderModifyButtons = course => {
   return (
-    <Button.Group attached="bottom" size="big" widths="two">
+    <Button.Group attached="bottom" size="large" widths="two">
       <Button
         basic
-        color="teal"
+        color="grey"
         name="modify"
         onClick={() => {
           console.log("[Contirb.js] Modify button clicked");
@@ -29,6 +29,7 @@ const renderModifyButtons = course => {
         Modify
       </Button>
       <Button
+        basic
         color="red"
         name="delete"
         onClick={() => {

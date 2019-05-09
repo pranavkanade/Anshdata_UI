@@ -6,7 +6,8 @@ import {
   Button,
   Card,
   Label,
-  Header
+  Header,
+  Divider
 } from "semantic-ui-react";
 import CoursesList from "../../Generic/Assets/CoursesList";
 import { courseListType } from "../../../globals";
@@ -52,18 +53,14 @@ class Contrib extends Component {
     console.log("[Contrib.js] render");
     return (
       <Container as="div" className={"ContributePlugin"}>
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column width="3" />
-            <Grid.Column textAlign="right" width="10">
-              <br />
-              <Link href="/contrib/course">
-                <Button color="twitter">Add New Course</Button>
-              </Link>
-            </Grid.Column>
-            <Grid.Column width="3" />
-          </Grid.Row>
-        </Grid>
+        <Divider hidden />
+        <Divider hidden />
+        <Link href="/contrib/course">
+          <Button inverted color="twitter" size="big" floated="right">
+            Add New Course
+          </Button>
+        </Link>
+        <Divider hidden />
         <Header dividing size="large">
           List of drafted courses
         </Header>
