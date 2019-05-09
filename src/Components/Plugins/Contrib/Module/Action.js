@@ -23,7 +23,7 @@ const createModuleHandler = async (onSaveHandler, modData) => {
       })
       .then(data => {
         console.log("Module Created ", data);
-        onSaveHandler(data);
+        onSaveHandler(data.id);
       });
   } catch (err) {
     console.log("[Module/Action.js] Error when creating a module : ", err);

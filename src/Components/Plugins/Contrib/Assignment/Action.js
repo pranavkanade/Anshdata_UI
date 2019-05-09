@@ -2,7 +2,7 @@ const URLS = {
   POST_CREATE_ASSIGNMENT: "http://127.0.0.1:8000/api/course/ex/"
 };
 
-const createAssignmentHandler = async assignmentData => {
+const createAssignmentHandler = async (onSaveHandler, assignmentData) => {
   console.log(
     "[Assignment/Action.js] create new assignment: ",
     assignmentData
@@ -27,6 +27,7 @@ const createAssignmentHandler = async assignmentData => {
       })
       .then(data => {
         console.log("Assignment Created ", data);
+        onSaveHandler(data.id);
       });
   } catch (err) {
     console.log(
