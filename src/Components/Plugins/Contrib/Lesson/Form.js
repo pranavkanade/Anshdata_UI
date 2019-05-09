@@ -18,8 +18,8 @@ class LessonForm extends Component {
     title: "",
     description: "",
     lecture: "",
-    module: 0,
-    modList: []
+    module: this.props.moduleId,
+    modList: this.props.course.modules
   };
 
   changeHandler = event => {
@@ -42,35 +42,8 @@ class LessonForm extends Component {
       lecture: this.state.lecture,
       module: this.state.module
     };
-    createLessonHandler(lessonData);
+    createLessonHandler(this.props.onSaveHandler, lessonData);
     this.props.closeHandler();
-  };
-
-  getModuleList = async () => {
-    console.log(
-      "[Lesson/Form.js] get the list of modules of the course : ",
-      this.props.course.id
-    );
-
-    const GET_MODULES_LIST = `http://127.0.0.1:8000/api/course/${
-      this.props.course.id
-    }/mod/`;
-
-    try {
-      await fetch(GET_MODULES_LIST, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        .then(data => this.setState({ modList: data }));
-    } catch (err) {
-      console.log(
-        "[Lesson/Form.js] Error when getting a list of modules : ",
-        err
-      );
-    }
   };
 
   moduleSelectionHandler = (event, { value }) => {
@@ -99,11 +72,7 @@ class LessonForm extends Component {
           options={modOptions}
           fluid
           selection
-          defaultValue={
-            modOptions.length !== 0
-              ? modOptions[modOptions.length - 1].value
-              : null
-          }
+          defaultValue={this.state.module}
           onChange={this.moduleSelectionHandler}
         />
       </>
@@ -179,7 +148,6 @@ class LessonForm extends Component {
   componentDidMount() {
     console.log("[Contrib/Lesson/Form.js] component did mount");
     this.setState({ shouldOpen: this.props.open });
-    this.getModuleList();
   }
 }
 

@@ -18,10 +18,10 @@ class AssignmentForm extends Component {
     title: "",
     instruction: "",
     reference: "",
-    module: 0,
-    lesson: 0,
-    creditPoints: 0,
-    modList: []
+    moduleId: this.props.moduleId,
+    lessonId: this.props.lessonId,
+    modList: this.props.course.modules,
+    creditPoints: 0
   };
 
   changeHandler = event => {
@@ -41,44 +41,17 @@ class AssignmentForm extends Component {
       title: this.state.title,
       instruction: this.state.instruction,
       reference: this.state.reference,
-      lesson: this.state.lesson === 0 ? "" : this.state.lesson,
-      module: this.state.module,
+      lesson: this.state.lessonId === null ? "" : this.state.lessonId,
+      module: this.state.moduleId,
       course: this.props.course.id,
       credit_points: String(this.state.creditPoints)
     };
-    createAssignmentHandler(assignmentData);
+    createAssignmentHandler(this.props.onSaveHandler, assignmentData);
     this.props.closeHandler();
   };
 
-  getModuleList = async () => {
-    console.log(
-      "[Assignment/Form.js] get the list of modules of the course : ",
-      this.props.course.id
-    );
-
-    const GET_MODULES_LIST = `http://127.0.0.1:8000/api/course/${
-      this.props.course.id
-    }/mod/`;
-
-    try {
-      await fetch(GET_MODULES_LIST, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        .then(data => this.setState({ modList: data }));
-    } catch (err) {
-      console.log(
-        "[Assignment/Form.js] Error when getting a list of modules : ",
-        err
-      );
-    }
-  };
-
   creditSelectionHandler = (event, { value }) => {
-    console.log("[Assignment/Form.js] creaditSelection ", value);
+    // console.log("[Assignment/Form.js] creaditSelection ", value);
     this.setState({ creditPoints: value });
   };
 
@@ -137,11 +110,7 @@ class AssignmentForm extends Component {
           options={modOptions}
           fluid
           selection
-          defaultValue={
-            modOptions.length !== 0
-              ? modOptions[modOptions.length - 1].value
-              : null
-          }
+          defaultValue={this.state.moduleId}
           onChange={this.moduleSelectionHandler}
         />
       </>
@@ -149,17 +118,17 @@ class AssignmentForm extends Component {
   };
 
   lessonSelectionHandler = (event, { value }) => {
-    this.setState({ lesson: value });
+    this.setState({ lessonId: value });
   };
 
   renderLessonChoise = () => {
     // TODO: This function is not working properly
-    console.log("[Assignment/Form.js] List the lessons");
+    // console.log("[Assignment/Form.js] List the lessons,", this.state.modList);
     let lessonOptions = [];
     try {
       const mod = {
         ...this.state.modList.find(mod => {
-          return mod.id === this.state.module;
+          return mod.id === this.state.moduleId;
         })
       };
 
@@ -167,13 +136,15 @@ class AssignmentForm extends Component {
       lessonOptions = mod.lessons.map(each_lesson => {
         return {
           id: each_lesson.id,
-          text: each_lesson.text,
+          text: each_lesson.title,
           value: each_lesson.id
         };
       });
     } catch (err) {
       console.log("Failed to get the list of lessons");
     }
+
+    // console.log("lesson options", lessonOptions);
 
     return (
       <>
@@ -182,6 +153,7 @@ class AssignmentForm extends Component {
           options={lessonOptions}
           fluid
           selection
+          defaultValue={this.state.lessonId}
           onChange={this.lessonSelectionHandler}
         />
       </>
@@ -259,7 +231,6 @@ class AssignmentForm extends Component {
   componentDidMount() {
     console.log("[Contrib/Assignment/Form.js] component did mount");
     this.setState({ shouldOpen: this.props.open });
-    this.getModuleList();
   }
 }
 
