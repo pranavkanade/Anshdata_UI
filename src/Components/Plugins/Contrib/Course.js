@@ -148,7 +148,10 @@ class CourseContribution extends Component {
               </Segment>
             </Grid.Column>
             <Grid.Column width="3">
-              <Toolbar addHandler={this.addNewHandler} />
+              <Toolbar
+                addHandler={this.addNewHandler}
+                courseId={this.state.courseId}
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>

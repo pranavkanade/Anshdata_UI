@@ -69,11 +69,10 @@ class DetailedCourse extends Component {
 
     return lessons.map(lsn => {
       return (
-        <>
+        <div key={lsn.id}>
           <Lesson
             lesson={lsn}
             type={viewType}
-            key={lsn.id}
             addHandler={this.props.addHandler}
           />
           <Grid>
@@ -84,7 +83,7 @@ class DetailedCourse extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        </>
+        </div>
       );
     });
   };
