@@ -20,12 +20,14 @@ class DetailedCourse extends Component {
   state = {
     course: null,
     activeModule: -1,
-    activeMenu: menuTypes.DETAIL
+    activeMenu: menuTypes.DETAIL,
+    newEle: this.props.newEleId
   };
 
   courseSaveHandler = course => {
     console.log("[Detailed.js] saving course");
     this.setState({ course });
+    this.props.setCourse(course);
   };
 
   moduleExpansionHandler = modId => {
@@ -40,13 +42,23 @@ class DetailedCourse extends Component {
     }
   };
 
-  renderAssignments = (assignments, viewType) => {
+  renderAssignments = (assignments, viewType, moduleOnly = false) => {
     if (assignments === null) {
       return null;
     }
 
     return assignments.map(assign => {
-      return <Assignment assignment={assign} type={viewType} />;
+      if (moduleOnly && assign.lesson !== null) {
+        return null;
+      }
+      return (
+        <Assignment
+          assignment={assign}
+          type={viewType}
+          key={assign.id}
+          addHandler={this.props.addHandler}
+        />
+      );
     });
   };
 
@@ -56,7 +68,24 @@ class DetailedCourse extends Component {
     }
 
     return lessons.map(lsn => {
-      return <Lesson lesson={lsn} type={viewType} />;
+      return (
+        <>
+          <Lesson
+            lesson={lsn}
+            type={viewType}
+            key={lsn.id}
+            addHandler={this.props.addHandler}
+          />
+          <Grid>
+            <Grid.Row columns={2}>
+              <Grid.Column width={2} />
+              <Grid.Column width={14}>
+                {this.renderAssignments(lsn.assignments, viewType, false)}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </>
+      );
     });
   };
 
@@ -77,6 +106,7 @@ class DetailedCourse extends Component {
               module={mod}
               type={viewType}
               isExpanded={mod.id === this.state.activeModule}
+              addHandler={this.props.addHandler}
             />
           </Accordion.Title>
           {/*
@@ -93,7 +123,7 @@ class DetailedCourse extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={1} />
                 <Grid.Column width={15}>
-                  {this.renderAssignments(mod.assignments, viewType)}
+                  {this.renderAssignments(mod.assignments, viewType, true)}
                 </Grid.Column>
               </Grid.Row>
             </Grid>
