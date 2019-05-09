@@ -52,7 +52,10 @@ const renderActionButtons = (course, type) => {
 const renderCoursesList = props => {
   return props.courses.map(course => {
     return (
-      <Card key={course["id"]} raised href={`/courses/${course["id"]}`}>
+      <Card
+        key={course["id"]}
+        raised
+        href={`${props.detailURL}/${course["id"]}`}>
         <Segment basic padded>
           <Header size="large">{course.title}</Header>
           <span>{course.description}</span>

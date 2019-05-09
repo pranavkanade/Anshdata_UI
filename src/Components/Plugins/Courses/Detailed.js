@@ -11,6 +11,11 @@ const menuTypes = {
   ASSIGNMENT: "Assignments"
 };
 
+const viewTypes = {
+  MODIFY: "mod",
+  DETAIL: "detail"
+};
+
 class DetailedCourse extends Component {
   state = {
     course: null,
@@ -35,27 +40,27 @@ class DetailedCourse extends Component {
     }
   };
 
-  renderAssignments = assignments => {
+  renderAssignments = (assignments, viewType) => {
     if (assignments === null) {
       return null;
     }
 
     return assignments.map(assign => {
-      return <Assignment assignment={assign} type="detail" />;
+      return <Assignment assignment={assign} type={viewType} />;
     });
   };
 
-  renderLessons = lessons => {
+  renderLessons = (lessons, viewType) => {
     if (lessons === null) {
       return null;
     }
 
     return lessons.map(lsn => {
-      return <Lesson lesson={lsn} type="detail" />;
+      return <Lesson lesson={lsn} type={viewType} />;
     });
   };
 
-  renderModules = () => {
+  renderModules = viewType => {
     if (this.state.course === null) {
       return null;
     }
@@ -70,7 +75,7 @@ class DetailedCourse extends Component {
             }}>
             <Module
               module={mod}
-              type="detail"
+              type={viewType}
               isExpanded={mod.id === this.state.activeModule}
             />
           </Accordion.Title>
@@ -82,13 +87,13 @@ class DetailedCourse extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column width={2} />
                 <Grid.Column width={14}>
-                  {this.renderLessons(mod.lessons)}
+                  {this.renderLessons(mod.lessons, viewType)}
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row columns={2}>
                 <Grid.Column width={1} />
                 <Grid.Column width={15}>
-                  {this.renderAssignments(mod.assignments)}
+                  {this.renderAssignments(mod.assignments, viewType)}
                 </Grid.Column>
               </Grid.Row>
             </Grid>
@@ -125,11 +130,15 @@ class DetailedCourse extends Component {
   };
 
   render() {
+    const viewType =
+      this.props.viewType !== viewTypes.MODIFY
+        ? viewTypes.DETAIL
+        : this.props.viewType;
     return (
       <Container>
         <br />
         {this.state.course !== null ? (
-          <Course course={this.state.course} />
+          <Course course={this.state.course} type={viewType} />
         ) : null}
 
         <Divider />
@@ -141,8 +150,11 @@ class DetailedCourse extends Component {
             <Grid.Column width={14}>
               <br />
               {this.state.activeMenu === menuTypes.DETAIL
-                ? this.renderModules()
-                : this.renderAssignments(this.state.course.assignments)}
+                ? this.renderModules(viewType)
+                : this.renderAssignments(
+                    this.state.course.assignments,
+                    viewType
+                  )}
             </Grid.Column>
             <Grid.Column width={1} />
           </Grid.Row>
