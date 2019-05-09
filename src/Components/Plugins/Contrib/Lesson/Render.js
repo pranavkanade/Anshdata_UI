@@ -41,7 +41,7 @@ const renderAssignments = assignments => {
 const lessonRender = props => {
   return (
     <>
-      <Segment raised>
+      <Segment attached raised>
         <Header size="small">{props.lesson.title}</Header>
         <Label basic size="small" color="blue">
           <Icon name="pen square" />

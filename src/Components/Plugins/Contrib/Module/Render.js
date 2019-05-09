@@ -4,7 +4,7 @@ import { Segment, Header, Button, Icon, Label } from "semantic-ui-react";
 
 const renderEditButtons = props => {
   return (
-    <Button.Group attached="bottom" size="big" widths="three">
+    <Button.Group attached="bottom" size="large" widths="three">
       <Button
         basic
         color="teal"

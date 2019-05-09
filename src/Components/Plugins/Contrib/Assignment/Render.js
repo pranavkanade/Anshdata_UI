@@ -22,7 +22,7 @@ const renderEditButtons = props => {
 const assignmentRender = props => {
   return (
     <>
-      <Segment raised color="orange">
+      <Segment raised attached color="orange">
         <Header size="small">{props.assignment.title}</Header>
         <Label basic size="small" color="blue">
           <Icon name="pen square" />
