@@ -47,6 +47,7 @@ class Courses extends Component {
           <CoursesList
             courses={this.state.courses}
             courseListType={courseListType.OVERVIEW}
+            detailURL={"/courses"}
           />
         </Card.Group>
       </Container>

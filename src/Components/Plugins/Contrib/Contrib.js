@@ -69,6 +69,7 @@ class Contrib extends Component {
           <CoursesList
             courses={this.state.courses}
             courseListType={courseListType.MODIFY}
+            detailURL={"/courses/mod"}
           />
         </Card.Group>
       </Container>
