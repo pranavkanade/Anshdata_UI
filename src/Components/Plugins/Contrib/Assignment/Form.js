@@ -82,6 +82,7 @@ class AssignmentForm extends Component {
           fluid
           options={options}
           selection
+          defaultValue={this.state.creditPoints}
           onChange={this.creditSelectionHandler}
         />
       </>
