@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Auth from "../Components/Generic/Auth/Auth";
+import Router from "next/router";
 
 class App extends Component {
   state = {
@@ -37,6 +38,7 @@ class App extends Component {
     localStorage.removeItem("AnshdataUser");
     this.setState({ isAuthenticated: false, attemptingSignIn: false });
     this.authEventHandler();
+    Router.push("/");
   };
 
   showAuthFormHandler = () => {
