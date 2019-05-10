@@ -15,7 +15,10 @@ class CourseContribution extends Component {
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
     elementBeingAdded: "",
-    newEleId: null
+    newEleId: null,
+    moduleId: null,
+    lessonId: null,
+    assignmentId: null
   };
 
   closeHandler = () => {
@@ -43,7 +46,7 @@ class CourseContribution extends Component {
     });
   };
 
-  addNewHandler = (btn, moduleId, lessonId) => {
+  addNewHandler = (btn, moduleId, lessonId, assignmentId = null) => {
     console.log(
       "[Contrib/Course.js] Add New Clicked : ",
       btn,
@@ -70,7 +73,8 @@ class CourseContribution extends Component {
         shouldOpenAddAssignment: true,
         elementBeingAdded: btn,
         moduleId,
-        lessonId
+        lessonId,
+        assignmentId
       });
     }
   };
@@ -92,6 +96,7 @@ class CourseContribution extends Component {
           closeHandler={this.closeHandler}
           course={this.state.course}
           onSaveHandler={this.onSaveHandler}
+          moduleId={this.state.moduleId}
         />
       );
     } else if (btn === "lesson") {
@@ -100,6 +105,7 @@ class CourseContribution extends Component {
           open={true}
           closeHandler={this.closeHandler}
           moduleId={this.state.moduleId}
+          lessonId={this.state.lessonId}
           course={this.state.course}
           onSaveHandler={this.onSaveHandler}
         />
@@ -111,6 +117,7 @@ class CourseContribution extends Component {
           closeHandler={this.closeHandler}
           moduleId={this.state.moduleId}
           lessonId={this.state.lessonId}
+          assignmentId={this.state.assignmentId}
           course={this.state.course}
           onSaveHandler={this.onSaveHandler}
         />
@@ -120,6 +127,7 @@ class CourseContribution extends Component {
 
   renderDetailedCourse = courseId => {
     // TODO: Add an edit handler too
+
     return (
       <DetailedCourse
         courseId={courseId}

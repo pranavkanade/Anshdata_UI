@@ -1,16 +1,20 @@
-const URLS = {
-  POST_CREATE_MODULE: "http://127.0.0.1:8000/api/course/mod/"
-};
-
-const createModuleHandler = async (onSaveHandler, modData) => {
+import Router from "next/router";
+const createModuleHandler = async (onSaveHandler, modData, modId) => {
   console.log("[Module/Action.js] create new module: ", modData);
   try {
     const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
       "token"
     ];
 
-    await fetch(URLS.POST_CREATE_MODULE, {
-      method: "POST",
+    let mthd = "POST";
+    let URL = "http://127.0.0.1:8000/api/course/mod/";
+    if (modId !== null) {
+      mthd = "PATCH";
+      URL = `http://127.0.0.1:8000/api/course/mod/${modId}/`;
+    }
+
+    await fetch(URL, {
+      method: mthd,
       headers: {
         "Content-Type": "application/json",
         Authorization: `JWT ${AnshdataToken}`
@@ -25,6 +29,9 @@ const createModuleHandler = async (onSaveHandler, modData) => {
         console.log("Module Created ", data);
         onSaveHandler(data.id);
       });
+    const page = window.location.pathname;
+
+    Router.push(page);
   } catch (err) {
     console.log("[Module/Action.js] Error when creating a module : ", err);
   }

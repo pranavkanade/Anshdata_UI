@@ -46,7 +46,11 @@ class AssignmentForm extends Component {
       course: this.props.course.id,
       credit_points: String(this.state.creditPoints)
     };
-    createAssignmentHandler(this.props.onSaveHandler, assignmentData);
+    createAssignmentHandler(
+      this.props.onSaveHandler,
+      assignmentData,
+      this.props.assignmentId
+    );
     this.props.closeHandler();
   };
 
@@ -228,8 +232,32 @@ class AssignmentForm extends Component {
     );
   }
 
+  getLessonToUpdate = () => {
+    if (this.props.course === null || this.props.assignmentId === null) {
+      return null;
+    }
+    const course = this.props.course;
+    const assignment = {
+      ...course.assignments.find(mod => {
+        return mod.id === this.props.assignmentId;
+      })
+    };
+
+    console.log("assignment to update", assignment);
+    this.setState({
+      assingToUpdate: assignment,
+      title: assignment.title,
+      instruction: assignment.instruction,
+      reference: assignment.reference,
+      lesson: assignment.lessonId,
+      module: assignment.moduleId,
+      creditPoints: assignment.creditPoints
+    });
+  };
+
   componentDidMount() {
     console.log("[Contrib/Assignment/Form.js] component did mount");
+    this.getLessonToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
 }

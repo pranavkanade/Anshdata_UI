@@ -11,7 +11,12 @@ const renderEditButtons = props => {
         color="teal"
         name="assignment"
         onClick={event => {
-          props.addHandler(event.target.name, props.assignment.id);
+          props.addHandler(
+            event.target.name,
+            props.assignment.module,
+            props.assignment.lesson,
+            props.assignment.id
+          );
         }}>
         Edit Assignment
       </Button>

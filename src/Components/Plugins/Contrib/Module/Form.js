@@ -39,7 +39,11 @@ class ModuleForm extends Component {
       reference: this.state.reference,
       course: this.props.course.id
     };
-    createModuleHandler(this.props.onSaveHandler, moduleData);
+    createModuleHandler(
+      this.props.onSaveHandler,
+      moduleData,
+      this.props.moduleId
+    );
     this.props.closeHandler();
   };
 
@@ -108,8 +112,29 @@ class ModuleForm extends Component {
     );
   }
 
+  getModuleToUpdate = () => {
+    if (this.props.course === null || this.props.moduleId === null) {
+      return null;
+    }
+    const course = this.props.course;
+    const mod = {
+      ...course.modules.find(mod => {
+        return mod.id === this.props.moduleId;
+      })
+    };
+    console.log("mod to update", mod);
+    this.setState({
+      modToUpdate: mod,
+      title: mod.title,
+      description: mod.description,
+      reference: mod.reference
+    });
+  };
+
   componentDidMount() {
     console.log("[Contrib/Module/Form.js] component did mount");
+    this.getModuleToUpdate();
+    // this.setUpdateState();
     this.setState({ shouldOpen: this.props.open });
   }
 }

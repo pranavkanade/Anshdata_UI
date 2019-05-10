@@ -42,7 +42,11 @@ class LessonForm extends Component {
       lecture: this.state.lecture,
       module: this.state.module
     };
-    createLessonHandler(this.props.onSaveHandler, lessonData);
+    createLessonHandler(
+      this.props.onSaveHandler,
+      lessonData,
+      this.props.lessonId
+    );
     this.props.closeHandler();
   };
 
@@ -145,8 +149,39 @@ class LessonForm extends Component {
     );
   }
 
+  getLessonToUpdate = () => {
+    if (
+      this.props.course === null ||
+      this.props.moduleId === null ||
+      this.props.lessonId === null
+    ) {
+      return null;
+    }
+    const course = this.props.course;
+    const mod = {
+      ...course.modules.find(mod => {
+        return mod.id === this.props.moduleId;
+      })
+    };
+
+    const lesson = {
+      ...mod.lessons.find(lsn => {
+        return lsn.id === this.props.lessonId;
+      })
+    };
+    console.log("lesson to update", lesson);
+    this.setState({
+      lsnToUpdate: lesson,
+      title: lesson.title,
+      description: lesson.description,
+      lecture: lesson.lecture,
+      module: lesson.module
+    });
+  };
+
   componentDidMount() {
     console.log("[Contrib/Lesson/Form.js] component did mount");
+    this.getLessonToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
 }

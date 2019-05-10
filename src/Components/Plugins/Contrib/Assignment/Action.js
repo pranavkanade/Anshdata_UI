@@ -1,8 +1,10 @@
-const URLS = {
-  POST_CREATE_ASSIGNMENT: "http://127.0.0.1:8000/api/course/ex/"
-};
+import Router from "next/router";
 
-const createAssignmentHandler = async (onSaveHandler, assignmentData) => {
+const createAssignmentHandler = async (
+  onSaveHandler,
+  assignmentData,
+  exId
+) => {
   console.log(
     "[Assignment/Action.js] create new assignment: ",
     assignmentData
@@ -12,9 +14,15 @@ const createAssignmentHandler = async (onSaveHandler, assignmentData) => {
     const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
       "token"
     ];
+    let mthd = "POST";
+    let URL = "http://127.0.0.1:8000/api/course/ex/";
+    if (exId !== null) {
+      mthd = "PATCH";
+      URL = `http://127.0.0.1:8000/api/course/ex/${exId}/`;
+    }
 
-    await fetch(URLS.POST_CREATE_ASSIGNMENT, {
-      method: "POST",
+    await fetch(URL, {
+      method: mthd,
       headers: {
         "Content-Type": "application/json",
         Authorization: `JWT ${AnshdataToken}`
@@ -29,6 +37,9 @@ const createAssignmentHandler = async (onSaveHandler, assignmentData) => {
         console.log("Assignment Created ", data);
         onSaveHandler(data.id);
       });
+    const page = window.location.pathname;
+
+    Router.push(page);
   } catch (err) {
     console.log(
       "[Assignment/Action.js] Error when creating an assignment : ",
