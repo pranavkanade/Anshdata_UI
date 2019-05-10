@@ -1,22 +1,23 @@
 import React, { Component } from "react";
 import {
-  Container,
+  Modal,
   Grid,
   Form,
   Dropdown,
   Divider,
   Segment,
-  Header
+  Header,
+  Button
 } from "semantic-ui-react";
-import Router from "next/router";
+import createCourseHandler from "./Action";
 
 const URLS = {
-  CREATE_COURSE: "http://127.0.0.1:8000/api/course/",
   LIST_CATS: "http://127.0.0.1:8000/api/plat/cat/"
 };
 
 class CourseContributionForm extends Component {
   state = {
+    courseId: null,
     title: "",
     subject: "",
     category: "",
@@ -57,27 +58,12 @@ class CourseContributionForm extends Component {
     };
   };
 
-  createCourse = async () => {
+  createCourse = () => {
     console.log("[Course/Form.js] Create Course clicked");
-    try {
-      const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-        "token"
-      ];
-      const courseData = this.getNewCourseData();
-      const createCourseRes = await fetch(URLS.CREATE_COURSE, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${AnshdataToken}`
-        },
-        body: JSON.stringify(courseData)
-      });
-      let newCourse = await createCourseRes.json();
-      console.log("Newly Created Course", newCourse);
-      this.props.onSaveHandler(newCourse);
-      Router.push(`/contrib/course/${newCourse.id}`);
-    } catch (err) {
-      console.log("[Course/Form.js] user is not logged in : ", err);
+    const courseData = this.getNewCourseData();
+    createCourseHandler(courseData, this.state.courseId);
+    if (this.props.closeHandler !== null) {
+      this.props.closeHandler();
     }
   };
 
@@ -100,11 +86,11 @@ class CourseContributionForm extends Component {
       <>
         <Header size="tiny">Category</Header>
         <Dropdown
-          placeholder="Select Category"
           clearable
           fluid
           options={catOptions}
           selection
+          defaultValue={this.state.category}
           onChange={this.categorySelectionHandler}
         />
       </>
@@ -133,6 +119,7 @@ class CourseContributionForm extends Component {
           clearable
           fluid
           options={options}
+          defaultValue={this.state.creditPoints}
           selection
           onChange={this.creditSelectionHandler}
         />
@@ -195,20 +182,40 @@ class CourseContributionForm extends Component {
   };
 
   render() {
-    return (
-      <>
-        <Header dividing size="huge">
-          Create New Course
-        </Header>
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column width="1" />
-            <Grid.Column width="13">{this.renderForm()}</Grid.Column>
-            <Grid.Column width="2" />
-          </Grid.Row>
-        </Grid>
-      </>
-    );
+    if (this.props.edit === undefined) {
+      return (
+        <>
+          <Header dividing size="huge">
+            Create New Course
+          </Header>
+          <Grid>
+            <Grid.Row columns={3}>
+              <Grid.Column width="1" />
+              <Grid.Column width="13">{this.renderForm()}</Grid.Column>
+              <Grid.Column width="2" />
+            </Grid.Row>
+          </Grid>
+        </>
+      );
+    } else {
+      const open = this.state.shouldOpen;
+      return (
+        <Modal
+          open={open}
+          onClose={this.props.closeHandler}
+          closeOnDimmerClick={false}
+          closeOnEscape={false}
+          centered={false}>
+          <Modal.Header>
+            Edit Course
+            <Button onClick={this.props.closeHandler} negative floated="right">
+              close
+            </Button>
+          </Modal.Header>
+          <Modal.Content>{this.renderForm()}</Modal.Content>
+        </Modal>
+      );
+    }
   }
 
   // The component management functions
@@ -229,9 +236,26 @@ class CourseContributionForm extends Component {
     }
   };
 
+  getCourseToUpdate = () => {
+    if (this.props.course === undefined) {
+      return null;
+    }
+    const course = this.props.course;
+    this.setState({
+      courseId: course.id,
+      title: course.title,
+      subject: course.subject,
+      category: course.category.id,
+      creditPoints: course.credit_points,
+      description: course.description
+    });
+  };
+
   componentDidMount() {
     console.log("[Course/Form.js] component did mount");
     this.getCategoryList();
+    this.getCourseToUpdate();
+    this.setState({ shouldOpen: this.props.open });
   }
 }
 

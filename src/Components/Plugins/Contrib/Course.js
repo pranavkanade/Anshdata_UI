@@ -14,6 +14,7 @@ class CourseContribution extends Component {
     shouldOpenAddModule: false,
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
+    shouldOpenAddCourse: false,
     elementBeingAdded: "",
     newEleId: null,
     moduleId: null,
@@ -26,6 +27,7 @@ class CourseContribution extends Component {
       shouldOpenAddModule: false,
       shouldOpenAddLesson: false,
       shouldOpenAddAssignment: false,
+      shouldOpenAddCourse: false,
       elementBeingAdded: ""
     });
   };
@@ -46,7 +48,12 @@ class CourseContribution extends Component {
     });
   };
 
-  addNewHandler = (btn, moduleId, lessonId, assignmentId = null) => {
+  addNewHandler = (
+    btn,
+    moduleId = null,
+    lessonId = null,
+    assignmentId = null
+  ) => {
     console.log(
       "[Contrib/Course.js] Add New Clicked : ",
       btn,
@@ -54,7 +61,12 @@ class CourseContribution extends Component {
       lessonId
     );
     // TODO: fetch the module data here and then pass on to the form
-    if (btn === "module") {
+    if (btn === "course") {
+      this.setState({
+        shouldOpenAddCourse: true,
+        elementBeingAdded: btn
+      });
+    } else if (btn === "module") {
       this.setState({
         shouldOpenAddModule: true,
         elementBeingAdded: btn,
@@ -89,7 +101,17 @@ class CourseContribution extends Component {
   renderAddNewForm = () => {
     const btn = this.state.elementBeingAdded;
     console.log("[Contrib/Course.js] render add new form : ", btn);
-    if (btn === "module") {
+    if (btn === "course") {
+      return (
+        <CourseForm
+          open={true}
+          closeHandler={this.closeHandler}
+          course={this.state.course}
+          onSaveHandler={this.onSaveHandler}
+          edit={true}
+        />
+      );
+    } else if (btn === "module") {
       return (
         <ModuleForm
           open={true}

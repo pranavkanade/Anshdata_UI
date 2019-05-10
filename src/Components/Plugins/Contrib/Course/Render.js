@@ -1,16 +1,67 @@
 import React from "react";
+import {
+  Grid,
+  Segment,
+  Header,
+  Button,
+  Icon,
+  Divider
+} from "semantic-ui-react";
+import enrollEventHandler from "../../../../Requests/Enroll";
 
-import { Grid, Segment, Header } from "semantic-ui-react";
+const renderButtons = props => {
+  console.log("render course type", props.type);
+  if (props.type !== "detail") {
+    return (
+      <>
+        <Grid.Column width="4">
+          <Button
+            fluid
+            basic
+            size="large"
+            color="red"
+            name="course"
+            onClick={event => props.addHandler(event.target.name)}>
+            <Icon name="pencil" />
+            Edit Course
+          </Button>
+        </Grid.Column>
+      </>
+    );
+  }
+  return (
+    <>
+      <Grid.Column width="3">
+        <Button
+          size="big"
+          color="twitter"
+          fluid
+          onClick={() => enrollEventHandler(props.course.id)}>
+          Enroll
+        </Button>
+      </Grid.Column>
+      <Grid.Column width="1" />
+    </>
+  );
+};
 
 const courseRender = props => {
   return (
     <>
-      <Header>
-        <h2>{props.course.title}</h2>
-      </Header>
       <Segment basic>
-        <Header>Description</Header>
-        <span>{props.course.description}</span>
+        <Grid>
+          <Grid.Row columns={4}>
+            <Grid.Column width="1" />
+            <Grid.Column width="11">
+              <Header>
+                <h2>{props.course.title}</h2>
+              </Header>
+              <Header>Description</Header>
+              <span>{props.course.description}</span>
+            </Grid.Column>
+            {renderButtons(props)}
+          </Grid.Row>
+        </Grid>
       </Segment>
       <Grid textAlign="center">
         <Grid.Row columns={5}>

@@ -167,7 +167,11 @@ class DetailedCourse extends Component {
       <Container>
         <br />
         {this.state.course !== null ? (
-          <Course course={this.state.course} type={viewType} />
+          <Course
+            course={this.state.course}
+            type={viewType}
+            addHandler={this.props.addHandler}
+          />
         ) : null}
 
         <Divider />
@@ -202,3 +206,5 @@ class DetailedCourse extends Component {
 }
 
 export default DetailedCourse;
+
+// TODO: Show course level assignments
