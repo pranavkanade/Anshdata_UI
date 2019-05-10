@@ -61,7 +61,7 @@ class CourseContributionForm extends Component {
   createCourse = () => {
     console.log("[Course/Form.js] Create Course clicked");
     const courseData = this.getNewCourseData();
-    createCourseHandler(courseData, this.state.courseId);
+    createCourseHandler(courseData, this.state.courseId, "/contrib/course");
     if (this.props.closeHandler !== null) {
       this.props.closeHandler();
     }

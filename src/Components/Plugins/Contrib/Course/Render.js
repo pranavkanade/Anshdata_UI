@@ -8,6 +8,8 @@ import {
   Divider
 } from "semantic-ui-react";
 import enrollEventHandler from "../../../../Requests/Enroll";
+import createCourseHandler from "./Action";
+import Router from "next/router";
 
 const renderButtons = props => {
   console.log("render course type", props.type);
@@ -18,12 +20,28 @@ const renderButtons = props => {
           <Button
             fluid
             basic
-            size="large"
+            size="big"
             color="red"
             name="course"
             onClick={event => props.addHandler(event.target.name)}>
-            <Icon name="pencil" />
-            Edit Course
+            <Icon name="pencil" size="small" /> Edit Course
+          </Button>
+          <Divider hidden />
+          <Button
+            fluid
+            basic
+            size="big"
+            color="green"
+            name="publish"
+            onClick={() => {
+              const data = {
+                is_published: true
+              };
+              createCourseHandler(data, props.course.id, "/course");
+              Router.push(`/courses/${props.course.id}`);
+            }}>
+            <Icon name="paper plane outline" size="small" />
+            Publish Course
           </Button>
         </Grid.Column>
       </>
