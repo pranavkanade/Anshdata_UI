@@ -6,43 +6,78 @@ import {
   Button,
   Card,
   Label,
+  Menu,
   Header,
   Divider
 } from "semantic-ui-react";
 import CoursesList from "../../Generic/Assets/CoursesList";
 import { courseListType } from "../../../globals";
-import { getAuthorization } from "../../../Requests/Authorization";
+import {
+  getDraftedCommunityCoursesList,
+  getDraftedSelfCoursesList
+} from "../../../Requests/DraftCourses";
 
-const URLS = {
-  LIST_DRAFTED_COURSES: "http://127.0.0.1:8000/api/course/drafts/"
+const menuTypes = {
+  COMMUNITY: "Community",
+  SELF: "Self"
 };
 
 class Contrib extends Component {
   state = {
-    courses: []
+    activeMenu: menuTypes.COMMUNITY,
+    courses: [],
+    commCourses: [],
+    selfCourses: []
   };
 
-  getDraftedCoursesList = async () => {
-    // Only if the user is logged in
-    console.log("[Contrib.js] get Courses user has not yet published");
-    try {
-      await fetch(URLS.LIST_DRAFTED_COURSES, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          Authorization: getAuthorization()
-        }
-      })
-        .then(resp => resp.json())
-        .then(data => {
-          this.setState({ courses: data });
-        });
-    } catch (err) {
-      console.log(
-        "[Contrib.js] Failed to collect the list of drafted courses : ",
-        err
-      );
+  saveCommCourses = courses => {
+    this.setState({ commCourses: courses });
+  };
+
+  saveSelfCourses = courses => {
+    this.setState({ selfCourses: courses });
+  };
+
+  renderCourseList = () => {
+    const { activeMenu } = this.state;
+    let courses = [];
+    if (activeMenu === menuTypes.SELF) {
+      courses = this.state.selfCourses;
+    } else {
+      courses = this.state.commCourses;
     }
+    return (
+      <Card.Group itemsPerRow={3}>
+        <CoursesList
+          courses={courses}
+          courseListType={courseListType.MODIFY}
+          detailURL={"/contrib/course"}
+        />
+      </Card.Group>
+    );
+  };
+
+  renderSecMenu = () => {
+    const { activeMenu } = this.state;
+    return (
+      <Menu size="large" pointing secondary widths={3} fluid color="violet">
+        <Menu.Item
+          name={menuTypes.COMMUNITY}
+          active={activeMenu === menuTypes.COMMUNITY}
+          onClick={() => {
+            this.setState({ activeMenu: menuTypes.COMMUNITY });
+          }}
+        />
+        <Menu.Item
+          name={menuTypes.SELF}
+          active={activeMenu === menuTypes.SELF}
+          onClick={() => {
+            this.setState({ activeMenu: menuTypes.SELF });
+          }}
+        />
+        <Menu.Item disabled />
+      </Menu>
+    );
   };
 
   // TODO: Add a tab of all the courses that are pending for the review
@@ -59,17 +94,9 @@ class Contrib extends Component {
           </Button>
         </Link>
         <Divider hidden />
-        <Header dividing size="large">
-          List of drafted courses
-        </Header>
-        <br />
-        <Card.Group itemsPerRow={3}>
-          <CoursesList
-            courses={this.state.courses}
-            courseListType={courseListType.MODIFY}
-            detailURL={"/contrib/course"}
-          />
-        </Card.Group>
+        <Header size="large">List of drafted courses</Header>
+        {this.renderSecMenu()}
+        {this.renderCourseList()}
       </Container>
     );
   }
@@ -77,7 +104,9 @@ class Contrib extends Component {
   componentDidMount() {
     console.log("[Contrib.js] component did mount");
     console.log("State: ", this.state);
-    this.getDraftedCoursesList();
+    // this.getDraftedCoursesList();
+    getDraftedCommunityCoursesList(this.saveCommCourses);
+    getDraftedSelfCoursesList(this.saveSelfCourses);
   }
 
   componentWillUnmount() {
