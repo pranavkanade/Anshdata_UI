@@ -29,7 +29,7 @@ class Courses extends Component {
         method: "GET",
         headers: {
           "content-type": "application/json",
-          Authorization: getAuthorization
+          Authorization: getAuthorization()
         }
       })
         .then(response => response.json())
