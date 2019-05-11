@@ -1,5 +1,5 @@
 import Router from "next/router";
-
+import { getAuthorization } from "../Requests/Authorization";
 const URLS = {
   PATCH_COURSE_ENROLL: "http://127.0.0.1:8000/api/course/enroll/"
 };
@@ -7,9 +7,6 @@ const URLS = {
 const enrollEventHandler = async courseKey => {
   console.log("[Actions/Enroll.js] enroll in a course: ", courseKey);
   try {
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
     const enrollmentData = {
       course: String(courseKey)
     };
@@ -18,7 +15,7 @@ const enrollEventHandler = async courseKey => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
+        Authorization: getAuthorization()
       },
       body: JSON.stringify(enrollmentData)
     })

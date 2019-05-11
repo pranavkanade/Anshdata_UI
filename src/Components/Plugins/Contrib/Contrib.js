@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import CoursesList from "../../Generic/Assets/CoursesList";
 import { courseListType } from "../../../globals";
+import { getAuthorization } from "../../../Requests/Authorization";
 
 const URLS = {
   LIST_DRAFTED_COURSES: "http://127.0.0.1:8000/api/course/drafts/"
@@ -25,14 +26,11 @@ class Contrib extends Component {
     // Only if the user is logged in
     console.log("[Contrib.js] get Courses user has not yet published");
     try {
-      const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-        "token"
-      ];
       await fetch(URLS.LIST_DRAFTED_COURSES, {
         method: "GET",
         headers: {
           "content-type": "application/json",
-          Authorization: `JWT ${AnshdataToken}`
+          Authorization: getAuthorization()
         }
       })
         .then(resp => resp.json())

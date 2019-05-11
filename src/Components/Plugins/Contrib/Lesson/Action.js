@@ -1,12 +1,10 @@
 import Router from "next/router";
+import { getAuthorization } from "../../../../Requests/Authorization";
 
 const createLessonHandler = async (onSaveHandler, lsnData, lsnId) => {
   console.log("[Lesson/Action.js] create new lesson: ", lsnData);
 
   try {
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
     let mthd = "POST";
     let URL = "http://127.0.0.1:8000/api/course/lsn/";
     if (lsnId !== null) {
@@ -18,7 +16,7 @@ const createLessonHandler = async (onSaveHandler, lsnData, lsnId) => {
       method: mthd,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
+        Authorization: getAuthorization()
       },
       body: JSON.stringify(lsnData)
     })

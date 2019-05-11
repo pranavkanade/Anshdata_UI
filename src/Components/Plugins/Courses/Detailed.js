@@ -197,10 +197,6 @@ class DetailedCourse extends Component {
   }
 
   componentDidMount() {
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
-
     getCourse(this.props.courseId, this.courseSaveHandler);
   }
 }

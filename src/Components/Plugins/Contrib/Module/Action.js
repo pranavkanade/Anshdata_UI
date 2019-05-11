@@ -1,11 +1,9 @@
 import Router from "next/router";
+import { getAuthorization } from "../../../../Requests/Authorization";
+
 const createModuleHandler = async (onSaveHandler, modData, modId) => {
   console.log("[Module/Action.js] create new module: ", modData);
   try {
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
-
     let mthd = "POST";
     let URL = "http://127.0.0.1:8000/api/course/mod/";
     if (modId !== null) {
@@ -17,7 +15,7 @@ const createModuleHandler = async (onSaveHandler, modData, modId) => {
       method: mthd,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
+        Authorization: getAuthorization()
       },
       body: JSON.stringify(modData)
     })

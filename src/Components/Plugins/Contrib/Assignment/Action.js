@@ -1,4 +1,5 @@
 import Router from "next/router";
+import { getAuthorization } from "../../../../Requests/Authorization";
 
 const createAssignmentHandler = async (
   onSaveHandler,
@@ -11,9 +12,6 @@ const createAssignmentHandler = async (
   );
 
   try {
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
     let mthd = "POST";
     let URL = "http://127.0.0.1:8000/api/course/ex/";
     if (exId !== null) {
@@ -25,7 +23,7 @@ const createAssignmentHandler = async (
       method: mthd,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
+        Authorization: getAuthorization()
       },
       body: JSON.stringify(assignmentData)
     })

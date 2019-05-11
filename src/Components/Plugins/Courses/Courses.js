@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import CoursesList from "../../Generic/Assets/CoursesList";
 import { courseListType } from "../../../globals";
+import { getAuthorization } from "../../../Requests/Authorization";
 
 const URLS = {
   LIST_COURSE: "http://127.0.0.1:8000/api/course/"
@@ -25,7 +26,11 @@ class Courses extends Component {
     console.log("[Courses.js] get courses");
     try {
       await fetch(URLS.LIST_COURSE, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          Authorization: getAuthorization
+        }
       })
         .then(response => response.json())
         .then(data => this.setState({ courses: data }));
