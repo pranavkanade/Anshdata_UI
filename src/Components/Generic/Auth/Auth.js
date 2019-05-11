@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Form, Modal, Menu, Segment, Grid } from "semantic-ui-react";
+import Router from "next/router";
 
 const URLS = {
   USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
@@ -220,6 +221,8 @@ class Auth extends Component {
     }
     this.close();
     this.props.reloadOnAuthEvent();
+    const page = window.location.pathname;
+    Router.push("/");
   };
 
   signinHandler = async event => {
@@ -252,6 +255,8 @@ class Auth extends Component {
     }
     this.close();
     this.props.reloadOnAuthEvent();
+    const page = window.location.pathname;
+    Router.push("/");
   };
 }
 
