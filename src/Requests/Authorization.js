@@ -3,7 +3,7 @@ export const getAuthorization = () => {
 
   let Authorization = "";
   if (adUser !== null) {
-    const AnshdataToken = JSON.parse(adUser["token"]);
+    const AnshdataToken = JSON.parse(adUser)["token"];
     Authorization = `JWT ${AnshdataToken}`;
   }
 
