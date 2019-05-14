@@ -11,10 +11,7 @@ import {
 } from "semantic-ui-react";
 import createCourseHandler from "./Action";
 import Link from "next/link";
-
-const URLS = {
-  LIST_CATS: "http://127.0.0.1:8000/api/plat/cat/"
-};
+import { getCategoryList } from "../../../../Requests/Category";
 
 class CourseContributionForm extends Component {
   state = {
@@ -25,6 +22,10 @@ class CourseContributionForm extends Component {
     isPublished: false,
     creditPoints: 0,
     description: ""
+  };
+
+  catSaveHandler = data => {
+    this.setState({ catList: data });
   };
 
   creditSelectionHandler = (event, { value }) => {
@@ -225,24 +226,6 @@ class CourseContributionForm extends Component {
     }
   }
 
-  // The component management functions
-  getCategoryList = async () => {
-    console.log("[Course/Form.js] get categories");
-    try {
-      await fetch(URLS.LIST_CATS, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        .then(data => this.setState({ catList: data }));
-    } catch (err) {
-      console.log("[Course/Form.js] user is not logged in : ", err);
-      return [];
-    }
-  };
-
   getCourseToUpdate = () => {
     if (this.props.course === undefined) {
       return null;
@@ -260,7 +243,7 @@ class CourseContributionForm extends Component {
 
   componentDidMount() {
     console.log("[Course/Form.js] component did mount");
-    this.getCategoryList();
+    getCategoryList(this.catSaveHandler);
     this.getCourseToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
