@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import Router from "next/router";
 import { getCourse } from "../requests";
 import Course from "./Render";
-import { Container, Divider, Grid, Accordion, Menu } from "semantic-ui-react";
+import { getIfEnrolled } from "../../../../Requests/Enrollment";
 
 class AttendCourse extends Component {
   state = {
@@ -9,7 +10,16 @@ class AttendCourse extends Component {
     courseId: this.props.courseId,
     activeModId: null,
     activeLesson: null,
-    activeAssign: null
+    activeAssign: null,
+    isEnrolledIn: false
+  };
+
+  ifEnrolledSaveHandler = data => {
+    if (data.length !== 0) {
+      this.setState({ isEnrolledIn: true });
+    } else {
+      Router.push(`/courses/${this.state.courseId}`);
+    }
   };
 
   activeLessonHandler = lsn => {
@@ -67,7 +77,11 @@ class AttendCourse extends Component {
     if (this.state.course === undefined) {
       getCourse(this.state.courseId, this.courseSaveHandler);
     }
+
+    getIfEnrolled(this.state.courseId, this.ifEnrolledSaveHandler);
   }
+
+  componentDidUpdate() {}
 }
 
 export default AttendCourse;
