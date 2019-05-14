@@ -27,7 +27,9 @@ class Courses extends Component {
   };
 
   saveEnrolledCoursesHandler = enrolledCourses => {
-    this.setState({ enrolledCourses });
+    if (enrolledCourses.detail === undefined) {
+      this.setState({ enrolledCourses });
+    }
   };
 
   renderLoader = () => {
@@ -58,18 +60,27 @@ class Courses extends Component {
     );
   };
 
+  renderMyCourses = () => {
+    const courseEnrolledin = this.state.enrolledCourses;
+    console.log("Courses enrolled : ", courseEnrolledin);
+    // return null;
+    return courseEnrolledin === null ? (
+      <span>Courses you'll enroll in</span>
+    ) : (
+      this.renderCourses(courseEnrolledin, courseListType.OVERVIEW)
+    );
+  };
+
   render() {
     const courseListing = this.state.courses;
-    const courseEnrolledin = this.state.enrolledCourses;
+
     return (
       <Container className={"CoursesPlugin"}>
         <br />
         <Header as={Grid.Column} dividing size="huge">
-          Your Courses
+          My Courses
         </Header>
-        {courseEnrolledin === null
-          ? this.renderLoader()
-          : this.renderCourses(courseEnrolledin, courseListType.OVERVIEW)}
+        {this.renderMyCourses()}
         <br />
         <Header as={Grid.Column} dividing size="huge">
           Courses List

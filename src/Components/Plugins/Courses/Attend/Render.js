@@ -11,6 +11,9 @@ import {
 } from "semantic-ui-react";
 
 const renderLessonContent = lesson => {
+  if (lesson === undefined) {
+    return null;
+  }
   console.log("Lect ID", lesson);
   let lectId = null;
   if (lesson.lecture !== null && lesson.lecture !== undefined) {
