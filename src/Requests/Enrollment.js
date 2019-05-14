@@ -1,10 +1,10 @@
 import Router from "next/router";
-import { getAuthorization } from "../Requests/Authorization";
+import { getAuthorization } from "./Authorization";
 const URLS = {
   PATCH_COURSE_ENROLL: "http://127.0.0.1:8000/api/course/enroll/"
 };
 
-const enrollEventHandler = async courseKey => {
+export const enrollEventHandler = async courseKey => {
   console.log("[Actions/Enroll.js] enroll in a course: ", courseKey);
   try {
     const enrollmentData = {
@@ -32,5 +32,3 @@ const enrollEventHandler = async courseKey => {
 
   Router.push("/courses");
 };
-
-export default enrollEventHandler;

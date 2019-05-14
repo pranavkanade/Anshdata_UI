@@ -1,5 +1,5 @@
 import React from "react";
-import enrollEventHandler from "../../../Requests/Enroll";
+import { enrollEventHandler } from "../../../Requests/Enrollment";
 import { courseListType } from "../../../globals";
 import { Card, Segment, Header, Label, Icon, Button } from "semantic-ui-react";
 

@@ -7,7 +7,7 @@ import {
   Icon,
   Divider
 } from "semantic-ui-react";
-import enrollEventHandler from "../../../../Requests/Enroll";
+import { enrollEventHandler } from "../../../../Requests/Enrollment";
 import createCourseHandler from "./Action";
 import Router from "next/router";
 
