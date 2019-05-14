@@ -6,6 +6,8 @@ import Lesson from "../Contrib/Lesson/Render";
 import Assignment from "../Contrib/Assignment/Render";
 import { Container, Divider, Grid, Accordion, Menu } from "semantic-ui-react";
 
+import { getIfEnrolled } from "../../../Requests/Enrollment";
+
 const menuTypes = {
   DETAIL: "Detailed",
   ASSIGNMENT: "Assignments"
@@ -21,7 +23,14 @@ class DetailedCourse extends Component {
     course: null,
     activeModule: -1,
     activeMenu: menuTypes.DETAIL,
-    newEle: this.props.newEleId
+    newEle: this.props.newEleId,
+    isEnrolledIn: false
+  };
+
+  ifEnrolledSaveHandler = data => {
+    if (data.length !== 0) {
+      this.setState({ isEnrolledIn: true });
+    }
   };
 
   courseSaveHandler = course => {
@@ -169,6 +178,7 @@ class DetailedCourse extends Component {
         {this.state.course !== null ? (
           <Course
             course={this.state.course}
+            isEnrolled={this.state.isEnrolledIn}
             type={viewType}
             addHandler={this.props.addHandler}
           />
@@ -198,6 +208,7 @@ class DetailedCourse extends Component {
 
   componentDidMount() {
     getCourse(this.props.courseId, this.courseSaveHandler);
+    getIfEnrolled(this.props.courseId, this.ifEnrolledSaveHandler);
   }
 }
 

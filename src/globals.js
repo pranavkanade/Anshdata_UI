@@ -1,4 +1,5 @@
 export const courseListType = {
   OVERVIEW: "OVERVIEW",
-  MODIFY: "MODIFY"
+  MODIFY: "MODIFY",
+  LIST: "LIST"
 };

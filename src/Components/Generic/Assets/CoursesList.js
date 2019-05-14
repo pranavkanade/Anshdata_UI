@@ -44,9 +44,10 @@ const renderModifyButtons = course => {
 const renderActionButtons = (course, type) => {
   if (type === courseListType.MODIFY) {
     return renderModifyButtons(course);
+  } else if (type === courseListType.LIST) {
+    return renderEnrollButton(course);
   }
-
-  return renderEnrollButton(course);
+  return null;
 };
 
 const renderCoursesList = props => {

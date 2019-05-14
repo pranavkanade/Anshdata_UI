@@ -6,55 +6,78 @@ import {
   Button,
   Header,
   Segment,
-  Label,
-  Icon
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
 import CoursesList from "../../Generic/Assets/CoursesList";
 import { courseListType } from "../../../globals";
-import { getAuthorization } from "../../../Requests/Authorization";
-
-const URLS = {
-  LIST_COURSE: "http://127.0.0.1:8000/api/course/"
-};
+import {
+  getCoursesList,
+  getEnrolledCoursesList
+} from "../../../Requests/Courses";
 
 class Courses extends Component {
   state = {
-    courses: []
+    courses: null,
+    enrolledCourses: null
   };
 
-  getCourseList = async () => {
-    console.log("[Courses.js] get courses");
-    try {
-      await fetch(URLS.LIST_COURSE, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          Authorization: getAuthorization()
-        }
-      })
-        .then(response => response.json())
-        .then(data => this.setState({ courses: data }));
-    } catch (err) {
-      // This means we are dealing with anonymous user
-      console.log(err);
-    }
+  saveCoursesHandler = courses => {
+    this.setState({ courses });
+  };
+
+  saveEnrolledCoursesHandler = enrolledCourses => {
+    this.setState({ enrolledCourses });
+  };
+
+  renderLoader = () => {
+    return (
+      <Container>
+        <br />
+        <br />
+        <br />
+        <br />
+        <Segment basic>
+          <Dimmer active inverted>
+            <Loader size="large">Loading</Loader>
+          </Dimmer>
+        </Segment>
+      </Container>
+    );
+  };
+
+  renderCourses = (courses, listType) => {
+    return (
+      <Card.Group itemsPerRow={3}>
+        <CoursesList
+          courses={courses}
+          courseListType={listType}
+          detailURL={"/courses"}
+        />
+      </Card.Group>
+    );
   };
 
   render() {
+    const courseListing = this.state.courses;
+    const courseEnrolledin = this.state.enrolledCourses;
     return (
       <Container className={"CoursesPlugin"}>
         <br />
         <Header as={Grid.Column} dividing size="huge">
+          Your Courses
+        </Header>
+        {courseEnrolledin === null
+          ? this.renderLoader()
+          : this.renderCourses(courseEnrolledin, courseListType.OVERVIEW)}
+        <br />
+        <Header as={Grid.Column} dividing size="huge">
           Courses List
         </Header>
+        {courseListing === null
+          ? this.renderLoader()
+          : this.renderCourses(courseListing, courseListType.LIST)}
         <br />
-        <Card.Group itemsPerRow={3}>
-          <CoursesList
-            courses={this.state.courses}
-            courseListType={courseListType.OVERVIEW}
-            detailURL={"/courses"}
-          />
-        </Card.Group>
       </Container>
     );
   }
@@ -62,17 +85,18 @@ class Courses extends Component {
   // Lifecycle methods
   componentDidMount() {
     console.log("[Courses.js] component did mount", this.state);
-    this.getCourseList();
+    getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+    getCoursesList(this.saveCoursesHandler);
   }
 
   componentWillUnmount() {
     console.log("[courses.js] component will unmount");
   }
 
-  shouldComponentUpdate() {
-    console.log("[Courses.js] should component Update");
-    return true;
-  }
+  // shouldComponentUpdate() {
+  //   console.log("[Courses.js] should component Update");
+  //   return true;
+  // }
 
   componentDidUpdate() {
     console.log("[Courses.js] component did update");

@@ -7,6 +7,7 @@ import {
   Icon,
   Divider
 } from "semantic-ui-react";
+import Link from "next/link";
 import { enrollEventHandler } from "../../../../Requests/Enrollment";
 import createCourseHandler from "./Action";
 import Router from "next/router";
@@ -46,17 +47,32 @@ const renderButtons = props => {
         </Grid.Column>
       </>
     );
+  } else if (props.isEnrolled) {
+    return (
+      <>
+        <Grid.Column width="3">
+          <Link href={`/courses/attend/${props.course.id}`}>
+            <Button size="big" color="purple" fluid>
+              Attend
+            </Button>
+          </Link>
+        </Grid.Column>
+        <Grid.Column width="1" />
+      </>
+    );
   }
   return (
     <>
       <Grid.Column width="3">
-        <Button
-          size="big"
-          color="twitter"
-          fluid
-          onClick={() => enrollEventHandler(props.course.id)}>
-          Enroll
-        </Button>
+        <Link href={`/courses/${props.course.id}`}>
+          <Button
+            size="big"
+            color="twitter"
+            fluid
+            onClick={() => enrollEventHandler(props.course.id)}>
+            Enroll
+          </Button>
+        </Link>
       </Grid.Column>
       <Grid.Column width="1" />
     </>
