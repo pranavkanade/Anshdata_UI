@@ -10,7 +10,6 @@ import {
 import Link from "next/link";
 import { enrollEventHandler } from "../../../../Requests/Enrollment";
 import createCourseHandler from "./Action";
-import Router from "next/router";
 
 const renderButtons = props => {
   console.log("render course type", props.type);
@@ -28,22 +27,23 @@ const renderButtons = props => {
             <Icon name="pencil" size="small" /> Edit Course
           </Button>
           <Divider hidden />
-          <Button
-            fluid
-            basic
-            size="big"
-            color="green"
-            name="publish"
-            onClick={() => {
-              const data = {
-                is_published: true
-              };
-              createCourseHandler(data, props.course.id, "/course");
-              Router.push(`/courses/${props.course.id}`);
-            }}>
-            <Icon name="paper plane outline" size="small" />
-            Publish Course
-          </Button>
+          <Link href={`/courses/${props.course.id}`}>
+            <Button
+              fluid
+              basic
+              size="big"
+              color="green"
+              name="publish"
+              onClick={() => {
+                const data = {
+                  is_published: true
+                };
+                createCourseHandler(data, props.course.id);
+              }}>
+              <Icon name="paper plane outline" size="small" />
+              Publish Course
+            </Button>
+          </Link>
         </Grid.Column>
       </>
     );

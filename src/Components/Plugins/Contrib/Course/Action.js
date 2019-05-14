@@ -22,7 +22,7 @@ const createCourseHandler = async (courseData, courseId, baseURL) => {
     let newCourse = await createCourseRes.json();
     console.log("Newly Created Course", newCourse);
 
-    Router.push(`${baseURL}/${newCourse.id}`);
+    // Router.push(`${baseURL}/${newCourse.id}`);
   } catch (err) {
     console.log("[Course/Form.js] user is not logged in : ", err);
   }

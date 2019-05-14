@@ -10,6 +10,7 @@ import {
   Button
 } from "semantic-ui-react";
 import createCourseHandler from "./Action";
+import Link from "next/link";
 
 const URLS = {
   LIST_CATS: "http://127.0.0.1:8000/api/plat/cat/"
@@ -61,7 +62,7 @@ class CourseContributionForm extends Component {
   createCourse = () => {
     console.log("[Course/Form.js] Create Course clicked");
     const courseData = this.getNewCourseData();
-    createCourseHandler(courseData, this.state.courseId, "/contrib/course");
+    createCourseHandler(courseData, this.state.courseId);
     if (this.props.closeHandler !== null) {
       this.props.closeHandler();
     }
@@ -169,9 +170,15 @@ class CourseContributionForm extends Component {
               <Grid.Row columns={2}>
                 <Grid.Column />
                 <Grid.Column>
-                  <Form.Button type="submit" color="twitter" fluid size="big">
-                    Save
-                  </Form.Button>
+                  <Link href="/contrib/course">
+                    <Form.Button
+                      type="submit"
+                      color="twitter"
+                      fluid
+                      size="big">
+                      Save
+                    </Form.Button>
+                  </Link>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
