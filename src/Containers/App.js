@@ -4,6 +4,7 @@ import Head from "next/head";
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Auth from "../Components/Generic/Auth/Auth";
 import Router from "next/router";
+import { refreshUserToken } from "../Requests/Authorization";
 
 class App extends Component {
   state = {
@@ -79,6 +80,7 @@ class App extends Component {
   // Lifecycle methods
   componentDidMount() {
     console.log("[App.js] component did mount", this.state);
+    refreshUserToken();
     if (!this.state.isAuthenticated) {
       this.authEventHandler();
     }
