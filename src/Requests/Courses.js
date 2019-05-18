@@ -40,3 +40,21 @@ export const getEnrolledCoursesList = async coursesSaveHandler => {
     console.log(err);
   }
 };
+
+export const getPublishedCoursesList = async (usrId, saveHandler) => {
+  console.log("[Courses.js] get courses enrolled in");
+  const URL = `http://127.0.0.1:8000/api/course/pub/${usrId}/`;
+  try {
+    await fetch(URL, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        Authorization: getAuthorization()
+      }
+    })
+      .then(response => response.json())
+      .then(data => saveHandler(data));
+  } catch (err) {
+    console.log(err);
+  }
+};
