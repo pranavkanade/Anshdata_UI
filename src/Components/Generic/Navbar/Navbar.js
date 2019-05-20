@@ -19,7 +19,9 @@ const renderAuthMenuItem = props => {
   } else {
     return (
       <>
-        <Menu.Item>{props.user.username}</Menu.Item>
+        <Link href={`/u/${props.user.username}`}>
+          <Menu.Item>{props.user.username}</Menu.Item>
+        </Link>
         <Menu.Item>
           <Button
             color="red"

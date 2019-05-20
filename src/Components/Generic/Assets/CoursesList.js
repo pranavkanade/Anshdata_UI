@@ -59,7 +59,7 @@ const renderCoursesList = props => {
         href={`${props.detailURL}/${course["id"]}`}>
         <Segment basic padded>
           <Header size="large">{course.title}</Header>
-          <span>{course.description}</span>
+          <span>{course.description.slice(0, 30)}</span>
         </Segment>
         <Segment basic>
           <Label color="grey" image>

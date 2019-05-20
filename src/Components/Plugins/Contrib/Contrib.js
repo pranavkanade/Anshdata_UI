@@ -24,7 +24,7 @@ const menuTypes = {
 
 class Contrib extends Component {
   state = {
-    activeMenu: menuTypes.COMMUNITY,
+    activeMenu: menuTypes.SELF,
     courses: [],
     commCourses: [],
     selfCourses: []
@@ -62,17 +62,17 @@ class Contrib extends Component {
     return (
       <Menu size="large" pointing secondary widths={3} fluid color="violet">
         <Menu.Item
-          name={menuTypes.COMMUNITY}
-          active={activeMenu === menuTypes.COMMUNITY}
-          onClick={() => {
-            this.setState({ activeMenu: menuTypes.COMMUNITY });
-          }}
-        />
-        <Menu.Item
           name={menuTypes.SELF}
           active={activeMenu === menuTypes.SELF}
           onClick={() => {
             this.setState({ activeMenu: menuTypes.SELF });
+          }}
+        />
+        <Menu.Item
+          name={menuTypes.COMMUNITY}
+          active={activeMenu === menuTypes.COMMUNITY}
+          onClick={() => {
+            this.setState({ activeMenu: menuTypes.COMMUNITY });
           }}
         />
         <Menu.Item disabled />
