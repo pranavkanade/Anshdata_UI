@@ -3,6 +3,8 @@ import Head from "next/head";
 
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Auth from "../Components/Generic/Auth/Auth";
+import Router from "next/router";
+import { refreshUserToken } from "../Requests/Authorization";
 
 class App extends Component {
   state = {
@@ -17,9 +19,16 @@ class App extends Component {
   };
 
   authEventHandler = () => {
+    console.log("[App.js] auth Event handler");
     const rawUserData = localStorage.getItem("AnshdataUser");
-    const isAuthenticated = !!rawUserData;
-    const user = JSON.parse(rawUserData);
+    let isAuthenticated = !!rawUserData;
+    let user;
+    try {
+      user = JSON.parse(rawUserData);
+    } catch (err) {
+      user = null;
+      isAuthenticated = false;
+    }
     this.setState({
       isAuthenticated: isAuthenticated,
       AnshdataUser: user
@@ -30,6 +39,7 @@ class App extends Component {
     localStorage.removeItem("AnshdataUser");
     this.setState({ isAuthenticated: false, attemptingSignIn: false });
     this.authEventHandler();
+    Router.push("/");
   };
 
   showAuthFormHandler = () => {
@@ -70,6 +80,7 @@ class App extends Component {
   // Lifecycle methods
   componentDidMount() {
     console.log("[App.js] component did mount", this.state);
+    refreshUserToken();
     if (!this.state.isAuthenticated) {
       this.authEventHandler();
     }

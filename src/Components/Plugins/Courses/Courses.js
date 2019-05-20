@@ -1,69 +1,94 @@
 import React, { Component } from "react";
-import { Container, Grid, Card, Button } from "semantic-ui-react";
-import enrollEventHandler from "../../../Actions/Enroll";
-
-const URLS = {
-  LIST_COURSE: "http://127.0.0.1:8000/api/course/"
-};
+import {
+  Container,
+  Grid,
+  Card,
+  Button,
+  Header,
+  Segment,
+  Dimmer,
+  Loader
+} from "semantic-ui-react";
+import CoursesList from "../../Generic/Assets/CoursesList";
+import { courseListType } from "../../../globals";
+import {
+  getCoursesList,
+  getEnrolledCoursesList
+} from "../../../Requests/Courses";
 
 class Courses extends Component {
   state = {
-    courses: []
+    courses: null,
+    enrolledCourses: null
   };
 
-  renderCoursesList = () => {
-    return this.state.courses.map(course => {
-      return (
-        <Card key={course["id"]} fluid href="#">
-          <Card.Content
-            header={course["title"]}
-            meta={"Author : " + course.author.username}
-          />
-          <Card.Description>
-            {"Enrollment Count : " + course.num_of_enrollments}
-          </Card.Description>
-          <Card.Content extra>
-            <Button
-              floated="right"
-              color="blue"
-              onClick={() => enrollEventHandler(course["id"])}>
-              Enroll
-            </Button>
-          </Card.Content>
-        </Card>
-      );
-    });
+  saveCoursesHandler = courses => {
+    this.setState({ courses });
   };
 
-  getCourseList = async () => {
-    console.log("[Courses.js] get courses");
-    const AnshdataToken = JSON.parse(localStorage.getItem("AnshdataUser"))[
-      "token"
-    ];
-    await fetch(URLS.LIST_COURSE, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${AnshdataToken}`
-      }
-    })
-      .then(response => response.json())
-      .then(data => this.setState({ courses: data }));
+  saveEnrolledCoursesHandler = enrolledCourses => {
+    if (enrolledCourses.detail === undefined) {
+      this.setState({ enrolledCourses });
+    }
+  };
+
+  renderLoader = () => {
+    return (
+      <Container>
+        <br />
+        <br />
+        <br />
+        <br />
+        <Segment basic>
+          <Dimmer active inverted>
+            <Loader size="large">Loading</Loader>
+          </Dimmer>
+        </Segment>
+      </Container>
+    );
+  };
+
+  renderCourses = (courses, listType) => {
+    return (
+      <Card.Group itemsPerRow={3}>
+        <CoursesList
+          courses={courses}
+          courseListType={listType}
+          detailURL={"/courses"}
+        />
+      </Card.Group>
+    );
+  };
+
+  renderMyCourses = () => {
+    const courseEnrolledin = this.state.enrolledCourses;
+    console.log("Courses enrolled : ", courseEnrolledin);
+    // return null;
+    return courseEnrolledin === null ? (
+      <span>Courses you'll enroll in</span>
+    ) : (
+      this.renderCourses(courseEnrolledin, courseListType.OVERVIEW)
+    );
   };
 
   render() {
+    const courseListing = this.state.courses;
+
     return (
-      <Container as="div" className={"CoursesPlugin"}>
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column width="4" />
-            <Grid.Column width="8">
-              <h4>Courses List</h4>
-              {this.renderCoursesList()}
-            </Grid.Column>
-            <Grid.Column width="4" />
-          </Grid.Row>
-        </Grid>
+      <Container className={"CoursesPlugin"}>
+        <br />
+        <Header as={Grid.Column} dividing size="huge">
+          My Courses
+        </Header>
+        {this.renderMyCourses()}
+        <br />
+        <Header as={Grid.Column} dividing size="huge">
+          Courses List
+        </Header>
+        {courseListing === null
+          ? this.renderLoader()
+          : this.renderCourses(courseListing, courseListType.LIST)}
+        <br />
       </Container>
     );
   }
@@ -71,17 +96,18 @@ class Courses extends Component {
   // Lifecycle methods
   componentDidMount() {
     console.log("[Courses.js] component did mount", this.state);
-    this.getCourseList();
+    getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+    getCoursesList(this.saveCoursesHandler);
   }
 
   componentWillUnmount() {
     console.log("[courses.js] component will unmount");
   }
 
-  shouldComponentUpdate() {
-    console.log("[Courses.js] should component Update");
-    return true;
-  }
+  // shouldComponentUpdate() {
+  //   console.log("[Courses.js] should component Update");
+  //   return true;
+  // }
 
   componentDidUpdate() {
     console.log("[Courses.js] component did update");
