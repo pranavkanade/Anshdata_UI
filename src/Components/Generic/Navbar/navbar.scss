@@ -1,0 +1,87 @@
+.brandLogo text {
+  position: absolute;
+  width: 179px;
+  height: 45px;
+  // left: 168px;
+  top: 6px;
+
+  font-family: Lato;
+  font-style: normal;
+  font-size: 36px;
+  line-height: 45px;
+
+  color: #ffffff;
+}
+
+.navbar {
+  position: absolute;
+  width: 559px;
+  height: 37px;
+  // left: 710px;
+  top: 6px;
+}
+
+.navLink {
+  margin-top: 10px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  // top: 10px;
+  // line-height: 28px;
+
+  color: #ffffff;
+}
+
+.authBtnGrp {
+  position: absolute;
+  width: 167px;
+  height: 37px;
+  left: 392px;
+  top: 5px;
+}
+
+.signIn {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 107px;
+  height: 45px;
+  text-align: center;
+  align-content: center;
+
+  background: #006eff;
+  border-radius: 3px;
+}
+
+.signIn text {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  width: 100px;
+  height: 38px;
+  color: #ffffff;
+  display: block;
+}
+
+.join {
+  margin-top: 10px;
+  margin-right: 10px;
+  width: 107px;
+  height: 45px;
+  text-align: center;
+  align-content: center;
+
+  border: 1.5px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+
+.join text {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  width: 100px;
+  color: #ffffff;
+}

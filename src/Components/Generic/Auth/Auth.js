@@ -15,7 +15,7 @@ class Auth extends Component {
     email: "",
     password: "",
     shouldOpen: true,
-    formType: "signin"
+    formType: this.props.authOption
   };
 
   tabSwitchHandler = tabKey => {

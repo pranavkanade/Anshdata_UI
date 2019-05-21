@@ -1,27 +1,39 @@
 import React from "react";
 import Link from "next/link";
 
-import { Menu, Container, Button } from "semantic-ui-react";
+import { Menu, Container, Button, MenuItem } from "semantic-ui-react";
+import css from "./navbar.scss";
 
 const menus = ["Courses", "Contribute"];
 
 const renderAuthMenuItem = props => {
   if (!props.isAuthenticated) {
     return (
-      <Menu.Item>
-        <Button
-          color="blue"
-          content="Sign In"
-          onClick={props.showAuthFormHandler}
-        />
-      </Menu.Item>
+      <>
+        <a
+          className={css.join}
+          onClick={() => props.showAuthFormHandler("signup")}>
+          <Menu.Item>
+            <text>Join</text>
+          </Menu.Item>
+        </a>
+        <a
+          className={css.signIn}
+          onClick={() => props.showAuthFormHandler("signin")}>
+          <Menu.Item>
+            <text>Sign In</text>
+          </Menu.Item>
+        </a>
+      </>
     );
   } else {
     return (
       <>
-        <Link href={`/u/${props.user.username}`}>
-          <Menu.Item>{props.user.username}</Menu.Item>
-        </Link>
+        <a href={`/u/${props.user.username}`}>
+          <Menu.Item>
+            <text className={css.navLink}>{props.user.username}</text>
+          </Menu.Item>
+        </a>
         <Menu.Item>
           <Button
             color="red"
@@ -37,11 +49,11 @@ const renderAuthMenuItem = props => {
 const renderNavMenus = props => {
   return menus.map((m, i) => {
     return (
-      <Link href={"/".concat(m.toLowerCase())} key={i}>
+      <a href={"/".concat(m.toLowerCase())} key={i}>
         <Menu.Item as="div" name={m} active={props.activeMenu === m}>
-          <a>{m}</a>
+          <text className={css.navLink}>{m}</text>
         </Menu.Item>
-      </Link>
+      </a>
     );
   });
 };
@@ -49,13 +61,11 @@ const renderNavMenus = props => {
 const navbar = props => {
   return (
     <div className={"Navbar"}>
-      <Menu as="div" secondary stackable borderless>
+      <Menu secondary stackable borderless fixed="top">
         <Container>
-          <Link href="/">
-            <Menu.Item as="div" header>
-              Anshdata
-            </Menu.Item>
-          </Link>
+          <a className={css.brandLogo} href="/">
+            <text>Anshdata</text>
+          </a>
           <Menu.Menu position="right">
             {renderNavMenus(props)}
             {renderAuthMenuItem(props)}

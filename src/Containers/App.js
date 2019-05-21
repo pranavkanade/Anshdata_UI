@@ -11,7 +11,8 @@ class App extends Component {
     page: this.props.page,
     isAuthenticated: false,
     AnshdataUser: null,
-    attemptingSignIn: false
+    attemptingSignIn: false,
+    authOption: null
   };
 
   hideAuthFormHandler = () => {
@@ -42,8 +43,8 @@ class App extends Component {
     Router.push("/");
   };
 
-  showAuthFormHandler = () => {
-    this.setState({ attemptingSignIn: true });
+  showAuthFormHandler = authOption => {
+    this.setState({ attemptingSignIn: true, authOption });
   };
 
   render() {
@@ -70,6 +71,7 @@ class App extends Component {
           <Auth
             reloadOnAuthEvent={this.authEventHandler}
             hideAuthFormHandler={this.hideAuthFormHandler}
+            authOption={this.state.authOption}
           />
         ) : null}
         <div>{this.props.children}</div>
