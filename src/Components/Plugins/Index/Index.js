@@ -6,7 +6,7 @@ import css from "./index.scss";
 const index = props => {
   return (
     <div className={"IndexPlugin"}>
-      <div className={`${css.hero}`}>
+      <div className={css.hero}>
         <span className={css.heroMsg}>
           <b>Unlocking</b> the potential of online learning, together!
         </span>
@@ -23,9 +23,10 @@ const index = props => {
             </a>
           </div>
         </div>
-        <div className={css.heroImg}>
-          <img src="/static/Imgs/Homepage-Hero/teamwork.png" />
-        </div>
+        <img
+          className={css.heroImg}
+          src="/static/Imgs/Homepage-Hero/teamwork.png"
+        />
       </div>
     </div>
   );
