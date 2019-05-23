@@ -7,7 +7,8 @@ import {
   Header,
   Segment,
   Dimmer,
-  Loader
+  Loader,
+  Divider
 } from "semantic-ui-react";
 import CoursesList from "../../Generic/Assets/CoursesList";
 import { courseListType } from "../../../globals";
@@ -15,6 +16,7 @@ import {
   getCoursesList,
   getEnrolledCoursesList
 } from "../../../Requests/Courses";
+import css from "./courses.scss";
 
 class Courses extends Component {
   state = {
@@ -49,8 +51,11 @@ class Courses extends Component {
   };
 
   renderCourses = (courses, listType) => {
+    if (courses.length === 0) {
+      return <p>Take up some courses</p>;
+    }
     return (
-      <Card.Group itemsPerRow={3}>
+      <Card.Group>
         <CoursesList
           courses={courses}
           courseListType={listType}
@@ -75,21 +80,31 @@ class Courses extends Component {
     const courseListing = this.state.courses;
 
     return (
-      <Container className={"CoursesPlugin"}>
-        <br />
-        <Header as={Grid.Column} dividing size="huge">
-          My Courses
-        </Header>
-        {this.renderMyCourses()}
-        <br />
-        <Header as={Grid.Column} dividing size="huge">
-          Courses List
-        </Header>
-        {courseListing === null
-          ? this.renderLoader()
-          : this.renderCourses(courseListing, courseListType.LIST)}
-        <br />
-      </Container>
+      <div className={"CoursesPlugin"}>
+        <div className={css.courses}>
+          <div className={css.myCourses}>
+            <Divider hidden />
+            <Divider hidden />
+            <text className={css.heading}>My Courses</text>
+            <Divider />
+            {this.renderMyCourses()}
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
+          </div>
+
+          <div className={css.catalog}>
+            <Divider hidden />
+            <Divider hidden />
+            <text className={css.heading}>Course Catalog</text>
+            <Divider />
+            {courseListing === null
+              ? this.renderLoader()
+              : this.renderCourses(courseListing, courseListType.LIST)}
+          </div>
+          <Divider hidden />
+        </div>
+      </div>
     );
   }
 

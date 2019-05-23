@@ -1,43 +1,41 @@
 import React from "react";
 import { enrollEventHandler } from "../../../Requests/Enrollment";
 import { courseListType } from "../../../globals";
-import { Card, Segment, Header, Label, Icon, Button } from "semantic-ui-react";
+import Link from "next/link";
+import css from "./courselist.scss";
 
 const renderEnrollButton = course => {
   return (
-    <Button
-      color="facebook"
+    <button
       onClick={() => enrollEventHandler(course["id"])}
-      attached="bottom"
-      fluid
-      size="large">
-      Enroll
-    </Button>
+      className={css.enrollBtn}>
+      <text>Enroll</text>
+    </button>
   );
 };
 
 const renderModifyButtons = course => {
   return (
-    <Button.Group attached="bottom" size="large" widths="two">
-      <Button
-        basic
-        color="grey"
-        name="modify"
-        onClick={() => {
-          console.log("[Contirb.js] Modify button clicked");
-        }}>
-        Modify
-      </Button>
-      <Button
-        basic
-        color="red"
-        name="delete"
-        onClick={() => {
-          console.log("[Contirb.js] Delete button clicked");
-        }}>
-        Delete
-      </Button>
-    </Button.Group>
+    <button
+      onClick={() => {
+        console.log("[Contirb.js] Modify button clicked");
+      }}
+      className={css.modifyBtn}>
+      <text>Modify</text>
+    </button>
+  );
+};
+
+const renderContinueButton = course => {
+  // send to attend the course
+  return (
+    <button
+      onClick={() => {
+        console.log("[Contirb.js] Attend button clicked");
+      }}
+      className={css.attendBtn}>
+      <text>Attend</text>
+    </button>
   );
 };
 
@@ -47,42 +45,49 @@ const renderActionButtons = (course, type) => {
   } else if (type === courseListType.LIST) {
     return renderEnrollButton(course);
   }
-  return null;
+  return renderContinueButton(course);
 };
 
 const renderCoursesList = props => {
   return props.courses.map(course => {
     return (
-      <Card
-        key={course["id"]}
-        raised
-        href={`${props.detailURL}/${course["id"]}`}>
-        <Segment basic padded>
-          <Header size="large">{course.title}</Header>
-          <span>{course.description.slice(0, 30)}</span>
-        </Segment>
-        <Segment basic>
-          <Label color="grey" image>
-            <img src="https://react.semantic-ui.com/images/avatar/small/veronika.jpg" />
-            {course.author.username}
-            <Label.Detail>Author</Label.Detail>
-          </Label>
-          <Label color="olive">
-            <Icon name="dollar" />
-            {course.credit_points}
-            <Label.Detail>Credit Points</Label.Detail>
-          </Label>
-        </Segment>
-        <Segment basic>
-          <Label basic color="teal" size="large">
-            {course.subject}
-          </Label>
-          <Label basic color="violet" size="large">
-            {course.category.title}
-          </Label>
-        </Segment>
+      // TODO: Add the link - href={`${props.detailURL}/${course["id"]}`}
+      <div className={css.courseCard} key={course["id"]}>
+        <a className={css.linked} href={`${props.detailURL}/${course["id"]}`}>
+          <div className={css.title}>
+            <em>
+              <p>{course.title}</p>
+            </em>
+          </div>
+          <div className={css.descriptionBox}>
+            <p>{course.description.slice(0, 30)} ...</p>
+          </div>
+        </a>
+        <div className={css.credNratingBox}>
+          <div className={css.ratingBox}>
+            <text className={css.heading}>Rating</text>
+            <div /> {/** TODO: Add rating images */}
+          </div>
+          <div className={css.creditBox}>
+            <text className={css.heading}>Credit Point</text>
+            <text className={css.value}>{course.credit_points}</text>
+          </div>
+        </div>
+        <div className={css.subCatBox}>
+          <div className={css.subjectBox}>
+            <text className={css.value}>{course.subject}</text>
+          </div>
+          <div className={css.categoryBox}>
+            <text className={css.value}>{course.category.title}</text>
+          </div>
+        </div>
+        <div className={css.authorBox}>
+          <text className={css.heading}>Author</text>
+          <text className={css.value}>{course.author.username}</text>
+        </div>
+
         {renderActionButtons(course, props.courseListType)}
-      </Card>
+      </div>
     );
   });
 };
