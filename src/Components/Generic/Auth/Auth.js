@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 
-import { Form, Modal, Menu, Segment, Grid } from "semantic-ui-react";
+import {
+  Form,
+  Modal,
+  Menu,
+  Segment,
+  Grid,
+  Button,
+  Divider
+} from "semantic-ui-react";
 import Router from "next/router";
 
 const URLS = {
@@ -86,15 +94,9 @@ class Auth extends Component {
                   onChange={event => this.changeHandler(event)}
                 />
               </Form.Field>
-              <Form.Button type="submit" size="large" color="violet" inverted>
+              <Divider hidden />
+              <Form.Button type="submit" size="large" color="violet" fluid>
                 {isSignup ? "Sign Up" : "Sign In"}
-              </Form.Button>
-
-              <Form.Button
-                size="large"
-                color="red"
-                onClick={this.props.hideAuthFormHandler}>
-                Cancle
               </Form.Button>
             </Form>
           </Grid.Column>
@@ -108,7 +110,7 @@ class Auth extends Component {
       "[Auth.js] render\n-------------------------------------------"
     );
     return (
-      <>
+      <div>
         <Modal
           size="tiny"
           dimmer="blurring"
@@ -117,10 +119,19 @@ class Auth extends Component {
           closeOnEscape={false}
           onClose={this.close}
           centered>
-          <Modal.Header>
-            {this.state.formType === "signin"
-              ? "Sign in to your account"
-              : "Create your new account"}
+          <Modal.Header as={"div"}>
+            <text>
+              {this.state.formType === "signin"
+                ? "Sign in to your account"
+                : "Create your new account"}
+            </text>
+            <Button
+              icon="close"
+              floated="right"
+              color="red"
+              basic
+              onClick={this.props.hideAuthFormHandler}
+            />
           </Modal.Header>
           <Modal.Content>
             <Menu attached="top" tabular size="massive" borderless widths={2}>
@@ -139,7 +150,7 @@ class Auth extends Component {
             <Segment attached="bottom"> {this.renderAuthForm()} </Segment>
           </Modal.Content>
         </Modal>
-      </>
+      </div>
     );
   }
 
