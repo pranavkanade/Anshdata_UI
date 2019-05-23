@@ -60,8 +60,8 @@ const renderNavMenus = props => {
 
 const navbar = props => {
   return (
-    <div className={"Navbar"}>
-      <Menu secondary stackable borderless fixed="top">
+    <div className={css.navbar}>
+      <Menu borderless inverted size="huge" attached>
         <Container>
           <a className={css.brandLogo} href="/">
             <text>Anshdata</text>
