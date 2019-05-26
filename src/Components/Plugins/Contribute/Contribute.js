@@ -1,27 +1,32 @@
 import React from "react";
 import Link from "next/link";
 import { Container, Grid, Button } from "semantic-ui-react";
+import css from "./contribute.scss";
 
 const contribute = props => {
   return (
-    <Container as="div" className={"ContributePlugin"}>
-      <Grid>
-        <Grid.Row columns={3}>
-          <Grid.Column width="4" />
-          <Grid.Column width="8">
-            <Link href="/contrib">
-              <Button color="twitter">Contribute to Course Work</Button>
-            </Link>
-            <Link href="/contribute">
-              <Button color="facebook">
-                Contribute by Reviewing Solutions
-              </Button>
-            </Link>
-          </Grid.Column>
-          <Grid.Column width="4" />
-        </Grid.Row>
-      </Grid>
-    </Container>
+    <div className={css.contribute}>
+      <div className={css.hero}>
+        <div className={css.choice}>
+          <img src="/static/Imgs/Contribute-Hero/online_tutorial.svg" />
+          <Link href="/contrib/course">
+            <button>Add New Course</button>
+          </Link>
+        </div>
+        <div className={css.choice}>
+          <img src="/static/Imgs/Contribute-Hero/adjustment.svg" />
+          <Link href="/contrib">
+            <button>Update Drafted Course</button>
+          </Link>
+        </div>
+        <div className={css.choice}>
+          <img src="/static/Imgs/Contribute-Hero/teaching.svg" />
+          <Link href="/contribute">
+            <button>Review Requests</button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 
