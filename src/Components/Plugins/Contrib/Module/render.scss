@@ -1,0 +1,64 @@
+.module {
+  background: #ffffff;
+  border: 2px solid #dadada;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 2rem;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+
+  .heading {
+    grid-column: 1/ -1;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #000000;
+  }
+
+  %font {
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .clsBox {
+    border: 3px solid #1ec8ff;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 0.5rem;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 3fr 1fr;
+    justify-items: center;
+    align-items: center;
+    @extend %font;
+    color: #1ec8ff;
+  }
+
+  .assignBox {
+    border: 3px solid #536dfe;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    @extend %font;
+    color: #536dfe;
+  }
+
+  transition: transform 0.2s ease;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 1px 20px 50px rgba(0, 0, 0, 0.2);
+  }
+}

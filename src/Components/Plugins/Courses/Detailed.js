@@ -7,6 +7,7 @@ import Assignment from "../Contrib/Assignment/Render";
 import { Container, Divider, Grid, Accordion, Menu } from "semantic-ui-react";
 
 import { getIfEnrolled } from "../../../Requests/Enrollment";
+import css from "./detailed.scss";
 
 const menuTypes = {
   DETAIL: "Detailed",
@@ -145,24 +146,24 @@ class DetailedCourse extends Component {
   renderSecondaryMenu = () => {
     const { activeMenu } = this.state;
     return (
-      <div>
-        <Menu size="large" pointing secondary widths={3} fluid color="violet">
+      <div className={css.secMenu}>
+        <Menu secondary>
           <Menu.Item
-            name={menuTypes.DETAIL}
             active={activeMenu === menuTypes.DETAIL}
             onClick={() => {
               this.setState({ activeMenu: menuTypes.DETAIL });
-            }}
-          />
+            }}>
+            <text>{menuTypes.DETAIL}</text>
+          </Menu.Item>
           <Menu.Item
-            name={menuTypes.ASSIGNMENT}
             active={activeMenu === menuTypes.ASSIGNMENT}
             onClick={() => {
               this.setState({ activeMenu: menuTypes.ASSIGNMENT });
-            }}
-          />
-          <Menu.Item disabled />
+            }}>
+            <text>{menuTypes.ASSIGNMENT}</text>
+          </Menu.Item>
         </Menu>
+        <Divider />
       </div>
     );
   };
@@ -173,7 +174,7 @@ class DetailedCourse extends Component {
         ? viewTypes.DETAIL
         : this.props.viewType;
     return (
-      <Container>
+      <div className={css.detailed}>
         <br />
         {this.state.course !== null ? (
           <Course
@@ -183,26 +184,14 @@ class DetailedCourse extends Component {
             addHandler={this.props.addHandler}
           />
         ) : null}
-
-        <Divider />
-
+        <Divider hidden />
         {this.renderSecondaryMenu()}
-        <Grid>
-          <Grid.Row columns={3}>
-            <Grid.Column width={1} />
-            <Grid.Column width={14}>
-              <br />
-              {this.state.activeMenu === menuTypes.DETAIL
-                ? this.renderModules(viewType)
-                : this.renderAssignments(
-                    this.state.course.assignments,
-                    viewType
-                  )}
-            </Grid.Column>
-            <Grid.Column width={1} />
-          </Grid.Row>
-        </Grid>
-      </Container>
+        <div className={css.modBox}>
+          {this.state.activeMenu === menuTypes.DETAIL
+            ? this.renderModules(viewType)
+            : this.renderAssignments(this.state.course.assignments, viewType)}
+        </div>
+      </div>
     );
   }
 

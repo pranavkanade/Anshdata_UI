@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Segment, Header, Button, Icon, Label } from "semantic-ui-react";
+import css from "./render.scss";
 
 const renderEditButtons = props => {
   return (
@@ -39,30 +40,23 @@ const renderEditButtons = props => {
 const moduleRender = props => {
   // console.log("moduleRender: ", props.module);
   return (
-    <Segment.Group raised>
-      <Segment basic>
-        <Header>{props.module.title}</Header>
-        <span>{props.module.description}</span>
-      </Segment>
-      <Segment basic>
-        <Label basic size="large" color="violet">
-          <Icon name="book" />
-          {props.module.lessons.length}
-          <Label.Detail>Lessons</Label.Detail>
-        </Label>
-        <Label basic size="large" color="brown">
-          <Icon name="pen square" />
-          {props.module.assignments.length}
-          <Label.Detail>Assignments</Label.Detail>
-        </Label>
-        <Button icon basic floated="right">
-          {props.isExpanded ? <Icon name="minus" /> : <Icon name="add" />}
-        </Button>
-      </Segment>
-      <br />
-      {/* NOTE: if this is 'detail' that means a user is viewing the course in detail */}
+    <div className={css.module}>
+      <div className={css.heading}>
+        <text>{props.module.title}</text>
+      </div>
+      <div className={css.clsBox}>
+        <text>Lessons</text>
+        <text>{props.module.lessons.length}</text>
+      </div>
+      <div className={css.assignBox}>
+        <text>Assignments</text>
+        <text>{props.module.assignments.length}</text>
+      </div>
+      {/* NOTE: if this is 'detail' that means a user is viewing the course in detail
+        TODO: Edit following with assignment creation
+    */}
       {props.type !== "detail" ? renderEditButtons(props) : null}
-    </Segment.Group>
+    </div>
   );
 };
 
