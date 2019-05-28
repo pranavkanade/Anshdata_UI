@@ -10,10 +10,12 @@ import {
 import Link from "next/link";
 import { enrollEventHandler } from "../../../../Requests/Enrollment";
 import createCourseHandler from "./Action";
+import css from "./render.scss";
 
 const renderButtons = props => {
   console.log("render course type", props.type);
   if (props.type !== "detail") {
+    // TODO: Style these buttons
     return (
       <>
         <Grid.Column width="4">
@@ -49,81 +51,51 @@ const renderButtons = props => {
     );
   } else if (props.isEnrolled) {
     return (
-      <>
-        <Grid.Column width="3">
-          <Link href={`/courses/attend/${props.course.id}`}>
-            <Button size="big" color="purple" fluid>
-              Attend
-            </Button>
-          </Link>
-        </Grid.Column>
-        <Grid.Column width="1" />
-      </>
+      <Link href={`/courses/attend/${props.course.id}`}>
+        <button className={css.attend}>Attend</button>
+      </Link>
     );
   }
   return (
-    <>
-      <Grid.Column width="3">
-        <Link href={`/courses/${props.course.id}`}>
-          <Button
-            size="big"
-            color="twitter"
-            fluid
-            onClick={() => enrollEventHandler(props.course.id)}>
-            Enroll
-          </Button>
-        </Link>
-      </Grid.Column>
-      <Grid.Column width="1" />
-    </>
+    <Link href={`/courses/${props.course.id}`}>
+      <button
+        className={css.enroll}
+        onClick={() => enrollEventHandler(props.course.id)}>
+        Enroll
+      </button>
+    </Link>
   );
 };
 
 const courseRender = props => {
   return (
-    <>
-      <Segment basic>
-        <Grid>
-          <Grid.Row columns={4}>
-            <Grid.Column width="1" />
-            <Grid.Column width="11">
-              <Header>
-                <h2>{props.course.title}</h2>
-              </Header>
-              <Header>Description</Header>
-              <span>{props.course.description}</span>
-            </Grid.Column>
-            {renderButtons(props)}
-          </Grid.Row>
-        </Grid>
-      </Segment>
-      <Grid textAlign="center">
-        <Grid.Row columns={5}>
-          <Grid.Column>
-            <Segment color="blue" attached>
-              <Header>Credit Points</Header>
-              <Header.Subheader>{props.course.credit_points}</Header.Subheader>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment color="violet" attached>
-              <Header>Category</Header>
-              <Header.Subheader>
-                {props.course.category.title}
-              </Header.Subheader>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment color="teal" attached>
-              <Header>Subject</Header>
-              <Header.Subheader>{props.course.subject}</Header.Subheader>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column />
-          <Grid.Column />
-        </Grid.Row>
-      </Grid>
-    </>
+    <div>
+      <h1 className={css.heading}>{props.course.title}</h1>
+      <hr />
+      <div className={css.extraOne}>
+        <div className={css.descBox}>
+          <p>{props.course.description}</p>
+        </div>
+        <div className={css.detailBox}>
+          <div className={css.item}>
+            <text className={css.heading}>Credit Points</text>
+            <text className={css.value}>{props.course.credit_points}</text>
+          </div>
+          <div className={css.item}>
+            <text className={css.heading}>Category</text>
+            <text className={css.value}>{props.course.category.title}</text>
+          </div>
+          <div className={css.item}>
+            <text className={css.heading}>Subject</text>
+            <text className={css.value}>{props.course.subject}</text>
+          </div>
+        </div>
+      </div>
+      <div className={css.extraTwo}>
+        {renderButtons(props)}
+        <div className={css.tagBox}>tagbox</div>
+      </div>
+    </div>
   );
 };
 
