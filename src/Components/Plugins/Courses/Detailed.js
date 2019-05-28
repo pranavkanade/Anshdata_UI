@@ -28,7 +28,7 @@ class DetailedCourse extends Component {
   };
 
   ifEnrolledSaveHandler = data => {
-    if (data.length !== 0) {
+    if (data !== undefined) {
       this.setState({ isEnrolledIn: true });
     }
   };
