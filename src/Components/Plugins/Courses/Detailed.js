@@ -4,7 +4,7 @@ import Course from "../Contrib/Course/Render";
 import Module from "../Contrib/Module/Render";
 import Lesson from "../Contrib/Lesson/Render";
 import Assignment from "../Contrib/Assignment/Render";
-import { Container, Divider, Grid, Accordion, Menu } from "semantic-ui-react";
+import { Modal, Divider, Grid, Accordion, Menu } from "semantic-ui-react";
 
 import { getIfEnrolled } from "../../../Requests/Enrollment";
 import css from "./detailed.scss";
@@ -79,23 +79,33 @@ class DetailedCourse extends Component {
 
     return lessons.map(lsn => {
       return (
-        <div key={lsn.id}>
+        <div key={lsn.id} className={css.item}>
           <Lesson
             lesson={lsn}
             type={viewType}
             addHandler={this.props.addHandler}
           />
-          <Grid>
-            <Grid.Row columns={2}>
-              <Grid.Column width={2} />
-              <Grid.Column width={14}>
-                {this.renderAssignments(lsn.assignments, viewType, false)}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          <div>{this.renderAssignments(lsn.assignments, viewType, false)}</div>
         </div>
       );
     });
+  };
+
+  renderLessonList = (mod, viewType) => {
+    return (
+      <div className={css.detailedModBox}>
+        <div>
+          <span className={css.heading}>{mod.title}</span>
+          <Divider hidden />
+          <span className={css.desc}>{mod.description}</span>
+        </div>
+        <div className={css.lessons}>
+          {this.renderLessons(mod.lessons, viewType)}
+        </div>
+        <Divider />
+        <div>{this.renderAssignments(mod.assignments, viewType, true)}</div>
+      </div>
+    );
   };
 
   renderModules = viewType => {
@@ -105,40 +115,24 @@ class DetailedCourse extends Component {
 
     return this.state.course.modules.map(mod => {
       return (
-        <Accordion key={mod.id}>
-          <Accordion.Title
-            active={mod.id === this.state.activeModule}
-            onClick={() => {
-              this.moduleExpansionHandler(mod.id);
-            }}>
-            <Module
-              module={mod}
-              type={viewType}
-              isExpanded={mod.id === this.state.activeModule}
-              addHandler={this.props.addHandler}
-            />
-          </Accordion.Title>
-          {/*
-          TODO: Edit this to put the rendered lessons and Assignments here
-         */}
-          <Accordion.Content active={mod.id === this.state.activeModule}>
-            <Grid>
-              <Grid.Row columns={2}>
-                <Grid.Column width={2} />
-                <Grid.Column width={14}>
-                  {this.renderLessons(mod.lessons, viewType)}
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row columns={2}>
-                <Grid.Column width={1} />
-                <Grid.Column width={15}>
-                  {this.renderAssignments(mod.assignments, viewType, true)}
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-            <br />
-          </Accordion.Content>
-        </Accordion>
+        <>
+          <div className={css.modBox} key={mod.id}>
+            <div
+              onClick={() => {
+                this.moduleExpansionHandler(mod.id);
+              }}>
+              <Module
+                module={mod}
+                type={viewType}
+                isExpanded={mod.id === this.state.activeModule}
+                addHandler={this.props.addHandler}
+              />
+            </div>
+          </div>
+          {mod.id === this.state.activeModule
+            ? this.renderLessonList(mod, viewType)
+            : null}
+        </>
       );
     });
   };
@@ -186,7 +180,7 @@ class DetailedCourse extends Component {
         ) : null}
         <Divider hidden />
         {this.renderSecondaryMenu()}
-        <div className={css.modBox}>
+        <div className={css.listModBox}>
           {this.state.activeMenu === menuTypes.DETAIL
             ? this.renderModules(viewType)
             : this.renderAssignments(this.state.course.assignments, viewType)}

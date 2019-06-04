@@ -40,7 +40,7 @@ const renderEditButtons = props => {
 const moduleRender = props => {
   // console.log("moduleRender: ", props.module);
   return (
-    <div className={css.module}>
+    <div className={css.content}>
       <div className={css.heading}>
         <text>{props.module.title}</text>
       </div>

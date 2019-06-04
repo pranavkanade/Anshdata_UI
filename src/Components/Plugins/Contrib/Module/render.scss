@@ -1,6 +1,6 @@
-.module {
+.content {
   background: #ffffff;
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
   border-radius: 5px;
   box-sizing: border-box;
   padding: 2rem;
@@ -29,7 +29,7 @@
   }
 
   .clsBox {
-    border: 3px solid #1ec8ff;
+    border: 2px solid #1ec8ff;
     box-sizing: border-box;
     border-radius: 5px;
     padding: 0.5rem;
@@ -43,7 +43,7 @@
   }
 
   .assignBox {
-    border: 3px solid #536dfe;
+    border: 2px solid #536dfe;
     box-sizing: border-box;
     border-radius: 5px;
     padding: 0.5rem;
@@ -58,7 +58,7 @@
 
   transition: transform 0.2s ease;
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.04);
     box-shadow: 1px 20px 50px rgba(0, 0, 0, 0.2);
   }
 }
