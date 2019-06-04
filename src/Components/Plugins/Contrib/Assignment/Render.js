@@ -1,6 +1,15 @@
 import React from "react";
 
-import { Segment, Header, Button, Icon, Label } from "semantic-ui-react";
+import {
+  Segment,
+  Header,
+  Button,
+  Icon,
+  Label,
+  Divider
+} from "semantic-ui-react";
+
+import css from "./render.scss";
 
 // TODO: The addHandler need to be provided in contribution page
 const renderEditButtons = props => {
@@ -27,15 +36,14 @@ const renderEditButtons = props => {
 const assignmentRender = props => {
   return (
     <>
-      <br />
-      <Segment raised attached color="orange">
-        <Header size="small">{props.assignment.title}</Header>
-        <Label basic size="small" color="blue">
-          <Icon name="pen square" />
-          {props.assignment.credit_points}
-          <Label.Detail>Credit Points</Label.Detail>
-        </Label>
-      </Segment>
+      <div className={css.assignment}>
+        <span className={css.heading}>{props.assignment.title}</span>
+        <Divider hidden />
+        <div className={css.credits}>
+          <text>Credit Points</text>
+          <text>{props.assignment.credit_points}</text>
+        </div>
+      </div>
       {props.type !== "detail" ? renderEditButtons(props) : null}
     </>
   );

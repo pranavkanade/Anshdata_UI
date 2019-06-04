@@ -72,6 +72,14 @@ class DetailedCourse extends Component {
     });
   };
 
+  renderAllAssignments = viewType => {
+    return (
+      <div className={css.listAssignBox}>
+        {this.renderAssignments(this.state.course.assignments, viewType)}
+      </div>
+    );
+  };
+
   renderLessons = (lessons, viewType) => {
     if (lessons === null) {
       return null;
@@ -113,28 +121,32 @@ class DetailedCourse extends Component {
       return null;
     }
 
-    return this.state.course.modules.map(mod => {
-      return (
-        <>
-          <div className={css.modBox} key={mod.id}>
-            <div
-              onClick={() => {
-                this.moduleExpansionHandler(mod.id);
-              }}>
-              <Module
-                module={mod}
-                type={viewType}
-                isExpanded={mod.id === this.state.activeModule}
-                addHandler={this.props.addHandler}
-              />
-            </div>
-          </div>
-          {mod.id === this.state.activeModule
-            ? this.renderLessonList(mod, viewType)
-            : null}
-        </>
-      );
-    });
+    return (
+      <div className={css.listModBox}>
+        {this.state.course.modules.map(mod => {
+          return (
+            <>
+              <div className={css.modBox} key={mod.id}>
+                <div
+                  onClick={() => {
+                    this.moduleExpansionHandler(mod.id);
+                  }}>
+                  <Module
+                    module={mod}
+                    type={viewType}
+                    isExpanded={mod.id === this.state.activeModule}
+                    addHandler={this.props.addHandler}
+                  />
+                </div>
+              </div>
+              {mod.id === this.state.activeModule
+                ? this.renderLessonList(mod, viewType)
+                : null}
+            </>
+          );
+        })}
+      </div>
+    );
   };
 
   renderSecondaryMenu = () => {
@@ -180,10 +192,10 @@ class DetailedCourse extends Component {
         ) : null}
         <Divider hidden />
         {this.renderSecondaryMenu()}
-        <div className={css.listModBox}>
+        <div className={css.secondaryBox}>
           {this.state.activeMenu === menuTypes.DETAIL
             ? this.renderModules(viewType)
-            : this.renderAssignments(this.state.course.assignments, viewType)}
+            : this.renderAllAssignments(viewType)}
         </div>
       </div>
     );

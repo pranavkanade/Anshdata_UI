@@ -1,0 +1,40 @@
+%font {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.assignment {
+  background: #ffffff;
+  border: 1px solid #dadada;
+  box-sizing: border-box;
+  border-radius: 15px;
+  padding: 1.5rem;
+
+  .heading {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+
+    color: #000000;
+  }
+
+  .credits {
+    width: 15rem;
+    border: 2px solid #ff9b70;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 0.5rem;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 3fr 1fr;
+    justify-items: center;
+    align-items: center;
+    @extend %font;
+    color: #ff9b70;
+  }
+}
