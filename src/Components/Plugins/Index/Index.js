@@ -1,33 +1,13 @@
 import React from "react";
-import Link from "next/link";
-import { Container, Grid, Button } from "semantic-ui-react";
-import css from "./index.scss";
+
+import Hero from "./HeroCard/HeroCard";
 
 const index = props => {
   return (
     <div className={"IndexPlugin"}>
-      <div className={css.hero}>
-        <span className={css.heroMsg}>
-          <b>Unlocking</b> the potential of online learning, together!
-        </span>
-        <div className={css.startBtnGrp}>
-          <div className={css.exploreBtn}>
-            <a href="/courses">
-              <text>Start Exploring</text>
-            </a>
-          </div>
-          <div className={css.separator} />
-          <div className={css.contribBtn}>
-            <a href="/contribute">
-              <text>Contribute Now</text>
-            </a>
-          </div>
-        </div>
-        <img
-          className={css.heroImg}
-          src="/static/Imgs/Homepage-Hero/teamwork.png"
-        />
-      </div>
+      <Hero explore="/courses" contribute="/contribute" />
+      <br />
+      <hr />
     </div>
   );
 };
