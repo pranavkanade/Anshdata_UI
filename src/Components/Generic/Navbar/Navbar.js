@@ -1,46 +1,43 @@
 import React from "react";
 import Link from "next/link";
 
-import { Menu, Container, Button, MenuItem } from "semantic-ui-react";
 import css from "./navbar.scss";
 
-const menus = ["Courses", "Contribute"];
+const menus = ["Courses", "Contribute", "Blog"];
 
 const renderAuthMenuItem = props => {
   if (!props.isAuthenticated) {
     return (
       <>
-        <a
-          className={css.join}
-          onClick={() => props.showAuthFormHandler("signup")}>
-          <Menu.Item>
-            <text>Join</text>
-          </Menu.Item>
-        </a>
-        <a
-          className={css.signIn}
-          onClick={() => props.showAuthFormHandler("signin")}>
-          <Menu.Item>
+        <div>
+          <button
+            className={css.join}
+            onClick={() => props.showAuthFormHandler("signup")}>
+            Join
+          </button>
+        </div>
+        <div>
+          <button
+            className={css.signIn}
+            onClick={() => props.showAuthFormHandler("signin")}>
             <text>Sign In</text>
-          </Menu.Item>
-        </a>
+          </button>
+        </div>
       </>
     );
   } else {
     return (
       <>
-        <a href={`/u/${props.user.username}`}>
-          <Menu.Item>
-            <text className={css.navLink}>{props.user.username}</text>
-          </Menu.Item>
-        </a>
-        <Menu.Item>
-          <Button
-            color="red"
-            content="Sign Out"
-            onClick={props.signOutHandler}
-          />
-        </Menu.Item>
+        <div>
+          <a href={`/u/${props.user.username}`}>
+            <button className={css.navLink}>{props.user.username}</button>
+          </a>
+        </div>
+        <div>
+          <button className={css.signOut} onClick={props.signOutHandler}>
+            <text>Sign Out</text>
+          </button>
+        </div>
       </>
     );
   }
@@ -49,11 +46,11 @@ const renderAuthMenuItem = props => {
 const renderNavMenus = props => {
   return menus.map((m, i) => {
     return (
-      <a href={"/".concat(m.toLowerCase())} key={i}>
-        <Menu.Item as="div" name={m} active={props.activeMenu === m}>
-          <text className={css.navLink}>{m}</text>
-        </Menu.Item>
-      </a>
+      <div>
+        <a href={"/".concat(m.toLowerCase())} key={i}>
+          <button className={css.navLink}>{m}</button>
+        </a>
+      </div>
     );
   });
 };
@@ -61,17 +58,17 @@ const renderNavMenus = props => {
 const navbar = props => {
   return (
     <div className={css.navbar}>
-      <Menu borderless inverted size="huge" attached>
-        <Container>
-          <a className={css.brandLogo} href="/">
-            <text>Anshdata</text>
+      <div className={css.container}>
+        <div className={css.brandLogo}>
+          <a href="/">
+            <button>Anshdata</button>
           </a>
-          <Menu.Menu position="right">
-            {renderNavMenus(props)}
-            {renderAuthMenuItem(props)}
-          </Menu.Menu>
-        </Container>
-      </Menu>
+        </div>
+        <div className={css.item}>
+          {renderNavMenus(props)}
+          {renderAuthMenuItem(props)}
+        </div>
+      </div>
     </div>
   );
 };
