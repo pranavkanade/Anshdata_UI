@@ -1,0 +1,62 @@
+@import "../../../../../static/styles/globals.scss";
+
+.container {
+  margin: 3rem 8rem 0 8rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 3rem;
+
+  span {
+    padding-left: 4rem;
+    font-family: Scope One;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 66px;
+
+    color: $Black-1;
+  }
+
+  .actions {
+    margin-top: 2rem;
+    width: 100%;
+    height: 370px;
+
+    background: $grad-2;
+    /* mild */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+  }
+  .introClip {
+    height: 320px;
+    width: 470px;
+    justify-self: right;
+  }
+  iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  button {
+    margin-top: 4.5rem;
+    align-self: end;
+    width: 470px;
+    height: 80px;
+
+    background: $Blue-3;
+    border-radius: 5px;
+    border: 0px;
+
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    text-align: center;
+
+    color: $White-0;
+  }
+}
