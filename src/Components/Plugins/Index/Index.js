@@ -4,6 +4,7 @@ import css from "./index.scss";
 
 import Hero from "./HeroCard/HeroCard";
 import WorkingBox from "./WorkingBox/WorkingBox";
+import TopCourses from "./TopCourses/TopCourses";
 
 const index = props => {
   return (
@@ -15,6 +16,9 @@ const index = props => {
           src="../../../../../static/assets/back/howWorks.svg"
         />
         <WorkingBox />
+        <div className={css.topCourses}>
+          <TopCourses />
+        </div>
       </div>
     </div>
   );
