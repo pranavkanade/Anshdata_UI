@@ -1,0 +1,27 @@
+.footer {
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  background: #1c1627;
+  height: 400px;
+  max-height: 600px;
+  padding-top: 2rem;
+
+  .brandLogo {
+    button {
+      background: inherit;
+      color: #ffffff;
+      border: 0px;
+
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 48px;
+      line-height: 55px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

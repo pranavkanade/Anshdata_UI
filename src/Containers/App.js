@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Head from "next/head";
 
 import Navbar from "../Components/Generic/Navbar/Navbar";
+import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
 import Router from "next/router";
 import { refreshUserToken } from "../Requests/Authorization";
@@ -83,6 +84,7 @@ class App extends Component {
           />
         ) : null}
         <div>{this.props.children}</div>
+        <Footer />
       </div>
     );
   }
