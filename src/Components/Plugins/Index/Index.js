@@ -5,6 +5,7 @@ import css from "./index.scss";
 import Hero from "./HeroCard/HeroCard";
 import WorkingBox from "./WorkingBox/WorkingBox";
 import TopCourses from "./TopCourses/TopCourses";
+import Partners from "./Partners/Partners";
 
 const index = props => {
   return (
@@ -13,11 +14,18 @@ const index = props => {
         <Hero explore="/courses" contribute="/contribute" />
         <img
           className={css.backWorking}
-          src="../../../../../static/assets/back/howWorks.svg"
+          src="../../../../static/assets/back/howWorks.svg"
         />
         <WorkingBox />
         <div className={css.topCourses}>
           <TopCourses />
+        </div>
+        <div>
+          <img
+            className={css.partners}
+            src="../../../../static/assets/back/partners.svg"
+          />
+          <Partners />
         </div>
       </div>
     </div>
