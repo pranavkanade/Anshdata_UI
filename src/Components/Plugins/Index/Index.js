@@ -7,6 +7,7 @@ import WorkingBox from "./WorkingBox/WorkingBox";
 import TopCourses from "./TopCourses/TopCourses";
 import Partners from "./Partners/Partners";
 import Testimonials from "./Testimonials/Testimonials";
+import Mentions from "./Mentions/Mentions";
 
 const index = props => {
   return (
@@ -31,6 +32,14 @@ const index = props => {
 
         <div className={css.testimonials}>
           <Testimonials explore="/courses" contribute="/contribute" />
+        </div>
+
+        <div>
+          <img
+            className={css.mentions}
+            src="../../../../static/assets/back/mentions.png"
+          />
+          <Mentions />
         </div>
       </div>
     </div>
