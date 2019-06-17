@@ -6,6 +6,7 @@ import Hero from "./HeroCard/HeroCard";
 import WorkingBox from "./WorkingBox/WorkingBox";
 import TopCourses from "./TopCourses/TopCourses";
 import Partners from "./Partners/Partners";
+import Testimonials from "./Testimonials/Testimonials";
 
 const index = props => {
   return (
@@ -26,6 +27,10 @@ const index = props => {
             src="../../../../static/assets/back/partners.svg"
           />
           <Partners />
+        </div>
+
+        <div className={css.testimonials}>
+          <Testimonials explore="/courses" contribute="/contribute" />
         </div>
       </div>
     </div>

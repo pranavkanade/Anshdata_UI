@@ -26,4 +26,12 @@
     height: 700px;
     z-index: -1;
   }
+
+  .testimonials {
+    margin: 6rem 2.5% 4rem 2.5%;
+    height: 510px;
+
+    background: $grad-5;
+    border-radius: 10px;
+  }
 }
