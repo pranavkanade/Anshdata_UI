@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import css from "./TopCourses.scss";
 
-import { PublishedCard } from "./../../../Generic/CourseCard/CourseCard";
+import { PublishedCard } from "./../../../Generic/Cards/CourseCard";
 export default class extends Component {
   state = {
     activeCC: 0

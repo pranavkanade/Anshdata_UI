@@ -14,7 +14,7 @@ const RenderRating = (rating = 5) => {
       {ratingArr.map(i => (
         <img
           src="./../../../../static/assets/icon/star_24px_outlined.svg"
-          id={i}
+          key={i}
         />
       ))}
     </>
@@ -38,9 +38,9 @@ export const PublishedCard = props => {
       */}
         <iframe
           src="https://www.youtube.com/embed/RKLKib4bHhA"
-          frameborder="0"
+          frameBorder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
+          allowFullScreen
         />
       </div>
       <div className={css.title}>

@@ -22,7 +22,8 @@ class Courses extends Component {
   state = {
     courses: null,
     enrolledCourses: null,
-    courseSearched: null
+    courseSearched: "",
+    selectedCourse: null
   };
 
   changeHandler = event => {
@@ -33,6 +34,14 @@ class Courses extends Component {
       newState[name] = value;
       return newState;
     });
+  };
+
+  setSelectedCourse = courseId => {
+    this.setState({ selectedCourse: courseId });
+  };
+
+  closeSelectedCourse = () => {
+    this.setState({ selectedCourse: null });
   };
 
   saveCoursesHandler = courses => {
@@ -67,15 +76,13 @@ class Courses extends Component {
     }
     return (
       <div className={css.listWrapper}>
-        <div />
-        <div className={css.courseList}>
-          <CoursesList
-            courses={courses}
-            courseListType={listType}
-            detailURL={"/courses"}
-          />
-        </div>
-        <div />
+        <CoursesList
+          courses={courses}
+          courseListType={listType}
+          setSelectedCourse={this.setSelectedCourse}
+          selectedCourse={this.state.selectedCourse}
+          closeSelectedCourse={this.closeSelectedCourse}
+        />
       </div>
     );
   };

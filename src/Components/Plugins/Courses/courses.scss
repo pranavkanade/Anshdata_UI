@@ -91,13 +91,9 @@
 
 .listWrapper {
   display: grid;
-  grid-template-columns: 3rem 1fr 3rem;
-  margin-top: 3rem;
-}
-
-.courseList {
-  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(222px, auto));
+  grid-auto-flow: dense;
+  margin-top: 3rem;
   grid-column-gap: 1.5rem;
   grid-row-gap: 2rem;
   align-items: center;
