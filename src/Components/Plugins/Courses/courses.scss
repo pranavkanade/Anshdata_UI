@@ -81,10 +81,27 @@
 }
 
 .myCourses {
-  padding: 2rem 10% 0% 10%;
+  padding: 2rem 5% 2rem 5%;
   background-color: #fcf7f7;
 }
 
 .catalog {
-  padding: 2rem 10% 0% 10%;
+  padding: 2rem 5% 2rem 5%;
+}
+
+.listWrapper {
+  display: grid;
+  grid-template-columns: 3rem 1fr 3rem;
+  margin-top: 3rem;
+}
+
+.courseList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(222px, auto));
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
 }

@@ -66,13 +66,17 @@ class Courses extends Component {
       return <p>Take up some courses</p>;
     }
     return (
-      <Card.Group>
-        <CoursesList
-          courses={courses}
-          courseListType={listType}
-          detailURL={"/courses"}
-        />
-      </Card.Group>
+      <div className={css.listWrapper}>
+        <div />
+        <div className={css.courseList}>
+          <CoursesList
+            courses={courses}
+            courseListType={listType}
+            detailURL={"/courses"}
+          />
+        </div>
+        <div />
+      </div>
     );
   };
 
@@ -97,11 +101,7 @@ class Courses extends Component {
             <div className={css.heading}>
               <span>My Courses</span>
             </div>
-            <Divider />
             {this.renderMyCourses()}
-            <Divider hidden />
-            <Divider hidden />
-            <Divider hidden />
           </div>
 
           <div className={css.catalog}>
@@ -118,12 +118,10 @@ class Courses extends Component {
                 <button>Search</button>
               </div>
             </div>
-            <Divider />
             {courseListing === null
               ? this.renderLoader()
               : this.renderCourses(courseListing, courseListType.LIST)}
           </div>
-          <Divider hidden />
         </div>
       </div>
     );

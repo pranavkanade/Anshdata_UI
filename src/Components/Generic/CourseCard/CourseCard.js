@@ -22,9 +22,20 @@ const RenderRating = (rating = 5) => {
 };
 
 export const PublishedCard = props => {
+  const course = props.course;
+  const title =
+    course !== null && course !== undefined
+      ? course.title
+      : "This is Course Title";
+
+  const creditPoints =
+    course !== null && course !== undefined ? course.credit_points : "10";
   return (
     <div className={css.published}>
       <div className={css.intro}>
+        {/*
+      TODO: Edit this iframe as you create intro links for courses
+      */}
         <iframe
           src="https://www.youtube.com/embed/RKLKib4bHhA"
           frameborder="0"
@@ -33,12 +44,12 @@ export const PublishedCard = props => {
         />
       </div>
       <div className={css.title}>
-        <span>This is Course Title</span>
+        <span>{title}</span>
       </div>
       <div className={css.rating}>{RenderRating()}</div>
       <div className={css.credits}>
         <span>Credit Points</span>
-        <span>10</span>
+        <span>{creditPoints}</span>
       </div>
     </div>
   );
