@@ -21,7 +21,18 @@ import css from "./courses.scss";
 class Courses extends Component {
   state = {
     courses: null,
-    enrolledCourses: null
+    enrolledCourses: null,
+    courseSearched: null
+  };
+
+  changeHandler = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+    });
   };
 
   saveCoursesHandler = courses => {
@@ -83,9 +94,9 @@ class Courses extends Component {
       <div className={"CoursesPlugin"}>
         <div className={css.courses}>
           <div className={css.myCourses}>
-            <Divider hidden />
-            <Divider hidden />
-            <text className={css.heading}>My Courses</text>
+            <div className={css.heading}>
+              <span>My Courses</span>
+            </div>
             <Divider />
             {this.renderMyCourses()}
             <Divider hidden />
@@ -94,9 +105,19 @@ class Courses extends Component {
           </div>
 
           <div className={css.catalog}>
-            <Divider hidden />
-            <Divider hidden />
-            <text className={css.heading}>Course Catalog</text>
+            <div className={css.heading}>
+              <span>Course Catalog</span>
+              <div className={css.searchBar}>
+                <input
+                  placeholder="Course Name"
+                  name="courseSearched"
+                  type="text"
+                  value={this.state.courseSearched}
+                  onChange={event => this.changeHandler(event)}
+                />
+                <button>Search</button>
+              </div>
+            </div>
             <Divider />
             {courseListing === null
               ? this.renderLoader()

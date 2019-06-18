@@ -6,19 +6,85 @@
 }
 
 .heading {
-  padding-left: 2%;
-  font-family: "Scope One";
-  font-size: 40px;
-  font-weight: 900;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 2rem;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+
+  span {
+    font-family: Scope One;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 66px;
+
+    color: #3f3e3e;
+  }
+
+  .searchBar {
+    display: inline;
+
+    input {
+      width: 700px;
+      height: 55px;
+      padding-left: 2rem;
+
+      border: 1px solid #c6c6c6;
+      box-sizing: border-box;
+      border-radius: 3px;
+      margin-right: 1rem;
+
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 24px;
+      color: #455a64;
+
+      &::placeholder {
+        color: #b0bec5;
+      }
+
+      &:focus,
+      &:hover {
+        border: 1px solid #181616;
+      }
+    }
+
+    button {
+      width: 136px;
+      height: 55px;
+
+      color: #3880fd;
+      background: #ffffff;
+      border: 2px solid #3880fd;
+      border-radius: 3px;
+
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 24px;
+      /* identical to box height */
+
+      &:hover {
+        cursor: pointer;
+        color: #ffffff;
+        border: 0px;
+        background: #3880fd;
+      }
+    }
+  }
 }
 
 .myCourses {
-  padding: 3% 10% 0% 10%;
-  width: 100%;
-  left: 0;
+  padding: 2rem 10% 0% 10%;
   background-color: #fcf7f7;
 }
 
 .catalog {
-  padding: 0px 10% 0% 10%;
+  padding: 2rem 10% 0% 10%;
 }
