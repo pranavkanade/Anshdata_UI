@@ -11,7 +11,7 @@
     font-size: 48px;
     line-height: 66px;
 
-    color: $Black-1;
+    color: $White-0;
   }
 }
 
@@ -69,6 +69,10 @@
         text-align: center;
 
         color: #ffffff;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
 
       img {
@@ -81,11 +85,11 @@
 
   .cat1 {
     @extend %categoryBox;
-    background: $grad-3;
+    background: $grad-7;
   }
 
   .cat2 {
     @extend %categoryBox;
-    background: $grad-4;
+    background: $grad-8;
   }
 }
