@@ -22,6 +22,7 @@ const renderCoursesList = props => {
           <DetailedCard
             course={course}
             closeSelectedCourse={props.closeSelectedCourse}
+            courseListType={props.courseListType}
           />
         ) : null}
       </>

@@ -6,6 +6,7 @@ import css from "./DetailedCard.scss";
 import { ModuleCardMd } from "./ModuleCard";
 import { getCourse } from "../../../Requests/Courses";
 import { enrollEventHandler } from "../../../Requests/Enrollment";
+import { courseListType } from "../../../globals";
 
 class DetailedCourseCard extends Component {
   state = {
@@ -29,6 +30,30 @@ class DetailedCourseCard extends Component {
         ))}
       </>
     );
+  };
+
+  renderActionBtn = courseId => {
+    if (this.props.courseListType === courseListType.ENROLLED) {
+      return (
+        <button className={css.attend}>
+          <span>Attend</span>
+          <img
+            src={
+              "../../../../static/assets/icon/play_circle_outline_24px_outlined.svg"
+            }
+          />
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className={css.enroll}
+          onClick={() => enrollEventHandler(courseId)}>
+          <span>Enroll</span>
+          <img src={"../../../../static/assets/icon/add_24px_outlined.svg"} />
+        </button>
+      );
+    }
   };
 
   renderStats = (
@@ -66,10 +91,7 @@ class DetailedCourseCard extends Component {
           <br />
           <span className={css.label}>Author</span>
         </div>
-        <button onClick={() => enrollEventHandler(courseId)}>
-          <span>Enroll</span>
-          <img src={"../../../../static/assets/icon/add_24px_outlined.svg"} />
-        </button>
+        {this.renderActionBtn(courseId)}
       </div>
     );
   };

@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Grid,
-  Card,
-  Button,
-  Header,
-  Segment,
-  Dimmer,
-  Loader,
-  Divider
-} from "semantic-ui-react";
+import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
 import CoursesList from "../../Generic/Assets/CoursesList";
 import { courseListType } from "../../../globals";
 import {
@@ -94,7 +84,7 @@ class Courses extends Component {
     return courseEnrolledin === null ? (
       <span>Courses you'll enroll in</span>
     ) : (
-      this.renderCourses(courseEnrolledin, courseListType.OVERVIEW)
+      this.renderCourses(courseEnrolledin, courseListType.ENROLLED)
     );
   };
 
@@ -127,7 +117,7 @@ class Courses extends Component {
             </div>
             {courseListing === null
               ? this.renderLoader()
-              : this.renderCourses(courseListing, courseListType.LIST)}
+              : this.renderCourses(courseListing, courseListType.CATALOG)}
           </div>
         </div>
       </div>
