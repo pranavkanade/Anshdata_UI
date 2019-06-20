@@ -1,100 +1,256 @@
-.detailed {
+@import "../../../../static//styles/globals.scss";
+
+.container {
   width: 100%;
-  padding: 6rem 10% 0rem 10%;
-  background-color: #fcf7f7;
+  padding: 0rem 10% 0rem 10%;
+  background-color: $White-2;
 }
 
 @media (max-width: 1024px) {
-  .detailed {
+  .container {
     padding: 6rem 5% 0rem 5%;
   }
 }
 
-.secMenu {
-  padding-left: 2rem;
+.courseInfo {
+  padding: 2rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 2rem;
 
-  text {
-    padding: 0 2rem 0 2rem;
-    font-family: Barlow;
-    font-style: normal;
-    font-weight: 800;
-    font-size: 20px;
-    line-height: 34px;
-    text-align: justify;
+  .primaryInfo {
+    display: flex;
+    flex-direction: column;
 
-    color: #000000;
+    .courseTitle {
+      width: 710px;
+      height: 110px;
+      font-family: Scope One;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 40px;
+      line-height: 55px;
+
+      color: #000000;
+    }
+
+    .courseDetails {
+      margin-top: 2rem;
+      margin-left: 2rem;
+      display: flex;
+      flex-direction: column;
+
+      .courseDescription {
+        padding: 1rem;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 24px;
+
+        color: #3f3e3e;
+
+        height: 210px;
+
+        border: 1px solid $White-3;
+        box-sizing: border-box;
+        border-radius: 2px;
+      }
+
+      .advance {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 2rem;
+
+        %actionBtn {
+          width: 200px;
+          height: 60px;
+
+          border-radius: 2px;
+          border: 0px;
+
+          font-family: Barlow;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 20px;
+          line-height: 24px;
+          /* identical to box height */
+
+          color: #ffffff;
+          box-sizing: border-box;
+        }
+
+        .attend {
+          @extend %actionBtn;
+
+          background: $Blue-3;
+
+          &:hover {
+            cursor: pointer;
+            background: #ffffff;
+            color: $Blue-3;
+            border: 1px solid $Blue-3;
+          }
+        }
+
+        .enroll {
+          @extend %actionBtn;
+          font-weight: bolder;
+          background: $Yellow-2;
+
+          &:hover {
+            cursor: pointer;
+            background: #ffffff;
+            color: $Yellow-2;
+            border: 2px solid $Yellow-2;
+          }
+        }
+
+        .statsBox {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+
+          width: 480px;
+          height: 60px;
+
+          border: 1px solid $White-3;
+          box-sizing: border-box;
+          border-radius: 2px;
+
+          .stat {
+            width: 160px;
+            height: 60px;
+
+            text-align: center;
+            justify-self: center;
+
+            .value {
+              font-family: Barlow;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 24px;
+              line-height: 29px;
+              /* identical to box height */
+              text-align: center;
+
+              color: #000000;
+            }
+
+            .label {
+              font-family: Barlow;
+              font-style: normal;
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 19px;
+              /* identical to box height */
+              text-align: center;
+
+              color: #000000;
+            }
+          }
+        }
+      }
+    }
+
+    .tagBox {
+      margin-top: 2rem;
+      height: 72px;
+
+      border: 1px solid $White-3;
+      box-sizing: border-box;
+      border-radius: 2px;
+    }
+  }
+
+  .secondaryInfo {
+    display: flex;
+    flex-direction: column;
+
+    .introClip {
+      margin-top: 2rem;
+      vertical-align: middle;
+      width: 380px;
+      height: 320px;
+
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .extraInfo {
+      margin-top: 2rem;
+      padding: 1rem 0 1rem 0;
+      width: 380px;
+      height: 161px;
+
+      border: 1px solid $White-3;
+      box-sizing: border-box;
+      border-radius: 2px;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-gap: 1rem 1rem;
+
+      .info {
+        width: 160px;
+        height: 60px;
+
+        border: 1px solid $White-3;
+        box-sizing: border-box;
+        border-radius: 2px;
+
+        text-align: center;
+        justify-self: center;
+
+        .value {
+          font-family: Barlow;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 29px;
+          /* identical to box height */
+          text-align: center;
+
+          color: #000000;
+        }
+
+        .label {
+          font-family: Barlow;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 24px;
+          /* identical to box height */
+          text-align: center;
+
+          color: #000000;
+        }
+      }
+    }
   }
 }
 
-.secondaryBox {
-  padding: 1rem 2rem 2rem 4rem;
-}
+.courseContent {
+  padding: 2rem 0 2rem 0;
 
-.listModBox {
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  grid-auto-flow: dense;
-}
-
-.listAssignBox {
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  grid-auto-flow: dense;
-}
-
-.modBox {
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.detailedModBox {
-  // width: 80%;
-  grid-column: 1/ -1;
-  padding: 0 2rem 0 4rem;
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: 1fr;
-  // height: 100px;
-  background: #ffffff;
-  border: 1px solid #dadada;
-  box-sizing: border-box;
-  border-radius: 2px;
-  padding: 2rem;
-
-  .heading {
+  .sectionTitle {
     font-family: Lato;
     font-style: normal;
-    font-weight: 500;
+    font-weight: normal;
     font-size: 32px;
-    line-height: 40px;
-
+    line-height: 36px;
     color: #000000;
   }
 
-  .desc {
-    font-family: Barlow;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-
-    color: #2e2e2e;
-  }
-
-  .lessons {
+  .moduleList {
+    margin: 2rem 1rem 1rem 1rem;
     display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-
-    .item {
-      // background: #ffffff;
-      border: 1px solid #d0d2d5;
-      box-sizing: border-box;
-      border-radius: 10px;
-      padding: 1rem;
-    }
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-gap: 2rem 1rem;
+    place-items: center;
+    grid-auto-flow: dense;
   }
 }

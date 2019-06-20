@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { getCourse } from "./requests";
-import Course from "../Contrib/Course/Render";
-import Module from "../Contrib/Module/Render";
-import Lesson from "../Contrib/Lesson/Render";
-import Assignment from "../Contrib/Assignment/Render";
-import { Modal, Divider, Grid, Accordion, Menu } from "semantic-ui-react";
+import {
+  ModuleCardMd,
+  DetailedModuleCard
+} from "../../Generic/Cards/ModuleCard";
 
-import { getIfEnrolled } from "../../../Requests/Enrollment";
+import {
+  getIfEnrolled,
+  enrollEventHandler
+} from "../../../Requests/Enrollment";
 import css from "./detailed.scss";
 
 const menuTypes = {
@@ -22,14 +24,21 @@ const viewTypes = {
 class DetailedCourse extends Component {
   state = {
     course: null,
-    activeModule: -1,
-    activeMenu: menuTypes.DETAIL,
-    newEle: this.props.newEleId,
+    activeModule: 1,
     isEnrolledIn: false
   };
 
+  setSelectedModule = courseId => {
+    this.setState({ activeModule: courseId });
+  };
+
+  closeSelectedModule = () => {
+    this.setState({ activeModule: null });
+  };
+
   ifEnrolledSaveHandler = data => {
-    if (data !== undefined) {
+    console.log("Check If enrolled - response data:", data);
+    if (data !== undefined && data.length === 1 && data[0].id !== undefined) {
       this.setState({ isEnrolledIn: true });
     }
   };
@@ -40,162 +49,177 @@ class DetailedCourse extends Component {
     this.props.setCourse(course);
   };
 
-  moduleExpansionHandler = modId => {
-    if (modId === this.state.activeModule) {
-      // NOTE: In case when use clicks on expanded module
-      // we need to close it
-      console.log("Closing module: ", modId);
-      this.setState({ activeModule: -1 });
-    } else {
-      console.log("Module to expand: ", modId);
-      this.setState({ activeModule: modId });
-    }
-  };
-
-  renderAssignments = (assignments, viewType, moduleOnly = false) => {
-    if (assignments === null) {
-      return null;
-    }
-
-    return assignments.map(assign => {
-      if (moduleOnly && assign.lesson !== null) {
-        return null;
-      }
-      return (
-        <Assignment
-          assignment={assign}
-          type={viewType}
-          key={assign.id}
-          addHandler={this.props.addHandler}
-        />
-      );
-    });
-  };
-
-  renderAllAssignments = viewType => {
+  renderLoader = () => {
     return (
-      <div className={css.listAssignBox}>
-        {this.renderAssignments(this.state.course.assignments, viewType)}
+      <div className={css.loader}>
+        <div className={"ui active inverted centered inline loader massive"} />
       </div>
     );
   };
 
-  renderLessons = (lessons, viewType) => {
-    if (lessons === null) {
-      return null;
-    }
+  getLessonsCount = modules => {
+    return modules.reduce((sum, mod) => {
+      return sum + mod.lessons.length;
+    }, 0);
+  };
 
-    return lessons.map(lsn => {
-      return (
-        <div key={lsn.id} className={css.item}>
-          <Lesson
-            lesson={lsn}
-            type={viewType}
-            addHandler={this.props.addHandler}
+  renderExtraInfo = (
+    lessons = 3,
+    author = "John Doe",
+    subject = "Computer Science",
+    assignments = 4
+  ) => {
+    return (
+      <>
+        <div className={css.info}>
+          <span className={css.value}>{author}</span>
+          <br />
+          <span className={css.label}>Author</span>
+        </div>
+        <div className={css.info}>
+          <span className={css.value}>{subject}</span>
+          <br />
+          <span className={css.label}>Subject</span>
+        </div>
+        <div className={css.info}>
+          <span className={css.value}>{lessons}</span>
+          <br />
+          <span className={css.label}>Lessons</span>
+        </div>
+        <div className={css.info}>
+          <span className={css.value}>{assignments}</span>
+          <br />
+          <span className={css.label}>Assignments</span>
+        </div>
+      </>
+    );
+  };
+
+  RenderRating = (rating = 5) => {
+    const ratingArr = [...Array(rating).keys()];
+
+    return (
+      <>
+        {ratingArr.map(i => (
+          <img
+            src="./../../../../static/assets/icon/star_24px_outlined.svg"
+            key={i}
           />
-          <div>{this.renderAssignments(lsn.assignments, viewType, false)}</div>
+        ))}
+      </>
+    );
+  };
+
+  renderStats = (creditPoints, enrollments = 203, rating = 5) => {
+    return (
+      <>
+        <div className={css.stat}>
+          <span className={css.value}>{creditPoints}</span>
+          <br />
+          <span className={css.label}>Credit Points</span>
         </div>
+        <div className={css.stat}>
+          <span className={css.value}>{enrollments}</span>
+          <br />
+          <span className={css.label}>Enrollments</span>
+        </div>
+        <div className={css.stat}>
+          <span className={css.value}>{this.RenderRating(rating)}</span>
+          <br />
+          <span className={css.label}>Rating</span>
+        </div>
+      </>
+    );
+  };
+
+  renderActionBtn = () => {
+    if (this.state.isEnrolledIn) {
+      // TODO: Push user to attend the course
+      return <button className={css.attend}>Attend</button>;
+    } else {
+      return (
+        // TODO: Refresh the page.
+        <button
+          className={css.enroll}
+          onClick={() => enrollEventHandler(this.state.course.id)}>
+          Enroll
+        </button>
+      );
+    }
+  };
+
+  renderCourseInfo = course => {
+    return (
+      <>
+        <div className={css.primaryInfo}>
+          <span className={css.courseTitle}>{course.title}</span>
+          <div className={css.courseDetails}>
+            <span className={css.courseDescription}>{course.description}</span>
+            <div className={css.advance}>
+              {this.renderActionBtn()}
+              <div className={css.statsBox}>
+                {this.renderStats(course.credit_points)}
+              </div>
+            </div>
+            <div className={css.tagBox} />
+          </div>
+        </div>
+        <div className={css.secondaryInfo}>
+          <div className={css.introClip}>
+            <iframe
+              src="https://www.youtube.com/embed/RKLKib4bHhA"
+              frameBorder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          <div className={css.extraInfo}>
+            {this.renderExtraInfo(
+              this.getLessonsCount(course.modules),
+              course.author.username,
+              course.category.title,
+              course.assignments.length
+            )}
+          </div>
+        </div>
+      </>
+    );
+  };
+
+  renderModulesList = modules => {
+    return modules.map(mod => {
+      return (
+        <>
+          <ModuleCardMd
+            module={mod}
+            key={mod.id}
+            select={this.setSelectedModule}
+          />
+          {this.state.activeModule === mod.id ? (
+            <DetailedModuleCard
+              module={mod}
+              key={`detailed_${mod.id}`}
+              close={this.closeSelectedModule}
+            />
+          ) : null}
+        </>
       );
     });
-  };
-
-  renderLessonList = (mod, viewType) => {
-    return (
-      <div className={css.detailedModBox}>
-        <div>
-          <span className={css.heading}>{mod.title}</span>
-          <Divider hidden />
-          <span className={css.desc}>{mod.description}</span>
-        </div>
-        <div className={css.lessons}>
-          {this.renderLessons(mod.lessons, viewType)}
-        </div>
-        <Divider />
-        <div>{this.renderAssignments(mod.assignments, viewType, true)}</div>
-      </div>
-    );
-  };
-
-  renderModules = viewType => {
-    if (this.state.course === null) {
-      return null;
-    }
-
-    return (
-      <div className={css.listModBox}>
-        {this.state.course.modules.map(mod => {
-          return (
-            <>
-              <div className={css.modBox} key={mod.id}>
-                <div
-                  onClick={() => {
-                    this.moduleExpansionHandler(mod.id);
-                  }}>
-                  <Module
-                    module={mod}
-                    type={viewType}
-                    isExpanded={mod.id === this.state.activeModule}
-                    addHandler={this.props.addHandler}
-                  />
-                </div>
-              </div>
-              {mod.id === this.state.activeModule
-                ? this.renderLessonList(mod, viewType)
-                : null}
-            </>
-          );
-        })}
-      </div>
-    );
-  };
-
-  renderSecondaryMenu = () => {
-    const { activeMenu } = this.state;
-    return (
-      <div className={css.secMenu}>
-        <Menu secondary>
-          <Menu.Item
-            active={activeMenu === menuTypes.DETAIL}
-            onClick={() => {
-              this.setState({ activeMenu: menuTypes.DETAIL });
-            }}>
-            <text>{menuTypes.DETAIL}</text>
-          </Menu.Item>
-          <Menu.Item
-            active={activeMenu === menuTypes.ASSIGNMENT}
-            onClick={() => {
-              this.setState({ activeMenu: menuTypes.ASSIGNMENT });
-            }}>
-            <text>{menuTypes.ASSIGNMENT}</text>
-          </Menu.Item>
-        </Menu>
-        <Divider />
-      </div>
-    );
   };
 
   render() {
-    const viewType =
-      this.props.viewType !== viewTypes.MODIFY
-        ? viewTypes.DETAIL
-        : this.props.viewType;
+    if (this.state.course === null || this.state.course === undefined) {
+      return <div>{this.renderLoader()}</div>;
+    }
+    const { course } = this.state;
     return (
-      <div className={css.detailed}>
-        <br />
-        {this.state.course !== null ? (
-          <Course
-            course={this.state.course}
-            isEnrolled={this.state.isEnrolledIn}
-            type={viewType}
-            addHandler={this.props.addHandler}
-          />
-        ) : null}
-        <Divider hidden />
-        {this.renderSecondaryMenu()}
-        <div className={css.secondaryBox}>
-          {this.state.activeMenu === menuTypes.DETAIL
-            ? this.renderModules(viewType)
-            : this.renderAllAssignments(viewType)}
+      <div className={css.container}>
+        <div className={css.courseInfo}>{this.renderCourseInfo(course)}</div>
+        <div className={css.courseContent}>
+          <span className={css.sectionTitle}>Modules</span>
+          <div className={css.moduleList}>
+            {this.renderModulesList(course.modules)}
+          </div>
         </div>
       </div>
     );

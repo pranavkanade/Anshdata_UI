@@ -7,20 +7,25 @@
 .mdModuleCard {
   width: 500px;
   height: 244px;
+  background: $White-0;
 
-  border: 2px solid #ffffff;
-  box-sizing: border-box;
+  // border: 1px solid $Black-1;
+  // box-sizing: border-box;
   border-radius: 5px;
   padding: 1rem 2rem 1rem 2rem;
 
-  span {
+  .title {
     font-family: Scope One;
     font-style: normal;
     font-weight: normal;
     font-size: 28px;
     line-height: 39px;
 
-    color: #ffffff;
+    color: $Black-1;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }
 
@@ -34,7 +39,7 @@
     width: 130px;
     height: 60px;
 
-    border: 2px solid #ffffff;
+    border: 1px solid $Black-1;
     box-sizing: border-box;
     border-radius: 2px;
 
@@ -50,7 +55,7 @@
       /* identical to box height */
       text-align: center;
 
-      color: #ffffff;
+      color: $Black-1;
     }
 
     .label {
@@ -62,7 +67,7 @@
       /* identical to box height */
       text-align: center;
 
-      color: #ffffff;
+      color: $Black-1;
     }
   }
 
@@ -97,6 +102,75 @@
     &:hover {
       cursor: pointer;
       background: $Blue-6;
+    }
+  }
+}
+
+.detailedModuleCard {
+  height: 300px;
+  width: 105%;
+  padding: 1rem 2rem 1rem 2rem;
+  grid-column: 1 / -1;
+  background: $grad-5;
+  border-radius: 10px;
+
+  .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-family: Lato;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 28px;
+      line-height: 38px;
+
+      color: #ffffff;
+    }
+
+    button {
+      height: 36px;
+      width: 36px;
+      align-self: center;
+
+      background: transparent;
+      border: 0px;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+        background: transparent;
+      }
+    }
+  }
+
+  .lessonsBox {
+    margin: 2rem 0 2rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .lessonsList {
+      flex-grow: 4;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-gap: 2rem;
+      margin: 0 1rem 0 1rem;
+    }
+
+    .arrows {
+      height: 160px;
+      width: 64px;
+      align-self: center;
+      border: 0px;
+      background: transparent;
+
+      &:hover {
+        cursor: pointer;
+        background: #00000010;
+      }
     }
   }
 }

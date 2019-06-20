@@ -107,6 +107,7 @@ class DetailedCourseCard extends Component {
               </button>
               <ModuleCardMd
                 module={course.modules.length > 0 ? course.modules[0] : null}
+                select={() => {}}
               />
               <button className={css.arrows}>
                 <img src="../../../../static/assets/icon/arrow_forward_ios_24px_outlined.svg" />
