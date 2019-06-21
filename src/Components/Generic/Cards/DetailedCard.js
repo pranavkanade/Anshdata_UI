@@ -35,14 +35,16 @@ class DetailedCourseCard extends Component {
   renderActionBtn = courseId => {
     if (this.props.courseListType === courseListType.ENROLLED) {
       return (
-        <button className={css.attend}>
-          <span>Attend</span>
-          <img
-            src={
-              "../../../../static/assets/icon/play_circle_outline_24px_outlined.svg"
-            }
-          />
-        </button>
+        <Link href={`/courses/attend/${courseId}`}>
+          <button className={css.attend}>
+            <span>Attend</span>
+            <img
+              src={
+                "../../../../static/assets/icon/play_circle_outline_24px_outlined.svg"
+              }
+            />
+          </button>
+        </Link>
       );
     } else {
       return (

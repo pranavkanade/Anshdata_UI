@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Link from "next/link";
 import { getCourse } from "./requests";
 import {
   ModuleCardMd,
@@ -134,8 +135,11 @@ class DetailedCourse extends Component {
 
   renderActionBtn = () => {
     if (this.state.isEnrolledIn) {
-      // TODO: Push user to attend the course
-      return <button className={css.attend}>Attend</button>;
+      return (
+        <Link href={`/courses/attend/${this.state.course.id}`}>
+          <button className={css.attend}>Attend</button>
+        </Link>
+      );
     } else {
       return (
         // TODO: Refresh the page.
