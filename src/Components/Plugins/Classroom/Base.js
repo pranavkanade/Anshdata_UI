@@ -107,7 +107,73 @@ const renderActionBtns = () => {
   );
 };
 
-const renderCurrentLecture = (lesson = null) => {
+const renderAssignmentDetails = assignment => {
+  return (
+    <div className={css.detailed}>
+      <span>{assignment.title}</span>
+      <div className={css.instructions}>
+        <span>Instructions</span>
+        <p>{assignment.instruction}</p>
+        <span>References</span>
+        <p>{assignment.reference}</p>
+      </div>
+      <div className={css.action}>
+        <button>Solve</button>
+      </div>
+    </div>
+  );
+};
+
+const renderAssignmetns = (assignments, activeAsignmt, setActiveAsignmt) => {
+  if (
+    assignments === null ||
+    assignments === undefined ||
+    assignments.length === 0
+  ) {
+    return (
+      <>
+        <span className={css.heading}>Assignments</span>
+        <br />
+        <div className={css.notice}>
+          <span>There are no assignments for this lesson!</span>
+        </div>
+      </>
+    );
+  }
+
+  let detailedAssignment = {
+    ...assignments.find(a => {
+      return a.id === activeAsignmt;
+    })
+  };
+
+  console.log("Assignment Detailed : ", detailedAssignment);
+  return (
+    <>
+      <span className={css.heading}>Assignments</span>
+      <div className={css.assignments}>
+        <div className={css.listing}>
+          {assignments.map(asignmt => (
+            <div
+              className={
+                `${css.item} ` +
+                (asignmt.id === activeAsignmt ? css.active : "")
+              }
+              onClick={() => setActiveAsignmt(asignmt.id)}>
+              <span key={asignmt.id}>{asignmt.title}</span>
+            </div>
+          ))}
+        </div>
+        <div className={css.divider} />
+        {activeAsignmt === 0
+          ? null
+          : renderAssignmentDetails(detailedAssignment)}
+      </div>
+    </>
+  );
+};
+
+const renderCurrentLecture = (lesson, activeAsignmt, setActiveAsignmt) => {
   // TODO: change the iframe -
   // URLs like - "https://www.youtube.com/watch?v=RKLKib4bHhA" won't work dynamically.
   // change `watch?v=` to `embed/` and it'll start working
@@ -128,7 +194,11 @@ const renderCurrentLecture = (lesson = null) => {
         <p>{lesson.description}</p>
       </div>
       <div className={css.assignmentsBoard}>
-        <span className={css.heading}>Assignments</span>
+        {renderAssignmetns(
+          lesson.assignments,
+          activeAsignmt,
+          setActiveAsignmt
+        )}
       </div>
     </>
   );
@@ -136,6 +206,7 @@ const renderCurrentLecture = (lesson = null) => {
 
 const ClassroomBase = props => {
   const [openMod, setOpenMod] = useState(0);
+  const [activeAsignmt, setActiveAsignmt] = useState(0);
   console.log("active module => ", props.activeModule);
   if (
     props.course === undefined ||
@@ -161,7 +232,11 @@ const ClassroomBase = props => {
           )}
         </div>
         <div className={css.lesson}>
-          {renderCurrentLecture(props.activeLesson)}
+          {renderCurrentLecture(
+            props.activeLesson,
+            activeAsignmt,
+            setActiveAsignmt
+          )}
         </div>
       </div>
     </div>
