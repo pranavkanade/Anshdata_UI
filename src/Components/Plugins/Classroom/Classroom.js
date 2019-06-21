@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Router from "next/router";
 import { getCourse } from "../../../Requests/Courses";
-import Course from "./Render";
+import Course from "./Base";
 import { getIfEnrolled } from "../../../Requests/Enrollment";
 
 class CourseClassroom extends Component {

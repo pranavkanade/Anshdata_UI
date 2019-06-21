@@ -10,6 +10,8 @@ import {
   Embed
 } from "semantic-ui-react";
 
+import css from "./Base.scss";
+
 const renderLessonContent = lesson => {
   if (lesson === undefined) {
     return null;
@@ -133,21 +135,25 @@ const renderCourseSidebar = props => {
   );
 };
 
+const renderLoader = () => {
+  return (
+    <Container>
+      <br />
+      <br />
+      <br />
+      <br />
+      <Segment basic>
+        <Dimmer active inverted>
+          <Loader size="large">Loading</Loader>
+        </Dimmer>
+      </Segment>
+    </Container>
+  );
+};
+
 const Course = props => {
   if (props.course === undefined) {
-    return (
-      <Container>
-        <br />
-        <br />
-        <br />
-        <br />
-        <Segment basic>
-          <Dimmer active inverted>
-            <Loader size="large">Loading</Loader>
-          </Dimmer>
-        </Segment>
-      </Container>
-    );
+    return renderLoader();
   }
   return (
     <>
@@ -164,4 +170,64 @@ const Course = props => {
   );
 };
 
-export default Course;
+const renderCourseContent = (course = null) => {
+  return null;
+};
+
+const renderActionBtns = () => {
+  return (
+    <>
+      <button className={css.mark}>Mark Done</button>
+      <button className={css.next}>Next Lesson</button>
+    </>
+  );
+};
+
+const renderCurrentLecture = (lesson = null) => {
+  // TODO: change the iframe -
+  // URLs like - "https://www.youtube.com/watch?v=RKLKib4bHhA" won't work dynamically.
+  // change `watch?v=` to `embed/` and it'll start working
+  return (
+    <>
+      <span className={css.title}>{lesson.title}</span>
+      <div className={css.lecture}>
+        <iframe
+          src={"https://www.youtube.com/embed/RKLKib4bHhA"}
+          frameBorder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+      <div className={css.actionBtns}>{renderActionBtns()}</div>
+      <div className={css.description}>
+        <span className={css.heading}>Description</span>
+        <p>{lesson.description}</p>
+      </div>
+      <div className={css.assignmentsBoard}>
+        <span className={css.heading}>Assignments</span>
+      </div>
+    </>
+  );
+};
+
+const ClassroomBase = props => {
+  if (props.course === undefined) {
+    return renderLoader();
+  }
+
+  return (
+    <div className={css.classroomBase}>
+      <div className={css.head}>
+        <span>{props.course.title}</span>
+      </div>
+      <div className={css.board}>
+        <div className={css.courseContent}>{renderCourseContent()}</div>
+        <div className={css.lesson}>
+          {renderCurrentLecture(props.course.modules[0].lessons[0])}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ClassroomBase;

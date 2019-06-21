@@ -1,0 +1,156 @@
+@import "../../../../static/styles/globals.scss";
+
+.classroomBase {
+  padding: 1rem 5% 2rem 5%;
+  background: $White-1;
+}
+
+%font {
+  font-family: Scope One;
+  font-style: normal;
+  font-weight: normal;
+  color: #000000;
+}
+
+%heading {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  text-align: center;
+
+  color: #000000;
+}
+
+.head {
+  padding: 1rem 2rem 1rem 4rem;
+
+  @extend %font;
+  font-size: 32px;
+  line-height: 36px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 2rem;
+
+  .courseContent {
+    background: #f8f8f8;
+    border: 1px solid #e7e7e7;
+    box-sizing: border-box;
+
+    height: 640px;
+  }
+
+  .lesson {
+    background: #f8f8f8;
+    border: 1px solid #e7e7e7;
+    box-sizing: border-box;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      margin: 1rem 2rem 1rem 4rem;
+      @extend %font;
+      font-size: 24px;
+      line-height: 29px;
+    }
+
+    .lecture {
+      // justify-self: center;
+      margin: 2rem 0 2rem 0;
+      align-self: center;
+      width: 840px;
+      height: 570px;
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .actionBtns {
+      margin: 0 2rem 1rem 2rem;
+      display: flex;
+      flex-direction: row-reverse;
+
+      button {
+        width: 149px;
+        height: 55px;
+
+        border-radius: 5px;
+
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        /* identical to box height */
+        text-align: center;
+        border: 0px;
+
+        color: #ffffff;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .mark {
+        margin-left: 1rem;
+        background: rgb(0, 128, 107);
+      }
+
+      .next {
+        background: #2d9cdb;
+      }
+    }
+
+    .description {
+      margin-top: 1rem;
+      align-self: center;
+      width: 840px;
+      height: 128px;
+      padding: 1rem 2rem 1rem 2rem;
+
+      border: 1px solid #e7e7e7;
+      box-sizing: border-box;
+      border-radius: 2px;
+
+      .heading {
+        @extend %heading;
+      }
+
+      p {
+        padding: 1rem 2rem 1rem 2rem;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 19px;
+        text-align: justify;
+
+        color: #494848;
+      }
+    }
+
+    .assignmentsBoard {
+      align-self: center;
+      margin-top: 2rem;
+      width: 840px;
+      height: 435px;
+      padding: 1rem 2rem 1rem 2rem;
+
+      border: 1px solid #e7e7e7;
+      box-sizing: border-box;
+      border-radius: 2px;
+
+      .heading {
+        @extend %heading;
+      }
+    }
+  }
+}
