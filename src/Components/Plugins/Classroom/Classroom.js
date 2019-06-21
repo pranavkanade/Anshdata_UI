@@ -1,17 +1,45 @@
 import React, { Component } from "react";
 import Router from "next/router";
 import { getCourse } from "../../../Requests/Courses";
-import Course from "./Base";
 import { getIfEnrolled } from "../../../Requests/Enrollment";
+import ClassroomBase from "./Base";
 
 class CourseClassroom extends Component {
   state = {
     course: this.props.course,
     courseId: this.props.courseId,
-    activeModId: null,
+    activeModule: null,
     activeLesson: null,
-    activeAssign: null,
     isEnrolledIn: false
+  };
+
+  moduleSelectionHandler = module => {
+    console.log("module switched : ", module.id);
+    this.setState({ activeModule: module });
+  };
+
+  lessonSelectionHandler = (lsnId, modId) => {
+    console.log("lesson activated : ", lsnId);
+    let activatedMod = null;
+
+    if (modId === this.state.activeModule.id) {
+      activatedMod = this.state.activeModule;
+    } else {
+      activatedMod = {
+        ...this.state.course.modules.find(mod => {
+          return modId === mod.id;
+        })
+      };
+      this.moduleSelectionHandler(activatedMod);
+    }
+
+    const activatedLsn = {
+      ...activatedMod.lessons.find(lsn => {
+        return lsnId === lsn.id;
+      })
+    };
+    console.log("lesson activated : ", activatedLsn);
+    this.setState({ activeLesson: activatedLsn });
   };
 
   ifEnrolledSaveHandler = data => {
@@ -22,50 +50,29 @@ class CourseClassroom extends Component {
     }
   };
 
-  activeLessonHandler = lsn => {
-    console.log("active lesson : ", lsn);
-    this.setState({ activeLesson: lsn, activeAssign: null });
-  };
-
-  activeAssignmentHandler = assign => {
-    console.log("active assignment : ", assign);
-    this.setState({ activeLesson: null, activeAssign: assign });
-  };
-
-  moduleExpansionHandler = modId => {
-    if (modId === this.state.activeModId) {
-      // NOTE: In case when use clicks on expanded module
-      // we need to close it
-      console.log("Closing module: ", modId);
-      this.setState({ activeModId: -1 });
-    } else {
-      console.log("Module to expand: ", modId);
-      this.setState({ activeModId: modId });
-    }
-  };
-
-  setDefaultLesson = () => {
-    console.log("[Attend.js] setting default lesson");
-    const lesson = this.state.course.modules[0].lessons[0];
-    this.setState({ activeLesson: lesson });
+  initialize = course => {
+    // TODO: for now setting to the first module and first lesson.
+    this.setState({
+      activeModule: course.modules[0],
+      activeLesson: course.modules[0].lessons[0]
+    });
+    console.log("module initiated");
   };
 
   courseSaveHandler = course => {
     console.log("[Attend.js] saving course");
     this.setState({ course });
-    this.setDefaultLesson();
+    this.initialize(course);
   };
 
   render() {
     return (
-      <Course
+      <ClassroomBase
         course={this.state.course}
-        activeModId={this.state.activeModId}
+        activeModule={this.state.activeModule}
         activeLesson={this.state.activeLesson}
-        activeAssign={this.state.activeAssign}
-        modExpandHandler={this.moduleExpansionHandler}
-        activeLessonHandler={this.activeLessonHandler}
-        activeAssignmentHandler={this.activeAssignmentHandler}
+        moduleSelectionHandler={this.moduleSelectionHandler}
+        lessonSelectionHandler={this.lessonSelectionHandler}
       />
     );
   }

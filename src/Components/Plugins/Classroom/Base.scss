@@ -5,6 +5,10 @@
   background: $White-1;
 }
 
+.loader {
+  margin-top: 5rem;
+}
+
 %font {
   font-family: Scope One;
   font-style: normal;
@@ -37,16 +41,125 @@
   grid-template-columns: 1fr 3fr;
   grid-gap: 2rem;
 
-  .courseContent {
-    background: #f8f8f8;
-    border: 1px solid #e7e7e7;
-    box-sizing: border-box;
+  .content {
+    %box {
+      display: flex;
+      flex-direction: column;
+      background: $White-0;
+      // border: 1px solid #ffffff;
+      box-sizing: border-box;
 
-    height: 640px;
+      .title {
+        text-align: center;
+        padding-top: 1rem;
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 34px;
+        /* identical to box height */
+
+        color: #3f3e3e;
+        width: 100%;
+        height: 64px;
+        background: #e9e9e9;
+      }
+    }
+    .activeMod {
+      @extend %box;
+      // height: 320px;
+
+      margin-bottom: 2rem;
+
+      .modBox {
+        width: 100%;
+
+        // height: 90px;
+        vertical-align: middle;
+        padding: 1rem;
+
+        background: #267aa9;
+        border: 1px solid #267aa9;
+
+        font-family: Scope One;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 33px;
+
+        color: #ffffff;
+      }
+      .lsn {
+        margin-top: 1px;
+        padding: 1rem;
+        background: #88c2e4;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: lighter;
+        font-size: 20px;
+        line-height: 24px;
+
+        color: #ffffff;
+        // border: 1px solid #ffffff;
+
+        transition: transform 0.1s ease;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.02);
+          font-weight: normal;
+          box-shadow: $shadow-1;
+        }
+      }
+    }
+
+    .course {
+      @extend %box;
+
+      .module {
+        margin-top: 3px;
+
+        font-family: Lato;
+        font-style: normal;
+        font-weight: lighter;
+
+        line-height: 24px;
+
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+
+        .card {
+          background: #7c6cda;
+          padding: 1rem;
+          transition: transform 0.1s ease;
+          font-size: 20px;
+          &:hover {
+            cursor: pointer;
+            transform: scale(1.02);
+            font-weight: normal;
+            box-shadow: $shadow-1;
+          }
+        }
+
+        .lsn {
+          background: #a296e4;
+          padding: 1rem;
+          margin: 1px 0.5rem 0 0.5rem;
+          transition: transform 0.1s ease;
+          font-size: 16px;
+          &:hover {
+            cursor: pointer;
+            transform: scale(1.02);
+            font-weight: normal;
+            box-shadow: $shadow-2;
+          }
+        }
+      }
+    }
   }
 
   .lesson {
-    background: #f8f8f8;
+    background: $White-0;
     border: 1px solid #e7e7e7;
     box-sizing: border-box;
     padding: 1rem;

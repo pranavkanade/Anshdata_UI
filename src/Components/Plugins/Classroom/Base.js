@@ -1,177 +1,101 @@
-import React from "react";
-import {
-  Segment,
-  Header,
-  Dimmer,
-  Loader,
-  Grid,
-  Container,
-  Accordion,
-  Embed
-} from "semantic-ui-react";
+import React, { useState } from "react";
 
 import css from "./Base.scss";
 
-const renderLessonContent = lesson => {
-  if (lesson === undefined) {
-    return null;
-  }
-  console.log("Lect ID", lesson);
-  let lectId = null;
-  if (lesson.lecture !== null && lesson.lecture !== undefined) {
-    lectId = lesson.lecture.split("?v=")[1];
-  }
+const renderLoader = () => {
   return (
-    <Segment attached>
-      <Header>{lesson.title}</Header>
-      <br />
-      <br />
-      {lectId !== null ? (
-        <Embed active autoplay={true} id={lectId} source="youtube" />
-      ) : (
-        <Embed />
-      )}
-      <br />
-      <Segment color="violet">{lesson.description}</Segment>
-    </Segment>
-  );
-};
-
-const renderAssignmentContent = assignment => {
-  return <Header>{assignment.title}</Header>;
-};
-
-const renderCurrent = props => {
-  return (
-    <Segment basic>
-      {props.activeLesson === null
-        ? null
-        : renderLessonContent(props.activeLesson)}
-      {props.activeAssign === null
-        ? null
-        : renderAssignmentContent(props.activeAssign)}
-    </Segment>
-  );
-};
-
-const renderAssignment = (assign, extra) => {
-  return (
-    <Segment
-      key={assign.id}
-      inverted
-      color="olive"
-      attached
-      onClick={() => extra.activeAssignmentHandler(assign)}>
-      {assign.title}
-    </Segment>
-  );
-};
-
-const renderLesson = (lsn, extra) => {
-  const assignments = lsn.assignments.map(assign => {
-    return renderAssignment(assign, extra);
-  });
-
-  return (
-    <div key={lsn.id}>
-      <Segment
-        attached
-        key={lsn.id}
-        onClick={() => extra.activeLessonHandler(lsn)}>
-        <Header size="small">{`${lsn.title}`.toUpperCase()}</Header>
-      </Segment>
-      {assignments}
-      <br />
+    <div className={css.loader}>
+      <div className={"ui active inverted centered inline loader massive"} />;
     </div>
   );
 };
 
-const renderModuleLessons = (lessons, extra) => {
+const renderLessons = (lessons, lessonSelectionHandler) => {
   return lessons.map(lsn => {
-    return renderLesson(lsn, extra);
+    return (
+      <span
+        className={css.lsn}
+        key={lsn.id}
+        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
+        {lsn.title}
+      </span>
+    );
   });
 };
 
-const renderModule = (mod, extra) => {
-  return (
-    <Segment vertical key={mod.id}>
-      <Accordion key={mod.id}>
-        <Accordion.Title
-          active={mod.id === extra.activeModId}
-          onClick={() => extra.modExpandHandler(mod.id)}>
-          <Header size="medium">{`${mod.title}`.toUpperCase()}</Header>
-        </Accordion.Title>
-        <Accordion.Content active={mod.id === extra.activeModId}>
-          {renderModuleLessons(mod.lessons, extra)}
-        </Accordion.Content>
-      </Accordion>
-    </Segment>
-  );
-};
-
-const renderCourseModules = (modules, extra) => {
-  return modules.map(mod => {
-    return renderModule(mod, extra);
+const renderCourseContent = (
+  course,
+  lessonSelectionHandler,
+  openMod,
+  setOpenMod
+) => {
+  const Modules = course.modules.map(mod => {
+    return (
+      <div className={css.module} key={mod.id}>
+        <span
+          className={css.card}
+          onClick={() => {
+            mod.id === openMod ? setOpenMod(0) : setOpenMod(mod.id);
+          }}>
+          {mod.title}
+        </span>
+        {mod.id === openMod
+          ? renderLessons(mod.lessons, lessonSelectionHandler)
+          : null}
+      </div>
+    );
   });
+
+  return (
+    <div className={css.course}>
+      <div className={css.title}>
+        <span>Course Content</span>
+      </div>
+
+      {Modules}
+    </div>
+  );
 };
 
-const renderCourseSidebar = props => {
-  const course = props.course;
-  const extra = {
-    modExpandHandler: props.modExpandHandler,
-    activeLessonHandler: props.activeLessonHandler,
-    activeAssignmentHandler: props.activeAssignmentHandler,
-    activeModId: props.activeModId,
-    activeLesson: props.activeLesson,
-    activeAssign: props.activeAssign
-  };
+const renderActiveMod = (activeModule, lessonSelectionHandler) => {
+  const Lessons = activeModule.lessons.map(lsn => {
+    return (
+      <span
+        className={css.lsn}
+        key={lsn.id}
+        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
+        {lsn.title}
+      </span>
+    );
+  });
+
+  return (
+    <div className={css.activeMod}>
+      <span className={css.title}>Active Module</span>
+      <span className={css.modBox}>{activeModule.title}</span>
+      {Lessons}
+    </div>
+  );
+};
+
+const renderContent = (
+  course,
+  activeModule,
+  lessonSelectionHandler,
+  openMod,
+  setOpenMod
+) => {
   return (
     <>
-      <Segment attached>
-        <Header size="large">{`${course.title}`.toUpperCase()}</Header>
-      </Segment>
-      {renderCourseModules(course.modules, extra)}
+      {renderActiveMod(activeModule, lessonSelectionHandler)}
+      {renderCourseContent(
+        course,
+        lessonSelectionHandler,
+        openMod,
+        setOpenMod
+      )}
     </>
   );
-};
-
-const renderLoader = () => {
-  return (
-    <Container>
-      <br />
-      <br />
-      <br />
-      <br />
-      <Segment basic>
-        <Dimmer active inverted>
-          <Loader size="large">Loading</Loader>
-        </Dimmer>
-      </Segment>
-    </Container>
-  );
-};
-
-const Course = props => {
-  if (props.course === undefined) {
-    return renderLoader();
-  }
-  return (
-    <>
-      <br />
-      <Grid>
-        <Grid.Row columns={4}>
-          <Grid.Column width="1" />
-          <Grid.Column width="4">{renderCourseSidebar(props)}</Grid.Column>
-          <Grid.Column width="10">{renderCurrent(props)}</Grid.Column>
-          <Grid.Column width="1" />
-        </Grid.Row>
-      </Grid>
-    </>
-  );
-};
-
-const renderCourseContent = (course = null) => {
-  return null;
 };
 
 const renderActionBtns = () => {
@@ -211,7 +135,13 @@ const renderCurrentLecture = (lesson = null) => {
 };
 
 const ClassroomBase = props => {
-  if (props.course === undefined) {
+  const [openMod, setOpenMod] = useState(0);
+  console.log("active module => ", props.activeModule);
+  if (
+    props.course === undefined ||
+    props.course === null ||
+    props.activeModule === null
+  ) {
     return renderLoader();
   }
 
@@ -221,9 +151,17 @@ const ClassroomBase = props => {
         <span>{props.course.title}</span>
       </div>
       <div className={css.board}>
-        <div className={css.courseContent}>{renderCourseContent()}</div>
+        <div className={css.content}>
+          {renderContent(
+            props.course,
+            props.activeModule,
+            props.lessonSelectionHandler,
+            openMod,
+            setOpenMod
+          )}
+        </div>
         <div className={css.lesson}>
-          {renderCurrentLecture(props.course.modules[0].lessons[0])}
+          {renderCurrentLecture(props.activeLesson)}
         </div>
       </div>
     </div>

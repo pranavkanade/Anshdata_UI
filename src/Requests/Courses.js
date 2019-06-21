@@ -73,6 +73,7 @@ export const getCourse = async (courseId, courseSaveHandler) => {
     let course = await retrieveCourse.json();
     console.log("Course Details : ", course);
     courseSaveHandler(course);
+    initialize(course);
   } catch (err) {
     console.log("[Courses/Detailed-request] user is not logged in : ", err);
   }
