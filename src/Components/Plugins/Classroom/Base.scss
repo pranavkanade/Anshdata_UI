@@ -34,6 +34,12 @@
   @extend %font;
   font-size: 32px;
   line-height: 36px;
+
+  span {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .board {
@@ -110,6 +116,28 @@
           box-shadow: $shadow-1;
         }
       }
+
+      .asignmt {
+        margin-top: 1px;
+        padding: 1rem;
+        background: #5e92b1;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: lighter;
+        font-size: 20px;
+        line-height: 24px;
+
+        color: #ffffff;
+        // border: 1px solid #ffffff;
+
+        transition: transform 0.1s ease;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.02);
+          font-weight: normal;
+          box-shadow: $shadow-1;
+        }
+      }
     }
 
     .course {
@@ -143,6 +171,20 @@
 
         .lsn {
           background: #a296e4;
+          padding: 1rem;
+          margin: 1px 0.5rem 0 0.5rem;
+          transition: transform 0.1s ease;
+          font-size: 16px;
+          &:hover {
+            cursor: pointer;
+            transform: scale(1.02);
+            font-weight: normal;
+            box-shadow: $shadow-2;
+          }
+        }
+
+        .asignmt {
+          background: #62579e;
           padding: 1rem;
           margin: 1px 0.5rem 0 0.5rem;
           transition: transform 0.1s ease;

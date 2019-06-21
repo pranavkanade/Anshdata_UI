@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Link from "next/link";
 
 import css from "./Base.scss";
 
@@ -10,8 +11,8 @@ const renderLoader = () => {
   );
 };
 
-const renderLessons = (lessons, lessonSelectionHandler) => {
-  return lessons.map(lsn => {
+const renderLsnNAsign = (lessons, lessonSelectionHandler, assignments) => {
+  const Lessons = lessons.map(lsn => {
     return (
       <span
         className={css.lsn}
@@ -21,6 +22,28 @@ const renderLessons = (lessons, lessonSelectionHandler) => {
       </span>
     );
   });
+
+  const Assignments = assignments.map(asignmt => {
+    // TODO: This is a hack to skip any assignment that may belong to a lesson.
+    // Fix this in back so that only those asign will be here which need to
+    //  e.g - course level and module level.
+    if (asignmt.lesson !== null) {
+      return null;
+    }
+    console.log("rendering assignment : ", asignmt);
+    return (
+      <span className={css.asignmt} key={asignmt.id}>
+        {asignmt.title}
+      </span>
+    );
+  });
+
+  return (
+    <>
+      {Lessons}
+      {Assignments}
+    </>
+  );
 };
 
 const renderCourseContent = (
@@ -40,7 +63,11 @@ const renderCourseContent = (
           {mod.title}
         </span>
         {mod.id === openMod
-          ? renderLessons(mod.lessons, lessonSelectionHandler)
+          ? renderLsnNAsign(
+              mod.lessons,
+              lessonSelectionHandler,
+              mod.assignments
+            )
           : null}
       </div>
     );
@@ -73,7 +100,11 @@ const renderActiveMod = (activeModule, lessonSelectionHandler) => {
     <div className={css.activeMod}>
       <span className={css.title}>Active Module</span>
       <span className={css.modBox}>{activeModule.title}</span>
-      {Lessons}
+      {renderLsnNAsign(
+        activeModule.lessons,
+        lessonSelectionHandler,
+        activeModule.assignments
+      )}
     </div>
   );
 };
@@ -219,7 +250,9 @@ const ClassroomBase = props => {
   return (
     <div className={css.classroomBase}>
       <div className={css.head}>
-        <span>{props.course.title}</span>
+        <Link href={`/courses/${props.course.id}`}>
+          <span>{props.course.title}</span>
+        </Link>
       </div>
       <div className={css.board}>
         <div className={css.content}>
