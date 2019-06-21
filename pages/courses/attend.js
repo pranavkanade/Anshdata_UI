@@ -1,11 +1,11 @@
 import React from "react";
 import App from "../../src/Containers/App";
-import AttendCourse from "../../src/Components/Plugins/Courses/Attend/Attend";
+import CourseClassroom from "../../src/Components/Plugins/Classroom/Classroom";
 
 const course = props => {
   return (
-    <App page={"attendCourse"}>
-      <AttendCourse courseId={props.url.query.id} />
+    <App page={"courseClassroom"}>
+      <CourseClassroom courseId={props.url.query.id} />
     </App>
   );
 };

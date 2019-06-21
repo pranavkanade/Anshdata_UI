@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Router from "next/router";
-import { getCourse } from "../requests";
+import { getCourse } from "../../../Requests/Courses";
 import Course from "./Render";
-import { getIfEnrolled } from "../../../../Requests/Enrollment";
+import { getIfEnrolled } from "../../../Requests/Enrollment";
 
-class AttendCourse extends Component {
+class CourseClassroom extends Component {
   state = {
     course: this.props.course,
     courseId: this.props.courseId,
@@ -74,7 +74,7 @@ class AttendCourse extends Component {
     // Here assume if the course is undefined then we are directly comming
     // from the tile representaion and not the detailed course.
     // In that case only we should fetch the course else use the earliear data.
-    if (this.state.course === undefined) {
+    if (this.state.course === undefined || this.state.course === null) {
       getCourse(this.state.courseId, this.courseSaveHandler);
     }
 
@@ -84,6 +84,6 @@ class AttendCourse extends Component {
   componentDidUpdate() {}
 }
 
-export default AttendCourse;
+export default CourseClassroom;
 
 // TODO: Show course level assignments
