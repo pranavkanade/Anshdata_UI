@@ -1,0 +1,33 @@
+.courseList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(222px, auto));
+  grid-auto-flow: dense;
+  margin-top: 3rem;
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+}
+
+.courseCard {
+  border: 1px solid #d6d6d6;
+  box-sizing: border-box;
+  border-radius: 2px;
+
+  box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.1);
+
+  transition: transform 0.1s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.08);
+    box-shadow: 1px 20px 50px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.active {
+  transform: scale(1.08);
+  box-shadow: 1px 20px 50px rgba(0, 0, 0, 0.3);
+}
