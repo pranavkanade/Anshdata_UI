@@ -1,11 +1,11 @@
 import React from "react";
 import App from "../../src/Containers/App";
-import Contrib from "../../src/Components/Plugins/Contrib/Contrib";
+import Contribute from "../../src/Components/Plugins/Contribute/contribute";
 
 const contrib = () => {
   return (
-    <App page={"Contrib"}>
-      <Contrib />
+    <App page={"Contribute"}>
+      <Contribute />
     </App>
   );
 };

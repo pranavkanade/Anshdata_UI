@@ -1,0 +1,88 @@
+@import "../../../../static/styles/globals.scss";
+
+.contributePage {
+  background: $White-1;
+  padding: 2rem 5% 4rem 5%;
+
+  .loader {
+    margin-top: 5rem;
+  }
+
+  hr {
+    height: 1px;
+    background-color: #e0e0e0;
+    border: none;
+  }
+
+  .actionBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 4rem;
+
+    .subMenu {
+      button {
+        margin-right: 1rem;
+        padding: 0 2rem 0 2rem;
+        height: 56px;
+        background: $White-0;
+        border: 0px;
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 29px;
+        background: transparent;
+        /* identical to box height */
+
+        color: $Black-1;
+
+        &:hover {
+          cursor: pointer;
+          color: #000000;
+          background: $White-3;
+          border-radius: 5px;
+        }
+      }
+
+      .activeMenu {
+        background: $White-3;
+        border-radius: 5px;
+        color: #000000;
+      }
+    }
+
+    .creation {
+      width: 280px;
+      height: 60px;
+
+      background: #6253e6;
+      border-radius: 4px;
+      border: 0px;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        margin-right: 1.3rem;
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 29px;
+        /* identical to box height */
+
+        text-align: center;
+
+        color: #ffffff;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background: #3b3199;
+      }
+    }
+  }
+}
