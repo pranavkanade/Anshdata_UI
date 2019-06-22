@@ -42,6 +42,8 @@
   }
 }
 
+%{$fg[blue]%}%/%{$reset_color%} $(git_prompt_info)$(bzr_prompt_info)%{$fg[white]%}[%n@%m]%{$reset_color%} %{$fg[white]%}[%T]%{$reset_color%}
+
 .board {
   display: grid;
   grid-template-columns: 1fr 3fr;
