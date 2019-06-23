@@ -1,6 +1,6 @@
 import React from "react";
 import App from "../../src/Containers/App";
-import Course from "../../src/Components/Plugins/Contrib/Course";
+import CourseForm from "../../src/Components/Plugins/Contribute/Course/course";
 
 const getCourseId = props => {
   try {
@@ -13,7 +13,7 @@ const getCourseId = props => {
 const contribCourse = props => {
   return (
     <App page={"ContribCourse"}>
-      <Course courseId={getCourseId(props)} />
+      <CourseForm courseId={getCourseId(props)} />
     </App>
   );
 };

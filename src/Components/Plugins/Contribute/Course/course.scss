@@ -1,0 +1,60 @@
+@import "../../../../../static/styles/globals.scss";
+
+.container {
+  @extend %containerLg;
+}
+
+.page {
+  margin-top: 2rem;
+}
+
+.heading {
+  @extend %heading-1;
+}
+
+.courseCreationPlane {
+  margin: 2rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 2rem;
+  place-content: center;
+  place-items: center;
+  justify-content: space-around;
+}
+
+.courseForm {
+  width: 700px;
+
+  input {
+    width: 700px;
+    height: 55px;
+    padding-left: 2rem;
+
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin-right: 1rem;
+
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+    color: #455a64;
+
+    &::placeholder {
+      color: #b0bec5;
+    }
+
+    &:focus,
+    &:hover {
+      border: 1px solid #181616;
+    }
+  }
+
+  .halfCut {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+  }
+}

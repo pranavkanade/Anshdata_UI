@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Link from "next/link";
 
 import css from "./contribute.scss";
 
@@ -150,10 +151,12 @@ class Contribute extends Component {
         />
         <div className={css.actionBar}>
           {this.renderSubMenu()}
-          <button className={css.creation}>
-            <span>Create New Course</span>
-            <img src="../../../../static/assets/icon/add_24px_outlined.svg" />
-          </button>
+          <Link href="/contribute/course">
+            <button className={css.creation}>
+              <span>Create New Course</span>
+              <img src="../../../../static/assets/icon/add_24px_outlined.svg" />
+            </button>
+          </Link>
         </div>
         <hr />
         <div className={css.showcase}>{this.renderCourseShowcase()}</div>

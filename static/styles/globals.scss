@@ -39,3 +39,19 @@ $grad-8: linear-gradient(203.81deg, #00ffff -8.36%, #504de8 101.17%);
 // Shadow
 $shadow-1: 10px 10px 20px rgba(0, 0, 0, 0.15);
 $shadow-2: 10px 10px 20px rgba(0, 0, 0, 0.342);
+
+// headings
+%heading-1 {
+  font-family: Scope One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 50px;
+
+  color: #000000;
+}
+
+// container
+%containerLg {
+  padding: 2rem 5% 2rem 5%;
+}
