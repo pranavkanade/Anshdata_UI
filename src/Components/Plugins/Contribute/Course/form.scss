@@ -15,7 +15,7 @@ span {
   font-family: Lato;
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 29px;
   height: 60px;
 }
@@ -65,14 +65,23 @@ span {
 .creditPoints {
   display: flex;
   flex-direction: row;
+  place-content: center;
+  place-items: center;
 
-  height: 56px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 29px;
-  text-align: center;
+  span {
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 1rem 2rem 1rem 2rem;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+
+    color: #000000;
+  }
 
   button {
     border: 0px;

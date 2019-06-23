@@ -145,12 +145,8 @@ class CourseContributionForm extends Component {
             }}>
             <img src="../../../../../static/assets/icon/remove_24px_outlined.svg" />
           </button>
-          <input
-            className={css.inp}
-            placeholder="0"
-            type="text"
-            value={this.state.credit_points}
-          />
+
+          <span>{this.state.credit_points}</span>
           <button
             className={css.add}
             onClick={() => {
