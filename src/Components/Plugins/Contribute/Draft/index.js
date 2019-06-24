@@ -3,6 +3,7 @@ import css from "./index.scss";
 
 import { getCourse } from "../../../../Requests/Courses";
 import CourseForm from "../../../Generic/Forms/course";
+import CourseContent from "./content";
 
 class DraftedCourse extends Component {
   state = {
@@ -184,6 +185,7 @@ class DraftedCourse extends Component {
         <div className={css.page}>
           {this.renderCourseInfo()}
           {this.renderAddNewForm()}
+          <CourseContent modules={this.state.course.modules} />
         </div>
       </div>
     );

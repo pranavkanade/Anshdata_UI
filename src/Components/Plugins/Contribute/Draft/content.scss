@@ -1,0 +1,21 @@
+.courseContent {
+  padding: 2rem 0 2rem 0;
+
+  .sectionTitle {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 36px;
+    color: #000000;
+  }
+
+  .moduleList {
+    margin: 2rem 1rem 1rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-gap: 2rem 1rem;
+    place-items: center;
+    grid-auto-flow: dense;
+  }
+}
