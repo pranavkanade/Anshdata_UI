@@ -185,7 +185,7 @@ class DraftedCourse extends Component {
         <div className={css.page}>
           {this.renderCourseInfo()}
           {this.renderAddNewForm()}
-          <CourseContent modules={this.state.course.modules} />
+          <CourseContent course={this.state.course} />
         </div>
       </div>
     );
