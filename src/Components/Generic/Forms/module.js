@@ -8,6 +8,7 @@ import {
   Divider,
   Grid
 } from "semantic-ui-react";
+import Router from "next/router";
 
 import { createModuleHandler } from "../../../Requests/courseCreation";
 import css from "./module.scss";
@@ -34,7 +35,7 @@ class ModuleForm extends Component {
     });
   };
 
-  createModule = () => {
+  createModule = async () => {
     console.log("[Module/Form.js] Create Module clicked");
     const moduleData = {
       title: this.state.title,
@@ -42,7 +43,8 @@ class ModuleForm extends Component {
       reference: this.state.reference,
       course: this.props.course.id
     };
-    createModuleHandler(moduleData);
+    const courseId = await createModuleHandler(moduleData);
+    Router.push(`/contribute/draft/${courseId}`);
     this.props.closeHandler();
   };
 
