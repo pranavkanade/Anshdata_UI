@@ -14,9 +14,9 @@ export default props => {
           <div className={css.introClip}>
             <iframe
               src="https://www.youtube.com/embed/RKLKib4bHhA"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
             />
           </div>
           <button>Join Now</button>

@@ -46,8 +46,8 @@ const renderAuthMenuItem = props => {
 const renderNavMenus = props => {
   return menus.map((m, i) => {
     return (
-      <div>
-        <a href={"/".concat(m.toLowerCase())} key={i}>
+      <div key={i}>
+        <a href={"/".concat(m.toLowerCase())}>
           <button className={css.navLink}>{m}</button>
         </a>
       </div>
