@@ -43,7 +43,10 @@ class ModuleForm extends Component {
       reference: this.state.reference,
       course: this.props.course.id
     };
-    const courseId = await createModuleHandler(moduleData);
+    const courseId = await createModuleHandler(
+      moduleData,
+      this.props.moduleId
+    );
     Router.push(`/contribute/draft/${courseId}`);
     this.props.closeHandler();
   };
@@ -115,7 +118,8 @@ class ModuleForm extends Component {
     if (
       this.props.course === null ||
       this.props.moduleId === null ||
-      this.props.moduleId === undefined
+      this.props.moduleId === undefined ||
+      this.props.moduleId === 0
     ) {
       console.log("Creating new module");
       this.setState({ type: "create" });

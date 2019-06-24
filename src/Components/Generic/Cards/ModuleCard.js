@@ -71,14 +71,17 @@ export const ModuleCardMd = props => {
   );
 };
 
-const renderEditActionBar = () => {
+const renderEditActionBar = (moduleId, select, modify) => {
   return (
     <div className={css.actionBar}>
+      <button className={css.fullscreen} onClick={() => select(moduleId)}>
+        <img src="../../../../static/assets/icon/fullscreen_24px_outlined.svg" />
+      </button>
       <button className={css.delete}>
         <span className={css.label}>Delete</span>
         <img src="../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
       </button>
-      <button className={css.edit}>
+      <button className={css.edit} onClick={() => modify(moduleId)}>
         <span className={css.label}>Modify</span>
         <img src="../../../../static/assets/icon/create_24px_outlined.svg" />
       </button>
@@ -95,15 +98,15 @@ export const ModuleCardDraft = props => {
   }
 
   return (
-    <div className={css.mdModuleCard} onClick={() => props.select(module.id)}>
+    <div className={css.mdModuleCard}>
       <h3 className={css.title}>{module.title}</h3>
-      <p>{module.description}</p>
+      <p>{module.description.substring(0, 50)}...</p>
       {renderStats(
         module.lessons.length,
         getCreditPoints(module.assignments),
         module.assignments.length
       )}
-      {renderEditActionBar()}
+      {renderEditActionBar(module.id, props.select, props.modify)}
     </div>
   );
 };

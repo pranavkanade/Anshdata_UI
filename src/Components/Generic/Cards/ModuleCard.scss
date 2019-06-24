@@ -25,8 +25,7 @@
   }
 
   &:hover {
-    cursor: pointer;
-    box-shadow: $shadow-1;
+    border: 1px solid #a5a5a5;
   }
 }
 
@@ -77,6 +76,16 @@
     &:hover {
       cursor: pointer;
       background: #f31f4d;
+    }
+  }
+
+  .fullscreen {
+    background: transparent;
+    padding: 0px;
+    transition: transform 0.1s ease;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.3);
     }
   }
 }

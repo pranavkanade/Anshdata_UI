@@ -26,12 +26,17 @@ class CourseContent extends Component {
     this.setState({ activeModule: id });
   };
 
+  modifySelectedModule = id => {
+    this.addHandler("module", id);
+  };
+
   closeHandler = () => {
     this.setState({
       shouldOpenAddModule: false,
       shouldOpenAddLesson: false,
       shouldOpenAddAssignment: false,
-      elementBeingAdded: ""
+      elementBeingAdded: "",
+      activeModule: 0
     });
   };
 
@@ -45,7 +50,8 @@ class CourseContent extends Component {
     if (btn === "module") {
       this.setState({
         shouldOpenAddModule: true,
-        elementBeingAdded: btn
+        elementBeingAdded: btn,
+        activeModule: moduleId !== null ? moduleId : 0
       });
     }
   };
@@ -60,6 +66,7 @@ class CourseContent extends Component {
           course={this.state.course}
           closeHandler={this.closeHandler}
           edit={true}
+          moduleId={this.state.activeModule}
         />
       );
     }
@@ -80,8 +87,10 @@ class CourseContent extends Component {
             module={mod}
             key={mod.id}
             select={this.setSelectedModule}
+            modify={this.modifySelectedModule}
           />
-          {this.state.activeModule === mod.id ? (
+          {this.state.activeModule === mod.id &&
+          !this.state.shouldOpenAddModule ? (
             <DetailedModuleCard
               module={mod}
               key={`detailed_${mod.id}`}

@@ -30,7 +30,7 @@ export const createModuleHandler = async (modData, modId = null) => {
   try {
     let mthd = "POST";
     let URL = `http://127.0.0.1:8000/api/course/mod/`;
-    if (modId !== null) {
+    if (modId !== null && modId !== undefined && modId !== 0) {
       mthd = "PATCH";
       URL = `http://127.0.0.1:8000/api/course/mod/${modId}/`;
     }
