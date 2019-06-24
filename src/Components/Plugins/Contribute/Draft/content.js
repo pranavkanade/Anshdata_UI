@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import css from "./content.scss";
 
 import {
-  ModuleCardMd,
+  ModuleCardDraft,
   DetailedModuleCard
 } from "../../../Generic/Cards/ModuleCard";
 
@@ -21,10 +21,16 @@ class CourseContent extends Component {
   };
 
   renderModulesList = () => {
-    return this.state.modules.map(mod => {
+    const AddModuleBtn = (
+      <div className={css.moduleBtn}>
+        <img src="../../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
+        <span>Add New Module</span>
+      </div>
+    );
+    const Modules = this.state.modules.map(mod => {
       return (
         <>
-          <ModuleCardMd
+          <ModuleCardDraft
             module={mod}
             key={mod.id}
             select={this.setSelectedModule}
@@ -39,13 +45,20 @@ class CourseContent extends Component {
         </>
       );
     });
+
+    return (
+      <div className={css.moduleList}>
+        {AddModuleBtn}
+        {Modules}
+      </div>
+    );
   };
 
   render() {
     return (
       <div className={css.courseContent}>
         <span className={css.sectionTitle}>Modules</span>
-        <div className={css.moduleList}>{this.renderModulesList()}</div>
+        {this.renderModulesList()}
       </div>
     );
   }

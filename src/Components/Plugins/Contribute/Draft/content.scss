@@ -1,3 +1,4 @@
+@import "../../../../../static/styles/globals.scss";
 .courseContent {
   padding: 2rem 0 2rem 0;
 
@@ -17,5 +18,39 @@
     grid-gap: 2rem 1rem;
     place-items: center;
     grid-auto-flow: dense;
+  }
+}
+
+.moduleBtn {
+  width: 500px;
+  height: 244px;
+  background: inherit;
+
+  border: 5px dashed #c2cfe0;
+  // box-sizing: border-box;
+  border-radius: 5px;
+  padding: 1rem 2rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  text-align: center;
+
+  span {
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 28px;
+    line-height: 39px;
+
+    color: #c2cfe0;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $shadow-1;
+    border: 5px dashed #8e98a5;
+    span {
+      color: #67707c;
+    }
   }
 }
