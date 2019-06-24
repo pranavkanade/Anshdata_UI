@@ -9,7 +9,7 @@
   height: 244px;
   background: $White-0;
 
-  // border: 1px solid $Black-1;
+  border: 1px solid $White-3;
   // box-sizing: border-box;
   border-radius: 5px;
   padding: 1rem 2rem 1rem 2rem;
@@ -26,14 +26,66 @@
 
   &:hover {
     cursor: pointer;
+    box-shadow: $shadow-1;
+  }
+}
+
+.actionBar {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 1rem;
+
+  button {
+    margin-left: 1rem;
+    justify-self: center;
+    grid-column-end: -1;
+    padding: 0 1rem 0 1rem;
+    height: 36px;
+
+    background: $Blue-4;
+    border-radius: 5px;
+    border: 0px;
+    /* mild */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    color: $White-0;
+    .label {
+      margin-right: 1rem;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: lighter;
+      font-size: 16px;
+      line-height: 24px;
+      /* identical to box height */
+
+      color: inherit;
+    }
+  }
+  .edit {
+    &:hover {
+      cursor: pointer;
+      background: $Blue-6;
+    }
+  }
+
+  .delete {
+    background: #cf002d;
+    &:hover {
+      cursor: pointer;
+      background: #f31f4d;
+    }
   }
 }
 
 .secBox {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  display: flex;
+  flex-direction: row;
   margin-top: 2rem;
-  grid-gap: 2rem 1rem;
+  place-content: space-around;
 
   .stat {
     width: 130px;
