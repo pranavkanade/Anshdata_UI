@@ -1,7 +1,7 @@
 import { getAuthorization } from "./Authorization";
 
 export const createCourseHandler = async (courseData, courseId) => {
-  console.log("[Course/Form.js] Create Course clicked");
+  console.log("[Course/Form.js] Create Course clicked : ", courseData);
   try {
     let mthd = "POST";
     let URL = "http://127.0.0.1:8000/api/course/";
@@ -18,7 +18,8 @@ export const createCourseHandler = async (courseData, courseId) => {
       body: JSON.stringify(courseData)
     });
     let newCourse = await createCourseRes.json();
-    console.log("Newly Created Course", newCourse);
+    // console.log("Newly Created Course", newCourse);
+    return newCourse.id;
   } catch (err) {
     console.log("[Course/Form.js] user is not logged in : ", err);
   }

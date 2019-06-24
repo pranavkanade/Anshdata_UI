@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import css from "./course.scss";
-import Form from "./form";
+import Form from "../../../Generic/Forms/course";
 
 class CourseForm extends Component {
   state = {
@@ -17,7 +17,7 @@ class CourseForm extends Component {
   renderCourseForm = () => {
     return (
       <div className={css.courseForm}>
-        <Form onSaveHandler={this.courseSaveHandler} />
+        <Form onSaveHandler={this.courseSaveHandler} closeHandler={() => {}} />
       </div>
     );
   };

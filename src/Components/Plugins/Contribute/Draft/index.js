@@ -2,11 +2,58 @@ import React, { Component } from "react";
 import css from "./index.scss";
 
 import { getCourse } from "../../../../Requests/Courses";
+import CourseForm from "../../../Generic/Forms/course";
 
 class DraftedCourse extends Component {
   state = {
     courseId: this.props.courseId,
-    course: null
+    course: null,
+    shouldOpenAddModule: false,
+    shouldOpenAddLesson: false,
+    shouldOpenAddAssignment: false,
+    shouldOpenAddCourse: false,
+    elementBeingAdded: ""
+  };
+
+  closeHandler = () => {
+    this.setState({
+      shouldOpenAddModule: false,
+      shouldOpenAddLesson: false,
+      shouldOpenAddAssignment: false,
+      shouldOpenAddCourse: false,
+      elementBeingAdded: ""
+    });
+  };
+
+  addHandler = (
+    btn,
+    moduleId = null,
+    lessonId = null,
+    assignmentId = null
+  ) => {
+    console.log("[Contrib/Course.js] Add New Clicked : ", btn);
+    if (btn === "course") {
+      this.setState({
+        shouldOpenAddCourse: true,
+        elementBeingAdded: btn
+      });
+    }
+  };
+
+  renderAddNewForm = () => {
+    const btn = this.state.elementBeingAdded;
+    console.log("[Contrib/Course.js] render add new form : ", btn);
+    if (this.state.shouldOpenAddCourse) {
+      return (
+        <CourseForm
+          open={true}
+          closeHandler={this.closeHandler}
+          course={this.state.course}
+          edit={true}
+        />
+      );
+    }
+    return null;
   };
 
   courseSaveHandler = course => {
@@ -28,7 +75,7 @@ class DraftedCourse extends Component {
   renderActionBar = () => {
     return (
       <div className={css.actionBar}>
-        <button className={css.edit}>
+        <button className={css.edit} onClick={() => this.addHandler("course")}>
           <span>Edit Course Info</span>
           <img src="../../../../../static/assets/icon/create_24px_outlined.svg" />
         </button>
@@ -73,7 +120,7 @@ class DraftedCourse extends Component {
   renderAuthorNSub = (author = "John Doe", subject = "Test") => {
     return (
       <div className={css.infoBox}>
-        <div className={css.authSub}>
+        <div className={css.authSub + " " + css.author}>
           <span className={css.label}>Author</span>
           <span className={css.value}>{author}</span>
         </div>
@@ -115,8 +162,8 @@ class DraftedCourse extends Component {
                 this.getLessonsCount(this.state.course.modules)
               )}
             </div>
-            <div className={css.options}>
-              <button>
+            <div className={css.optionsBox}>
+              <button className={css.save}>
                 <span>Save</span>
               </button>
             </div>
@@ -134,7 +181,10 @@ class DraftedCourse extends Component {
 
     return (
       <div className={css.container}>
-        <div className={css.page}>{this.renderCourseInfo()}</div>
+        <div className={css.page}>
+          {this.renderCourseInfo()}
+          {this.renderAddNewForm()}
+        </div>
       </div>
     );
   }

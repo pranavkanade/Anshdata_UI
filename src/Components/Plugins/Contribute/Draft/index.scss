@@ -186,6 +186,10 @@
             line-height: 24px;
           }
         }
+
+        .author {
+          color: #9b51e0;
+        }
       }
 
       .stats {
@@ -235,7 +239,7 @@
       }
     }
 
-    .options {
+    .optionsBox {
       // TODO: When adding more content here remove height
       height: 200px;
       margin-top: 1rem;
@@ -248,7 +252,7 @@
       flex-direction: column-reverse;
       padding: 1rem 2rem 1rem 2rem;
 
-      button {
+      .save {
         align-self: center;
         background: #397ef0;
         height: 48px;
