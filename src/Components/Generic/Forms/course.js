@@ -10,10 +10,12 @@ import {
   Button
 } from "semantic-ui-react";
 import Link from "next/link";
-import { getCategoryList } from "../../../../Requests/Category";
-import { createCourseHandler } from "../../../../Requests/courseCreation";
-import css from "./form.scss";
-class CourseContributionForm extends Component {
+import { getCategoryList } from "../../../Requests/Category";
+import { createCourseHandler } from "../../../Requests/courseCreation";
+import css from "./course.scss";
+import Router from "next/router";
+
+class CourseForm extends Component {
   state = {
     courseId: null,
     title: "",
@@ -22,7 +24,8 @@ class CourseContributionForm extends Component {
     tag: "",
     isPublished: false,
     credit_points: 0,
-    description: ""
+    description: "",
+    shouldOpen: false
   };
 
   catSaveHandler = data => {
@@ -54,21 +57,27 @@ class CourseContributionForm extends Component {
       subject: this.state.subject,
       category: this.state.category,
       isPublished: this.state.isPublished,
-      credit_points: this.state.creditPoints,
+      credit_points: this.state.credit_points,
       description: this.state.description
     };
   };
 
-  createCourse = () => {
+  createCourse = async () => {
     console.log("[Course/Form.js] Create Course clicked");
     const courseData = this.getNewCourseData();
-    createCourseHandler(courseData, this.state.courseId);
-    // if (
-    //   this.props.closeHandler !== null ||
-    //   this.props.closeHandler !== undefined
-    // ) {
-    //   this.props.closeHandler();
-    // }
+    console.log(courseData);
+    const courseId = await createCourseHandler(
+      courseData,
+      this.state.courseId
+    );
+    console.log("Course Created : ", courseId);
+    Router.push(`/contribute/draft/${courseId}`);
+    if (
+      this.props.closeHandler !== null ||
+      this.props.closeHandler !== undefined
+    ) {
+      this.props.closeHandler();
+    }
   };
 
   renderCategoryChoise = () => {
@@ -161,7 +170,7 @@ class CourseContributionForm extends Component {
     );
   };
 
-  render() {
+  renderForm() {
     // TODO: Add button to send it for review
     // TODO: Add a muted button to publish the courses
     return (
@@ -202,40 +211,38 @@ class CourseContributionForm extends Component {
           />
         </div>
         <div className={css.reverse}>
-          <Link href="/contribute">
-            <button type="submit" onClick={this.createCourse}>
-              <span>Create</span>
-              <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-            </button>
-          </Link>
+          <button type="submit" onClick={this.createCourse}>
+            <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
+            <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+          </button>
         </div>
       </Form>
     );
   }
 
-  // render() {
-  //   // if (this.props.edit === undefined) {
-  //   //   return <>{this.renderForm()}</>;
-  //   // } else {
-  //   //   const open = this.state.shouldOpen;
-  //   //   return (
-  //   //     <Modal
-  //   //       open={open}
-  //   //       onClose={this.props.closeHandler}
-  //   //       closeOnDimmerClick={false}
-  //   //       closeOnEscape={false}
-  //   //       centered={false}>
-  //   //       <Modal.Header>
-  //   //         Edit Course
-  //   //         <Button onClick={this.props.closeHandler} negative floated="right">
-  //   //           close
-  //   //         </Button>
-  //   //       </Modal.Header>
-  //   //       <Modal.Content>{this.renderForm()}</Modal.Content>
-  //   //     </Modal>
-  //   //   );
-  //   // }
-  // }
+  render() {
+    if (this.props.edit === undefined) {
+      return <>{this.renderForm()}</>;
+    } else {
+      const open = this.state.shouldOpen;
+      return (
+        <Modal
+          open={open}
+          onClose={this.props.closeHandler}
+          closeOnDimmerClick={false}
+          closeOnEscape={false}
+          centered={false}>
+          <Modal.Header>
+            Edit Course
+            <Button onClick={this.props.closeHandler} negative floated="right">
+              close
+            </Button>
+          </Modal.Header>
+          <Modal.Content>{this.renderForm()}</Modal.Content>
+        </Modal>
+      );
+    }
+  }
 
   getCourseToUpdate = () => {
     if (this.props.course === undefined) {
@@ -260,4 +267,4 @@ class CourseContributionForm extends Component {
   }
 }
 
-export default CourseContributionForm;
+export default CourseForm;
