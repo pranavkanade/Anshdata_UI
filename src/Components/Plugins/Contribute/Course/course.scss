@@ -16,45 +16,50 @@
   margin: 2rem;
   display: grid;
   grid-template-columns: auto auto;
-  grid-gap: 2rem;
-  place-content: center;
-  place-items: center;
-  justify-content: space-around;
+  grid-gap: 5rem;
+  justify-content: center;
 }
 
 .courseForm {
   width: 700px;
+}
 
-  input {
-    width: 700px;
-    height: 55px;
-    padding-left: 2rem;
+.sidebar {
+  display: flex;
+  flex-direction: column-reverse;
+  align-content: flex-start;
+  margin-top: 2rem;
+  padding: 2rem;
+  width: 280px;
+  height: 380px;
 
-    border: 1px solid #c6c6c6;
-    box-sizing: border-box;
-    border-radius: 3px;
-    margin-right: 1rem;
+  background: #eff0f1;
+  border-radius: 5px;
 
-    font-family: Barlow;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: 24px;
-    color: #455a64;
+  place-items: center;
 
-    &::placeholder {
-      color: #b0bec5;
+  button {
+    width: 220px;
+    height: 54px;
+    left: 0px;
+    top: 0px;
+
+    background: #2e96d3;
+    border-radius: 5px;
+
+    color: $White-0;
+
+    span {
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 29px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: #ffffff;
     }
-
-    &:focus,
-    &:hover {
-      border: 1px solid #181616;
-    }
-  }
-
-  .halfCut {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
   }
 }
