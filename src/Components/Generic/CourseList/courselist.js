@@ -7,14 +7,13 @@ import LgDrafedCourseCard from "../Cards/LgCard/draftcard";
 const getCourseList = props => {
   return props.courses.map(course => {
     return (
-      <>
+      <div key={course.id}>
         <div
           className={
             css.courseCard +
             " " +
             (course.id === props.selectedCourse ? css.active : "")
           }
-          key={course.id}
           onClick={() => props.setSelectedCourse(course.id)}>
           <PublishedCard course={course} />
         </div>
@@ -25,7 +24,7 @@ const getCourseList = props => {
             activeTab={props.activeTab}
           />
         ) : null}
-      </>
+      </div>
     );
   });
 };
