@@ -3,6 +3,7 @@ $White-0: #ffffff;
 $White-1: #fcfcfc;
 $White-2: #f7f7f7;
 $White-3: #dddddd;
+$White-4: #e7e7e7;
 
 $Red-4: #eb2b2b31;
 
@@ -41,6 +42,16 @@ $shadow-1: 10px 10px 20px rgba(0, 0, 0, 0.15);
 $shadow-2: 10px 10px 20px rgba(0, 0, 0, 0.342);
 
 // headings
+%heading-0 {
+  font-family: Scope One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 55px;
+
+  color: #000000;
+}
+
 %heading-1 {
   font-family: Scope One;
   font-style: normal;
@@ -49,6 +60,21 @@ $shadow-2: 10px 10px 20px rgba(0, 0, 0, 0.342);
   line-height: 50px;
 
   color: #000000;
+}
+
+// font
+
+%BtnFont-1 {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 29px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #ffffff;
 }
 
 // container

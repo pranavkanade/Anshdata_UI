@@ -25,6 +25,107 @@ class DraftedCourse extends Component {
     );
   };
 
+  renderActionBar = () => {
+    return (
+      <div className={css.actionBar}>
+        <button className={css.edit}>
+          <span>Edit Course Info</span>
+          <img src="../../../../../static/assets/icon/create_24px_outlined.svg" />
+        </button>
+        <button className={css.review}>
+          <span>Send for Review</span>
+          <img src="../../../../../static/assets/icon/done_all_24px_outlined.svg" />
+        </button>
+        <button className={css.publish}>
+          <span>Publish</span>
+          <img src="../../../../../static/assets/icon/upload_24px_outlined.svg" />
+        </button>
+        <button className={css.delete}>
+          <span>Delete</span>
+          <img src="../../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
+        </button>
+      </div>
+    );
+  };
+
+  renderStats = (creditPoints = 10, assignments = 2, lessons = 4) => {
+    return (
+      <div className={css.stats}>
+        <div className={css.stat}>
+          <span className={css.value}>{lessons}</span>
+          <br />
+          <span className={css.label}>Lessons</span>
+        </div>
+        <div className={css.stat}>
+          <span className={css.value}>{assignments}</span>
+          <br />
+          <span className={css.label}>Assignments</span>
+        </div>
+        <div className={css.stat}>
+          <span className={css.value + " " + css.credits}>{creditPoints}</span>
+          <br />
+          <span className={css.label}>Credit Points</span>
+        </div>
+      </div>
+    );
+  };
+
+  renderAuthorNSub = (author = "John Doe", subject = "Test") => {
+    return (
+      <div className={css.infoBox}>
+        <div className={css.authSub}>
+          <span className={css.label}>Author</span>
+          <span className={css.value}>{author}</span>
+        </div>
+        <div className={css.authSub}>
+          <div className={css.label}>Subject</div>
+          <div className={css.value}>{subject}</div>
+        </div>
+      </div>
+    );
+  };
+
+  getLessonsCount = modules => {
+    return modules.reduce((sum, mod) => {
+      return sum + mod.lessons.length;
+    }, 0);
+  };
+
+  renderCourseInfo = () => {
+    return (
+      <div className={css.course}>
+        <span className={css.title}>{this.state.course.title}</span>
+        <div className={css.info}>
+          <div className={css.primary}>
+            <div className={css.description}>
+              <p>{this.state.course.description}</p>
+            </div>
+            <div className={css.tagBox} />
+            {this.renderActionBar()}
+          </div>
+          <div className={css.secondary}>
+            <div className={css.extra}>
+              {this.renderAuthorNSub(
+                this.state.course.author.username,
+                this.state.course.subject
+              )}
+              {this.renderStats(
+                this.state.course.credit_points,
+                this.state.course.assignments.length,
+                this.getLessonsCount(this.state.course.modules)
+              )}
+            </div>
+            <div className={css.options}>
+              <button>
+                <span>Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   render() {
     if (this.state.course === null) {
       return <div className={css.container}>{this.renderLoader()}</div>;
@@ -32,10 +133,8 @@ class DraftedCourse extends Component {
     const { course } = this.state;
 
     return (
-      <div>
-        <div>
-          <span className={css.title}>{course.title}</span>
-        </div>
+      <div className={css.container}>
+        <div className={css.page}>{this.renderCourseInfo()}</div>
       </div>
     );
   }

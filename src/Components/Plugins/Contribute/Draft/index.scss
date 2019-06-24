@@ -1,5 +1,8 @@
+@import "../../../../../static/styles/globals.scss";
+
 .container {
   padding: 0 5% 0 5%;
+  background-color: $White-2;
 }
 
 .loader {
@@ -7,5 +10,254 @@
 }
 
 .page {
-  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
+.course {
+  padding: 2rem;
+  .title {
+    @extend %heading-0;
+  }
+
+  .info {
+    display: grid;
+    grid-template-columns: 2fr auto;
+    grid-gap: 2rem;
+    // align-items: center;
+    justify-content: center;
+    margin: 2rem 2rem 0 2rem;
+  }
+
+  .primary {
+    display: flex;
+    flex-direction: column;
+    // margin: 2rem 0 0 2rem;
+
+    .description {
+      padding: 1rem;
+      font-family: Lato;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 24px;
+
+      color: #3f3e3e;
+
+      height: 210px;
+
+      border: 1px solid $White-3;
+      box-sizing: border-box;
+      border-radius: 2px;
+    }
+
+    .tagBox {
+      margin-top: 2rem;
+      height: 72px;
+
+      border: 1px solid $White-3;
+      box-sizing: border-box;
+      border-radius: 2px;
+    }
+
+    .actionBar {
+      margin-top: 2rem;
+      // height: 72px;
+      background: $White-4;
+      border-radius: 5px;
+      border: 0px;
+      padding: 1rem;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+
+      button {
+        height: 48px;
+        padding: 0 2rem 0 2rem;
+
+        border-radius: 5px;
+        border: 0px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          margin-right: 1rem;
+          font-family: Barlow;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 29px;
+          /* identical to box height */
+
+          text-align: center;
+
+          color: #ffffff;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .edit {
+        background: #1c52ad;
+
+        &:hover {
+          background: #2769db;
+        }
+      }
+
+      .publish {
+        background: #03b86c;
+
+        &:hover {
+          background: #14dd89;
+        }
+      }
+
+      .review {
+        background: #fb9700;
+
+        &:hover {
+          background: #f3b14e;
+        }
+      }
+
+      .delete {
+        background: #cf002d;
+        &:hover {
+          background: #f31f4d;
+        }
+      }
+    }
+  }
+
+  .secondary {
+    display: flex;
+    flex-direction: column;
+
+    width: 380px;
+    // justify-content: space-between;
+
+    .extra {
+      // height: 160px;
+      padding: 1rem 0 1rem 0;
+
+      border: 1px solid $White-3;
+      box-sizing: border-box;
+      border-radius: 2px;
+
+      display: flex;
+      flex-direction: column;
+
+      .infoBox {
+        display: flex;
+        flex-direction: column;
+        margin: 0 1rem 0 1rem;
+        place-items: center;
+
+        .authSub {
+          display: flex;
+          flex-direction: row;
+          width: 320px;
+          border: 1px solid #9b51e0;
+          border-radius: 5px;
+
+          font-family: Barlow;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 24px;
+          /* identical to box height */
+          text-align: center;
+          place-content: space-between;
+          padding: 0.2rem 1rem 0.2rem 1rem;
+
+          margin-bottom: 1rem;
+          color: #9b51e0;
+
+          .value {
+            font-family: Lato;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 24px;
+          }
+        }
+      }
+
+      .stats {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        .stat {
+          // width: 160px;
+          height: 64px;
+          padding: 0 1rem 0 1rem;
+
+          border: 1px solid #474747;
+          box-sizing: border-box;
+          border-radius: 2px;
+
+          text-align: center;
+          justify-self: center;
+
+          .value {
+            font-family: Lato;
+            font-style: normal;
+            font-weight: bolder;
+            font-size: 24px;
+            line-height: 34px;
+            /* identical to box height */
+            text-align: center;
+
+            color: #000000;
+          }
+
+          .label {
+            font-family: Barlow;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            /* identical to box height */
+            text-align: center;
+
+            color: #000000;
+          }
+
+          .credits {
+            color: #f3971f;
+          }
+        }
+      }
+    }
+
+    .options {
+      // TODO: When adding more content here remove height
+      height: 200px;
+      margin-top: 1rem;
+
+      background: $White-4;
+      border: 0px;
+      border-radius: 5px;
+
+      display: flex;
+      flex-direction: column-reverse;
+      padding: 1rem 2rem 1rem 2rem;
+
+      button {
+        align-self: center;
+        background: #397ef0;
+        height: 48px;
+        width: 160px;
+        border-radius: 5px;
+        border: 0px;
+
+        @extend %BtnFont-1;
+      }
+    }
+  }
 }
