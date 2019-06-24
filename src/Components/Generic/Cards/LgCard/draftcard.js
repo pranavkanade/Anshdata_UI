@@ -96,10 +96,12 @@ const renderActionBar = props => {
         <span>Delete</span>
         <img src="./../../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
       </button>
-      <button className={css.modify}>
-        <span>Modify</span>
-        <img src="./../../../../../static/assets/icon/create_24px_outlined.svg" />
-      </button>
+      <Link href={`/contribute/draft/${props.course.id}`}>
+        <button className={css.modify}>
+          <span>Modify</span>
+          <img src="./../../../../../static/assets/icon/create_24px_outlined.svg" />
+        </button>
+      </Link>
     </div>
   );
 };
