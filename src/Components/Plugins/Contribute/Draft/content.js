@@ -8,12 +8,14 @@ import {
 
 import ModuleForm from "../../../Generic/Forms/module";
 import LessonForm from "../../../Generic/Forms/lesson";
+import AssignmentForm from "../../../Generic/Forms/assignment";
 
 class CourseContent extends Component {
   state = {
     course: this.props.course,
     activeModule: 0,
     activeLesson: 0,
+    activeAssignment: 0,
     shouldOpenAddModule: false,
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
@@ -39,7 +41,8 @@ class CourseContent extends Component {
       shouldOpenAddAssignment: false,
       elementBeingAdded: "",
       activeModule: 0,
-      activeLesson: 0
+      activeLesson: 0,
+      activeAssignment: 0
     });
   };
 
@@ -50,11 +53,19 @@ class CourseContent extends Component {
     assignmentId = null
   ) => {
     console.log("[Contrib/Course.js] Add New Clicked : ", btn);
-    if (btn === "lesson") {
+    if (btn === "assignment") {
+      this.setState({
+        shouldOpenAddAssignment: true,
+        elementBeingAdded: btn,
+        activeModule: moduleId !== null ? moduleId : 0,
+        activeLesson: lessonId !== null ? lessonId : 0,
+        activeAssignment: assignmentId !== null ? assignmentId : 0
+      });
+    } else if (btn === "lesson") {
       this.setState({
         shouldOpenAddLesson: true,
         elementBeingAdded: btn,
-        activeModule: moduleId,
+        activeModule: moduleId !== null ? moduleId : 0,
         activeLesson: lessonId !== null ? lessonId : 0
       });
     } else if (btn === "module") {
@@ -89,20 +100,18 @@ class CourseContent extends Component {
           course={this.state.course}
         />
       );
+    } else if (this.state.shouldOpenAddAssignment) {
+      return (
+        <AssignmentForm
+          open={true}
+          closeHandler={this.closeHandler}
+          moduleId={this.state.activeModule}
+          lessonId={this.state.activeLesson}
+          assignmentId={this.state.activeAssignment}
+          course={this.state.course}
+        />
+      );
     }
-    // else if (btn === "assignment") {
-    //   return (
-    //     <AssignmentForm
-    //       open={true}
-    //       closeHandler={this.closeHandler}
-    //       moduleId={this.state.moduleId}
-    //       lessonId={this.state.lessonId}
-    //       assignmentId={this.state.assignmentId}
-    //       course={this.state.course}
-    //       onSaveHandler={this.onSaveHandler}
-    //     />
-    //   );
-    // }
     return null;
   };
 
@@ -128,7 +137,7 @@ class CourseContent extends Component {
               module={mod}
               key={`detailed_${mod.id}`}
               close={this.closeSelectedModule}
-              addNewLesson={this.addHandler}
+              addNewBtn={this.addHandler}
             />
           ) : null}
         </>

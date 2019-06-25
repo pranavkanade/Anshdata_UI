@@ -84,3 +84,40 @@ export const createLessonHandler = async (lsnData, lsnId = null) => {
     console.log("[Lesson/Action.js] Error when creating a lesson : ", err);
   }
 };
+
+export const createAssignmentHandler = async (assignmentData, exId = null) => {
+  console.log(
+    "[Assignment/Action.js] create new assignment: ",
+    assignmentData
+  );
+
+  try {
+    let mthd = "POST";
+    let URL = "http://127.0.0.1:8000/api/course/ex/";
+    if (exId !== null && exId !== undefined && exId !== 0) {
+      mthd = "PATCH";
+      URL = `http://127.0.0.1:8000/api/course/ex/${exId}/`;
+    }
+
+    await fetch(URL, {
+      method: mthd,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getAuthorization()
+      },
+      body: JSON.stringify(assignmentData)
+    })
+      .then(response => {
+        // console.log(response);
+        return response.json();
+      })
+      .then(data => {
+        console.log("Assignment Created ", data);
+      });
+  } catch (err) {
+    console.log(
+      "[Assignment/Action.js] Error when creating an assignment : ",
+      err
+    );
+  }
+};

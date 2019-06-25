@@ -200,7 +200,7 @@ export const DetailedModuleCardDraft = props => {
         <div className={css.itemList}>
           <div
             className={css.createBtn}
-            onClick={() => props.addNewLesson("lesson", module.id)}>
+            onClick={() => props.addNewBtn("lesson", module.id)}>
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
             <span>Add new lesson</span>
           </div>
@@ -212,7 +212,7 @@ export const DetailedModuleCardDraft = props => {
         <div className={css.itemList}>
           <div
             className={css.createBtn + " " + css.createAssignmentBtn}
-            onClick={() => props.addNewLesson("lesson", module.id)}>
+            onClick={() => props.addNewBtn("assignment", module.id)}>
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined_dark.svg" />
             <span>Add new assignment</span>
           </div>
