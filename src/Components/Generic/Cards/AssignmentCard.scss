@@ -1,0 +1,53 @@
+@import "../../../../static/styles/globals.scss";
+.assignmentCard {
+  width: 300px;
+  height: 160px;
+  background: #ffffff;
+  padding: 1rem 2rem 1rem 2rem;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  span {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: $Black-1;
+  }
+
+  .creds {
+    display: flex;
+    flex-direction: row-reverse;
+
+    .box {
+      border: 1px solid #ececec;
+      background: #e6e6e6;
+      border-radius: 10px;
+      padding: 0 1rem 0 1rem;
+      text-align: center;
+      .value {
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 29px;
+
+        color: #e47a23;
+      }
+      .label {
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 29px;
+
+        color: #e47a23;
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import React from "react";
 
 import css from "./ModuleCard.scss";
 import LessonCard from "./LessonCard";
+import AssignmentCard from "./AssignmentCard";
 
 const renderLoader = () => {
   return (
@@ -74,6 +75,12 @@ const renderLessonsList = lessons => {
   });
 };
 
+const renderAssignmentList = assignments => {
+  return assignments.map(asgnmt => {
+    return <AssignmentCard assignment={asgnmt} id={asgnmt.id} />;
+  });
+};
+
 export const ModuleCardMd = props => {
   const module = props.module;
   console.log("Module Card = ", module);
@@ -133,7 +140,6 @@ export const DetailedModuleCard = props => {
           <img src="../../../../static/assets/icon/clear_24px_outlined.svg" />
         </button>
       </div>
-
       <div className={css.lessonsBox}>
         <button className={css.arrows}>
           <img src="../../../../static/assets/icon/arrow_back_ios_24px_outlined.svg" />
@@ -166,15 +172,28 @@ export const DetailedModuleCardDraft = props => {
         </button>
       </div>
       <p>{module.description}</p>
-      <div className={css.lessonsBox}>
-        <div className={css.lessonsList}>
+      <div className={css.itemBox}>
+        <span className={css.title}>Lessons</span>
+        <div className={css.itemList}>
           <div
-            className={css.createLessonBtn}
+            className={css.createBtn}
             onClick={() => props.addNewLesson("lesson", module.id)}>
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
             <span>Add new lesson</span>
           </div>
           {renderLessonsList(module.lessons)}
+        </div>
+      </div>
+      <div className={css.itemBox}>
+        <span className={css.title}>Assignments</span>
+        <div className={css.itemList}>
+          <div
+            className={css.createBtn + " " + css.createAssignmentBtn}
+            onClick={() => props.addNewLesson("lesson", module.id)}>
+            <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined_dark.svg" />
+            <span>Add new assignment</span>
+          </div>
+          {renderAssignmentList(module.assignments)}
         </div>
       </div>
     </div>
