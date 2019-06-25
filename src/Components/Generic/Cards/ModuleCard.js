@@ -95,7 +95,7 @@ export const ModuleCardMd = props => {
   return (
     <div className={css.mdModuleCard}>
       <h3 className={css.title}>{module.title}</h3>
-
+      <p>{module.description.substring(0, 50)}...</p>
       {renderStats(
         module.lessons.length,
         getCreditPoints(module.assignments),
