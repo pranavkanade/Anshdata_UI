@@ -50,6 +50,30 @@ const getCreditPoints = assignments => {
   }, 0);
 };
 
+const renderEditActionBar = (moduleId, select, modify) => {
+  return (
+    <div className={css.actionBar}>
+      <button className={css.fullscreen} onClick={() => select(moduleId)}>
+        <img src="../../../../static/assets/icon/fullscreen_24px_outlined.svg" />
+      </button>
+      <button className={css.delete}>
+        <span className={css.label}>Delete</span>
+        <img src="../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
+      </button>
+      <button className={css.edit} onClick={() => modify(moduleId)}>
+        <span className={css.label}>Modify</span>
+        <img src="../../../../static/assets/icon/create_24px_outlined.svg" />
+      </button>
+    </div>
+  );
+};
+
+const renderLessonsList = lessons => {
+  return lessons.map(lsn => {
+    return <LessonCard lesson={lsn} id={lsn.id} />;
+  });
+};
+
 export const ModuleCardMd = props => {
   const module = props.module;
   console.log("Module Card = ", module);
@@ -67,24 +91,6 @@ export const ModuleCardMd = props => {
         getCreditPoints(module.assignments),
         module.assignments.length
       )}
-    </div>
-  );
-};
-
-const renderEditActionBar = (moduleId, select, modify) => {
-  return (
-    <div className={css.actionBar}>
-      <button className={css.fullscreen} onClick={() => select(moduleId)}>
-        <img src="../../../../static/assets/icon/fullscreen_24px_outlined.svg" />
-      </button>
-      <button className={css.delete}>
-        <span className={css.label}>Delete</span>
-        <img src="../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
-      </button>
-      <button className={css.edit} onClick={() => modify(moduleId)}>
-        <span className={css.label}>Modify</span>
-        <img src="../../../../static/assets/icon/create_24px_outlined.svg" />
-      </button>
     </div>
   );
 };
@@ -109,12 +115,6 @@ export const ModuleCardDraft = props => {
       {renderEditActionBar(module.id, props.select, props.modify)}
     </div>
   );
-};
-
-const renderLessonsList = lessons => {
-  return lessons.map(lsn => {
-    return <LessonCard lesson={lsn} id={lsn.id} />;
-  });
 };
 
 export const DetailedModuleCard = props => {
