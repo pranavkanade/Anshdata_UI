@@ -14,6 +14,8 @@ import Router from "next/router";
 
 import { createAssignmentHandler } from "../../../Requests/courseCreation";
 
+import css from "./assignment.scss";
+
 class AssignmentForm extends Component {
   state = {
     shouldOpen: false,
@@ -23,7 +25,7 @@ class AssignmentForm extends Component {
     moduleId: this.props.moduleId,
     lessonId: this.props.lessonId,
     modList: this.props.course.modules,
-    creditPoints: 0
+    creditPoints: "0"
   };
 
   changeHandler = event => {
@@ -49,7 +51,7 @@ class AssignmentForm extends Component {
           : this.state.lessonId,
       module: this.state.moduleId,
       course: this.props.course.id,
-      credit_points: String(this.state.creditPoints)
+      credit_points: this.state.creditPoints
     };
     createAssignmentHandler(assignmentData, this.props.assignmentId);
     const page = window.location.pathname;
@@ -63,32 +65,32 @@ class AssignmentForm extends Component {
   };
 
   renderCreditPointsChoise = () => {
-    const options = [
-      { key: 1, text: "1", value: 1 },
-      { key: 2, text: "2", value: 2 },
-      { key: 3, text: "3", value: 3 },
-      { key: 4, text: "4", value: 4 },
-      { key: 5, text: "5", value: 5 },
-      { key: 6, text: "6", value: 6 },
-      { key: 7, text: "7", value: 7 },
-      { key: 8, text: "8", value: 8 },
-      { key: 9, text: "9", value: 9 },
-      { key: 10, text: "10", value: 10 }
-    ];
-
+    console.log("THe credit point choise : ", this.state.creditPoints);
     return (
-      <>
-        <Header size="tiny">Credit Points</Header>
-        <Dropdown
-          placeholder="Credit Points"
-          clearable
-          fluid
-          options={options}
-          selection
-          defaultValue={this.state.creditPoints}
-          onChange={this.creditSelectionHandler}
-        />
-      </>
+      <div>
+        <span>Credit Points</span>
+        <div className={css.creditPoints}>
+          <button
+            className={css.sub}
+            onClick={() => {
+              let creds = Math.ceil(parseInt(this.state.creditPoints));
+              creds = creds <= 0 ? 0 : creds - 1;
+              this.setState({ creditPoints: creds });
+            }}>
+            <img src="../../../../../static/assets/icon/remove_24px_outlined.svg" />
+          </button>
+          <span>{String(this.state.creditPoints)}</span>
+          <button
+            className={css.add}
+            onClick={() => {
+              let creds = Math.ceil(parseInt(this.state.creditPoints));
+              creds = creds >= 10 ? 10 : creds + 1;
+              this.setState({ creditPoints: creds });
+            }}>
+            <img src="../../../../../static/assets/icon/add_24px_outlined.svg" />
+          </button>
+        </div>
+      </div>
     );
   };
 
@@ -113,11 +115,13 @@ class AssignmentForm extends Component {
 
     return (
       <>
-        <Header size="tiny">Module</Header>
+        <span>Module</span>
         <Dropdown
           options={modOptions}
           fluid
           selection
+          clearable
+          className={css.inp + " " + css.drpDn}
           defaultValue={this.state.moduleId}
           onChange={this.moduleSelectionHandler}
         />
@@ -156,11 +160,13 @@ class AssignmentForm extends Component {
 
     return (
       <>
-        <Header size="tiny">Lesson</Header>
+        <span>Lesson</span>
         <Dropdown
           options={lessonOptions}
           fluid
           selection
+          clearable
+          className={css.inp + " " + css.drpDn}
           defaultValue={this.state.lessonId}
           onChange={this.lessonSelectionHandler}
         />
@@ -185,50 +191,47 @@ class AssignmentForm extends Component {
         </Modal.Header>
         <Modal.Content>
           <Segment basic>
-            <Header>{this.props.course.title}</Header>
-            <Form onSubmit={this.createAssignment}>
+            <h3>{this.props.course.title}</h3>
+            <Form>
               {this.renderModuleChoise()}
               {this.renderLessonChoise()}
-              <Header size="tiny">Assignment Title</Header>
+              <span>Assignment Title</span>
               <Form.Input
                 placeholder="Assignment 1: Basics of Computer Science"
                 value={this.state.title}
                 name="title"
                 size="large"
+                className={css.inp}
                 onChange={event => this.changeHandler(event)}
               />
-              <Header size="tiny">Assignment Instructions</Header>
+              <span>Assignment Instructions</span>
               <Form.TextArea
                 rows={6}
                 placeholder="Describe purpose of this module in short..."
                 value={this.state.instruction}
                 name="instruction"
+                className={css.inp}
                 onChange={event => this.changeHandler(event)}
               />
               {this.renderCreditPointsChoise()}
-              <Header size="tiny">Reference (Help)</Header>
+              <span>Reference (Help)</span>
               <Form.TextArea
                 rows={6}
                 placeholder="May add pointers for the user to solve the assignment ..."
                 value={this.state.reference}
                 name="reference"
+                className={css.inp}
                 onChange={event => this.changeHandler(event)}
               />
               <Divider hidden />
-              <Grid>
-                <Grid.Row columns={2}>
-                  <Grid.Column />
-                  <Grid.Column>
-                    <Form.Button
-                      type="submit"
-                      color="twitter"
-                      fluid
-                      size="big">
-                      Create
-                    </Form.Button>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
+              <div className={css.reverse}>
+                <button type="submit" onClick={this.createAssignment}>
+                  <span>
+                    {this.state.type === "create" ? "Create" : "Save"}
+                  </span>
+                  <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+                </button>
+              </div>
             </Form>
           </Segment>
         </Modal.Content>
@@ -236,8 +239,15 @@ class AssignmentForm extends Component {
     );
   }
 
-  getLessonToUpdate = () => {
-    if (this.props.course === null || this.props.assignmentId === null) {
+  getaAssignmentToUpdate = () => {
+    if (
+      this.props.course === null ||
+      this.props.assignmentId === null ||
+      this.props.moduleId === null ||
+      this.props.lessonId === null ||
+      this.props.assignmentId === 0
+    ) {
+      console.log("Creating new assignment");
       return null;
     }
     const course = this.props.course;
@@ -261,7 +271,7 @@ class AssignmentForm extends Component {
 
   componentDidMount() {
     console.log("[Contrib/Assignment/Form.js] component did mount");
-    this.getLessonToUpdate();
+    this.getaAssignmentToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
 }

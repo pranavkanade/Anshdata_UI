@@ -1,0 +1,114 @@
+@import "../../../../static/styles/globals.scss";
+
+span {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: lighter;
+  font-size: 16px;
+  line-height: 29px;
+  /* identical to box height */
+
+  color: #a3a3a3;
+}
+
+h3 {
+  @extend %heading-2;
+}
+
+.inp {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 29px;
+}
+
+.drpDn {
+  margin-bottom: 1rem;
+}
+
+.reverse {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+
+  button {
+    margin-left: 1rem;
+    height: 60px;
+    padding: 0 2rem 0 2rem;
+
+    width: 240px;
+
+    background: #1c52ad;
+    border-radius: 4px;
+    border: 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      margin-right: 3rem;
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 29px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: #ffffff;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: #082557;
+    }
+  }
+}
+
+.creditPoints {
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+  place-items: center;
+
+  span {
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 1rem 2rem 1rem 2rem;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+
+    color: #000000;
+  }
+
+  button {
+    border: 0px;
+    padding: 1.1rem;
+    background: #1c52ad;
+    margin: 0 2rem 0 2rem;
+    border-radius: 5px;
+  }
+
+  .add {
+    background: #13ad94;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .sub {
+    background: #ec423c;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
