@@ -12,9 +12,12 @@ const renderLoader = () => {
   );
 };
 
-const renderAction = () => {
+const renderAction = (moduleId, select) => {
   return (
     <div className={css.actionBar}>
+      <button className={css.fullscreen} onClick={() => select(moduleId)}>
+        <img src="../../../../static/assets/icon/fullscreen_24px_outlined.svg" />
+      </button>
       <button>
         <span className={css.label}>Start</span>
         <img src="../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
@@ -90,14 +93,15 @@ export const ModuleCardMd = props => {
   }
 
   return (
-    <div className={css.mdModuleCard} onClick={() => props.select(module.id)}>
+    <div className={css.mdModuleCard}>
       <h3 className={css.title}>{module.title}</h3>
-      {renderAction()}
+
       {renderStats(
         module.lessons.length,
         getCreditPoints(module.assignments),
         module.assignments.length
       )}
+      {renderAction(module.id, props.select)}
     </div>
   );
 };
@@ -133,23 +137,42 @@ export const DetailedModuleCard = props => {
   }
 
   return (
+    // <div className={css.detailedModuleCard}>
+    //   <div className={css.head}>
+    //     <span>{module.title} : Lessons</span>
+    //     <button className={css.arrows} onClick={props.close}>
+    //       <img src="../../../../static/assets/icon/clear_24px_outlined.svg" />
+    //     </button>
+    //   </div>
+    //   <div className={css.lessonsBox}>
+    //     <button className={css.arrows}>
+    //       <img src="../../../../static/assets/icon/arrow_back_ios_24px_outlined.svg" />
+    //     </button>
+    //     <div className={css.lessonsList}>
+    //       {renderLessonsList(module.lessons)}
+    //     </div>
+    //     <button className={css.arrows}>
+    //       <img src="../../../../static/assets/icon/arrow_forward_ios_24px_outlined.svg" />
+    //     </button>
+    //   </div>
+    // </div>
     <div className={css.detailedModuleCard}>
       <div className={css.head}>
-        <span>{module.title} : Lessons</span>
+        <span>{module.title}</span>
         <button className={css.arrows} onClick={props.close}>
           <img src="../../../../static/assets/icon/clear_24px_outlined.svg" />
         </button>
       </div>
-      <div className={css.lessonsBox}>
-        <button className={css.arrows}>
-          <img src="../../../../static/assets/icon/arrow_back_ios_24px_outlined.svg" />
-        </button>
-        <div className={css.lessonsList}>
-          {renderLessonsList(module.lessons)}
+      <p>{module.description}</p>
+      <div className={css.itemBox}>
+        <span className={css.title}>Lessons</span>
+        <div className={css.itemList}>{renderLessonsList(module.lessons)}</div>
+      </div>
+      <div className={css.itemBox}>
+        <span className={css.title}>Assignments</span>
+        <div className={css.itemList}>
+          {renderAssignmentList(module.assignments)}
         </div>
-        <button className={css.arrows}>
-          <img src="../../../../static/assets/icon/arrow_forward_ios_24px_outlined.svg" />
-        </button>
       </div>
     </div>
   );
