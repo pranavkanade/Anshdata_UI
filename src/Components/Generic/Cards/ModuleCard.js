@@ -148,3 +148,35 @@ export const DetailedModuleCard = props => {
     </div>
   );
 };
+
+export const DetailedModuleCardDraft = props => {
+  const module = props.module;
+  console.log("Detailed Module Card = ", module);
+
+  if (module === null || module.lessons === undefined) {
+    return <div className={css.detailedModuleCard}>{renderLoader()}</div>;
+  }
+
+  return (
+    <div className={css.detailedModuleCard + " " + css.draftCard}>
+      <div className={css.head}>
+        <span>{module.title}</span>
+        <button className={css.arrows} onClick={props.close}>
+          <img src="../../../../static/assets/icon/clear_24px_outlined.svg" />
+        </button>
+      </div>
+      <p>{module.description}</p>
+      <div className={css.lessonsBox}>
+        <div className={css.lessonsList}>
+          <div
+            className={css.createLessonBtn}
+            onClick={() => props.addNewLesson("lesson", module.id)}>
+            <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
+            <span>Add new lesson</span>
+          </div>
+          {renderLessonsList(module.lessons)}
+        </div>
+      </div>
+    </div>
+  );
+};

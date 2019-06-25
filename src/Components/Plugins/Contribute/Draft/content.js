@@ -3,15 +3,17 @@ import css from "./content.scss";
 
 import {
   ModuleCardDraft,
-  DetailedModuleCard
+  DetailedModuleCardDraft
 } from "../../../Generic/Cards/ModuleCard";
 
 import ModuleForm from "../../../Generic/Forms/module";
+import LessonForm from "../../../Generic/Forms/lesson";
 
 class CourseContent extends Component {
   state = {
     course: this.props.course,
     activeModule: 0,
+    activeLesson: 0,
     shouldOpenAddModule: false,
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
@@ -36,7 +38,8 @@ class CourseContent extends Component {
       shouldOpenAddLesson: false,
       shouldOpenAddAssignment: false,
       elementBeingAdded: "",
-      activeModule: 0
+      activeModule: 0,
+      activeLesson: 0
     });
   };
 
@@ -47,7 +50,14 @@ class CourseContent extends Component {
     assignmentId = null
   ) => {
     console.log("[Contrib/Course.js] Add New Clicked : ", btn);
-    if (btn === "module") {
+    if (btn === "lesson") {
+      this.setState({
+        shouldOpenAddLesson: true,
+        elementBeingAdded: btn,
+        activeModule: moduleId,
+        activeLesson: lessonId !== null ? lessonId : 0
+      });
+    } else if (btn === "module") {
       this.setState({
         shouldOpenAddModule: true,
         elementBeingAdded: btn,
@@ -69,7 +79,30 @@ class CourseContent extends Component {
           moduleId={this.state.activeModule}
         />
       );
+    } else if (this.state.shouldOpenAddLesson) {
+      return (
+        <LessonForm
+          open={true}
+          closeHandler={this.closeHandler}
+          moduleId={this.state.activeModule}
+          lessonId={this.state.activeLesson}
+          course={this.state.course}
+        />
+      );
     }
+    // else if (btn === "assignment") {
+    //   return (
+    //     <AssignmentForm
+    //       open={true}
+    //       closeHandler={this.closeHandler}
+    //       moduleId={this.state.moduleId}
+    //       lessonId={this.state.lessonId}
+    //       assignmentId={this.state.assignmentId}
+    //       course={this.state.course}
+    //       onSaveHandler={this.onSaveHandler}
+    //     />
+    //   );
+    // }
     return null;
   };
 
@@ -91,10 +124,11 @@ class CourseContent extends Component {
           />
           {this.state.activeModule === mod.id &&
           !this.state.shouldOpenAddModule ? (
-            <DetailedModuleCard
+            <DetailedModuleCardDraft
               module={mod}
               key={`detailed_${mod.id}`}
               close={this.closeSelectedModule}
+              addNewLesson={this.addHandler}
             />
           ) : null}
         </>
