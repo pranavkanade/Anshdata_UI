@@ -143,10 +143,16 @@
   }
 
   .attend {
-    background: $Purple-1;
+    background: $Red-1;
+    border: 0px;
+    border-radius: 5px;
+    transition: transform 0.2s ease;
     &:hover {
       cursor: pointer;
-      background: $Purple-1b;
+      background: $Red-2;
+      img {
+        transform: scale(1.5);
+      }
     }
   }
 }
@@ -183,7 +189,7 @@
 
         &:hover {
           cursor: pointer;
-          background: $White-3;
+          background: #ca515146;
         }
       }
     }
