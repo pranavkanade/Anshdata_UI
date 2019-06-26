@@ -59,7 +59,7 @@ class AssignmentForm extends Component {
     };
     createAssignmentHandler(assignmentData, this.props.assignmentId);
     const page = window.location.pathname;
-    // Router.push(page);
+    Router.push(page);
     this.props.closeHandler();
   };
 
