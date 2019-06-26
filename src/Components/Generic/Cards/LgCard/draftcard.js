@@ -6,10 +6,14 @@ import css from "./draftcard.scss";
 import { getCourse } from "../../../../Requests/Courses";
 import { cardType } from "../../../../globals";
 
-const renderHead = (id, title, closeHandler) => {
+const renderHead = (id, title, closeHandler, activeTab) => {
+  console.log("[draft card ] active tab ", activeTab);
   return (
     <div className={css.head}>
-      <Link href={`/courses/${id}`}>
+      <Link
+        href={
+          activeTab === "drafts" ? `/contribute/draft/${id}` : `/courses/${id}`
+        }>
         <span>{title}</span>
       </Link>
       <button className={css.arrows} onClick={closeHandler}>
@@ -129,7 +133,12 @@ class LgDrafedCourseCard extends Component {
     }
     return (
       <div className={css.draftedCourseCardLg}>
-        {renderHead(course.id, course.title, this.props.closeSelectedCourse)}
+        {renderHead(
+          course.id,
+          course.title,
+          this.props.closeSelectedCourse,
+          this.props.activeTab
+        )}
         <div className={css.description}>
           <p>{this.state.course.description}</p>
         </div>
