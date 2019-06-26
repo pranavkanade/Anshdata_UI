@@ -8,7 +8,6 @@
   width: 500px;
   height: 244px;
   background: $White-0;
-
   border: 1px solid $White-3;
   // box-sizing: border-box;
   border-radius: 5px;
@@ -258,7 +257,7 @@
 
 .createBtn {
   width: 300px;
-  height: 160px;
+  height: 210px;
   background: #000000ad;
 
   // border: 5px dashed #c2cfe0;
@@ -297,14 +296,14 @@
 
 .createAssignmentBtn {
   background: #ffffff7e;
-
+  height: 160px;
   span {
     color: $Black-1;
   }
 
   &:hover {
     cursor: pointer;
-    box-shadow: $shadow-1;
+    box-shadow: $shadow-2;
     background: #ffffffbe;
 
     color: #000000;
