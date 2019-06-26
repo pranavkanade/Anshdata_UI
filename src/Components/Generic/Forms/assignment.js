@@ -25,7 +25,8 @@ class AssignmentForm extends Component {
     moduleId: this.props.moduleId,
     lessonId: this.props.lessonId,
     modList: this.props.course.modules,
-    creditPoints: "0"
+    creditPoints: "0",
+    type: "create"
   };
 
   changeHandler = event => {
@@ -49,13 +50,16 @@ class AssignmentForm extends Component {
         this.state.lessonId === null || this.state.lessonId === 0
           ? ""
           : this.state.lessonId,
-      module: this.state.moduleId,
+      module:
+        this.state.moduleId === null || this.state.moduleId === 0
+          ? ""
+          : this.state.moduleId,
       course: this.props.course.id,
       credit_points: this.state.creditPoints
     };
     createAssignmentHandler(assignmentData, this.props.assignmentId);
     const page = window.location.pathname;
-    Router.push(page);
+    // Router.push(page);
     this.props.closeHandler();
   };
 
@@ -121,6 +125,11 @@ class AssignmentForm extends Component {
           fluid
           selection
           clearable
+          disabled={
+            this.state.moduleId === 0 || this.state.moduleId === null
+              ? true
+              : false
+          }
           className={css.inp + " " + css.drpDn}
           defaultValue={this.state.moduleId}
           onChange={this.moduleSelectionHandler}
@@ -166,6 +175,11 @@ class AssignmentForm extends Component {
           fluid
           selection
           clearable
+          disabled={
+            this.state.moduleId === 0 || this.state.moduleId === null
+              ? true
+              : false
+          }
           className={css.inp + " " + css.drpDn}
           defaultValue={this.state.lessonId}
           onChange={this.lessonSelectionHandler}
@@ -265,7 +279,8 @@ class AssignmentForm extends Component {
       reference: assignment.reference,
       lesson: assignment.lessonId,
       module: assignment.moduleId,
-      creditPoints: assignment.creditPoints
+      creditPoints: assignment.creditPoints,
+      type: "edit"
     });
   };
 

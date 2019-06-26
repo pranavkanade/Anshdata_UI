@@ -1,6 +1,10 @@
 @import "../../../../../static/styles/globals.scss";
 .courseContent {
-  padding: 2rem 0 2rem 0;
+  // margin: 2rem 0 2rem 0;
+
+  .section {
+    margin: 4rem 0 4rem 0;
+  }
 
   .sectionTitle {
     font-family: Lato;
@@ -51,6 +55,69 @@
     border: 5px dashed #8e98a5;
     span {
       color: #67707c;
+    }
+  }
+}
+
+.itemBox {
+  margin: 2rem 1rem 2rem 1rem;
+
+  .itemList {
+    // flex-grow: 4;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 1rem;
+
+    .createAssignmentBtn {
+      width: 300px;
+      height: 160px;
+      background: #000000ad;
+
+      // border: 5px dashed #c2cfe0;
+      // box-sizing: border-box;
+      border-radius: 5px;
+      padding: 1rem 2rem 1rem 2rem;
+      display: flex;
+      flex-direction: column;
+      place-content: center;
+      text-align: center;
+
+      span {
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+
+        color: #c2cfe0;
+      }
+
+      img {
+        justify-self: center;
+        transform: scale(0.8);
+      }
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: $shadow-1;
+        background: #000000;
+        img {
+          transform: scale(0.85);
+        }
+      }
+    }
+  }
+
+  .arrows {
+    height: 160px;
+    width: 64px;
+    align-self: center;
+    border: 0px;
+    background: transparent;
+
+    &:hover {
+      cursor: pointer;
+      background: #00000027;
     }
   }
 }

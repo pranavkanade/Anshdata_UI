@@ -6,6 +6,8 @@ import {
   DetailedModuleCardDraft
 } from "../../../Generic/Cards/ModuleCard";
 
+import AssignmentCard from "../../../Generic/Cards/AssignmentCard";
+
 import ModuleForm from "../../../Generic/Forms/module";
 import LessonForm from "../../../Generic/Forms/lesson";
 import AssignmentForm from "../../../Generic/Forms/assignment";
@@ -152,11 +154,42 @@ class CourseContent extends Component {
     );
   };
 
+  renderCourseLevelAssignments = assignments => {
+    const Assignments = assignments.map(asgnmt => {
+      if (asgnmt.module !== null || asgnmt.lesson !== null) {
+        return null;
+      }
+      return <AssignmentCard assignment={asgnmt} id={asgnmt.id} />;
+    });
+
+    return (
+      <div className={css.itemBox}>
+        <div className={css.itemList}>
+          <div
+            className={css.createAssignmentBtn}
+            onClick={() => {
+              this.addHandler("assignment");
+            }}>
+            <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
+            <span>Add new assignment</span>
+          </div>
+          {Assignments}
+        </div>
+      </div>
+    );
+  };
+
   render() {
     return (
       <div className={css.courseContent}>
-        <span className={css.sectionTitle}>Modules</span>
-        {this.renderModulesList()}
+        <div className={css.section}>
+          <span className={css.sectionTitle}>Modules</span>
+          {this.renderModulesList()}
+        </div>
+        <div className={css.section}>
+          <span className={css.sectionTitle}>Assignments</span>
+          {this.renderCourseLevelAssignments(this.state.course.assignments)}
+        </div>
         {this.renderAddNewForm()}
       </div>
     );
