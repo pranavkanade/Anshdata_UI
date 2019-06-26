@@ -72,15 +72,17 @@ const renderEditActionBar = (moduleId, select, modify) => {
   );
 };
 
-const renderLessonsList = lessons => {
+const renderLessonsList = (lessons, onModify) => {
   return lessons.map(lsn => {
-    return <LessonCard lesson={lsn} id={lsn.id} />;
+    return <LessonCard lesson={lsn} id={lsn.id} modify={onModify} />;
   });
 };
 
-const renderAssignmentList = assignments => {
+const renderAssignmentList = (assignments, onModify) => {
   return assignments.map(asgnmt => {
-    return <AssignmentCard assignment={asgnmt} id={asgnmt.id} />;
+    return (
+      <AssignmentCard assignment={asgnmt} id={asgnmt.id} modify={onModify} />
+    );
   });
 };
 
@@ -204,7 +206,7 @@ export const DetailedModuleCardDraft = props => {
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
             <span>Add new lesson</span>
           </div>
-          {renderLessonsList(module.lessons)}
+          {renderLessonsList(module.lessons, props.addNewBtn)}
         </div>
       </div>
       <div className={css.itemBox}>
@@ -216,7 +218,7 @@ export const DetailedModuleCardDraft = props => {
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined_dark.svg" />
             <span>Add new assignment</span>
           </div>
-          {renderAssignmentList(module.assignments)}
+          {renderAssignmentList(module.assignments, props.addNewBtn)}
         </div>
       </div>
     </div>

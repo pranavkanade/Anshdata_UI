@@ -9,7 +9,16 @@ export default props => {
       <span>{props.assignment.title}</span>
       <div className={css.actionBox}>
         <div className={css.editBar}>
-          <button className={css.edit}>
+          <button
+            className={css.edit}
+            onClick={() =>
+              props.modify(
+                "assignment",
+                props.assignment.module,
+                props.assignment.lesson,
+                props.assignment.id
+              )
+            }>
             <img src="../../../../static/assets/icon/create_24px_outlined.svg" />
           </button>
           <button className={css.delete}>

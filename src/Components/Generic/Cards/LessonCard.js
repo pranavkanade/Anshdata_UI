@@ -16,7 +16,11 @@ export default props => {
       </div>
       <div className={css.actionBox}>
         <div className={css.editBar}>
-          <button className={css.edit}>
+          <button
+            className={css.edit}
+            onClick={() =>
+              props.modify("lesson", props.lesson.module, props.lesson.id)
+            }>
             <img src="../../../../static/assets/icon/create_24px_outlined.svg" />
           </button>
           <button className={css.delete}>

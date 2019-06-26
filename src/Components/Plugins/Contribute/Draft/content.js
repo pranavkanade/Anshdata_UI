@@ -159,7 +159,13 @@ class CourseContent extends Component {
       if (asgnmt.module !== null || asgnmt.lesson !== null) {
         return null;
       }
-      return <AssignmentCard assignment={asgnmt} id={asgnmt.id} />;
+      return (
+        <AssignmentCard
+          assignment={asgnmt}
+          id={asgnmt.id}
+          modify={this.addHandler}
+        />
+      );
     });
 
     return (

@@ -279,7 +279,7 @@ class AssignmentForm extends Component {
       reference: assignment.reference,
       lesson: assignment.lessonId,
       module: assignment.moduleId,
-      creditPoints: assignment.creditPoints,
+      creditPoints: assignment.credit_points,
       type: "edit"
     });
   };
