@@ -1,9 +1,14 @@
 @import "../../../../../static/styles/globals.scss";
+.container {
+  padding: 0 5% 0 5%;
+}
 .courseContent {
   // margin: 2rem 0 2rem 0;
+  padding-top: 1rem;
+  background: #fffaf3;
 
   .section {
-    margin: 4rem 0 4rem 0;
+    padding: 1rem 0 2rem 0;
   }
 
   .sectionTitle {
@@ -30,7 +35,8 @@
   height: 244px;
   background: inherit;
 
-  border: 5px dashed #c2cfe0;
+  border: 0px;
+  background: #000000ad;
   // box-sizing: border-box;
   border-radius: 5px;
   padding: 1rem 2rem 1rem 2rem;
@@ -48,14 +54,15 @@
 
     color: #c2cfe0;
   }
+  transition: transform 0.2s ease;
 
   &:hover {
     cursor: pointer;
     box-shadow: $shadow-1;
-    border: 5px dashed #8e98a5;
-    span {
-      color: #67707c;
-    }
+    // border: 5px dashed #8e98a5;
+    background: #000000;
+
+    transform: scale(1.1);
   }
 }
 
@@ -97,13 +104,14 @@
         transform: scale(0.8);
       }
 
+      transition: transform 0.2s ease;
+
       &:hover {
         cursor: pointer;
         box-shadow: $shadow-1;
         background: #000000;
-        img {
-          transform: scale(0.85);
-        }
+
+        transform: scale(1.07);
       }
     }
   }

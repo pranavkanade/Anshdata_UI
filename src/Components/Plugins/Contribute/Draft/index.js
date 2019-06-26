@@ -181,12 +181,12 @@ class DraftedCourse extends Component {
     const { course } = this.state;
 
     return (
-      <div className={css.container}>
-        <div className={css.page}>
+      <div className={css.page}>
+        <div className={css.container}>
           {this.renderCourseInfo()}
           {this.renderAddNewForm()}
-          <CourseContent course={this.state.course} />
         </div>
+        <CourseContent course={this.state.course} />
       </div>
     );
   }

@@ -230,6 +230,7 @@
     }
 
     .itemList {
+      margin-top: 1rem;
       // flex-grow: 4;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -283,14 +284,14 @@
     justify-self: center;
     transform: scale(0.8);
   }
+  transition: transform 0.2s ease;
 
   &:hover {
     cursor: pointer;
     box-shadow: $shadow-1;
     background: #000000;
-    img {
-      transform: scale(0.85);
-    }
+
+    transform: scale(1.07);
   }
 }
 
@@ -307,8 +308,6 @@
     background: #ffffffbe;
 
     color: #000000;
-    img {
-      transform: scale(0.85);
-    }
+    transform: scale(1.07);
   }
 }

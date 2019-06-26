@@ -188,15 +188,17 @@ class CourseContent extends Component {
   render() {
     return (
       <div className={css.courseContent}>
-        <div className={css.section}>
-          <span className={css.sectionTitle}>Modules</span>
-          {this.renderModulesList()}
+        <div className={css.container}>
+          <div className={css.section}>
+            <span className={css.sectionTitle}>Modules</span>
+            {this.renderModulesList()}
+          </div>
+          <div className={css.section}>
+            <span className={css.sectionTitle}>Assignments</span>
+            {this.renderCourseLevelAssignments(this.state.course.assignments)}
+          </div>
+          {this.renderAddNewForm()}
         </div>
-        <div className={css.section}>
-          <span className={css.sectionTitle}>Assignments</span>
-          {this.renderCourseLevelAssignments(this.state.course.assignments)}
-        </div>
-        {this.renderAddNewForm()}
       </div>
     );
   }

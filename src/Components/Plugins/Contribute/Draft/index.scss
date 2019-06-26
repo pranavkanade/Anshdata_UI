@@ -2,7 +2,6 @@
 
 .container {
   padding: 0 5% 0 5%;
-  background-color: $White-2;
 }
 
 .loader {
@@ -11,12 +10,15 @@
 
 .page {
   padding-top: 2rem;
+  background: $grad-3;
 }
 
 .course {
   padding: 2rem;
   .title {
     @extend %heading-0;
+    color: $White-0;
+    font-weight: 900;
   }
 
   .info {
@@ -42,11 +44,13 @@
       line-height: 24px;
 
       color: #3f3e3e;
+      background: $White-0;
 
       height: 210px;
 
-      border: 1px solid $White-3;
-      box-sizing: border-box;
+      // border: 1px solid $White-3;
+      border: 0px;
+      // box-sizing: border-box;
       border-radius: 2px;
     }
 
@@ -54,16 +58,18 @@
       margin-top: 2rem;
       height: 72px;
 
-      border: 1px solid $White-3;
-      box-sizing: border-box;
+      // border: 1px solid $White-3;
+      // box-sizing: border-box;
       border-radius: 2px;
+      border: 0px;
+      background: $White-0;
     }
 
     .actionBar {
       margin-top: 2rem;
       // height: 72px;
-      background: $White-4;
-      border-radius: 5px;
+      background: $White-0;
+      border-radius: 2px;
       border: 0px;
       padding: 1rem;
 
@@ -96,9 +102,12 @@
 
           color: #ffffff;
         }
-
+        transition: transform 0.2s ease;
         &:hover {
           cursor: pointer;
+          img {
+            transform: scale(1.3);
+          }
         }
       }
 
@@ -145,10 +154,12 @@
     .extra {
       // height: 160px;
       padding: 1rem 0 1rem 0;
+      background: $White-0;
 
-      border: 1px solid $White-3;
-      box-sizing: border-box;
+      // border: 1px solid $White-3;
+      // box-sizing: border-box;
       border-radius: 2px;
+      border: 0px;
 
       display: flex;
       flex-direction: column;
@@ -163,8 +174,10 @@
           display: flex;
           flex-direction: row;
           width: 320px;
-          border: 1px solid #9b51e0;
+          // border: 1px solid #9b51e0;
+          border: 0px;
           border-radius: 5px;
+          background: #9b51e0;
 
           font-family: Barlow;
           font-style: normal;
@@ -177,7 +190,7 @@
           padding: 0.2rem 1rem 0.2rem 1rem;
 
           margin-bottom: 1rem;
-          color: #9b51e0;
+          color: $White-0;
 
           .value {
             font-family: Lato;
@@ -188,7 +201,11 @@
         }
 
         .author {
-          color: #9b51e0;
+          background: #ff810c;
+          span {
+            font-weight: normal;
+            color: $White-0;
+          }
         }
       }
 
@@ -201,7 +218,7 @@
           height: 64px;
           padding: 0 1rem 0 1rem;
 
-          border: 1px solid #474747;
+          // border: 1px solid #919191;
           box-sizing: border-box;
           border-radius: 2px;
 
@@ -229,7 +246,7 @@
             /* identical to box height */
             text-align: center;
 
-            color: #000000;
+            color: $Black-1;
           }
 
           .credits {
@@ -242,11 +259,11 @@
     .optionsBox {
       // TODO: When adding more content here remove height
       height: 200px;
-      margin-top: 1rem;
+      margin-top: 2rem;
 
-      background: $White-4;
+      background: $White-0;
       border: 0px;
-      border-radius: 5px;
+      border-radius: 2px;
 
       display: flex;
       flex-direction: column-reverse;
@@ -259,8 +276,9 @@
         width: 160px;
         border-radius: 5px;
         border: 0px;
-
-        @extend %BtnFont-1;
+        span {
+          @extend %BtnFont-1;
+        }
       }
     }
   }
