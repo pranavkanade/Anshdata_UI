@@ -61,11 +61,13 @@ class ModuleForm extends Component {
         closeOnDimmerClick={false}
         closeOnEscape={false}
         centered={false}>
-        <Modal.Header>
-          Add New Module
-          <Button onClick={this.props.closeHandler} negative floated="right">
-            close
-          </Button>
+        <Modal.Header className={css.header}>
+          <span>
+            {this.state.type === "create" ? "Add New" : "Modify"} Module
+          </span>
+          <button onClick={this.props.closeHandler}>
+            <img src="./../../../../static/assets/icon/clear_24px_outlined_dark.svg" />
+          </button>
         </Modal.Header>
         <Modal.Content>
           <Segment basic>

@@ -15,6 +15,22 @@ h3 {
   @extend %heading-2;
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+
+  span {
+    @extend %heading-1;
+  }
+  button {
+    border: 0px;
+    float: right;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 .inp {
   font-family: Lato;
   font-style: normal;

@@ -197,11 +197,13 @@ class AssignmentForm extends Component {
         closeOnDimmerClick={false}
         closeOnEscape={false}
         centered={false}>
-        <Modal.Header>
-          Add New Assignment
-          <Button onClick={this.props.closeHandler} negative floated="right">
-            close
-          </Button>
+        <Modal.Header className={css.header}>
+          <span>
+            {this.state.type === "create" ? "Add New" : "Modify"} Assignment
+          </span>
+          <button onClick={this.props.closeHandler}>
+            <img src="./../../../../static/assets/icon/clear_24px_outlined_dark.svg" />
+          </button>
         </Modal.Header>
         <Modal.Content>
           <Segment basic>
