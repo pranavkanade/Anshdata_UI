@@ -41,10 +41,13 @@ $grad-7: linear-gradient(204.12deg, #ffc661 0%, #ee3d4f 101.17%);
 $grad-8: linear-gradient(203.81deg, #00ffff -8.36%, #504de8 101.17%);
 $grad-9: linear-gradient(306.31deg, #ffd29d 7.11%, #e85f53 94.22%);
 $grad-10: linear-gradient(201.37deg, #2d2a75 14.13%, #13c5dd 101.15%);
+
 // Shadow
 $shadow-1: 10px 10px 20px rgba(0, 0, 0, 0.15);
 $shadow-2: 10px 10px 20px rgba(0, 0, 0, 0.342);
-
+$shadow-all-1: 4px 0px 10px rgba(0, 0, 0, 0.06),
+  -4px 0px 10px rgba(0, 0, 0, 0.06), 0px -4px 10px rgba(0, 0, 0, 0.06),
+  0px 4px 10px rgba(0, 0, 0, 0.06);
 // headings
 %heading-0 {
   font-family: Scope One;
