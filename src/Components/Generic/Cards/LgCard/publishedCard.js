@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Link from "next/link";
 
-import css from "./DetailedCard.scss";
+import css from "./publishedCard.scss";
 
-import { ModuleCardMd } from "./ModuleCard";
-import { getCourse } from "../../../Requests/Courses";
-import { enrollEventHandler } from "../../../Requests/Enrollment";
-import { courseListType } from "../../../globals";
+import { ModuleCardMd } from "../ModuleCard";
+import { getCourse } from "../../../../Requests/Courses";
+import { enrollEventHandler } from "../../../../Requests/Enrollment";
+import { courseListType } from "../../../../globals";
 
 class DetailedCourseCard extends Component {
   state = {

@@ -86,18 +86,5 @@
 }
 
 .catalog {
-  padding: 2rem 5% 2rem 5%;
-}
-
-.listWrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(222px, auto));
-  grid-auto-flow: dense;
-  margin-top: 3rem;
-  grid-column-gap: 1.5rem;
-  grid-row-gap: 2rem;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-  align-content: center;
+  padding: 2rem 5% 4rem 5%;
 }

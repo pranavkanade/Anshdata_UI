@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
-import CoursesList from "../../Generic/Assets/CoursesList";
+import { renderPublishedCoursesList as PublishedCoursesList } from "../../Generic/CourseList/courselist";
 import { courseListType } from "../../../globals";
 import {
   getCoursesList,
@@ -65,15 +65,13 @@ class Courses extends Component {
       return <p>Take up some courses</p>;
     }
     return (
-      <div className={css.listWrapper}>
-        <CoursesList
-          courses={courses}
-          courseListType={listType}
-          setSelectedCourse={this.setSelectedCourse}
-          selectedCourse={this.state.selectedCourse}
-          closeSelectedCourse={this.closeSelectedCourse}
-        />
-      </div>
+      <PublishedCoursesList
+        courses={courses}
+        courseListType={listType}
+        setSelectedCourse={this.setSelectedCourse}
+        selectedCourse={this.state.selectedCourse}
+        closeSelectedCourse={this.closeSelectedCourse}
+      />
     );
   };
 

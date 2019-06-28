@@ -4,7 +4,7 @@ import Link from "next/link";
 import css from "./contribute.scss";
 
 import SearchBar from "../../Generic/Searchbar/searchbar";
-import CourseList from "../../Generic/CourseList/courselist";
+import { renderDraftCoursesList as CourseList } from "../../Generic/CourseList/courselist";
 
 import {
   getDraftedCommunityCoursesList,
