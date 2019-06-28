@@ -19,11 +19,12 @@ $Blue-11: #d9e3fd;
 
 $Yellow-1: #ffe3b0;
 $Yellow-2: #fbbc05;
-$Yellow-3: #e2d245;
+$Yellow-3: #d8fa17;
+$Yellow-4: #ffefd2;
 $Yellow-10: #ff9c44;
 
 $Purple-1: #270036;
-$Purple-1b: #6e1d8f;
+$Purple-1b: #6200ff;
 
 $Red-1: #830027;
 $Red-2: #a80939;
@@ -41,6 +42,14 @@ $grad-7: linear-gradient(204.12deg, #ffc661 0%, #ee3d4f 101.17%);
 $grad-8: linear-gradient(203.81deg, #00ffff -8.36%, #504de8 101.17%);
 $grad-9: linear-gradient(306.31deg, #ffd29d 7.11%, #e85f53 94.22%);
 $grad-10: linear-gradient(201.37deg, #2d2a75 14.13%, #13c5dd 101.15%);
+$grad-11: linear-gradient(205.61deg, #ff475d 0%, #ffb067 101.17%);
+$grad-12: linear-gradient(225.34deg, #270036 0%, #13c5dd 101.17%);
+
+$rgrad-1: radial-gradient(
+  3876px at 100% 50%,
+  rgba(22, 214, 168, 0.25) 0%,
+  rgba(45, 156, 219, 0.84) 100%
+);
 
 // Shadow
 $shadow-1: 10px 10px 20px rgba(0, 0, 0, 0.15);
@@ -48,6 +57,10 @@ $shadow-2: 10px 10px 20px rgba(0, 0, 0, 0.342);
 $shadow-all-1: 4px 0px 10px rgba(0, 0, 0, 0.06),
   -4px 0px 10px rgba(0, 0, 0, 0.06), 0px -4px 10px rgba(0, 0, 0, 0.06),
   0px 4px 10px rgba(0, 0, 0, 0.06);
+$shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
+  -4px 0px 10px rgba(0, 0, 0, 0.08), 0px -4px 10px rgba(0, 0, 0, 0.08),
+  0px 4px 10px rgba(0, 0, 0, 0.08);
+
 // headings
 %heading-0 {
   font-family: Scope One;

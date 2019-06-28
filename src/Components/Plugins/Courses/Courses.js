@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
+import { SideSheet, Position } from "evergreen-ui";
 import {
   renderPublishedCoursesList as PublishedCoursesList,
   renderEnrolledCoursesList as EnrolledCoursesList
@@ -9,6 +10,7 @@ import {
   getCoursesList,
   getEnrolledCoursesList
 } from "../../../Requests/Courses";
+
 import css from "./courses.scss";
 
 class Courses extends Component {
@@ -16,8 +18,12 @@ class Courses extends Component {
     courses: null,
     enrolledCourses: null,
     courseSearched: "",
-    selectedCourse: null
+    selectedCourse: 0,
+    visible: false
   };
+
+  handleHideClick = () => this.setState({ visible: false });
+  handleShowClick = () => this.setState({ visible: true });
 
   changeHandler = event => {
     const name = event.target.name;
@@ -30,11 +36,15 @@ class Courses extends Component {
   };
 
   setSelectedCourse = courseId => {
-    this.setState({ selectedCourse: courseId });
+    if (this.state.selectedCourse === courseId) {
+      this.setState({ selectedCourse: 0 });
+    } else {
+      this.setState({ selectedCourse: courseId });
+    }
   };
 
   closeSelectedCourse = () => {
-    this.setState({ selectedCourse: null });
+    this.setState({ selectedCourse: 0 });
   };
 
   saveCoursesHandler = courses => {
@@ -108,12 +118,24 @@ class Courses extends Component {
     return (
       <div className={"CoursesPlugin"}>
         <div className={css.courses}>
-          <div className={css.myCourses}>
-            <div className={css.heading}>
+          <div className={css.overlayBtn}>
+            <button onClick={this.handleShowClick}>
               <span>My Courses</span>
-            </div>
-            {this.renderMyCourses()}
+            </button>
           </div>
+
+          <SideSheet
+            isShown={this.state.visible}
+            onCloseComplete={this.handleHideClick}
+            preventBodyScrolling
+            width={600}>
+            <div className={css.myCourses}>
+              <div className={css.heading}>
+                <span>My Courses</span>
+              </div>
+              {this.renderMyCourses()}
+            </div>
+          </SideSheet>
 
           <div className={css.catalog}>
             <div className={css.heading}>
