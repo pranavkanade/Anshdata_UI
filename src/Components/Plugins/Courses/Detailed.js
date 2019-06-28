@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
-import { getCourse } from "./requests";
+import { getCourse } from "../../../Requests/Courses";
 import {
   ModuleCardMd,
   DetailedModuleCard
