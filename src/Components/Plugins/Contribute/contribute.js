@@ -168,8 +168,14 @@ class Contribute extends Component {
     const adUser = getADUserJson();
     this.setState({ adUser });
     this.setDefaultSubMenu(adUser);
-    getPublishedCoursesList(adUser.id, this.myPublicationSaveHandler);
-    getDraftedSelfCoursesList(this.myDraftsSaveHandler);
+    try {
+      getPublishedCoursesList(adUser.id, this.myPublicationSaveHandler);
+      getDraftedSelfCoursesList(this.myDraftsSaveHandler);
+    } catch (err) {
+      console.log(
+        "User may not be logged in. Failed to fetch the list of published and drafted courses."
+      );
+    }
     getDraftedCommunityCoursesList(this.communityDraftsSaveHandler);
   }
 }
