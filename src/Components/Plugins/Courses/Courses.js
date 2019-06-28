@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
-import { renderPublishedCoursesList as PublishedCoursesList } from "../../Generic/CourseList/courselist";
+import {
+  renderPublishedCoursesList as PublishedCoursesList,
+  renderEnrolledCoursesList as EnrolledCoursesList
+} from "../../Generic/CourseList/courselist";
 import { courseListType } from "../../../globals";
 import {
   getCoursesList,
@@ -64,15 +67,28 @@ class Courses extends Component {
     if (courses.length === 0) {
       return <p>Take up some courses</p>;
     }
-    return (
-      <PublishedCoursesList
-        courses={courses}
-        courseListType={listType}
-        setSelectedCourse={this.setSelectedCourse}
-        selectedCourse={this.state.selectedCourse}
-        closeSelectedCourse={this.closeSelectedCourse}
-      />
-    );
+
+    if (listType === courseListType.ENROLLED) {
+      return (
+        <EnrolledCoursesList
+          courses={courses}
+          courseListType={listType}
+          setSelectedCourse={this.setSelectedCourse}
+          selectedCourse={this.state.selectedCourse}
+          closeSelectedCourse={this.closeSelectedCourse}
+        />
+      );
+    } else {
+      return (
+        <PublishedCoursesList
+          courses={courses}
+          courseListType={listType}
+          setSelectedCourse={this.setSelectedCourse}
+          selectedCourse={this.state.selectedCourse}
+          closeSelectedCourse={this.closeSelectedCourse}
+        />
+      );
+    }
   };
 
   renderMyCourses = () => {

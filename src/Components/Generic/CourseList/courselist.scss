@@ -13,6 +13,11 @@
   align-content: center;
 }
 
+.enrolled {
+  grid-template-columns: repeat(auto-fill, minmax(482px, auto));
+  justify-content: space-around;
+}
+
 .courseCard {
   box-sizing: border-box;
   border-radius: 10px;

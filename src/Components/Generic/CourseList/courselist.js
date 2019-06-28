@@ -1,7 +1,7 @@
 import React from "react";
 import css from "./courselist.scss";
 
-import { PublishedCard } from "../Cards/CourseCard";
+import { PublishedCard, EnrolledCourseCard } from "../Cards/CourseCard";
 import LgDrafedCourseCard from "../Cards/LgCard/draftcard";
 import LgDetailedCourseCard from "../Cards/LgCard/publishedCard";
 
@@ -36,7 +36,11 @@ const getCourseList = (props, type) => {
           }
           key={course.id}
           onClick={() => props.setSelectedCourse(course.id)}>
-          <PublishedCard course={course} />
+          {type === "enrolled" ? (
+            <EnrolledCourseCard course={course} />
+          ) : (
+            <PublishedCard course={course} />
+          )}
         </div>
         {course.id === props.selectedCourse
           ? getDetailedCard(
@@ -60,5 +64,13 @@ export const renderDraftCoursesList = props => {
 export const renderPublishedCoursesList = props => {
   return (
     <div className={css.courseList}>{getCourseList(props, "published")}</div>
+  );
+};
+
+export const renderEnrolledCoursesList = props => {
+  return (
+    <div className={css.courseList + " " + css.enrolled}>
+      {getCourseList(props, "enrolled")}
+    </div>
   );
 };

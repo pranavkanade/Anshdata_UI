@@ -12,68 +12,95 @@
   grid-template-columns: 1fr;
   grid-template-rows: 4fr 3fr 1.5fr 1.5fr;
   grid-gap: 5px;
+}
+
+.enrolled {
+  width: 480px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  grid-gap: 1rem;
+  background: $White-0;
+  border: 0px;
+  border-radius: 10px;
 
   .intro {
-    width: 100%;
-    height: 100%;
-    iframe {
-      width: 220px;
-      height: inherit;
-    }
+    padding: 1rem;
+    width: auto;
   }
-
   .title {
-    // text-align: left;
-    padding: 0 1rem 0 1rem;
-    span {
-      // justify-self: center;
-      // padding: 1rem;
-
-      font-family: Scope One;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 24px;
-
-      color: #000000;
-    }
+    padding-top: 2rem;
   }
-
-  .credits {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    align-items: center;
-    justify-content: center;
-
-    span {
-      padding: 0;
-      font-family: Barlow;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 19px;
-      /* identical to box height */
-      text-align: center;
-
-      color: #3c3636;
-    }
+  .head {
+    display: flex;
+    flex-direction: row;
   }
+}
 
-  .rating {
-    align-self: center;
-    justify-self: center;
+.progress {
+  padding: 0 1rem 0 1rem;
+}
 
-    span {
-      padding: 0;
-      font-family: Barlow;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 19px;
-      /* identical to box height */
-      text-align: center;
+.intro {
+  width: 100%;
+  height: 100%;
+  iframe {
+    width: 220px;
+    height: inherit;
+  }
+}
 
-      color: #3c3636;
-    }
+.title {
+  // text-align: left;
+  padding: 0 1rem 0 1rem;
+  span {
+    // justify-self: center;
+    // padding: 1rem;
+
+    font-family: Scope One;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #000000;
+  }
+}
+
+.credits {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    padding: 0;
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    text-align: center;
+
+    color: #3c3636;
+  }
+}
+
+.rating {
+  align-self: center;
+  justify-self: center;
+
+  span {
+    padding: 0;
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    text-align: center;
+
+    color: #3c3636;
   }
 }
