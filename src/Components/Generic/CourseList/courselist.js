@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 import css from "./courselist.scss";
 
 import { PublishedCard, EnrolledCourseCard } from "../Cards/CourseCard";
@@ -32,17 +33,23 @@ const getCourseList = (props, type) => {
           className={
             css.courseCard +
             " " +
-            (course.id === props.selectedCourse ? css.active : "")
+            (course.id === props.selectedCourse && type !== "enrolled"
+              ? css.active
+              : "")
           }
           key={course.id}
-          onClick={() => props.setSelectedCourse(course.id)}>
+          onClick={
+            type !== "enrolled"
+              ? () => props.setSelectedCourse(course.id)
+              : () => Router.push(`/courses/attend/${course.id}`)
+          }>
           {type === "enrolled" ? (
             <EnrolledCourseCard course={course} />
           ) : (
             <PublishedCard course={course} />
           )}
         </div>
-        {course.id === props.selectedCourse
+        {course.id === props.selectedCourse && type !== "enrolled"
           ? getDetailedCard(
               course,
               type,
