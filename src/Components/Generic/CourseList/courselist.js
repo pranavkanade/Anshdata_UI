@@ -2,7 +2,11 @@ import React from "react";
 import Router from "next/router";
 import css from "./courselist.scss";
 
-import { PublishedCard, EnrolledCourseCard } from "../Cards/CourseCard";
+import {
+  PublishedCard,
+  EnrolledCourseCard,
+  DraftCourseCard
+} from "../Cards/CourseCard";
 import LgDrafedCourseCard from "../Cards/LgCard/draftcard";
 import LgDetailedCourseCard from "../Cards/LgCard/publishedCard";
 
@@ -45,6 +49,8 @@ const getCourseList = (props, type) => {
           }>
           {type === "enrolled" ? (
             <EnrolledCourseCard course={course} />
+          ) : type === "drafts" && props.activeTab !== "publication" ? (
+            <DraftCourseCard course={course} />
           ) : (
             <PublishedCard course={course} />
           )}

@@ -1,6 +1,6 @@
 @import "./../../../../static/styles/globals.scss";
 
-.published {
+%card {
   width: 220px;
   height: 300px;
 
@@ -13,6 +13,50 @@
   grid-template-rows: 4fr 3fr 1.5fr 1.5fr;
   grid-gap: 5px;
   box-shadow: $shadow-all-1;
+}
+
+%font-label {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 19px;
+  /* identical to box height */
+  text-align: center;
+
+  color: #3c3636;
+}
+
+.published {
+  @extend %card;
+}
+
+.drafted {
+  @extend %card;
+  height: auto;
+  grid-template-rows: 4fr auto auto;
+  align-self: auto;
+
+  .category {
+    grid-row-end: -1;
+    margin: 1rem;
+    border: 0px;
+    background: $Yellow-1;
+    border-radius: 5px;
+    padding: 1rem;
+    text-align: center;
+
+    .label {
+      @extend %font-label;
+    }
+    .value {
+      @extend %font-label;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 29px;
+      color: black;
+    }
+  }
 }
 
 .enrolled {

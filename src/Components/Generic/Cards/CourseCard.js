@@ -81,3 +81,22 @@ export const EnrolledCourseCard = props => {
     </div>
   );
 };
+
+export const DraftCourseCard = props => {
+  const course = props.course;
+  const title =
+    course !== null && course !== undefined
+      ? course.title
+      : "This is Course Title";
+
+  return (
+    <div className={css.drafted}>
+      {renderHead(title)}
+      <div className={css.category}>
+        <span className={css.value}>{course.category.title}</span>
+        <br />
+        <span className={css.label}>Category</span>
+      </div>
+    </div>
+  );
+};
