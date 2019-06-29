@@ -1,0 +1,141 @@
+@import "../../../../static/styles/globals.scss";
+
+.courses {
+  p {
+    font-family: lato;
+    font-size: 20px;
+  }
+}
+.overlayBtn {
+  width: 100%;
+  height: 100px;
+  padding: 0 5% 0 5%;
+  // background: #21688a;
+
+  button {
+    float: right;
+    height: 48px;
+    border: 0px;
+    margin: 2rem;
+    border-radius: 5px;
+    span {
+      font-family: lato;
+      font-size: 20px;
+      padding: 2rem;
+      color: #ffffff;
+    }
+    background: #3880fd;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: $shadow-all-1;
+      background: #ffffff;
+      span {
+        color: #3880fd;
+      }
+      // border: 2px solid #3880fd;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.heading {
+  display: flex;
+  // grid-template-columns: auto 1fr;
+  flex-direction: row;
+  // grid-gap: 2rem;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  justify-items: center;
+
+  span {
+    font-family: Scope One;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 40px;
+    line-height: 66px;
+
+    color: #3f3e3e;
+  }
+
+  .searchBar {
+    display: inline;
+    margin-right: 2rem;
+
+    input {
+      width: 700px;
+      height: 55px;
+      padding-left: 2rem;
+
+      border: 1px solid #c6c6c6;
+      box-sizing: border-box;
+      border-radius: 3px;
+      margin-right: 1rem;
+
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 24px;
+      color: #455a64;
+
+      &::placeholder {
+        color: #b0bec5;
+      }
+
+      &:focus,
+      &:hover {
+        border: 1px solid #616161;
+        outline: none;
+      }
+    }
+
+    button {
+      width: 136px;
+      height: 55px;
+
+      color: #3880fd;
+      background: #ffffff;
+      border: 2px solid #3880fd;
+      border-radius: 3px;
+
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 24px;
+      /* identical to box height */
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        color: #ffffff;
+        border: 0px;
+        background: #3880fd;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.myCourses {
+  padding: 2rem 5% 2rem 5%;
+  background: $grad-12;
+
+  .heading {
+    span {
+      color: $White-0;
+    }
+  }
+}
+
+.catalog {
+  padding: 2rem 5% 4rem 5%;
+}

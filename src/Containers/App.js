@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Head from "next/head";
 
 import Navbar from "../Components/Generic/Navbar/Navbar";
+import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
 import Router from "next/router";
 import { refreshUserToken } from "../Requests/Authorization";
@@ -11,7 +12,8 @@ class App extends Component {
     page: this.props.page,
     isAuthenticated: false,
     AnshdataUser: null,
-    attemptingSignIn: false
+    attemptingSignIn: false,
+    authOption: null
   };
 
   hideAuthFormHandler = () => {
@@ -42,8 +44,8 @@ class App extends Component {
     Router.push("/");
   };
 
-  showAuthFormHandler = () => {
-    this.setState({ attemptingSignIn: true });
+  showAuthFormHandler = authOption => {
+    this.setState({ attemptingSignIn: true, authOption });
   };
 
   render() {
@@ -58,6 +60,14 @@ class App extends Component {
             rel="stylesheet"
             href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
           />
+          <link
+            href="https://fonts.googleapis.com/css?family=Scope+One&display=swap"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <Navbar
           isAuthenticated={this.state.isAuthenticated}
@@ -70,9 +80,11 @@ class App extends Component {
           <Auth
             reloadOnAuthEvent={this.authEventHandler}
             hideAuthFormHandler={this.hideAuthFormHandler}
+            authOption={this.state.authOption}
           />
         ) : null}
         <div>{this.props.children}</div>
+        <Footer />
       </div>
     );
   }

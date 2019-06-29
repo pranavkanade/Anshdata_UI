@@ -42,7 +42,13 @@ export const getIfEnrolled = async (courseId, ifEnrolledSaveHandler) => {
         Authorization: getAuthorization()
       }
     })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
+      .catch(err => console.log("Enrollment err ", err))
       .then(data => ifEnrolledSaveHandler(data));
   } catch (err) {
     // This means we are dealing with anonymous user

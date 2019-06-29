@@ -1,0 +1,30 @@
+@import "../../../../../static/styles/globals.scss";
+
+.container {
+  padding: 5rem 8rem 6rem 8rem;
+
+  span {
+    padding-left: 4rem;
+    font-family: Scope One;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 48px;
+    line-height: 66px;
+
+    color: $Black-1;
+  }
+}
+
+.partners {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  align-items: center;
+  justify-items: center;
+  grid-gap: auto;
+
+  div {
+    align-self: center;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,131 @@
+@import "../../../../../static/styles/globals.scss";
+.container {
+  padding: 0 5% 0 5%;
+}
+.courseContent {
+  // margin: 2rem 0 2rem 0;
+  padding-top: 1rem;
+  background: #fffaf3;
+
+  .section {
+    padding: 1rem 0 2rem 0;
+  }
+
+  .sectionTitle {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 36px;
+    color: #000000;
+  }
+
+  .moduleList {
+    margin: 2rem 1rem 1rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-gap: 2rem 1rem;
+    place-items: center;
+    grid-auto-flow: dense;
+  }
+}
+
+.moduleBtn {
+  width: 500px;
+  height: 244px;
+  background: inherit;
+
+  border: 0px;
+  background: #000000ad;
+  // box-sizing: border-box;
+  border-radius: 5px;
+  padding: 1rem 2rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  text-align: center;
+
+  span {
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 28px;
+    line-height: 39px;
+
+    color: #c2cfe0;
+  }
+  transition: transform 0.2s ease;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $shadow-1;
+    // border: 5px dashed #8e98a5;
+    background: #000000;
+
+    transform: scale(1.1);
+  }
+}
+
+.itemBox {
+  margin: 2rem 1rem 2rem 1rem;
+
+  .itemList {
+    // flex-grow: 4;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 1rem;
+
+    .createAssignmentBtn {
+      width: 300px;
+      height: 160px;
+      background: #000000ad;
+
+      // border: 5px dashed #c2cfe0;
+      // box-sizing: border-box;
+      border-radius: 5px;
+      padding: 1rem 2rem 1rem 2rem;
+      display: flex;
+      flex-direction: column;
+      place-content: center;
+      text-align: center;
+
+      span {
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+
+        color: #c2cfe0;
+      }
+
+      img {
+        justify-self: center;
+        transform: scale(0.8);
+      }
+
+      transition: transform 0.2s ease;
+
+      &:hover {
+        cursor: pointer;
+        box-shadow: $shadow-1;
+        background: #000000;
+
+        transform: scale(1.07);
+      }
+    }
+  }
+
+  .arrows {
+    height: 160px;
+    width: 64px;
+    align-self: center;
+    border: 0px;
+    background: transparent;
+
+    &:hover {
+      cursor: pointer;
+      background: #00000027;
+    }
+  }
+}

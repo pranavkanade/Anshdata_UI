@@ -1,0 +1,65 @@
+@import "../../../../../static/styles/globals.scss";
+
+.container {
+  @extend %containerLg;
+}
+
+.page {
+  margin-top: 2rem;
+}
+
+.heading {
+  @extend %heading-1;
+}
+
+.courseCreationPlane {
+  margin: 2rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 5rem;
+  justify-content: center;
+}
+
+.courseForm {
+  width: 700px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column-reverse;
+  align-content: flex-start;
+  margin-top: 2rem;
+  padding: 2rem;
+  width: 280px;
+  height: 380px;
+
+  background: #eff0f1;
+  border-radius: 5px;
+
+  place-items: center;
+
+  button {
+    width: 220px;
+    height: 54px;
+    left: 0px;
+    top: 0px;
+
+    background: #2e96d3;
+    border-radius: 5px;
+
+    color: $White-0;
+
+    span {
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 29px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: #ffffff;
+    }
+  }
+}

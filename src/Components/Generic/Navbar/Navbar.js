@@ -1,34 +1,43 @@
 import React from "react";
 import Link from "next/link";
 
-import { Menu, Container, Button } from "semantic-ui-react";
+import css from "./navbar.scss";
 
-const menus = ["Courses", "Contribute"];
+const menus = ["Courses", "Contribute", "Blog"];
 
 const renderAuthMenuItem = props => {
   if (!props.isAuthenticated) {
     return (
-      <Menu.Item>
-        <Button
-          color="blue"
-          content="Sign In"
-          onClick={props.showAuthFormHandler}
-        />
-      </Menu.Item>
+      <>
+        <div>
+          <button
+            className={css.join}
+            onClick={() => props.showAuthFormHandler("signup")}>
+            Join
+          </button>
+        </div>
+        <div>
+          <button
+            className={css.signIn}
+            onClick={() => props.showAuthFormHandler("signin")}>
+            <text>Sign In</text>
+          </button>
+        </div>
+      </>
     );
   } else {
     return (
       <>
-        <Link href={`/u/${props.user.username}`}>
-          <Menu.Item>{props.user.username}</Menu.Item>
-        </Link>
-        <Menu.Item>
-          <Button
-            color="red"
-            content="Sign Out"
-            onClick={props.signOutHandler}
-          />
-        </Menu.Item>
+        <div>
+          <a href={`/u/${props.user.username}`}>
+            <button className={css.navLink}>{props.user.username}</button>
+          </a>
+        </div>
+        <div>
+          <button className={css.signOut} onClick={props.signOutHandler}>
+            <text>Sign Out</text>
+          </button>
+        </div>
       </>
     );
   }
@@ -37,31 +46,29 @@ const renderAuthMenuItem = props => {
 const renderNavMenus = props => {
   return menus.map((m, i) => {
     return (
-      <Link href={"/".concat(m.toLowerCase())} key={i}>
-        <Menu.Item as="div" name={m} active={props.activeMenu === m}>
-          <a>{m}</a>
-        </Menu.Item>
-      </Link>
+      <div key={i}>
+        <a href={"/".concat(m.toLowerCase())}>
+          <button className={css.navLink}>{m}</button>
+        </a>
+      </div>
     );
   });
 };
 
 const navbar = props => {
   return (
-    <div className={"Navbar"}>
-      <Menu as="div" secondary stackable borderless>
-        <Container>
-          <Link href="/">
-            <Menu.Item as="div" header>
-              Anshdata
-            </Menu.Item>
-          </Link>
-          <Menu.Menu position="right">
-            {renderNavMenus(props)}
-            {renderAuthMenuItem(props)}
-          </Menu.Menu>
-        </Container>
-      </Menu>
+    <div className={css.navbar}>
+      <div className={css.container}>
+        <div className={css.brandLogo}>
+          <a href="/">
+            <button>Anshdata</button>
+          </a>
+        </div>
+        <div className={css.item}>
+          {renderNavMenus(props)}
+          {renderAuthMenuItem(props)}
+        </div>
+      </div>
     </div>
   );
 };

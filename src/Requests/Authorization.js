@@ -9,6 +9,10 @@ export const getADUser = () => {
   return localStorage.getItem("AnshdataUser");
 };
 
+export const getADUserJson = () => {
+  return JSON.parse(getADUser());
+};
+
 export const getAuthToken = () => {
   const adUser = getADUser();
   const token = "";
