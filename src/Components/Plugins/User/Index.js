@@ -19,7 +19,7 @@ import {
   getEnrolledCoursesList,
   getPublishedCoursesList
 } from "../../../Requests/Courses";
-import CoursesList from "../../Generic/Assets/CoursesList";
+import { renderPublishedCoursesList as CoursesList } from "../../Generic/CourseList/courselist";
 import { courseListType } from "../../../globals";
 import Link from "next/link";
 
@@ -143,13 +143,11 @@ class Index extends Component {
     }
     return (
       <>
-        <Card.Group itemsPerRow={3}>
-          <CoursesList
-            courses={courses.slice(0, 6)}
-            courseListType={listType}
-            detailURL={"/courses"}
-          />
-        </Card.Group>
+        <CoursesList
+          courses={courses.slice(0, 6)}
+          courseListType={listType}
+          detailURL={"/courses"}
+        />
         <Divider hidden />
         <Link href={moreURL}>
           <Button
