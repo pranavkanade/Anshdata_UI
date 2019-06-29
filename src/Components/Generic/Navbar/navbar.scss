@@ -1,3 +1,4 @@
+@import "../../../../static/styles/globals.scss";
 .container {
   width: 100%;
   padding-left: 10%;
@@ -10,7 +11,7 @@
 .navbar {
   width: 100%;
   // background: #161616;
-  background: #1c1627;
+  background: $Base-secondary;
 }
 
 .brandLogo {
@@ -53,11 +54,17 @@
   border-radius: 2px;
   border: 0px;
 
-  font-family: lato;
+  // font-family: lato;
+
+  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
   color: #ffffff;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .navLink {
@@ -71,12 +78,14 @@
 
 .signIn {
   @extend %nav;
-  background: #777ae2;
-  width: 10rem;
+  background: $Base-primary;
+  padding: 0 2rem 0 2rem;
+  transition: 0.2s ease;
 
   &:hover {
-    background: #676ac5;
+    background: $White-0;
     cursor: pointer;
+    color: $Base-primary;
   }
 }
 
@@ -93,11 +102,11 @@
 
 .join {
   @extend %nav;
-  background: #8633c5;
-  width: 8rem;
-
+  background: #931eec;
+  padding: 0 2rem 0 2rem;
+  transition: 0.2s ease;
   &:hover {
-    background: #5d2488;
+    background: #6714a7;
     cursor: pointer;
   }
 }

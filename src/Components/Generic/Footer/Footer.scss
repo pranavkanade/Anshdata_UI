@@ -1,8 +1,6 @@
 @import "../../../../static/styles/globals.scss";
 .footer {
   width: 100%;
-  // padding: 2rem 10% 1rem 10%;
-  background: $Base-primary;
   height: 300px;
   max-height: 600px;
 
@@ -47,6 +45,7 @@
 
 .bottom {
   padding: 1rem 10% 1rem 10%;
+  background: $Base-primary;
   display: flex;
   flex-direction: row;
   align-items: center;
