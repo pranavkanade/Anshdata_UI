@@ -1,0 +1,188 @@
+.head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 38px;
+    padding-bottom: 8px;
+
+    color: #ffffff;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+  }
+
+  button {
+    height: 36px;
+    width: 36px;
+    align-self: center;
+
+    background: transparent;
+    box-shadow: none;
+    border: 0px;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.2);
+      background: transparent;
+    }
+  }
+}
+
+.draftedCourseCardLg {
+  width: 105%;
+  grid-column: 1 / -1;
+  background: linear-gradient(201.37deg, #2d2a75 14.13%, #13c5dd 101.15%);
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.loader {
+  margin-top: 5rem;
+}
+
+.description {
+  padding-left: 2rem;
+  margin-top: 1rem;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: lighter;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: justify;
+
+  color: #ffffff;
+}
+
+.statsBox {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  margin-top: 2rem;
+  grid-gap: 2rem 1rem;
+
+  .stat {
+    width: 160px;
+    height: 64px;
+
+    border: 1px solid #ececec;
+    box-sizing: border-box;
+    border-radius: 2px;
+
+    text-align: center;
+    justify-self: center;
+
+    .value {
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 24px;
+      line-height: 34px;
+      /* identical to box height */
+      text-align: center;
+
+      color: #ffffff;
+    }
+
+    .label {
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 24px;
+      /* identical to box height */
+      text-align: center;
+
+      color: #ffffff;
+    }
+  }
+}
+
+.tagBox {
+  width: 700px;
+  height: 71px;
+  margin: 2rem 0 0 1rem;
+  border: 1px solid #ececec;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.actionBar {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row-reverse;
+
+  button {
+    margin-left: 1rem;
+    height: 60px;
+    padding: 0 2rem 0 2rem;
+
+    background: #6253e6;
+    border-radius: 4px;
+    border: 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      margin-right: 1.3rem;
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 29px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: #ffffff;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: #3b3199;
+    }
+  }
+
+  .publish {
+    background: #16d6a8;
+
+    &:hover {
+      cursor: pointer;
+      background: #098d6e;
+    }
+  }
+
+  .review {
+    background: #fb9700;
+    &:hover {
+      cursor: pointer;
+      background: #8d5e18;
+    }
+  }
+
+  .delete {
+    background: #ea4335;
+    &:hover {
+      cursor: pointer;
+      background: #a52d22;
+    }
+  }
+
+  .modify {
+    background: #03a9f4;
+    &:hover {
+      cursor: pointer;
+      background: #015981;
+    }
+  }
+}

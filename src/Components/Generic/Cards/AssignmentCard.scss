@@ -1,0 +1,109 @@
+@import "../../../../static/styles/globals.scss";
+.assignmentCard {
+  width: 300px;
+  height: 160px;
+  background: #ffffff;
+
+  padding: 1rem 2rem 1rem 2rem;
+
+  border-radius: 5px;
+  border: 1px solid #dfdfdf;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.1s ease;
+  &:hover {
+    box-shadow: $shadow-2;
+    // transform: scale(1.05);
+  }
+
+  span {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 20px;
+    line-height: 24px;
+    color: $Black-1;
+  }
+
+  .actionBox {
+    display: flex;
+    flex-direction: row-reverse;
+    place-content: space-between;
+
+    .creds {
+      border: 1px solid #ececec;
+      background: #e6e6e6;
+      border-radius: 5px;
+      padding: 0 0.5rem 0 0.5rem;
+      text-align: center;
+      .value {
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 29px;
+
+        color: #e47a23;
+      }
+      .label {
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 29px;
+
+        color: #e47a23;
+      }
+    }
+
+    .editBar {
+      align-self: flex-end;
+      // margin-right: 1rem;
+
+      button {
+        height: 40px;
+        border-radius: 5px;
+        border: 0px;
+        margin-left: 0.5rem;
+      }
+
+      .edit {
+        background: #0037cf;
+        transition: transform 0.1s ease;
+
+        &:hover {
+          cursor: pointer;
+          background: #1f3d8f;
+          img {
+            transform: scale(1.3);
+          }
+        }
+      }
+
+      .delete {
+        background: #cf002d;
+        transition: transform 0.1s ease;
+
+        &:hover {
+          cursor: pointer;
+          background: #f31f4d;
+          img {
+            transform: scale(1.3);
+          }
+        }
+      }
+
+      .fullscreen {
+        background: transparent;
+        padding: 0px;
+        transition: transform 0.1s ease;
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+}

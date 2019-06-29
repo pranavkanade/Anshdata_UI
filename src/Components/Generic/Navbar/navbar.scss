@@ -1,0 +1,118 @@
+@import "../../../../static/styles/globals.scss";
+.container {
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.navbar {
+  width: 100%;
+  // background: #161616;
+  background: $Base-secondary;
+}
+
+.brandLogo {
+  button {
+    background: inherit;
+    color: #ffffff;
+    border: 0px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 48px;
+
+  color: #ffffff;
+}
+
+.item {
+  padding: 5px;
+  display: grid;
+  grid-gap: 10px;
+  grid-column: -1;
+  grid-template-columns: repeat(8, auto);
+}
+
+%nav {
+  top: 2px;
+  height: 45px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  align-content: center;
+
+  background: inherit;
+  border-radius: 2px;
+  border: 0px;
+
+  // font-family: lato;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  color: #ffffff;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.navLink {
+  @extend %nav;
+  transition: 0.2s ease-in;
+  &:hover {
+    cursor: pointer;
+    color: $Base-secondary;
+    background: #ffffff;
+  }
+}
+
+.active {
+  color: $Base-secondary;
+  background: #ffffff;
+}
+
+.signIn {
+  @extend %nav;
+  background: $Base-primary;
+  padding: 0 2rem 0 2rem;
+  transition: 0.2s ease;
+
+  &:hover {
+    background: $White-0;
+    cursor: pointer;
+    color: $Base-primary;
+  }
+}
+
+.signOut {
+  @extend %nav;
+  background: #f11b0c;
+  width: 10rem;
+
+  &:hover {
+    background: #cf170a;
+    cursor: pointer;
+  }
+}
+
+.join {
+  @extend %nav;
+  background: #931eec;
+  padding: 0 2rem 0 2rem;
+  transition: 0.2s ease;
+  &:hover {
+    background: #6714a7;
+    cursor: pointer;
+  }
+}

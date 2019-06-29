@@ -1,0 +1,86 @@
+@import "../../../../static/styles/globals.scss";
+
+span {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: lighter;
+  font-size: 16px;
+  line-height: 29px;
+  /* identical to box height */
+
+  color: #a3a3a3;
+}
+
+h3 {
+  @extend %heading-2;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+
+  span {
+    @extend %heading-1;
+  }
+  button {
+    border: 0px;
+    float: right;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.inp {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 29px;
+}
+
+.drpDn {
+  margin-bottom: 1rem;
+}
+
+.reverse {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+
+  button {
+    margin-left: 1rem;
+    height: 60px;
+    padding: 0 2rem 0 2rem;
+
+    width: 240px;
+
+    background: #1c52ad;
+    border-radius: 4px;
+    border: 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      margin-right: 3rem;
+      font-family: Barlow;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 29px;
+      /* identical to box height */
+
+      text-align: center;
+
+      color: #ffffff;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: #082557;
+    }
+  }
+}

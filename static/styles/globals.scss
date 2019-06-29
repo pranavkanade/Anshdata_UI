@@ -1,0 +1,118 @@
+// Theme
+$Base-primary: #5143d3;
+$Base-primary-1: #2e229e;
+$Base-secondary: #100b41;
+
+// Colors
+$White-0: #ffffff;
+$White-1: #fcfcfc;
+$White-2: #f7f7f7;
+$White-3: #dddddd;
+$White-4: #e7e7e7;
+
+$Red-4: #eb2b2b31;
+
+$Blue-1: #1323dd;
+$Blue-2: #4a3ebe;
+$Blue-3: #397ef0;
+$Blue-4: #232057;
+$Blue-5: #1c52ad;
+$Blue-6: #0d3375;
+$Blue-10: #1c1627;
+
+$Blue-11: #d9e3fd;
+
+$Yellow-1: #ffe3b0;
+$Yellow-2: #fbbc05;
+$Yellow-3: #d8fa17;
+$Yellow-4: #ffefd2;
+$Yellow-10: #ff9c44;
+
+$Purple-1: #270036;
+$Purple-1b: #6200ff;
+
+$Red-1: #830027;
+$Red-2: #a80939;
+
+$Black-1: #3f3e3e;
+
+// Gradients
+$grad-card-1: linear-gradient(205.09deg, #dd13dd -12.19%, #2469de 101.17%);
+$grad-2: linear-gradient(27.72deg, #8400ff 0%, #ff786c 98.34%);
+$grad-3: linear-gradient(204.02deg, #70ff6b -20.48%, #1389f7 101.17%);
+$grad-4: linear-gradient(250.54deg, #0779eb -32.44%, #c9ffd8 100%);
+$grad-5: linear-gradient(109.15deg, #27d2a9 0%, #e2d245 100%);
+$grad-6: linear-gradient(205.1deg, #dd1374 0.56%, #ffd17f 101.17%);
+$grad-7: linear-gradient(204.12deg, #ffc661 0%, #ee3d4f 101.17%);
+$grad-8: linear-gradient(203.81deg, #00ffff -8.36%, #504de8 101.17%);
+$grad-9: linear-gradient(306.31deg, #ffd29d 7.11%, #e85f53 94.22%);
+$grad-10: linear-gradient(201.37deg, #2d2a75 14.13%, #13c5dd 101.15%);
+$grad-11: linear-gradient(205.61deg, #ff475d 0%, #ffb067 101.17%);
+$grad-12: linear-gradient(225.34deg, #270036 0%, #13c5dd 101.17%);
+
+$rgrad-1: radial-gradient(
+  3876px at 100% 50%,
+  rgba(22, 214, 168, 0.25) 0%,
+  rgba(45, 156, 219, 0.84) 100%
+);
+
+// Shadow
+$shadow-1: 10px 10px 20px rgba(0, 0, 0, 0.15);
+$shadow-2: 10px 10px 20px rgba(0, 0, 0, 0.342);
+$shadow-all-1: 4px 0px 10px rgba(0, 0, 0, 0.06),
+  -4px 0px 10px rgba(0, 0, 0, 0.06), 0px -4px 10px rgba(0, 0, 0, 0.06),
+  0px 4px 10px rgba(0, 0, 0, 0.06);
+$shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
+  -4px 0px 10px rgba(0, 0, 0, 0.08), 0px -4px 10px rgba(0, 0, 0, 0.08),
+  0px 4px 10px rgba(0, 0, 0, 0.08);
+
+// headings
+%heading-0 {
+  font-family: Scope One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 55px;
+
+  color: #000000;
+}
+
+%heading-1 {
+  font-family: Scope One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 50px;
+
+  color: #000000;
+}
+
+%heading-2 {
+  font-family: Scope One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  line-height: 50px;
+
+  color: #000000;
+}
+
+// font
+
+%BtnFont-1 {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 29px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+// container
+%containerLg {
+  padding: 2rem 5% 2rem 5%;
+}

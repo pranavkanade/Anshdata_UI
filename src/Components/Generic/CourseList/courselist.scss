@@ -1,0 +1,37 @@
+@import "../../../../static/styles/globals.scss";
+
+.courseList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(222px, auto));
+  grid-auto-flow: dense;
+  margin-top: 3rem;
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+}
+
+.enrolled {
+  grid-template-columns: repeat(auto-fill, minmax(482px, auto));
+  justify-content: space-around;
+}
+
+.courseCard {
+  box-sizing: border-box;
+  border-radius: 5px;
+
+  transition: transform 0.1s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.08);
+    box-shadow: 1px 20px 50px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.active {
+  transform: scale(1.08);
+  box-shadow: 1px 20px 50px rgba(0, 0, 0, 0.6);
+}
