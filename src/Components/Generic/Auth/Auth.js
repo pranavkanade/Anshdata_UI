@@ -11,11 +11,10 @@ import {
 } from "semantic-ui-react";
 import Router from "next/router";
 
-const URLS = {
-  USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
-  USERLOGIN: "http://127.0.0.1:8000/api/user/login/",
-  GETUSER: "http://127.0.0.1:8000/api/user/me/"
-};
+import {
+  signinHandler,
+  signupHandler
+} from "./../../../Requests/Authentication";
 
 class Auth extends Component {
   state = {
@@ -66,13 +65,7 @@ class Auth extends Component {
       <Grid stackable>
         <Grid.Row columns={1}>
           <Grid.Column>
-            <Form
-              onSubmit={event => {
-                isSignup
-                  ? this.signupHandler(event)
-                  : this.signinHandler(event);
-              }}
-              size="large">
+            <Form onSubmit={this.handleAuthentication} size="large">
               <Form.Field>
                 <label>User Name</label>
                 <input
@@ -182,92 +175,34 @@ class Auth extends Component {
   };
 
   getSignupData = () => {
-    const data = { ...this.state };
+    const data = {
+      username: this.state.username,
+      password1: this.state.password,
+      password2: this.state.password,
+      email: this.state.email
+    };
     return data;
   };
 
   getSignInData = () => {
-    const data = { ...this.state };
+    const data = {
+      username: this.state.username,
+      password: this.state.password
+    };
     return data;
   };
 
-  signupHandler = async event => {
-    console.log("[Auth.js] Sign Up Handler", this.state);
-    event.preventDefault();
+  handleAuthentication = event => {
+    const isSignup = this.state.formType === "signup" ? true : false;
 
-    try {
-      const signupData = this.getSignupData();
-      console.log("[Auth.js] : Sign Up Data", signupData);
-      const siginupRes = await fetch(URLS.USERSIGNUP, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(signupData)
-      });
-      const data = await siginupRes.json();
-      console.log("signup data : ", data);
-      localStorage.setItem("AnshdataUser", JSON.stringify(data));
-    } catch (err) {
-      console.log("[Auth.js] SIGNUP ERR : ", err);
-      this.close();
-      return;
-    }
-
-    try {
-      const signinData = this.getSignInData();
-      console.log("[Auth.js] Sign In Data", signinData);
-      const loginRes = await fetch(URLS.USERLOGIN, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(signinData)
-      });
-      let AnshdataUser = JSON.parse(localStorage.getItem("AnshdataUser"));
-      AnshdataUser["token"] = (await loginRes.json()).token;
-      localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
-    } catch (err) {
-      console.log("[Auth.js] SIGNIN ERR : ", err);
+    if (isSignup) {
+      signupHandler(event, this.getSignupData());
+    } else {
+      signinHandler(event, this.getSignInData());
     }
     this.close();
     this.props.reloadOnAuthEvent();
-    const page = window.location.pathname;
-    Router.push("/");
-  };
-
-  signinHandler = async event => {
-    console.log("[Auth.js] Log In Handler", this.state);
-    event.preventDefault();
-    try {
-      const signinData = this.getSignInData();
-      console.log("[Auth] : Sign In Handler", signinData);
-      const loginRes = await fetch(URLS.USERLOGIN, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(signinData)
-      });
-
-      let AnshdataToken = (await loginRes.json()).token;
-      const userRes = await fetch(URLS.GETUSER, {
-        headers: {
-          Authorization: `JWT ${AnshdataToken}`
-        }
-      });
-      // NOTE: Here assume no error will occur
-      // we get list so ..
-      let AnshdataUser = (await userRes.json())[0];
-      AnshdataUser["token"] = AnshdataToken;
-      localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
-    } catch (err) {
-      console.log("[Auth.js] SIGNIN ERR : ", err);
-    }
-    this.close();
-    this.props.reloadOnAuthEvent();
-    const page = window.location.pathname;
-    Router.push("/");
+    Router.push(window.location.pathname);
   };
 }
 

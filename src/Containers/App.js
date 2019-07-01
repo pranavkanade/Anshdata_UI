@@ -5,7 +5,7 @@ import Navbar from "../Components/Generic/Navbar/Navbar";
 import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
 import Router from "next/router";
-import { refreshUserToken } from "../Requests/Authorization";
+import { refreshUserToken, getADUserJson } from "../Requests/Authorization";
 
 class App extends Component {
   state = {
@@ -21,12 +21,13 @@ class App extends Component {
   };
 
   authEventHandler = () => {
-    console.log("[App.js] auth Event handler");
-    const rawUserData = localStorage.getItem("AnshdataUser");
-    let isAuthenticated = !!rawUserData;
+    // const rawUserData = localStorage.getItem("AnshdataUser");
+    const adUser = getADUserJson();
+    console.log("[App.js] auth Event handler", adUser);
+    let isAuthenticated = adUser === null ? false : !!adUser.token;
     let user;
     try {
-      user = JSON.parse(rawUserData);
+      user = adUser.user;
     } catch (err) {
       user = null;
       isAuthenticated = false;
