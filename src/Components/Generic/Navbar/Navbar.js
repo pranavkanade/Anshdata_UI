@@ -46,6 +46,8 @@ const renderAuthMenuItem = props => {
 };
 
 const handleSignout = async (event, handler) => {
+  event.preventDefault();
+  console.log("logging out of here");
   await logoutHandler(event);
   handler();
 };

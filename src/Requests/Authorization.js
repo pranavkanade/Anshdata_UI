@@ -27,35 +27,3 @@ export const getAuthorization = () => {
   }
   return Authorization;
 };
-
-export const refreshUserToken = async () => {
-  console.log("[Authorization.js] Refresh Handler");
-  const URL = "http://127.0.0.1:8000/api/user/refresh/";
-  try {
-    const adToken = getAuthToken();
-    if (adToken === "") {
-      return;
-    }
-    const refreshData = {
-      token: adToken
-    };
-    // console.log("[Authorization.js] : Refresh Handler", refreshData);
-    const refreshRes = await fetch(URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(refreshData)
-    });
-
-    let AnshdataToken = (await refreshRes.json()).token;
-    let AnshdataUser = JSON.parse(getADUser());
-    AnshdataUser["token"] = AnshdataToken;
-    localStorage.removeItem("AnshdataUser");
-    localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
-    console.log("[Authorization.js] Refreshed token");
-  } catch (err) {
-    console.log("[Authorization.js] Refresh ERR : ", err);
-    localStorage.removeItem("AnshdataUser");
-  }
-};
