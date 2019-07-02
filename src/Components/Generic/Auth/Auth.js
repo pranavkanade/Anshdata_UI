@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Form, Menu, Grid, Divider } from "semantic-ui-react";
+import { Form, Menu, Grid, Divider, Modal, Loader } from "semantic-ui-react";
 import { Dialog, Pane } from "evergreen-ui";
 import Router from "next/router";
 
@@ -17,7 +17,8 @@ class Auth extends Component {
     email: "",
     password: "",
     shouldOpen: true,
-    formType: this.props.authOption
+    formType: this.props.authOption,
+    isLoading: false
   };
 
   tabSwitchHandler = tabKey => {
@@ -105,6 +106,15 @@ class Auth extends Component {
     console.log(
       "[Auth.js] render\n-------------------------------------------"
     );
+
+    if (this.state.isLoading) {
+      return (
+        <Modal open={true} basic dimmer="inverted">
+          <Loader size="massive">Loading ...</Loader>
+        </Modal>
+      );
+    }
+
     return (
       <Dialog
         isShown={this.state.shouldOpen}
@@ -154,7 +164,7 @@ class Auth extends Component {
   };
 
   close = () => {
-    this.setState({ shouldOpen: false, formType: "" });
+    this.setState({ shouldOpen: false, formType: "", isLoading: false });
     this.props.hideAuthFormHandler();
   };
 
@@ -176,13 +186,14 @@ class Auth extends Component {
     return data;
   };
 
-  handleAuthentication = event => {
+  handleAuthentication = async event => {
+    this.setState({ isLoading: true });
     const isSignup = this.state.formType === "signup" ? true : false;
 
     if (isSignup) {
-      signupHandler(event, this.getSignupData());
+      await signupHandler(event, this.getSignupData());
     } else {
-      signinHandler(event, this.getSignInData());
+      await signinHandler(event, this.getSignInData());
     }
     this.close();
     this.props.reloadOnAuthEvent();
