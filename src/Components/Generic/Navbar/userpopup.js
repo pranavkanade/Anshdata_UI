@@ -1,4 +1,4 @@
-import { Popup, Divider, Segment } from "semantic-ui-react";
+import { Popup, Divider } from "semantic-ui-react";
 import css from "./userpopup.scss";
 import Link from "next/link";
 
