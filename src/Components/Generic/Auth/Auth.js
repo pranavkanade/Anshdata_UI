@@ -117,6 +117,7 @@ class Auth extends Component {
 
     return (
       <Dialog
+        preventBodyScrolling
         isShown={this.state.shouldOpen}
         title={
           this.state.formType === "signin"

@@ -95,6 +95,21 @@
   }
 }
 
+.user {
+  @extend %nav;
+  transition: 0.2s ease-in;
+  padding-top: 5px;
+
+  &:hover {
+    cursor: pointer;
+    background: $Base-primary;
+  }
+}
+
+.user_active {
+  background: $Base-primary;
+}
+
 .signOut {
   @extend %nav;
   background: #f11b0c;

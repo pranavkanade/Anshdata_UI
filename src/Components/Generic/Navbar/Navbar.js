@@ -2,6 +2,7 @@ import React from "react";
 
 import css from "./navbar.scss";
 import { logoutHandler } from "../../../Requests/Authentication";
+import UserPopup from "./userpopup";
 
 const menus = ["Courses", "Contribute", "Blog"];
 
@@ -27,20 +28,15 @@ const renderAuthMenuItem = props => {
     );
   } else {
     return (
-      <>
-        <div>
-          <a href={`/u/${props.user.username}`}>
-            <button className={css.navLink}>{props.user.username}</button>
-          </a>
-        </div>
-        <div>
-          <button
-            className={css.signOut}
-            onClick={event => handleSignout(event, props.signOutHandler)}>
-            <text>Sign Out</text>
+      <div>
+        <UserPopup
+          user={props.user}
+          handleSignout={event => handleSignout(event, props.signOutHandler)}>
+          <button className={css.user}>
+            <img src="../../../../static/assets/icon/person_outline_24px_outlined.svg" />
           </button>
-        </div>
-      </>
+        </UserPopup>
+      </div>
     );
   }
 };

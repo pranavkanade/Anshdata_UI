@@ -1,0 +1,64 @@
+@import "../../../../static/styles/globals.scss";
+
+%nav {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  align-content: center;
+
+  background: inherit;
+  border-radius: 2px;
+  border: 0px;
+
+  // font-family: lato;
+
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #ffffff;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+span {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.popup {
+  width: 12rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .link {
+    padding: 0.5rem;
+    transition: 0.1s ease;
+    &:hover {
+      cursor: pointer;
+      background: $Base-primary;
+      color: $White-0;
+      transform: scale(1.05);
+      border-radius: 5px;
+      border: 0px;
+    }
+  }
+
+  .signOut {
+    @extend %nav;
+    margin-top: 1rem;
+    background: #ff0155;
+    height: 36px;
+    border-radius: 5px;
+
+    &:hover {
+      background: #cf170a;
+      cursor: pointer;
+    }
+  }
+}
