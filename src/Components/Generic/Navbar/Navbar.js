@@ -1,7 +1,7 @@
 import React from "react";
-import Link from "next/link";
 
 import css from "./navbar.scss";
+import { logoutHandler } from "../../../Requests/Authentication";
 
 const menus = ["Courses", "Contribute", "Blog"];
 
@@ -34,13 +34,20 @@ const renderAuthMenuItem = props => {
           </a>
         </div>
         <div>
-          <button className={css.signOut} onClick={props.signOutHandler}>
+          <button
+            className={css.signOut}
+            onClick={event => handleSignout(event, props.signOutHandler)}>
             <text>Sign Out</text>
           </button>
         </div>
       </>
     );
   }
+};
+
+const handleSignout = async (event, handler) => {
+  await logoutHandler(event);
+  handler();
 };
 
 const renderNavMenus = props => {

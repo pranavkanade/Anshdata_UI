@@ -39,7 +39,6 @@ class App extends Component {
   };
 
   signOutHandler = () => {
-    localStorage.removeItem("AnshdataUser");
     this.setState({ isAuthenticated: false, attemptingSignIn: false });
     this.authEventHandler();
     Router.push("/");

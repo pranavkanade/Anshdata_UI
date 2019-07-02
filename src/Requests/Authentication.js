@@ -1,7 +1,9 @@
+import { getAuthorization } from "./Authorization";
+
 const URLS = {
   USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
   USERLOGIN: "http://127.0.0.1:8000/api/user/login/",
-  USERLOGOUT: ""
+  USERLOGOUT: "http://127.0.0.1:8000/api/user/logout/"
 };
 
 export const signupHandler = async (event, signupData) => {
@@ -47,5 +49,25 @@ export const signinHandler = async (event, signinData) => {
     localStorage.setItem("AnshdataUser", JSON.stringify(data));
   } catch (err) {
     console.log("[Auth.js] SIGNIN ERR : ", err);
+  }
+};
+
+export const logoutHandler = async event => {
+  console.log("[Auth.js] Log Out Handler");
+  event.preventDefault();
+  try {
+    const logoutRes = await fetch(URLS.USERLOGOUT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getAuthorization()
+      }
+    });
+    const data = await logoutRes.json();
+    console.log("signout response: ", data);
+    // remove if any thing is remaining of the previous user
+    localStorage.removeItem("AnshdataUser");
+  } catch (err) {
+    console.log("[Auth.js] Log out ERR : ", err);
   }
 };
