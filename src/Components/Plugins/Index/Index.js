@@ -18,7 +18,7 @@ const index = props => {
           className={css.backWorking}
           src="../../../../static/assets/back/howWorks.svg"
         />
-        <WorkingBox />
+        <WorkingBox showAuthFormHandler={props.showAuthFormHandler} />
         <div className={css.topCourses}>
           <TopCourses />
         </div>

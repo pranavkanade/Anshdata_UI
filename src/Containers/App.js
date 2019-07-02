@@ -14,7 +14,7 @@ class App extends Component {
     isAuthenticated: false,
     AnshdataUser: null,
     attemptingSignIn: false,
-    authOption: null
+    authOption: "signup"
   };
 
   hideAuthFormHandler = () => {
@@ -47,6 +47,16 @@ class App extends Component {
 
   showAuthFormHandler = authOption => {
     this.setState({ attemptingSignIn: true, authOption });
+  };
+
+  renderChildren = () => {
+    const children = React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        showAuthFormHandler: this.showAuthFormHandler
+      });
+    });
+
+    return <>{children}</>;
   };
 
   render() {
@@ -84,7 +94,7 @@ class App extends Component {
             authOption={this.state.authOption}
           />
         ) : null}
-        <div>{this.props.children}</div>
+        <div>{this.renderChildren()}</div>
         <Footer />
       </div>
     );

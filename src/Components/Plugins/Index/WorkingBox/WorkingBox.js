@@ -19,7 +19,9 @@ export default props => {
               allowFullScreen
             />
           </div>
-          <button>Join Now</button>
+          <button onClick={() => props.showAuthFormHandler("signup")}>
+            Join Now
+          </button>
         </div>
       </div>
 
