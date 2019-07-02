@@ -1,0 +1,48 @@
+@import "../../../../static/styles/globals.scss";
+
+.authBtn {
+  width: 100%;
+  @extend %BtnFont-1;
+  border: 0px;
+  height: 48px;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: $shadow-2;
+  }
+}
+
+.signupBtn {
+  background: #931eec;
+  transition: 0.2s ease;
+  &:hover {
+    background: #6714a7;
+    cursor: pointer;
+  }
+}
+
+.signinBtn {
+  background: $Base-primary;
+  transition: 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    background: $Base-secondary;
+  }
+}
+
+.inp {
+  height: 56px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.label {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 29px;
+}

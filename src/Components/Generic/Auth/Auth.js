@@ -1,20 +1,15 @@
 import React, { Component } from "react";
 
-import {
-  Form,
-  Modal,
-  Menu,
-  Segment,
-  Grid,
-  Button,
-  Divider
-} from "semantic-ui-react";
+import { Form, Menu, Grid, Divider } from "semantic-ui-react";
+import { Dialog, Pane } from "evergreen-ui";
 import Router from "next/router";
 
 import {
   signinHandler,
   signupHandler
 } from "./../../../Requests/Authentication";
+
+import css from "./auth.scss";
 
 class Auth extends Component {
   state = {
@@ -43,12 +38,13 @@ class Auth extends Component {
     if (isSignup) {
       return (
         <Form.Field>
-          <label>Email</label>
+          <label className={css.label}>Email</label>
           <input
             type="email"
             placeholder="pskanade@gmail.com"
             name="email"
             value={this.state.email}
+            className={css.inp}
             onChange={event => this.changeHandler(event)}
           />
         </Form.Field>
@@ -67,30 +63,37 @@ class Auth extends Component {
           <Grid.Column>
             <Form onSubmit={this.handleAuthentication} size="large">
               <Form.Field>
-                <label>User Name</label>
+                <label className={css.label}>User Name</label>
                 <input
                   placeholder="pskanade"
                   name="username"
                   type="text"
                   value={this.state.username}
+                  className={css.inp}
                   onChange={event => this.changeHandler(event)}
                 />
               </Form.Field>
               {this.renderEmailField(isSignup)}
               <Form.Field>
-                <label>Password</label>
+                <label className={css.label}>Password</label>
                 <input
                   type="password"
                   placeholder="password"
                   name="password"
                   value={this.state.password}
+                  className={css.inp}
                   onChange={event => this.changeHandler(event)}
                 />
               </Form.Field>
               <Divider hidden />
-              <Form.Button type="submit" size="large" color="violet" fluid>
+              <button
+                className={
+                  css.authBtn +
+                  " " +
+                  (isSignup ? css.signupBtn : css.signinBtn)
+                }>
                 {isSignup ? "Sign Up" : "Sign In"}
-              </Form.Button>
+              </button>
             </Form>
           </Grid.Column>
         </Grid.Row>
@@ -103,47 +106,32 @@ class Auth extends Component {
       "[Auth.js] render\n-------------------------------------------"
     );
     return (
-      <div>
-        <Modal
-          size="tiny"
-          dimmer="blurring"
-          open={this.state.shouldOpen}
-          closeOnDimmerClick={false}
-          closeOnEscape={false}
-          onClose={this.close}
-          centered>
-          <Modal.Header as={"div"}>
-            <text>
-              {this.state.formType === "signin"
-                ? "Sign in to your account"
-                : "Create your new account"}
-            </text>
-            <Button
-              icon="close"
-              floated="right"
-              color="red"
-              basic
-              onClick={this.props.hideAuthFormHandler}
+      <Dialog
+        isShown={this.state.shouldOpen}
+        title={
+          this.state.formType === "signin"
+            ? "Sign in to your account"
+            : "Create your new account"
+        }
+        onCloseComplete={this.close}
+        hasFooter={false}>
+        <div>
+          <Menu secondary pointing size="massive" borderless widths={2}>
+            <Menu.Item
+              name="Sign In"
+              active={this.state.formType === "signin"}
+              onClick={() => this.tabSwitchHandler("signin")}
             />
-          </Modal.Header>
-          <Modal.Content>
-            <Menu attached="top" tabular size="massive" borderless widths={2}>
-              <Menu.Item
-                name="Sign In"
-                active={this.state.formType === "signin"}
-                onClick={() => this.tabSwitchHandler("signin")}
-              />
-              <Menu.Item
-                position="right"
-                name="Sign Up"
-                active={this.state.formType === "signup"}
-                onClick={() => this.tabSwitchHandler("signup")}
-              />
-            </Menu>
-            <Segment attached="bottom"> {this.renderAuthForm()} </Segment>
-          </Modal.Content>
-        </Modal>
-      </div>
+            <Menu.Item
+              position="right"
+              name="Sign Up"
+              active={this.state.formType === "signup"}
+              onClick={() => this.tabSwitchHandler("signup")}
+            />
+          </Menu>
+          <Pane padding={32}>{this.renderAuthForm()}</Pane>
+        </div>
+      </Dialog>
     );
   }
 
@@ -154,11 +142,6 @@ class Auth extends Component {
 
   componentWillUnmount() {
     console.log("[Auth.js] component will unmount");
-  }
-
-  shouldComponentUpdate() {
-    console.log("[Auth.js] should component Update");
-    return true;
   }
 
   componentDidUpdate() {
@@ -172,6 +155,7 @@ class Auth extends Component {
 
   close = () => {
     this.setState({ shouldOpen: false, formType: "" });
+    this.props.hideAuthFormHandler();
   };
 
   getSignupData = () => {
