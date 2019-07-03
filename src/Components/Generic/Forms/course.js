@@ -1,16 +1,8 @@
 import React, { Component } from "react";
-import {
-  Modal,
-  Grid,
-  Form,
-  Dropdown,
-  Divider,
-  Segment,
-  Header,
-  Button
-} from "semantic-ui-react";
+import { Modal, Grid, Form, Dropdown } from "semantic-ui-react";
 import Link from "next/link";
 import { getCategoryList } from "../../../Requests/Category";
+import { getTagList } from "../../../Requests/Tag";
 import { createCourseHandler } from "../../../Requests/courseCreation";
 import css from "./course.scss";
 import Router from "next/router";
@@ -21,7 +13,7 @@ class CourseForm extends Component {
     title: "",
     subject: "",
     category: "",
-    tag: "",
+    tagged_to: [],
     isPublished: false,
     credit_points: 0,
     description: "",
@@ -32,6 +24,10 @@ class CourseForm extends Component {
     this.setState({ catList: data });
   };
 
+  tagSaveHandler = data => {
+    this.setState({ tagList: data });
+  };
+
   creditSelectionHandler = (event, { value }) => {
     console.log("[Course/Form.js] creaditSelection ", value);
     this.setState({ creditPoints: value });
@@ -39,6 +35,10 @@ class CourseForm extends Component {
 
   categorySelectionHandler = (event, { value }) => {
     this.setState({ category: value });
+  };
+
+  tagSelectionHandler = (event, { value }) => {
+    this.setState({ tagged_to: value });
   };
 
   changeHandler = event => {
@@ -56,6 +56,7 @@ class CourseForm extends Component {
       title: this.state.title,
       subject: this.state.subject,
       category: this.state.category,
+      tagged_to: this.state.tagged_to,
       isPublished: this.state.isPublished,
       credit_points: this.state.credit_points,
       description: this.state.description
@@ -114,17 +115,18 @@ class CourseForm extends Component {
   renderTagsChoise = () => {
     let tagsOptions = [];
     try {
-      tagsOptions = this.state.catList.map(cat => {
+      tagsOptions = this.state.tagList.map(tag => {
         return {
-          id: cat.id,
-          text: cat.title,
-          value: cat.id
+          id: tag.id,
+          text: tag.title,
+          value: tag.id
         };
       });
       // console.log(catOptions);
     } catch (err) {
       console.log("did not pull up the cat list yet");
     }
+
     return (
       <div className={css.tags}>
         <span>Tags</span>
@@ -135,6 +137,8 @@ class CourseForm extends Component {
           selection
           multiple
           defaultValue={this.state.tag}
+          value={this.state.tagged_to}
+          onChange={this.tagSelectionHandler}
         />
       </div>
     );
@@ -257,13 +261,15 @@ class CourseForm extends Component {
       subject: course.subject,
       category: course.category.id,
       creditPoints: course.credit_points,
-      description: course.description
+      description: course.description,
+      tagged_to: course.tagged_to.map(tag => tag.id)
     });
   };
 
   componentDidMount() {
     console.log("[Course/Form.js] component did mount");
     getCategoryList(this.catSaveHandler);
+    getTagList(this.tagSaveHandler);
     this.getCourseToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
