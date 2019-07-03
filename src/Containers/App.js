@@ -7,6 +7,7 @@ import Auth from "../Components/Generic/Auth/Auth";
 import Router from "next/router";
 import { getADUserJson } from "../Requests/Authorization";
 import { verifyUserToken } from "../Requests/Authentication";
+import { Button } from "rsuite";
 
 class App extends Component {
   state = {
@@ -67,10 +68,7 @@ class App extends Component {
       <div className={"App"}>
         <Head>
           <title>Anshdata</title>
-          <link
-            rel="stylesheet"
-            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-          />
+          <link rel="stylesheet" href="../../static/styles/rsuite.css" />
           <link
             href="https://fonts.googleapis.com/css?family=Scope+One&display=swap"
             rel="stylesheet"
