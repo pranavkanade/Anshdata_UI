@@ -1,8 +1,22 @@
 @import "../../../../static/styles/globals.scss";
 
-.authBtn {
+.ad_nav_tab_title {
+  text-align: center;
+
+  span {
+    @extend %BtnFont-1;
+    color: $Black-1;
+  }
+}
+
+.ad_auth_form_pane {
+  margin: 2rem;
+}
+
+.ad_authBtn {
   width: 100%;
   @extend %BtnFont-1;
+  font-weight: bold;
   border: 0px;
   height: 48px;
   border-radius: 5px;
@@ -12,7 +26,7 @@
   }
 }
 
-.signupBtn {
+.ad_signupBtn {
   background: #931eec;
   transition: 0.2s ease;
   &:hover {
@@ -21,7 +35,7 @@
   }
 }
 
-.signinBtn {
+.ad_signinBtn {
   background: $Base-primary;
   transition: 0.2s ease;
   &:hover {
@@ -30,12 +44,12 @@
   }
 }
 
-.inp {
+.ad_auth_form_input {
   height: 56px;
   font-family: Lato;
   font-style: normal;
   font-weight: 300;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 29px;
 }
 
