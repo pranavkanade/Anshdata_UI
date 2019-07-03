@@ -1,0 +1,77 @@
+@import "../../../../static/styles/globals.scss";
+
+.page {
+  @extend %containerLg;
+  height: 1000px;
+  background: $White-2;
+
+  .page_title {
+    text-align: center;
+    @extend %heading-0;
+    font-weight: 900;
+    color: $Black-1;
+
+    span {
+      @extend %heading-0;
+      border: 3px solid $Base-primary;
+      padding: 1rem 1rem 0 1rem;
+      margin-right: 0.5rem;
+      border-radius: 10px;
+    }
+  }
+
+  .description {
+    margin: 2rem 15% 4rem 15%;
+    p {
+      @extend %Paragraph-1;
+      text-align: justify;
+    }
+  }
+
+  hr {
+    border: 1px solid $White-4;
+  }
+
+  .operations {
+    margin: 2rem 15% 4rem 15%;
+    .toolbar {
+      display: flex;
+      flex-direction: row-reverse;
+
+      button {
+        @extend %BtnFont-2;
+        font-weight: lighter;
+        margin-left: 1rem;
+        padding: 0.4rem 2rem 0.5rem 2rem;
+        border: 0px;
+        border-radius: 5px;
+        transition: 0.2s ease;
+
+        &:focus {
+          outline: none;
+        }
+
+        &:hover {
+          cursor: pointer;
+          // background: $White-0;
+          // box-shadow: $shadow-all-2;
+          transform: scale(1.05);
+        }
+      }
+
+      .cat {
+        background: $Yellow-9;
+        &:hover {
+          background: $Yellow-9b;
+        }
+      }
+
+      .tag {
+        background: $Yellow-3;
+        &:hover {
+          background: $Yellow-3b;
+        }
+      }
+    }
+  }
+}

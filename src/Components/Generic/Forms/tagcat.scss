@@ -1,0 +1,33 @@
+@import "../../../../static/styles/globals.scss";
+
+span {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: lighter;
+  font-size: 16px;
+  line-height: 29px;
+  /* identical to box height */
+
+  color: #353535;
+}
+
+.inp {
+  height: 56px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.btn {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+  span {
+    font-family: Lato;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 29px;
+    color: $White-0;
+  }
+}

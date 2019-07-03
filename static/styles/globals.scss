@@ -24,8 +24,11 @@ $Blue-11: #d9e3fd;
 
 $Yellow-1: #ffe3b0;
 $Yellow-2: #fbbc05;
-$Yellow-3: #d8fa17;
+$Yellow-3: #b2cf0d;
+$Yellow-3b: #5d6d05;
 $Yellow-4: #ffefd2;
+$Yellow-9: #a17070;
+$Yellow-9b: #461e1e;
 $Yellow-10: #ff9c44;
 
 $Purple-1: #270036;
@@ -110,6 +113,29 @@ $shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
   text-align: center;
 
   color: #ffffff;
+}
+
+%BtnFont-2 {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 33px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+%Paragraph-1 {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 33px;
+
+  color: $Black-1;
 }
 
 // container

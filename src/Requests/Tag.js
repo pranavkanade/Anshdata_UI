@@ -1,0 +1,42 @@
+import { getAuthorization } from "./Authorization";
+
+const URL = "http://127.0.0.1:8000/api/plat/tag/";
+
+export const getTagList = async tagsSaveHandler => {
+  console.log("[Course/Form.js] get tags");
+  try {
+    await fetch(URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(data => tagsSaveHandler(data));
+  } catch (err) {
+    console.log("[Course/Form.js] user is not logged in : ", err);
+    return [];
+  }
+};
+
+export const createTag = async (title, wiki) => {
+  console.log("Create tag");
+  const tagData = {
+    title: title,
+    wiki: wiki
+  };
+  try {
+    await fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getAuthorization()
+      },
+      body: JSON.stringify(tagData)
+    })
+      .then(response => response.json())
+      .then(data => data);
+  } catch (err) {
+    console.log("Error during tag creation");
+  }
+};
