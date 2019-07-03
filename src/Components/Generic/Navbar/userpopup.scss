@@ -1,5 +1,21 @@
 @import "../../../../static/styles/globals.scss";
 
+.ad_popup_header {
+  margin: 1rem;
+  span {
+    font-family: Barlow;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+  }
+
+  h4 {
+    font-family: Lato;
+    font-size: 20px;
+    color: $Black-1;
+  }
+}
+
 %nav {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -30,15 +46,17 @@ span {
   font-size: 16px;
 }
 
-.popup {
-  width: 12rem;
+.ad_popup {
+  width: 10rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 1rem 1rem 0 1rem;
 
-  .link {
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
+  .ad_link {
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
     transition: 0.1s ease;
+    font-weight: normal;
     &:hover {
       cursor: pointer;
       background: $Base-primary;
@@ -49,13 +67,17 @@ span {
     }
   }
 
-  .signOut {
+  .ad_signOut {
     @extend %nav;
     margin-top: 1rem;
     background: #e02323;
     height: 36px;
     border-radius: 5px;
     transition: 0.1s ease;
+    span {
+      font-weight: normal;
+      color: $White-0;
+    }
     &:hover {
       background: #770a0a;
       cursor: pointer;
