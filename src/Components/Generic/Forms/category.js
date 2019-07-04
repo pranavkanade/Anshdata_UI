@@ -1,51 +1,65 @@
-import React, { useState } from "react";
-import { Segment, Form } from "semantic-ui-react";
+import React, { Component } from "react";
+import { Form, FormControl, ControlLabel, FormGroup, HelpBlock } from "rsuite";
 import { createCategory } from "../../../Requests/Category";
 
 import css from "./tagcat.scss";
 
-const catForm = props => {
-  const [title, setTitle] = useState("");
-  const [wiki, setWiki] = useState("");
-  return (
-    <Segment basic>
-      <Form
-        onSubmit={() => {
-          createCategory(title, wiki);
-          props.onClose();
-        }}>
-        <Form.Field>
-          <span className={css.label}>Category Title</span>
-          <input
-            placeholder="test"
-            name="title"
-            type="text"
-            value={title}
-            className={css.inp}
-            onChange={event => setTitle(event.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <span className={css.label}>Wiki Link (URL)</span>
-          <input
-            placeholder="https://"
-            name="wiki"
-            type="url"
-            value={wiki}
-            className={css.inp}
-            onChange={event => setWiki(event.target.value)}
-          />
-        </Form.Field>
-        <Form.Button
-          floated="right"
-          type="submit"
-          color="teal"
-          className={css.btn}>
-          <span>Create Category</span>
-        </Form.Button>
-      </Form>
-    </Segment>
-  );
-};
+class CategoryForm extends Component {
+  state = {
+    catForm: {
+      title: "",
+      wiki: ""
+    }
+  };
 
-export default catForm;
+  handleChange = value => {
+    console.log("handle change : ", value);
+    this.setState({
+      catForm: value
+    });
+  };
+
+  render() {
+    return (
+      <div className={css.ad_pane}>
+        <Form
+          fluid
+          onChange={this.handleChange}
+          formValue={this.state.catForm}>
+          <FormGroup>
+            <ControlLabel>Category Title</ControlLabel>
+            <FormControl
+              name="title"
+              placeholder="test"
+              className={css.ad_inp}
+            />
+            <HelpBlock>Required</HelpBlock>
+          </FormGroup>
+          <FormGroup>
+            <ControlLabel>Wiki Link (URL)</ControlLabel>
+            <FormControl
+              placeholder="https://"
+              type="url"
+              name="wiki"
+              className={css.ad_inp}
+            />
+          </FormGroup>
+
+          <button
+            className={css.ad_btn}
+            onClick={() => {
+              createCategory(
+                this.state.catForm.title,
+                this.state.catForm.wiki
+              );
+              this.props.onClose();
+            }}>
+            Create Category
+          </button>
+        </Form>
+      </div>
+    );
+  }
+}
+
+export default CategoryForm;

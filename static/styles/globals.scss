@@ -142,3 +142,13 @@ $shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
 %containerLg {
   padding: 2rem 5% 2rem 5%;
 }
+
+// Form
+%ad_form_input {
+  height: 56px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 29px;
+}
