@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { Form, Divider } from "semantic-ui-react";
 import FormModal from "./formmodal";
 import { Form, Input } from "rsuite";
 import CustomField from "./customformfield";
