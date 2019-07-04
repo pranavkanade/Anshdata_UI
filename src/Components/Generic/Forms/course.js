@@ -63,7 +63,8 @@ class CourseForm extends Component {
   createCourse = async () => {
     console.log(
       "[Course/Form.js] Create Course clicked:  ",
-      this.state.courseForm
+      this.state.courseForm,
+      this.state.courseId
     );
     const courseId = await createCourseHandler(
       this.state.courseForm,
@@ -222,7 +223,6 @@ class CourseForm extends Component {
     }
     const course = this.props.course;
     this.handleChange({
-      courseId: course.id,
       title: course.title,
       subject: course.subject,
       category: course.category.id,
@@ -230,6 +230,7 @@ class CourseForm extends Component {
       description: course.description,
       tagged_to: course.tagged_to.map(tag => tag.id)
     });
+    this.setState({ courseId: course.id });
   };
 
   componentDidMount() {

@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import FormModal from "./formmodal";
-import {
-  Form,
-  Input,
-  SelectPicker,
-  InputNumber
-} from "rsuite";
+import { Form, Input, SelectPicker, InputNumber } from "rsuite";
 import CustomField from "./customformfield";
 import Router from "next/router";
 
