@@ -18,7 +18,7 @@ class AssignmentForm extends Component {
       instruction: "",
       reference: "",
       lesson: "",
-      module: this.props.moduleId,
+      module: this.props.moduleId === 0 ? "" : this.props.moduleId,
       course: this.props.course.id,
       credit_points: 0
     }
