@@ -1,12 +1,12 @@
 @import "../../../../static/styles/globals.scss";
 
-.courses {
+.ad_courses {
   p {
     font-family: lato;
     font-size: 20px;
   }
 }
-.overlayBtn {
+.ad_overlayBtn {
   width: 100%;
   height: 100px;
   padding: 0 5% 0 5%;
@@ -42,7 +42,7 @@
   }
 }
 
-.heading {
+.ad_heading {
   display: flex;
   // grid-template-columns: auto 1fr;
   flex-direction: row;
@@ -62,7 +62,7 @@
     color: #3f3e3e;
   }
 
-  .searchBar {
+  .ad_searchBar {
     display: inline;
     margin-right: 2rem;
 
@@ -125,17 +125,41 @@
   }
 }
 
-.myCourses {
-  padding: 2rem 5% 2rem 5%;
-  background: $grad-12;
+.ad_drawer_title {
+  margin: 1rem;
+  text-align: left;
+  span {
+    border-radius: 5px;
+    background: $grad-12;
+    font-family: Scope One;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 66px;
+    padding: 1rem 16rem 0.5rem 2rem;
+    color: $White-0;
+  }
+}
 
-  .heading {
+.ad_myCourses {
+  margin-bottom: 2rem;
+  position: relative;
+  padding: 0 5% 2rem 5%;
+  background: $White-2;
+  overflow: scroll;
+  height: 710px;
+  .ad_heading {
     span {
       color: $White-0;
     }
   }
 }
 
-.catalog {
+.ad_drawer_footer {
+  top: -10px;
+  height: 0px;
+}
+
+.ad_catalog {
   padding: 2rem 5% 4rem 5%;
 }
