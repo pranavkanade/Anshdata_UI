@@ -1,17 +1,16 @@
 @import "../../../../static/styles/globals.scss";
 
-span {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: lighter;
-  font-size: 16px;
-  line-height: 29px;
-  /* identical to box height */
+.ad_cat_n_credit_pickers {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0;
 
-  color: #a3a3a3;
+  .ad_credits_choise {
+    margin-left: 5rem;
+  }
 }
 
-.header {
+.ad_header {
   display: flex;
   flex-direction: row;
 
@@ -27,16 +26,39 @@ span {
   }
 }
 
-.inp {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
+.ad_tag_choise {
+  height: 48px;
   line-height: 29px;
-  height: 60px;
+  align-items: center;
+  span {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+  }
+  color: #000000;
+
+  button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
-.reverse {
+// .ad_course_inp {
+//   margin-bottom: 0.5rem;
+// }
+
+.ad_course_form_input {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 29px;
+  height: 48px;
+}
+
+.ad_reverse {
   margin-top: 1rem;
   display: flex;
   flex-direction: row-reverse;
@@ -78,69 +100,7 @@ span {
   }
 }
 
-.creditPoints {
-  display: flex;
-  flex-direction: row;
-  place-content: center;
-  place-items: center;
-
-  span {
-    border: 1px solid #c6c6c6;
-    box-sizing: border-box;
-    border-radius: 5px;
-    padding: 1rem 2rem 1rem 2rem;
-
-    font-family: Lato;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    text-align: center;
-
-    color: #000000;
-  }
-
-  button {
-    border: 0px;
-    padding: 1.1rem;
-    background: #1c52ad;
-    margin: 0 2rem 0 2rem;
-    border-radius: 5px;
-  }
-
-  .add {
-    background: #13ad94;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .sub {
-    background: #ec423c;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.category {
-  height: 56px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 29px;
-}
-
-.tags {
-  // height: 56px;
-  margin-top: 1.2rem;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 29px;
-}
-
-.desc {
-  margin-top: 1.5rem;
+.ad_form_pane {
+  padding: 1rem;
+  background: $White-1;
 }
