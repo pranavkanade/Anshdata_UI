@@ -10,17 +10,16 @@ $White-2: #f7f7f7;
 $White-3: #dddddd;
 $White-4: #e7e7e7;
 
-$Red-4: #eb2b2b31;
-
 $Blue-1: #1323dd;
 $Blue-2: #4a3ebe;
-$Blue-3: #397ef0;
+$Blue-3: #3880fd;
+$Blue-3b: #004ed4;
 $Blue-4: #232057;
 $Blue-5: #1c52ad;
 $Blue-6: #0d3375;
 $Blue-10: #1c1627;
 
-$Blue-11: #d9e3fd;
+$Blue-11: #eff3fd;
 
 $Yellow-1: #ffe3b0;
 $Yellow-2: #fbbc05;
@@ -36,6 +35,7 @@ $Purple-1b: #6200ff;
 
 $Red-1: #830027;
 $Red-2: #a80939;
+$Red-4: #eb2b2b31;
 
 $Black-1: #3f3e3e;
 
@@ -68,6 +68,10 @@ $shadow-all-1: 4px 0px 10px rgba(0, 0, 0, 0.06),
 $shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
   -4px 0px 10px rgba(0, 0, 0, 0.08), 0px -4px 10px rgba(0, 0, 0, 0.08),
   0px 4px 10px rgba(0, 0, 0, 0.08);
+
+$shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
+  -4px 0px 30px rgba(0, 0, 0, 0.15), 0px -4px 30px rgba(0, 0, 0, 0.15),
+  0px 4px 30px rgba(0, 0, 0, 0.15);
 
 // headings
 %heading-0 {
@@ -151,4 +155,13 @@ $shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
   font-weight: 300;
   font-size: 18px;
   line-height: 29px;
+}
+
+// Transition
+$transition-1: 0.2 ease;
+
+%no-focus {
+  &:focus {
+    outline: none;
+  }
 }

@@ -1,10 +1,10 @@
 @import "../../../../../static/styles/globals.scss";
 
 .container {
-  padding: 3rem 8rem 0 8rem;
+  padding: 1rem 5% 0 5%;
 
   span {
-    padding-left: 4rem;
+    margin-left: 4rem;
     font-family: Scope One;
     font-style: normal;
     font-weight: bolder;
@@ -16,11 +16,12 @@
 }
 
 .partners {
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  justify-items: center;
-  grid-gap: 4rem;
+  place-content: center;
+  place-items: center;
+  grid-gap: 1rem;
 
   .dummy {
     width: 330px;
@@ -35,7 +36,10 @@
   }
 
   div {
-    align-self: center;
-    justify-content: center;
+    transition: 0.2s ease;
+    &:hover {
+      cursor: pointer;
+      transform: translateY(-5px);
+    }
   }
 }
