@@ -92,13 +92,17 @@
 .signIn {
   @extend %nav;
   background: $Base-primary;
+  color: $White-0;
   padding: 0 2rem 0 2rem;
   transition: 0.2s ease;
+  margin-left: 1rem;
+  border-radius: 5px;
 
   &:hover {
-    background: $White-0;
+    // background: $White-0;
     cursor: pointer;
-    color: $Base-primary;
+    // color: $Base-primary;
+    transform: translateY(-5px);
   }
 }
 
@@ -130,11 +134,13 @@
 
 .join {
   @extend %nav;
-  background: #931eec;
+  background: $Blue-3b;
   padding: 0 2rem 0 2rem;
   transition: 0.2s ease;
+  border-radius: 5px;
   &:hover {
-    background: #6714a7;
+    // background: $Blue-3b;
     cursor: pointer;
+    transform: translateY(-5px);
   }
 }
