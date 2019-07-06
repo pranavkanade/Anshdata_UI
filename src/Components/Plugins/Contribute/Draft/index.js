@@ -73,6 +73,17 @@ class DraftedCourse extends Component {
     );
   };
 
+  renderTags = () => {
+    const tags = this.state.course.tagged_to;
+    return tags.map(tag => {
+      return (
+        <span className={css.tag} key={tag.id}>
+          {tag.title}
+        </span>
+      );
+    });
+  };
+
   renderActionBar = () => {
     return (
       <div className={css.actionBar}>
@@ -148,7 +159,7 @@ class DraftedCourse extends Component {
             <div className={css.description}>
               <p>{this.state.course.description}</p>
             </div>
-            <div className={css.tagBox} />
+            <div className={css.tagBox}>{this.renderTags()}</div>
             {this.renderActionBar()}
           </div>
           <div className={css.secondary}>

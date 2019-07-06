@@ -1,7 +1,7 @@
 @import "../../../../../static/styles/globals.scss";
 
 .container {
-  padding: 0 5% 0 5%;
+  padding: 0 3% 0 3%;
 }
 
 .loader {
@@ -9,12 +9,15 @@
 }
 
 .page {
-  padding-top: 2rem;
-  background: $grad-3;
+  padding-top: 1rem;
+  background: $White-2;
 }
 
 .course {
-  padding: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
+  border-radius: 10px;
+  background: $grad-3;
+  box-shadow: $shadow-2;
   .title {
     @extend %heading-0;
     color: $White-0;
@@ -42,7 +45,7 @@
       font-weight: normal;
       font-size: 20px;
       line-height: 24px;
-
+      box-shadow: $shadow-all-2;
       color: #3f3e3e;
       background: $White-0;
 
@@ -51,25 +54,40 @@
       // border: 1px solid $White-3;
       border: 0px;
       // box-sizing: border-box;
-      border-radius: 2px;
+      border-radius: 5px;
     }
 
     .tagBox {
       margin-top: 2rem;
       height: 72px;
+      box-shadow: $shadow-all-2;
 
-      // border: 1px solid $White-3;
-      // box-sizing: border-box;
-      border-radius: 2px;
+      border-radius: 5px;
       border: 0px;
       background: $White-0;
+      padding: 1rem;
+
+      display: flex;
+      flex-direction: row;
+      place-items: center;
+
+      .tag {
+        padding: 0.3rem 1rem 0.3rem 1rem;
+        background: $Base-primary;
+        color: $White-0;
+        margin-right: 0.5rem;
+        border-radius: 5rem;
+        box-shadow: $shadow-all-1;
+        font-weight: normal;
+      }
     }
 
     .actionBar {
       margin-top: 2rem;
       // height: 72px;
+      box-shadow: $shadow-all-2;
       background: $White-0;
-      border-radius: 2px;
+      border-radius: 5px;
       border: 0px;
       padding: 1rem;
 
@@ -79,7 +97,7 @@
 
       button {
         height: 48px;
-        padding: 0 2rem 0 2rem;
+        padding: 0 1rem 0 1rem;
 
         border-radius: 5px;
         border: 0px;
@@ -91,9 +109,9 @@
 
         span {
           margin-right: 1rem;
-          font-family: Barlow;
+          font-family: Lato;
           font-style: normal;
-          font-weight: 400;
+          font-weight: normal;
           font-size: 16px;
           line-height: 29px;
           /* identical to box height */
@@ -158,11 +176,12 @@
 
       // border: 1px solid $White-3;
       // box-sizing: border-box;
-      border-radius: 2px;
+      border-radius: 5px;
       border: 0px;
 
       display: flex;
       flex-direction: column;
+      box-shadow: $shadow-all-3;
 
       .infoBox {
         display: flex;
@@ -187,10 +206,11 @@
           /* identical to box height */
           text-align: center;
           place-content: space-between;
-          padding: 0.2rem 1rem 0.2rem 1rem;
+          padding: 0.5rem 1rem 0.5rem 1rem;
 
           margin-bottom: 1rem;
           color: $White-0;
+          box-shadow: $shadow-all-1;
 
           .value {
             font-family: Lato;
@@ -201,7 +221,7 @@
         }
 
         .author {
-          background: #ff810c;
+          background: #a9cf00;
           span {
             font-weight: normal;
             color: $White-0;
@@ -260,10 +280,10 @@
       // TODO: When adding more content here remove height
       height: 200px;
       margin-top: 2rem;
-
+      box-shadow: $shadow-all-3;
       background: $White-0;
       border: 0px;
-      border-radius: 2px;
+      border-radius: 5px;
 
       display: flex;
       flex-direction: column-reverse;
