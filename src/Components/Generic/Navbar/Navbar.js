@@ -21,7 +21,7 @@ const renderAuthMenuItem = props => {
           <button
             className={css.signIn}
             onClick={() => props.showAuthFormHandler("signin")}>
-            <text>Sign In</text>
+            Sign In
           </button>
         </div>
       </>
