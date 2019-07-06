@@ -32,13 +32,18 @@ const Speaker = (username, handleSignout) => {
   );
 };
 
-const UserPopup = props => (
-  <Whisper
-    trigger="click"
-    placement="bottomRight"
-    speaker={Speaker(props.user.username, props.handleSignout)}>
-    {props.children}
-  </Whisper>
-);
+const UserPopup = props => {
+  if (props.user === null || props.user === undefined) {
+    return null;
+  }
+  return (
+    <Whisper
+      trigger="click"
+      placement="bottomRight"
+      speaker={Speaker(props.user.username, props.handleSignout)}>
+      {props.children}
+    </Whisper>
+  );
+};
 
 export default UserPopup;
