@@ -71,7 +71,13 @@ class CourseForm extends Component {
       this.state.courseId
     );
     console.log("Course Created : ", courseId);
-    Router.push(`/contribute/draft/${courseId}`);
+    Router.push(
+      `/contribute/draft/${
+        courseId !== undefined && courseId !== null
+          ? courseId
+          : this.state.courseId
+      }`
+    );
     if (
       this.props.closeHandler !== null ||
       this.props.closeHandler !== undefined
