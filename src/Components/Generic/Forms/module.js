@@ -34,7 +34,8 @@ class ModuleForm extends Component {
       this.state.moduleForm,
       this.props.moduleId
     );
-    Router.push(`/contribute/draft/${courseId}`);
+    const page = window.location.pathname;
+    Router.push(page);
     this.props.closeHandler();
   };
 

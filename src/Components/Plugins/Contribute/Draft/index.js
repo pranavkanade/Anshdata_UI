@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+import Router from "next/router";
 import css from "./index.scss";
 
-import { getCourse } from "../../../../Requests/Courses";
+import {
+  getCourse,
+  draftCourse,
+  deleteCourse
+} from "../../../../Requests/Courses";
+import { publishCourse } from "../../../../Requests/DraftCourses";
 import CourseForm from "../../../Generic/Forms/course";
 import CourseContent from "./content";
 
@@ -91,15 +97,24 @@ class DraftedCourse extends Component {
           <span>Edit Course Info</span>
           <img src="../../../../../static/assets/icon/create_24px_outlined.svg" />
         </button>
-        <button className={css.review}>
-          <span>Send for Review</span>
-          <img src="../../../../../static/assets/icon/done_all_24px_outlined.svg" />
+        <button
+          className={css.open_course}
+          onClick={() => draftCourse(this.state.courseId)}>
+          <span>Open for Modification</span>
+          <img src="../../../../../static/assets/icon/tune_24px_outlined.svg" />
         </button>
-        <button className={css.publish}>
+        <button
+          className={css.publish}
+          onClick={() => publishCourse(this.state.courseId)}>
           <span>Publish</span>
           <img src="../../../../../static/assets/icon/upload_24px_outlined.svg" />
         </button>
-        <button className={css.delete}>
+        <button
+          className={css.delete}
+          onClick={() => {
+            deleteCourse(this.state.courseId);
+            Router.push("/contribute");
+          }}>
           <span>Delete</span>
           <img src="../../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
         </button>
