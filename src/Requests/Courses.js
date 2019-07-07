@@ -77,3 +77,43 @@ export const getCourse = async (courseId, courseSaveHandler) => {
     console.log("[Courses/Detailed-request] user is not logged in : ", err);
   }
 };
+
+export const draftCourse = async courseId => {
+  console.log("[Courses.js] draft the course");
+  const URL = `http://127.0.0.1:8000/api/course/${courseId}/draft/`;
+  try {
+    await fetch(URL, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        Authorization: getAuthorization()
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+      });
+  } catch (err) {
+    console.log("[Courses.js] cannot draft the course: ", err);
+  }
+};
+
+export const deleteCourse = async courseId => {
+  console.log("[Courses.js] draft the course");
+  const URL = `http://127.0.0.1:8000/api/course/${courseId}/`;
+  try {
+    await fetch(URL, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        Authorization: getAuthorization()
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+      });
+  } catch (err) {
+    console.log("[Courses.js] cannot draft the course: ", err);
+  }
+};
