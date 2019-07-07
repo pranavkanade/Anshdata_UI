@@ -3,9 +3,9 @@
 .detailedCourse {
   width: 105%;
   grid-column: 1 / -1;
-  background: linear-gradient(205.1deg, #dd1374 0.56%, #ffd17f 101.17%);
+  background: linear-gradient(205.1deg, #da7eff 0.56%, #fdc25c 101.17%);
   border-radius: 10px;
-  padding: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
 
   .head {
     display: flex;
@@ -14,10 +14,10 @@
     align-items: center;
 
     span {
-      font-family: Barlow;
+      font-family: Lato;
       font-style: normal;
       font-weight: 600;
-      font-size: 32px;
+      font-size: 28px;
       line-height: 38px;
       padding-bottom: 8px;
 
@@ -25,7 +25,6 @@
 
       &:hover {
         cursor: pointer;
-        transform: scale(1.05);
       }
     }
 
@@ -46,11 +45,11 @@
   }
 
   p {
-    margin-top: 1rem;
+    margin: 1rem 0 0 1rem;
     font-family: Lato;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 24px;
     text-align: justify;
 
@@ -62,82 +61,93 @@
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     margin-top: 2rem;
     grid-gap: 2rem 1rem;
+
+    button {
+      grid-column-end: -1;
+      width: 100%;
+      // height: 64px;
+      padding: 0 1rem 0 1rem;
+      margin: 0.3rem 0 0.3rem 0;
+
+      background: $Blue-1;
+      /* mild */
+
+      border-radius: 5px;
+      border: 0px;
+      box-shadow: $shadow-1;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+
+      color: $White-0;
+      transition: 0.2s ease;
+
+      img {
+        transition: 0.3s ease;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background: $Blue-4;
+        box-shadow: $shadow-all-2;
+        img {
+          transform: scale(1.5);
+        }
+      }
+
+      span {
+        width: 64px;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 29px;
+        /* identical to box height */
+
+        color: inherit;
+      }
+
+      img {
+        color: inherit;
+      }
+    }
   }
 
   .stat {
     width: 160px;
-    height: 64px;
-
-    border: 2px solid #ffffff;
+    // height: 64px;
+    padding: 0.5rem 0rem 0.5rem 0rem;
+    background: #ffffffd7;
     box-sizing: border-box;
-    border-radius: 2px;
-
+    border-radius: 5px;
+    box-shadow: $shadow-1;
     text-align: center;
     justify-self: center;
 
     .value {
-      font-family: Barlow;
+      font-family: Lato;
       font-style: normal;
       font-weight: 500;
-      font-size: 28px;
+      font-size: 20px;
       line-height: 34px;
       /* identical to box height */
       text-align: center;
 
-      color: #ffffff;
+      color: $Black-1;
     }
 
     .label {
       font-family: Barlow;
       font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
+      font-weight: normal;
+      font-size: 16px;
       line-height: 24px;
       /* identical to box height */
       text-align: center;
 
-      color: #ffffff;
-    }
-  }
-
-  button {
-    grid-column-end: -1;
-    width: 100%;
-    height: 64px;
-
-    background: $Yellow-10;
-    /* mild */
-
-    border-radius: 2px;
-    border: 0px;
-    box-shadow: $shadow-1;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-
-    color: $White-0;
-
-    &:hover {
-      cursor: pointer;
-      background: $Yellow-2;
-    }
-
-    span {
-      width: 64px;
-      font-family: Lato;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 24px;
-      line-height: 29px;
-      /* identical to box height */
-
-      color: inherit;
-    }
-
-    img {
-      color: inherit;
+      color: $Black-1;
     }
   }
 
