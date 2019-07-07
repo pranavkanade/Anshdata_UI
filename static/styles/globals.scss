@@ -28,7 +28,7 @@ $Yellow-3b: #007562;
 $Yellow-4: #ffefd2;
 $Yellow-9: #a17070;
 $Yellow-9b: #461e1e;
-$Yellow-10: #ff9c44;
+$Yellow-10: #ffa600;
 
 $Purple-1: #270036;
 $Purple-1b: #6200ff;
@@ -47,7 +47,7 @@ $grad-4: linear-gradient(250.54deg, #0779eb -32.44%, #c9ffd8 100%);
 $grad-5: linear-gradient(109.15deg, #27d2a9 0%, #e2d245 100%);
 $grad-6: linear-gradient(205.1deg, #dd1374 0.56%, #ffd17f 101.17%);
 $grad-7: linear-gradient(204.12deg, #ffc661 0%, #ee3d4f 101.17%);
-$grad-8: linear-gradient(203.81deg, #00ffff -8.36%, #504de8 101.17%);
+$grad-8: linear-gradient(203.81deg, #66d1e4 -8.36%, #7573ff 101.17%);
 $grad-9: linear-gradient(306.31deg, #ffd29d 7.11%, #e85f53 94.22%);
 $grad-10: linear-gradient(201.37deg, #2d2a75 14.13%, #13c5dd 101.15%);
 $grad-11: linear-gradient(205.61deg, #ff475d 0%, #ffb067 101.17%);
@@ -159,7 +159,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 }
 
 // Transition
-$transition-1: 0.2 ease;
+$transition-1: 0.2s ease;
 
 %no-focus {
   &:focus {
