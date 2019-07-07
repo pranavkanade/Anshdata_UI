@@ -72,22 +72,22 @@ class DetailedCourse extends Component {
   ) => {
     return (
       <>
-        <div className={css.info}>
+        <div className={css.info + " " + css.author}>
           <span className={css.value}>{author}</span>
           <br />
           <span className={css.label}>Author</span>
         </div>
-        <div className={css.info}>
+        <div className={css.info + " " + css.sub}>
           <span className={css.value}>{subject}</span>
           <br />
           <span className={css.label}>Subject</span>
         </div>
-        <div className={css.info}>
+        <div className={css.info + " " + css.lsn}>
           <span className={css.value}>{lessons}</span>
           <br />
           <span className={css.label}>Lessons</span>
         </div>
-        <div className={css.info}>
+        <div className={css.info + " " + css.asign}>
           <span className={css.value}>{assignments}</span>
           <br />
           <span className={css.label}>Assignments</span>
@@ -151,6 +151,16 @@ class DetailedCourse extends Component {
       );
     }
   };
+  renderTags = course => {
+    const tags = course.tagged_to;
+    return tags.map(tag => {
+      return (
+        <span className={css.tag} key={tag.id}>
+          {tag.title}
+        </span>
+      );
+    });
+  };
 
   renderCourseInfo = course => {
     return (
@@ -159,13 +169,13 @@ class DetailedCourse extends Component {
           <span className={css.courseTitle}>{course.title}</span>
           <div className={css.courseDetails}>
             <span className={css.courseDescription}>{course.description}</span>
+            <div className={css.tagBox}>{this.renderTags(course)}</div>
             <div className={css.advance}>
               {this.renderActionBtn()}
               <div className={css.statsBox}>
                 {this.renderStats(course.credit_points)}
               </div>
             </div>
-            <div className={css.tagBox} />
           </div>
         </div>
         <div className={css.secondaryInfo}>

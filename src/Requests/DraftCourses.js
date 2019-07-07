@@ -44,3 +44,23 @@ export const getDraftedSelfCoursesList = async saveCourseHandler => {
   );
   getData(URLS.LIST_DRAFTED_COURSES_ME, saveCourseHandler);
 };
+
+export const publishCourse = async courseId => {
+  console.log("[DraftCourses.js] publish the course");
+  const URL = `http://127.0.0.1:8000/api/course/${courseId}/pub/`;
+  try {
+    await fetch(URL, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        Authorization: getAuthorization()
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+      });
+  } catch (err) {
+    console.log("[DraftCourses.js] cannot published the course: ", err);
+  }
+};

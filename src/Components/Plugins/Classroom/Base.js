@@ -265,11 +265,13 @@ const ClassroomBase = props => {
           )}
         </div>
         <div className={css.lesson}>
-          {renderCurrentLecture(
-            props.activeLesson,
-            activeAsignmt,
-            setActiveAsignmt
-          )}
+          {props.activeLesson !== null && props.activeLesson !== undefined
+            ? renderCurrentLecture(
+                props.activeLesson,
+                activeAsignmt,
+                setActiveAsignmt
+              )
+            : null}
         </div>
       </div>
     </div>

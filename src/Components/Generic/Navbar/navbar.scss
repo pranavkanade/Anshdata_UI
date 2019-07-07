@@ -1,16 +1,20 @@
 @import "../../../../static/styles/globals.scss";
 .container {
   width: 100%;
+  height: 100%;
   padding-left: 10%;
   padding-right: 10%;
 
   display: grid;
   grid-template-columns: auto 1fr;
+  // grid-template-rows: 1fr;
+  place-items: center;
 }
 
 .navbar {
   width: 100%;
-  // background: #161616;
+  height: 72px;
+
   background: $Base-secondary;
 }
 
@@ -22,6 +26,9 @@
 
     &:hover {
       cursor: pointer;
+    }
+    &:focus {
+      outline: none;
     }
   }
 
@@ -37,7 +44,7 @@
 .item {
   padding: 5px;
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 5px;
   grid-column: -1;
   grid-template-columns: repeat(8, auto);
 }
@@ -85,20 +92,24 @@
 .signIn {
   @extend %nav;
   background: $Base-primary;
+  color: $White-0;
   padding: 0 2rem 0 2rem;
   transition: 0.2s ease;
+  margin-left: 1rem;
+  border-radius: 5px;
 
   &:hover {
-    background: $White-0;
+    // background: $White-0;
     cursor: pointer;
-    color: $Base-primary;
+    // color: $Base-primary;
+    transform: translateY(-5px);
   }
 }
 
 .user {
   @extend %nav;
   transition: 0.2s ease-in;
-  padding-top: 5px;
+  padding: 0 0.6rem 0 0.6rem;
 
   &:hover {
     cursor: pointer;
@@ -123,11 +134,13 @@
 
 .join {
   @extend %nav;
-  background: #931eec;
+  background: $Blue-3b;
   padding: 0 2rem 0 2rem;
   transition: 0.2s ease;
+  border-radius: 5px;
   &:hover {
-    background: #6714a7;
+    // background: $Blue-3b;
     cursor: pointer;
+    transform: translateY(-5px);
   }
 }

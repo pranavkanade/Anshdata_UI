@@ -1,33 +1,36 @@
 @import "../../../../static/styles/globals.scss";
 
-span {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: lighter;
-  font-size: 16px;
-  line-height: 29px;
-  /* identical to box height */
+// span {
+//   font-family: Lato;
+//   font-style: normal;
+//   font-weight: lighter;
+//   font-size: 16px;
+//   line-height: 29px;
+//   /* identical to box height */
 
-  color: #353535;
+//   color: #353535;
+// }
+.ad_pane {
+  margin: 2rem;
 }
 
-.inp {
-  height: 56px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 29px;
+.ad_inp {
+  @extend %ad_form_input;
 }
 
-.btn {
-  margin-top: 1rem;
-  margin-bottom: 4rem;
-  span {
-    font-family: Lato;
-    font-style: normal;
-    font-size: 20px;
-    line-height: 29px;
-    color: $White-0;
+.ad_btn {
+  width: 100%;
+  @extend %BtnFont-1;
+  font-weight: bold;
+  border: 0px;
+  height: 48px;
+  border-radius: 5px;
+  background: $Base-primary;
+  transition: 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    background: $Base-secondary;
+    transform: scale(1.1);
+    box-shadow: $shadow-2;
   }
 }

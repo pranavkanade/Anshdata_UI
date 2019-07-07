@@ -25,10 +25,6 @@ export default class extends Component {
           <div className={this.categoryCardClasses[activeCC]}>
             <div className={css.options}>
               <button>category</button>
-              <img
-                src="./../../../../../static/assets/icon/more_horiz_24px_outlined.svg"
-                floated="right"
-              />
             </div>
             <div className={css.courseCards}>
               <PublishedCard />
@@ -38,10 +34,6 @@ export default class extends Component {
           <div className={this.categoryCardClasses[activeCC + 1]}>
             <div className={css.options}>
               <button>category</button>
-              <img
-                src="./../../../../../static/assets/icon/more_horiz_24px_outlined.svg"
-                floated="right"
-              />
             </div>
             <div className={css.courseCards}>
               <PublishedCard />
@@ -58,6 +50,7 @@ export default class extends Component {
     return (
       <div className={css.container}>
         <span>Top Courses</span>
+        <div className={css.catlist} />
         {this.renderCategoryCards()}
       </div>
     );

@@ -1,51 +1,62 @@
-import React, { useState } from "react";
-import { Segment, Form } from "semantic-ui-react";
+import React, { Component } from "react";
+import { Form, FormControl, ControlLabel, FormGroup, HelpBlock } from "rsuite";
 import { createTag } from "../../../Requests/Tag";
 
 import css from "./tagcat.scss";
 
-const tagForm = props => {
-  const [title, setTitle] = useState("");
-  const [wiki, setWiki] = useState("");
-  return (
-    <Segment basic>
-      <Form
-        onSubmit={() => {
-          createTag(title, wiki);
-          props.onClose();
-        }}>
-        <Form.Field>
-          <span className={css.label}>Tag Title</span>
-          <input
-            placeholder="test"
-            name="title"
-            type="text"
-            value={title}
-            className={css.inp}
-            onChange={event => setTitle(event.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <span className={css.label}>Wiki Link (URL)</span>
-          <input
-            placeholder="https://"
-            name="wiki"
-            type="url"
-            value={wiki}
-            className={css.inp}
-            onChange={event => setWiki(event.target.value)}
-          />
-        </Form.Field>
-        <Form.Button
-          floated="right"
-          type="submit"
-          color="teal"
-          className={css.btn}>
-          <span>Create Tag</span>
-        </Form.Button>
-      </Form>
-    </Segment>
-  );
-};
+class TagForm extends Component {
+  state = {
+    tagForm: {
+      title: "",
+      wiki: ""
+    }
+  };
 
-export default tagForm;
+  handleChange = value => {
+    console.log("handle change : ", value);
+    this.setState({
+      tagForm: value
+    });
+  };
+
+  render() {
+    return (
+      <div className={css.ad_pane}>
+        <Form
+          fluid
+          onChange={this.handleChange}
+          formValue={this.state.tagForm}>
+          <FormGroup>
+            <ControlLabel>Tag Title</ControlLabel>
+            <FormControl
+              name="title"
+              placeholder="test"
+              className={css.ad_inp}
+            />
+            <HelpBlock>Required</HelpBlock>
+          </FormGroup>
+          <FormGroup>
+            <ControlLabel>Wiki Link (URL)</ControlLabel>
+            <FormControl
+              placeholder="https://"
+              type="url"
+              name="wiki"
+              className={css.ad_inp}
+            />
+          </FormGroup>
+
+          <button
+            className={css.ad_btn}
+            onClick={() => {
+              createTag(this.state.tagForm.title, this.state.tagForm.wiki);
+              this.props.onClose();
+            }}>
+            Create Tag
+          </button>
+        </Form>
+      </div>
+    );
+  }
+}
+
+export default TagForm;

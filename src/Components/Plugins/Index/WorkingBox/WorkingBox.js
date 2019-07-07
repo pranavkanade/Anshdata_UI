@@ -6,11 +6,11 @@ export default props => {
   return (
     <div className={css.container}>
       <div className={css.grid}>
-        <div>
+        <div className={css.primary}>
           <span>How It Works?</span>
           <div className={css.actions} />
         </div>
-        <div>
+        <div className={css.secondary}>
           <div className={css.introClip}>
             <iframe
               src="https://www.youtube.com/embed/RKLKib4bHhA"

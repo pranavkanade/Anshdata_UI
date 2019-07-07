@@ -168,8 +168,9 @@ class Contribute extends Component {
     const adUser = getADUserJson();
     this.setState({ adUser });
     this.setDefaultSubMenu(adUser);
+    console.log("Getting published courses : ", adUser);
     try {
-      getPublishedCoursesList(adUser.id, this.myPublicationSaveHandler);
+      getPublishedCoursesList(adUser.user.pk, this.myPublicationSaveHandler);
       getDraftedSelfCoursesList(this.myDraftsSaveHandler);
     } catch (err) {
       console.log(

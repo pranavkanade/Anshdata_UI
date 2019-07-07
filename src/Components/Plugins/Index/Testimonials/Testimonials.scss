@@ -1,10 +1,10 @@
 @import "../../../../../static/styles/globals.scss";
 
 .container {
-  padding: 3rem 3rem 0 3rem;
+  padding: 2rem 3rem 0 3rem;
 
   span {
-    padding-left: 6rem;
+    margin-left: 3rem;
     font-family: Scope One;
     font-style: normal;
     font-weight: bolder;
@@ -16,7 +16,7 @@
 }
 
 .testimonials {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2rem;
@@ -44,7 +44,7 @@
       font-size: 16px;
       line-height: 19px;
 
-      color: #000000;
+      color: $Black-1;
     }
   }
 }
@@ -53,23 +53,24 @@
   width: 280px;
   height: 60px;
 
-  border-radius: 2px;
+  border-radius: 5px;
   border: 0px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
 
   font-family: Barlow;
   font-style: normal;
-  font-weight: 500;
+  font-weight: normal;
   font-size: 24px;
   line-height: 29px;
   /* identical to box height */
   text-align: center;
+  transition: 0.3s ease;
 
   color: #ffffff;
 }
 
 .btnBox {
-  margin-top: 4rem;
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: 12.5% 70% 12.5%;
   grid-gap: 2.5% 2.5%;
@@ -77,14 +78,17 @@
 
 .btns {
   justify-self: center;
-  padding-top: 20px;
+  margin-top: 20px;
   .exploreBtn {
     @extend %lgBtn;
     background: $Blue-1;
-    margin-right: 2rem;
+    margin-right: 20px;
 
     &:hover {
       cursor: pointer;
+      background: white;
+      transform: scale(1.1);
+      color: $Blue-1;
     }
   }
 
@@ -92,8 +96,13 @@
     @extend %lgBtn;
     background: $Blue-2;
     margin-left: 2rem;
+
     &:hover {
       cursor: pointer;
+      background: white;
+      transform: scale(1.1);
+      // transform: translateY(-10px);
+      color: $Blue-2;
     }
   }
 }

@@ -22,11 +22,7 @@ const index = props => {
         <div className={css.topCourses}>
           <TopCourses />
         </div>
-        <div>
-          <img
-            className={css.partners}
-            src="../../../../static/assets/back/partners.svg"
-          />
+        <div className={css.partners}>
           <Partners />
         </div>
 
@@ -34,11 +30,7 @@ const index = props => {
           <Testimonials explore="/courses" contribute="/contribute" />
         </div>
 
-        <div>
-          <img
-            className={css.mentions}
-            src="../../../../static/assets/back/mentions.png"
-          />
+        <div className={css.mentions}>
           <Mentions />
         </div>
       </div>

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
-import { SideSheet, Position } from "evergreen-ui";
+import { Drawer } from "rsuite";
 import {
   renderPublishedCoursesList as PublishedCoursesList,
   renderEnrolledCoursesList as EnrolledCoursesList
 } from "../../Generic/CourseList/courselist";
+import Loader from "../../Generic/Loader/loader";
 import { courseListType } from "../../../globals";
 import {
   getCoursesList,
@@ -57,22 +57,6 @@ class Courses extends Component {
     }
   };
 
-  renderLoader = () => {
-    return (
-      <Container>
-        <br />
-        <br />
-        <br />
-        <br />
-        <Segment basic>
-          <Dimmer active inverted>
-            <Loader size="large">Loading</Loader>
-          </Dimmer>
-        </Segment>
-      </Container>
-    );
-  };
-
   renderCourses = (courses, listType) => {
     if (courses.length === 0) {
       return <p>Take up some courses</p>;
@@ -117,30 +101,29 @@ class Courses extends Component {
 
     return (
       <div className={"CoursesPlugin"}>
-        <div className={css.courses}>
-          <div className={css.overlayBtn}>
+        <div className={css.ad_courses}>
+          <div className={css.ad_overlayBtn}>
             <button onClick={this.handleShowClick}>
               <span>My Courses</span>
             </button>
           </div>
 
-          <SideSheet
-            isShown={this.state.visible}
-            onCloseComplete={this.handleHideClick}
-            preventBodyScrolling
-            width={600}>
-            <div className={css.myCourses}>
-              <div className={css.heading}>
-                <span>My Courses</span>
-              </div>
-              {this.renderMyCourses()}
+          <Drawer
+            show={this.state.visible}
+            onHide={this.handleHideClick}
+            size="sm">
+            <Drawer.Header className={css.ad_drawer_title}>
+              <span>My Courses</span>
+            </Drawer.Header>
+            <div className={css.ad_myCourses}>
+              <div>{this.renderMyCourses()}</div>
             </div>
-          </SideSheet>
+          </Drawer>
 
-          <div className={css.catalog}>
-            <div className={css.heading}>
+          <div className={css.ad_catalog}>
+            <div className={css.ad_heading}>
               <span>Course Catalog</span>
-              <div className={css.searchBar}>
+              <div className={css.ad_searchBar}>
                 <input
                   placeholder="Course Name"
                   name="courseSearched"
@@ -151,9 +134,11 @@ class Courses extends Component {
                 <button>Search</button>
               </div>
             </div>
-            {courseListing === null
-              ? this.renderLoader()
-              : this.renderCourses(courseListing, courseListType.CATALOG)}
+            {courseListing === null ? (
+              <Loader msg="Gathering all courses" />
+            ) : (
+              this.renderCourses(courseListing, courseListType.CATALOG)
+            )}
           </div>
         </div>
       </div>

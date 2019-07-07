@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 
 import css from "./CourseCard.scss";
-import { Progress } from "semantic-ui-react";
+import { Progress } from "rsuite";
 
 // TODO: Make this turn rating in to three vals - full, half, null
 // EG - 3.5 => full: 3, half: 1, null: 1
 
 // NOTE: For now rating is whole number
+
+const { Circle, Line } = Progress;
+
 const RenderRating = (rating = 5) => {
   const ratingArr = [...Array(rating).keys()];
 
@@ -76,7 +79,7 @@ export const EnrolledCourseCard = props => {
     <div className={css.enrolled}>
       {renderHead(title)}
       <div className={css.progress}>
-        <Progress percent={progress} size="tiny" color="teal" />
+        <Line percent={progress} strokeColor="#2e229e" status={null} />
       </div>
     </div>
   );

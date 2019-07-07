@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 
-import { Form, Menu, Grid, Divider, Modal, Loader } from "semantic-ui-react";
-import { Dialog, Pane } from "evergreen-ui";
+import { Dialog } from "evergreen-ui";
+import {
+  Nav,
+  Form,
+  FormGroup,
+  ControlLabel,
+  HelpBlock,
+  FormControl
+} from "rsuite";
 import Router from "next/router";
+
+import Loader from "../../Generic/Loader/loader";
 
 import {
   signinHandler,
@@ -13,42 +22,39 @@ import css from "./auth.scss";
 
 class Auth extends Component {
   state = {
-    username: "",
-    email: "",
-    password: "",
+    formValue: {
+      username: "",
+      email: "",
+      password: ""
+    },
     shouldOpen: true,
     formType: this.props.authOption,
     isLoading: false
+  };
+
+  handleChange = value => {
+    console.log("handle change : ", value);
+    this.setState({
+      formValue: value
+    });
   };
 
   tabSwitchHandler = tabKey => {
     this.setState({ formType: tabKey });
   };
 
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState(prevstate => {
-      const newState = { ...prevstate };
-      newState[name] = value;
-      return newState;
-    });
-  };
-
   renderEmailField = isSignup => {
     if (isSignup) {
       return (
-        <Form.Field>
-          <label className={css.label}>Email</label>
-          <input
-            type="email"
-            placeholder="pskanade@gmail.com"
+        <FormGroup>
+          <ControlLabel>Email</ControlLabel>
+          <FormControl
             name="email"
-            value={this.state.email}
-            className={css.inp}
-            onChange={event => this.changeHandler(event)}
+            type="email"
+            className={css.ad_auth_form_input}
           />
-        </Form.Field>
+          <HelpBlock>Required</HelpBlock>
+        </FormGroup>
       );
     } else {
       return null;
@@ -59,46 +65,35 @@ class Auth extends Component {
     const isSignup = this.state.formType === "signup" ? true : false;
 
     return (
-      <Grid stackable>
-        <Grid.Row columns={1}>
-          <Grid.Column>
-            <Form onSubmit={this.handleAuthentication} size="large">
-              <Form.Field>
-                <label className={css.label}>User Name</label>
-                <input
-                  placeholder="pskanade"
-                  name="username"
-                  type="text"
-                  value={this.state.username}
-                  className={css.inp}
-                  onChange={event => this.changeHandler(event)}
-                />
-              </Form.Field>
-              {this.renderEmailField(isSignup)}
-              <Form.Field>
-                <label className={css.label}>Password</label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  name="password"
-                  value={this.state.password}
-                  className={css.inp}
-                  onChange={event => this.changeHandler(event)}
-                />
-              </Form.Field>
-              <Divider hidden />
-              <button
-                className={
-                  css.authBtn +
-                  " " +
-                  (isSignup ? css.signupBtn : css.signinBtn)
-                }>
-                {isSignup ? "Sign Up" : "Sign In"}
-              </button>
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Form
+        fluid
+        onChange={this.handleChange}
+        formValue={this.state.formValue}>
+        <FormGroup>
+          <ControlLabel>Username</ControlLabel>
+          <FormControl name="username" className={css.ad_auth_form_input} />
+          <HelpBlock>Required</HelpBlock>
+        </FormGroup>
+        {this.renderEmailField(isSignup)}
+        <FormGroup>
+          <ControlLabel>Password</ControlLabel>
+          <FormControl
+            name="password"
+            type="password"
+            className={css.ad_auth_form_input}
+          />
+        </FormGroup>
+
+        <button
+          className={
+            css.ad_authBtn +
+            " " +
+            (isSignup ? css.ad_signupBtn : css.ad_signinBtn)
+          }
+          onClick={this.handleAuthentication}>
+          {isSignup ? "Sign Up" : "Sign In"}
+        </button>
+      </Form>
     );
   };
 
@@ -108,11 +103,7 @@ class Auth extends Component {
     );
 
     if (this.state.isLoading) {
-      return (
-        <Modal open={true} basic dimmer="inverted">
-          <Loader size="massive">Loading ...</Loader>
-        </Modal>
-      );
+      return <Loader msg="Working on User Authentication" />;
     }
 
     return (
@@ -125,22 +116,22 @@ class Auth extends Component {
             : "Create your new account"
         }
         onCloseComplete={this.close}
-        hasFooter={false}>
+        hasFooter={false}
+        padding={16}>
         <div>
-          <Menu secondary pointing size="massive" borderless widths={2}>
-            <Menu.Item
-              name="Sign In"
-              active={this.state.formType === "signin"}
-              onClick={() => this.tabSwitchHandler("signin")}
-            />
-            <Menu.Item
-              position="right"
-              name="Sign Up"
-              active={this.state.formType === "signup"}
-              onClick={() => this.tabSwitchHandler("signup")}
-            />
-          </Menu>
-          <Pane padding={32}>{this.renderAuthForm()}</Pane>
+          <Nav
+            appearance="subtle"
+            activeKey={this.state.formType}
+            onSelect={this.tabSwitchHandler}
+            justified>
+            <Nav.Item eventKey="signin" className={css.ad_nav_tab_title}>
+              <span>Sign In</span>
+            </Nav.Item>
+            <Nav.Item eventKey="signup" className={css.ad_nav_tab_title}>
+              <span>Sign Up</span>
+            </Nav.Item>
+          </Nav>
+          <div className={css.ad_auth_form_pane}>{this.renderAuthForm()}</div>
         </div>
       </Dialog>
     );
@@ -171,18 +162,18 @@ class Auth extends Component {
 
   getSignupData = () => {
     const data = {
-      username: this.state.username,
-      password1: this.state.password,
-      password2: this.state.password,
-      email: this.state.email
+      username: this.state.formValue.username,
+      password1: this.state.formValue.password,
+      password2: this.state.formValue.password,
+      email: this.state.formValue.email
     };
     return data;
   };
 
   getSignInData = () => {
     const data = {
-      username: this.state.username,
-      password: this.state.password
+      username: this.state.formValue.username,
+      password: this.state.formValue.password
     };
     return data;
   };

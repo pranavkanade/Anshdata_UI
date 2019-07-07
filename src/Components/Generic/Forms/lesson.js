@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-  Modal,
-  Button,
-  Segment,
-  Header,
-  Form,
-  Divider,
-  Grid,
-  Dropdown
-} from "semantic-ui-react";
+import FormModal from "./formmodal";
+import { Form, Input, SelectPicker } from "rsuite";
+import CustomField from "./customformfield";
 import Router from "next/router";
 
 import { createLessonHandler } from "../../../Requests/courseCreation";
@@ -17,42 +10,32 @@ import css from "./lesson.scss";
 class LessonForm extends Component {
   state = {
     shouldOpen: false,
-    title: "",
-    description: "",
-    lecture: "",
     module: this.props.moduleId,
     modList: this.props.course.modules,
-    type: "create"
+    type: "create",
+    lessonForm: {
+      title: "",
+      description: "",
+      lecture: "",
+      module: this.props.moduleId
+    }
   };
 
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    // console.log("[Lesson/Form.js] onChangeHandler");
-    // console.log(name, value);
-    this.setState(prevstate => {
-      const newState = { ...prevstate };
-      newState[name] = value;
-      return newState;
+  handleChange = value => {
+    this.setState({
+      lessonForm: value
     });
   };
 
   createLesson = () => {
-    console.log("[Lesson/Form.js] Create Lesson clicked");
-    const lessonData = {
-      title: this.state.title,
-      description: this.state.description,
-      lecture: this.state.lecture,
-      module: this.state.module
-    };
-    createLessonHandler(lessonData, this.props.lessonId);
+    console.log(
+      "[Lesson/Form.js] Create Lesson clicked",
+      this.state.lessonForm
+    );
+    createLessonHandler(this.state.lessonForm, this.props.lessonId);
     const page = window.location.pathname;
     Router.push(page);
     this.props.closeHandler();
-  };
-
-  moduleSelectionHandler = (event, { value }) => {
-    this.setState({ module: value });
   };
 
   renderModuleChoise = () => {
@@ -61,8 +44,7 @@ class LessonForm extends Component {
     try {
       modOptions = this.state.modList.map(mod => {
         return {
-          id: mod.idm,
-          text: mod.title,
+          label: mod.title,
           value: mod.id
         };
       });
@@ -71,83 +53,65 @@ class LessonForm extends Component {
     }
 
     return (
-      <>
-        <span>Module</span>
-        <Dropdown
-          options={modOptions}
-          fluid
-          selection
-          className={css.inp + " " + css.drpDn}
-          defaultValue={this.state.module}
-          onChange={this.moduleSelectionHandler}
-        />
-      </>
+      <CustomField
+        className={css.ad_mod_choise}
+        size="lg"
+        name="module"
+        label="Module"
+        accepter={SelectPicker}
+        block
+        data={modOptions}
+      />
     );
   };
 
   render() {
     const open = this.state.shouldOpen;
     return (
-      <Modal
+      <FormModal
         open={open}
-        onClose={this.props.closeHandler}
-        closeOnDimmerClick={false}
-        closeOnEscape={false}
-        centered={false}>
-        <Modal.Header className={css.header}>
-          <span>
-            {this.state.type === "create" ? "Add New" : "Modify"} Lesson
-          </span>
-          <button onClick={this.props.closeHandler}>
-            <img src="./../../../../static/assets/icon/clear_24px_outlined_dark.svg" />
-          </button>
-        </Modal.Header>
-
-        <Modal.Content>
-          <Segment basic>
-            <h3>{this.props.course.title}</h3>
-            <Form onSubmit={this.createLesson}>
-              {this.renderModuleChoise()}
-              <span>Lesson Title</span>
-              <Form.Input
-                placeholder="Lesson 1: Basics of Computer Science"
-                value={this.state.title}
-                name="title"
-                size="large"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <span>{"Lecture Video Link (URL)"}</span>
-              <Form.Input
-                placeholder="https://"
-                type="url"
-                value={this.state.lecture}
-                name="lecture"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <span>Lesson Description</span>
-              <Form.TextArea
-                rows={6}
-                placeholder="Describe purpose of this module in short..."
-                value={this.state.description}
-                name="description"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <Divider hidden />
-              <div className={css.reverse}>
-                <button type="submit">
-                  <span>
-                    {this.state.type === "create" ? "Create" : "Save"}
-                  </span>
-                  <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-                </button>
-              </div>
-            </Form>
-          </Segment>
-        </Modal.Content>
-      </Modal>
+        closeHandler={this.props.closeHandler}
+        title={
+          this.state.type === "create" ? "Add New Lesson" : "Modify Lesson"
+        }>
+        <h3>{this.props.course.title}</h3>
+        <Form
+          fluid
+          onChange={this.handleChange}
+          formValue={this.state.lessonForm}>
+          {this.renderModuleChoise()}
+          <CustomField
+            className={css.ad_inp}
+            name="title"
+            label="Lesson Title"
+            placeholder="Lesson 1: Basics of Computer Science"
+            message="required"
+            accepter={Input}
+          />
+          <CustomField
+            className={css.ad_inp}
+            name="lecture"
+            label="Lecture Video Link (URL)"
+            placeholder="https://"
+            accepter={Input}
+            type="url"
+          />
+          <CustomField
+            className={css.ad_inp}
+            label="Lesson Description"
+            name="description"
+            placeholder="Describe purpose of this lesson in short..."
+            rows={6}
+            componentClass="textarea"
+          />
+          <div className={css.ad_reverse}>
+            <button type="submit" onClick={this.createLesson}>
+              <span>{this.state.type === "create" ? "Create" : "Save"}</span>
+              <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+            </button>
+          </div>
+        </Form>
+      </FormModal>
     );
   }
 
@@ -178,10 +142,12 @@ class LessonForm extends Component {
     console.log("lesson to update", lesson);
     this.setState({
       lsnToUpdate: lesson,
-      title: lesson.title,
-      description: lesson.description,
-      lecture: lesson.lecture,
-      module: lesson.module,
+      lessonForm: {
+        title: lesson.title,
+        description: lesson.description,
+        lecture: lesson.lecture,
+        module: lesson.module
+      },
       type: "edit"
     });
   };

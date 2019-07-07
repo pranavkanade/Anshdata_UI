@@ -1,7 +1,7 @@
 // Theme
 $Base-primary: #5143d3;
 $Base-primary-1: #2e229e;
-$Base-secondary: #100b41;
+$Base-secondary: #100c30;
 
 // Colors
 $White-0: #ffffff;
@@ -10,32 +10,32 @@ $White-2: #f7f7f7;
 $White-3: #dddddd;
 $White-4: #e7e7e7;
 
-$Red-4: #eb2b2b31;
-
 $Blue-1: #1323dd;
 $Blue-2: #4a3ebe;
-$Blue-3: #397ef0;
+$Blue-3: #3880fd;
+$Blue-3b: #004ed4;
 $Blue-4: #232057;
 $Blue-5: #1c52ad;
 $Blue-6: #0d3375;
 $Blue-10: #1c1627;
 
-$Blue-11: #d9e3fd;
+$Blue-11: #eff3fd;
 
 $Yellow-1: #ffe3b0;
 $Yellow-2: #fbbc05;
-$Yellow-3: #b2cf0d;
-$Yellow-3b: #5d6d05;
+$Yellow-3: #00b68e;
+$Yellow-3b: #007562;
 $Yellow-4: #ffefd2;
 $Yellow-9: #a17070;
 $Yellow-9b: #461e1e;
-$Yellow-10: #ff9c44;
+$Yellow-10: #ffa600;
 
 $Purple-1: #270036;
 $Purple-1b: #6200ff;
 
 $Red-1: #830027;
 $Red-2: #a80939;
+$Red-4: #eb2b2b31;
 
 $Black-1: #3f3e3e;
 
@@ -47,16 +47,17 @@ $grad-4: linear-gradient(250.54deg, #0779eb -32.44%, #c9ffd8 100%);
 $grad-5: linear-gradient(109.15deg, #27d2a9 0%, #e2d245 100%);
 $grad-6: linear-gradient(205.1deg, #dd1374 0.56%, #ffd17f 101.17%);
 $grad-7: linear-gradient(204.12deg, #ffc661 0%, #ee3d4f 101.17%);
-$grad-8: linear-gradient(203.81deg, #00ffff -8.36%, #504de8 101.17%);
+$grad-8: linear-gradient(203.81deg, #66d1e4 -8.36%, #7573ff 101.17%);
 $grad-9: linear-gradient(306.31deg, #ffd29d 7.11%, #e85f53 94.22%);
 $grad-10: linear-gradient(201.37deg, #2d2a75 14.13%, #13c5dd 101.15%);
 $grad-11: linear-gradient(205.61deg, #ff475d 0%, #ffb067 101.17%);
 $grad-12: linear-gradient(225.34deg, #270036 0%, #13c5dd 101.17%);
+$grad-13: linear-gradient(213.78deg, #ff7272 0%, #aa64ffe5 101.17%);
 
 $rgrad-1: radial-gradient(
   3876px at 100% 50%,
-  rgba(22, 214, 168, 0.25) 0%,
-  rgba(45, 156, 219, 0.84) 100%
+  rgba(4, 255, 196, 0.856) 0%,
+  rgb(0, 162, 255) 100%
 );
 
 // Shadow
@@ -68,6 +69,10 @@ $shadow-all-1: 4px 0px 10px rgba(0, 0, 0, 0.06),
 $shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
   -4px 0px 10px rgba(0, 0, 0, 0.08), 0px -4px 10px rgba(0, 0, 0, 0.08),
   0px 4px 10px rgba(0, 0, 0, 0.08);
+
+$shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
+  -4px 0px 30px rgba(0, 0, 0, 0.15), 0px -4px 30px rgba(0, 0, 0, 0.15),
+  0px 4px 30px rgba(0, 0, 0, 0.15);
 
 // headings
 %heading-0 {
@@ -141,4 +146,23 @@ $shadow-all-2: 4px 0px 10px rgba(0, 0, 0, 0.08),
 // container
 %containerLg {
   padding: 2rem 5% 2rem 5%;
+}
+
+// Form
+%ad_form_input {
+  height: 56px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 29px;
+}
+
+// Transition
+$transition-1: 0.2s ease;
+
+%no-focus {
+  &:focus {
+    outline: none;
+  }
 }

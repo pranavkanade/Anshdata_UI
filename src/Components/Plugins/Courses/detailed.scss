@@ -2,8 +2,9 @@
 
 .container {
   width: 100%;
-  padding: 0rem 10% 0rem 10%;
+
   background-color: $White-2;
+  padding: 2rem 0 2rem 0;
 }
 
 @media (max-width: 1024px) {
@@ -13,10 +14,14 @@
 }
 
 .courseInfo {
-  padding: 2rem 0 2rem 0;
+  margin: 0rem 5% 0rem 5%;
+  padding: 1rem 2rem 1rem 2rem;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 2rem;
+  background: $grad-13;
+  border-radius: 10px;
+  box-shadow: $shadow-all-3;
 
   .primaryInfo {
     display: flex;
@@ -27,11 +32,11 @@
       height: 110px;
       font-family: Scope One;
       font-style: normal;
-      font-weight: normal;
-      font-size: 40px;
+      font-weight: bold;
+      font-size: 32px;
       line-height: 55px;
 
-      color: #000000;
+      color: $White-0;
     }
 
     .courseDetails {
@@ -47,14 +52,15 @@
         font-weight: normal;
         font-size: 20px;
         line-height: 24px;
-
-        color: #3f3e3e;
+        background: $White-0;
+        color: $Black-1;
 
         height: 210px;
 
         border: 1px solid $White-3;
         box-sizing: border-box;
-        border-radius: 2px;
+        box-shadow: $shadow-all-1;
+        border-radius: 5px;
       }
 
       .advance {
@@ -62,17 +68,18 @@
         flex-direction: row;
         justify-content: space-between;
         margin-top: 2rem;
+        place-items: center;
 
         %actionBtn {
           width: 200px;
           height: 60px;
 
-          border-radius: 2px;
+          border-radius: 5px;
           border: 0px;
 
           font-family: Barlow;
           font-style: normal;
-          font-weight: normal;
+          font-weight: bold;
           font-size: 20px;
           line-height: 24px;
           /* identical to box height */
@@ -83,14 +90,13 @@
 
         .attend {
           @extend %actionBtn;
-
+          font-weight: bolder;
           background: $Blue-3;
-
+          transition: 0.2s ease;
           &:hover {
             cursor: pointer;
-            background: #ffffff;
-            color: $Blue-3;
-            border: 1px solid $Blue-3;
+            transform: scale(1.1);
+            box-shadow: $shadow-all-1;
           }
         }
 
@@ -98,12 +104,11 @@
           @extend %actionBtn;
           font-weight: bolder;
           background: $Yellow-2;
-
+          transition: 0.2s ease;
           &:hover {
             cursor: pointer;
-            background: #ffffff;
-            color: $Yellow-2;
-            border: 2px solid $Yellow-2;
+            transform: scale(1.1);
+            box-shadow: $shadow-all-1;
           }
         }
 
@@ -112,12 +117,16 @@
           flex-direction: row;
           justify-content: space-around;
 
-          width: 480px;
-          height: 60px;
+          // width: 480px;
+          // height: 60px;
 
-          border: 1px solid $White-3;
+          // border: 1px solid $White-3;
           box-sizing: border-box;
           border-radius: 2px;
+          background: $White-0;
+          box-shadow: $shadow-all-1;
+          border-radius: 5px;
+          padding: 1rem;
 
           .stat {
             width: 160px;
@@ -155,12 +164,24 @@
     }
 
     .tagBox {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       height: 72px;
 
-      border: 1px solid $White-3;
       box-sizing: border-box;
-      border-radius: 2px;
+      background: $White-0;
+      box-shadow: $shadow-all-1;
+      border-radius: 5px;
+      padding: 1rem;
+
+      .tag {
+        padding: 0.3rem 1rem 0.3rem 1rem;
+        background: $Base-primary;
+        color: $White-0;
+        margin-right: 0.5rem;
+        border-radius: 5rem;
+        box-shadow: $shadow-all-1;
+        font-weight: normal;
+      }
     }
   }
 
@@ -182,13 +203,14 @@
 
     .extraInfo {
       margin-top: 2rem;
-      padding: 1rem 0 1rem 0;
-      width: 380px;
-      height: 161px;
+      padding: 1rem;
+      // width: 380px;
+      // height: 161px;
+      background: $White-1;
+      box-shadow: $shadow-all-1;
+      border-radius: 5px;
 
-      border: 1px solid $White-3;
       box-sizing: border-box;
-      border-radius: 2px;
 
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -196,9 +218,10 @@
 
       .info {
         width: 160px;
-        height: 60px;
-
-        border: 1px solid $White-3;
+        // height: 6px;
+        padding: 0.5rem 0 0.5rem 0;
+        box-shadow: $shadow-all-1;
+        // border: 1px solid $White-3;
         box-sizing: border-box;
         border-radius: 2px;
 
@@ -206,27 +229,53 @@
         justify-self: center;
 
         .value {
-          font-family: Barlow;
+          font-family: Lato;
           font-style: normal;
           font-weight: 500;
-          font-size: 24px;
+          font-size: 20px;
           line-height: 29px;
           /* identical to box height */
           text-align: center;
-
-          color: #000000;
         }
 
         .label {
           font-family: Barlow;
           font-style: normal;
-          font-weight: 500;
+          font-weight: normal;
           font-size: 16px;
           line-height: 24px;
           /* identical to box height */
           text-align: center;
+        }
+      }
 
-          color: #000000;
+      .author {
+        background: #c2506c;
+        border-radius: 5px;
+        span {
+          color: $White-0;
+        }
+      }
+
+      .sub {
+        background: #ff6f62;
+        border-radius: 5px;
+        span {
+          color: $White-0;
+        }
+      }
+      .lsn {
+        background: #4240be;
+        border-radius: 5px;
+        span {
+          color: $White-0;
+        }
+      }
+      .asign {
+        background: #08afa1;
+        border-radius: 5px;
+        span {
+          color: $White-0;
         }
       }
     }
@@ -234,7 +283,7 @@
 }
 
 .courseContent {
-  padding: 2rem 0 2rem 0;
+  padding: 2rem 10% 2rem 10%;
 
   .sectionTitle {
     font-family: Lato;

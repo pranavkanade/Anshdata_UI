@@ -1,34 +1,49 @@
-import { Popup, Divider } from "semantic-ui-react";
+import { Popover, Whisper, Divider } from "rsuite";
 import css from "./userpopup.scss";
 import Link from "next/link";
 
-export default props => {
+const Speaker = (username, handleSignout) => {
   return (
-    <Popup trigger={props.children} on="click" wide="very">
-      <Popup.Header>
+    <Popover>
+      <div className={css.ad_popup_header}>
         <span>
           Signed in as,
-          <h3>{props.user.username}</h3>
+          <h4>{username}</h4>
         </span>
-      </Popup.Header>
+      </div>
       <Divider />
-      <Popup.Content className={css.popup}>
-        <Link href={`/u/${props.user.username}`}>
-          <span className={css.link}>Your Profile</span>
+      <div className={css.ad_popup}>
+        <Link href={`/u/${username}`}>
+          <span className={css.ad_link}>Your Profile</span>
         </Link>
-
-        <span className={css.link}>Your Courses</span>
-        <span className={css.link}>Your Notifications</span>
-        <span className={css.link}>Your Bookmarks</span>
+        <span className={css.ad_link}>Your Courses</span>
+        <span className={css.ad_link}>Your Notifications</span>
+        <span className={css.ad_link}>Your Bookmarks</span>
         <Divider />
-        <span className={css.link}>Help</span>
-        <span className={css.link}>Settings</span>
+        <span className={css.ad_link}>Help</span>
+        <span className={css.ad_link}>Settings</span>
         <button
-          className={css.signOut}
-          onClick={event => props.handleSignout(event)}>
+          className={css.ad_signOut}
+          onClick={event => handleSignout(event)}>
           <span>Sign Out</span>
         </button>
-      </Popup.Content>
-    </Popup>
+      </div>
+    </Popover>
   );
 };
+
+const UserPopup = props => {
+  if (props.user === null || props.user === undefined) {
+    return null;
+  }
+  return (
+    <Whisper
+      trigger="click"
+      placement="bottomRight"
+      speaker={Speaker(props.user.username, props.handleSignout)}>
+      {props.children}
+    </Whisper>
+  );
+};
+
+export default UserPopup;
