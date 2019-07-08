@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import ReactPlayer from "react-player";
 
 import css from "./Base.scss";
 
@@ -204,19 +205,31 @@ const renderAssignmetns = (assignments, activeAsignmt, setActiveAsignmt) => {
   );
 };
 
-const renderCurrentLecture = (lesson, activeAsignmt, setActiveAsignmt) => {
-  // TODO: change the iframe -
-  // URLs like - "https://www.youtube.com/watch?v=RKLKib4bHhA" won't work dynamically.
-  // change `watch?v=` to `embed/` and it'll start working
+const renderCurrentLecture = (
+  lesson,
+  activeAsignmt,
+  setActiveAsignmt,
+  setCourseProgress,
+  setCompleted
+) => {
+  // TODO: remove lesson id from title
   return (
     <>
-      <span className={css.title}>{lesson.title}</span>
+      <span className={css.title}>
+        {lesson.id}. {lesson.title}
+      </span>
       <div className={css.lecture}>
-        <iframe
-          src={"https://www.youtube.com/embed/RKLKib4bHhA"}
-          frameBorder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+        <ReactPlayer
+          url={lesson.lecture}
+          controls
+          pip={true}
+          height="100%"
+          width="100%"
+          onStart={() => {
+            console.log("Starting the lecture : ", lesson.id);
+            setCourseProgress("LESSON", lesson.id);
+          }}
+          onEnded={() => setCompleted("LESSON", lesson.id)}
         />
       </div>
       <div className={css.actionBtns}>{renderActionBtns()}</div>
@@ -269,7 +282,9 @@ const ClassroomBase = props => {
             ? renderCurrentLecture(
                 props.activeLesson,
                 activeAsignmt,
-                setActiveAsignmt
+                setActiveAsignmt,
+                props.setCourseProgress,
+                props.setCompleted
               )
             : null}
         </div>
