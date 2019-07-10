@@ -98,8 +98,8 @@
 
         font-family: Scope One;
         font-style: normal;
-        font-weight: normal;
-        font-size: 24px;
+        font-weight: 900;
+        font-size: 20px;
         line-height: 33px;
 
         color: #ffffff;
@@ -107,11 +107,11 @@
       .lsn {
         margin-top: 1px;
         padding: 1rem;
-        background: #88c2e4;
+        background: #6babcf;
         font-family: Lato;
         font-style: normal;
-        font-weight: lighter;
-        font-size: 20px;
+        font-weight: normal;
+        font-size: 16px;
         line-height: 24px;
 
         color: #ffffff;
@@ -121,9 +121,28 @@
         &:hover {
           cursor: pointer;
           transform: scale(1.02);
-          font-weight: normal;
+          font-weight: bold;
           box-shadow: $shadow-1;
         }
+      }
+
+      .active_lsn {
+        margin-top: 1px;
+        padding: 1rem;
+        background: #6babcf;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+
+        color: #ffffff;
+        // border: 1px solid #ffffff;
+
+        transition: transform 0.1s ease;
+        transform: scale(1.02);
+        font-weight: bold;
+        box-shadow: $shadow-1;
       }
 
       .asignmt {
@@ -179,7 +198,7 @@
         }
 
         .lsn {
-          background: #a296e4;
+          background: #8376ca;
           padding: 1rem;
           margin: 1px 0.5rem 0 0.5rem;
           transition: transform 0.1s ease;
@@ -277,7 +296,7 @@
       margin-top: 1rem;
       align-self: center;
       width: 840px;
-      height: 128px;
+      // height: 128px;
       padding: 1rem 2rem 1rem 2rem;
 
       border: 1px solid #e7e7e7;

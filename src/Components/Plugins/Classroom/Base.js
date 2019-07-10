@@ -85,11 +85,20 @@ const renderCourseContent = (
   );
 };
 
-const renderActiveMod = (activeModule, lessonSelectionHandler) => {
+const renderActiveMod = (
+  activeModule,
+  lessonSelectionHandler,
+  courseProgress
+) => {
   const Lessons = activeModule.lessons.map(lsn => {
     return (
       <span
-        className={css.lsn}
+        className={
+          courseProgress !== null &&
+          courseProgress.current_lesson.id === lsn.id
+            ? css.active_lsn
+            : css.lsn
+        }
         key={lsn.id}
         onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
         {lsn.title}
@@ -115,11 +124,12 @@ const renderContent = (
   activeModule,
   lessonSelectionHandler,
   openMod,
-  setOpenMod
+  setOpenMod,
+  courseProgress
 ) => {
   return (
     <>
-      {renderActiveMod(activeModule, lessonSelectionHandler)}
+      {renderActiveMod(activeModule, lessonSelectionHandler, courseProgress)}
       {renderCourseContent(
         course,
         lessonSelectionHandler,
@@ -274,7 +284,8 @@ const ClassroomBase = props => {
             props.activeModule,
             props.lessonSelectionHandler,
             openMod,
-            setOpenMod
+            setOpenMod,
+            props.courseProgress
           )}
         </div>
         <div className={css.lesson}>

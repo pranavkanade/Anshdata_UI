@@ -48,23 +48,23 @@ class CourseClassroom extends Component {
     this.setState({ activeLesson: activatedLsn });
   };
 
-  // recoverCurrentModNLsn = currentLesson => {
-  //   if (this.state.course !== null && this.state.course !== undefined) {
-  //     const activeModule = {
-  //       ...this.state.course.modules.find(mod => {
-  //         return currentLesson.module === mod.id;
-  //       })
-  //     };
-  //     this.setState({
-  //       activeModule,
-  //       activeLesson: currentLesson
-  //     });
-  //   } else {
-  //     this.setState({
-  //       activeLesson: currentLesson
-  //     });
-  //   }
-  // };
+  recoverCurrentModNLsn = currentLesson => {
+    if (this.state.course !== null && this.state.course !== undefined) {
+      const activeModule = {
+        ...this.state.course.modules.find(mod => {
+          return currentLesson.module === mod.id;
+        })
+      };
+      this.setState({
+        activeModule,
+        activeLesson: currentLesson
+      });
+    } else {
+      this.setState({
+        activeLesson: currentLesson
+      });
+    }
+  };
 
   ifEnrolledSaveHandler = data => {
     if (data.length !== 0) {
@@ -73,7 +73,7 @@ class CourseClassroom extends Component {
         isEnrolledIn: true,
         courseProgress: data[0]
       });
-      // this.recoverCurrentModNLsn(data[0].current_lesson);
+      this.recoverCurrentModNLsn(data[0].current_lesson);
     } else {
       Router.push(`/courses/${this.state.courseId}`);
     }
@@ -111,21 +111,21 @@ class CourseClassroom extends Component {
 
   initialize = course => {
     // TODO: un comment following
-    // if (this.state.activeLesson === null) {
-    this.setState({
-      activeModule: course.modules[0],
-      activeLesson: course.modules[0].lessons[0]
-    });
-    // } else {
-    //   const activeModule = {
-    //     ...course.modules.find(mod => {
-    //       return this.state.activeLesson.module === mod.id;
-    //     })
-    //   };
-    //   this.setState({
-    //     activeModule
-    //   });
-    // }
+    if (this.state.activeLesson === null) {
+      this.setState({
+        activeModule: course.modules[0],
+        activeLesson: course.modules[0].lessons[0]
+      });
+    } else {
+      const activeModule = {
+        ...course.modules.find(mod => {
+          return this.state.activeLesson.module === mod.id;
+        })
+      };
+      this.setState({
+        activeModule
+      });
+    }
 
     console.log("module initiated");
   };
