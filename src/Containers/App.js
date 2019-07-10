@@ -77,6 +77,10 @@ class App extends Component {
             href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
             rel="stylesheet"
           />
+          <link
+            href="https://fonts.googleapis.com/css?family=Barriecito&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <Navbar
           isAuthenticated={this.state.isAuthenticated}
