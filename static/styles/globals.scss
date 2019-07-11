@@ -76,7 +76,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 
 // headings
 %heading-0 {
-  font-family: Scope One;
+  font-family: Scope One, Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 40px;
@@ -86,7 +86,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 }
 
 %heading-1 {
-  font-family: Scope One;
+  font-family: Scope One, Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 36px;
@@ -96,7 +96,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 }
 
 %heading-2 {
-  font-family: Scope One;
+  font-family: Scope One, Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 28px;
@@ -108,7 +108,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 // font
 
 %BtnFont-1 {
-  font-family: Barlow;
+  font-family: Barlow, Roboto;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -121,7 +121,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 }
 
 %BtnFont-2 {
-  font-family: Barlow;
+  font-family: Barlow, Roboto;
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -134,7 +134,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 }
 
 %Paragraph-1 {
-  font-family: Lato;
+  font-family: Lato, Roboto;
   font-style: normal;
   font-weight: 300;
   font-size: 24px;
@@ -151,7 +151,7 @@ $shadow-all-3: 4px 0px 30px rgba(0, 0, 0, 0.15),
 // Form
 %ad_form_input {
   height: 56px;
-  font-family: Lato;
+  font-family: Lato, Roboto;
   font-style: normal;
   font-weight: 300;
   font-size: 18px;

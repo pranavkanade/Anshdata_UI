@@ -53,7 +53,7 @@
   justify-items: center;
 
   span {
-    font-family: Scope One;
+    font-family: Scope One, Roboto;
     font-style: normal;
     font-weight: 900;
     font-size: 40px;
@@ -76,7 +76,7 @@
       border-radius: 3px;
       margin-right: 1rem;
 
-      font-family: Barlow;
+      font-family: Barlow, Roboto;
       font-style: normal;
       font-weight: normal;
       font-size: 20px;
@@ -103,7 +103,7 @@
       border: 2px solid #3880fd;
       border-radius: 3px;
 
-      font-family: Barlow;
+      font-family: Barlow, Roboto;
       font-style: normal;
       font-weight: normal;
       font-size: 20px;
@@ -131,7 +131,7 @@
   span {
     border-radius: 5px;
     background: $grad-12;
-    font-family: Scope One;
+    font-family: Scope One, Roboto;
     font-style: normal;
     font-weight: 900;
     font-size: 28px;

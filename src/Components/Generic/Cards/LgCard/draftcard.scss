@@ -7,7 +7,7 @@
   align-items: center;
 
   span {
-    font-family: Lato;
+    font-family: Lato, Roboto;
     font-style: normal;
     font-weight: 600;
     font-size: 28px;
@@ -57,7 +57,7 @@
 .description {
   padding-left: 2rem;
   margin-top: 0.5rem;
-  font-family: Lato;
+  font-family: Lato, Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -88,7 +88,7 @@
     justify-self: center;
 
     .value {
-      font-family: Lato;
+      font-family: Lato, Roboto;
       font-style: normal;
       font-weight: normal;
       font-size: 20px;
@@ -100,7 +100,7 @@
     }
 
     .label {
-      font-family: Barlow;
+      font-family: Barlow, Roboto;
       font-style: normal;
       font-weight: normal;
       font-size: 16px;
@@ -136,7 +136,7 @@
 
     span {
       margin-right: 1.3rem;
-      font-family: Barlow;
+      font-family: Barlow, Roboto;
       font-style: normal;
       font-weight: bold;
       font-size: 20px;

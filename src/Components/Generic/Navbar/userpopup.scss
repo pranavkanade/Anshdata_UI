@@ -3,14 +3,14 @@
 .ad_popup_header {
   margin: 1rem;
   span {
-    font-family: Barlow;
+    font-family: Barlow, Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
   }
 
   h4 {
-    font-family: Lato;
+    font-family: Lato, Roboto;
     font-size: 20px;
     color: $Black-1;
   }
@@ -28,7 +28,7 @@
 
   // font-family: lato;
 
-  font-family: Lato;
+  font-family: Lato, Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -40,7 +40,7 @@
 }
 
 span {
-  font-family: Barlow;
+  font-family: Barlow, Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;

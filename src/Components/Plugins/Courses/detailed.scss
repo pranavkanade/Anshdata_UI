@@ -30,7 +30,7 @@
     .courseTitle {
       width: 710px;
       height: 110px;
-      font-family: Scope One;
+      font-family: Scope One, Roboto;
       font-style: normal;
       font-weight: bold;
       font-size: 32px;
@@ -47,7 +47,7 @@
 
       .courseDescription {
         padding: 1rem;
-        font-family: Lato;
+        font-family: Lato, Roboto;
         font-style: normal;
         font-weight: normal;
         font-size: 20px;
@@ -77,7 +77,7 @@
           border-radius: 5px;
           border: 0px;
 
-          font-family: Barlow;
+          font-family: Barlow, Roboto;
           font-style: normal;
           font-weight: bold;
           font-size: 20px;
@@ -136,7 +136,7 @@
             justify-self: center;
 
             .value {
-              font-family: Barlow;
+              font-family: Barlow, Roboto;
               font-style: normal;
               font-weight: 500;
               font-size: 24px;
@@ -148,7 +148,7 @@
             }
 
             .label {
-              font-family: Barlow;
+              font-family: Barlow, Roboto;
               font-style: normal;
               font-weight: 500;
               font-size: 16px;
@@ -229,7 +229,7 @@
         justify-self: center;
 
         .value {
-          font-family: Lato;
+          font-family: Lato, Roboto;
           font-style: normal;
           font-weight: 500;
           font-size: 20px;
@@ -239,7 +239,7 @@
         }
 
         .label {
-          font-family: Barlow;
+          font-family: Barlow, Roboto;
           font-style: normal;
           font-weight: normal;
           font-size: 16px;
@@ -286,7 +286,7 @@
   padding: 2rem 10% 2rem 10%;
 
   .sectionTitle {
-    font-family: Lato;
+    font-family: Lato, Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 32px;
