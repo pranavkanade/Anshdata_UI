@@ -95,6 +95,7 @@ const renderActiveMod = (
       <span
         className={
           courseProgress !== null &&
+          courseProgress.current_lesson !== null &&
           courseProgress.current_lesson.id === lsn.id
             ? css.active_lsn
             : css.lsn

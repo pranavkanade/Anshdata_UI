@@ -48,12 +48,16 @@ class DetailedCourseCard extends Component {
       );
     } else {
       return (
-        <button
-          className={css.enroll}
-          onClick={() => enrollEventHandler(courseId)}>
-          <span>Enroll</span>
-          <img src={"../../../../static/assets/icon/add_24px_outlined.svg"} />
-        </button>
+        <Link href={`/courses/attend/${courseId}`}>
+          <button
+            className={css.enroll}
+            onClick={() => enrollEventHandler(courseId)}>
+            <span>Enroll</span>
+            <img
+              src={"../../../../static/assets/icon/add_24px_outlined.svg"}
+            />
+          </button>
+        </Link>
       );
     }
   };

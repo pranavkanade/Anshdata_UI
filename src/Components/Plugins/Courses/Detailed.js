@@ -142,12 +142,13 @@ class DetailedCourse extends Component {
       );
     } else {
       return (
-        // TODO: Refresh the page.
-        <button
-          className={css.enroll}
-          onClick={() => enrollEventHandler(this.state.course.id)}>
-          Enroll
-        </button>
+        <Link href={`/courses/attend/${this.state.course.id}`}>
+          <button
+            className={css.enroll}
+            onClick={() => enrollEventHandler(this.state.course.id)}>
+            Enroll
+          </button>
+        </Link>
       );
     }
   };
