@@ -1,0 +1,37 @@
+@import "../../../../static/styles/globals.scss";
+
+.container {
+  padding: 2rem 5% 2rem 5%;
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+
+  img {
+    height: 600px;
+  }
+
+  div {
+    margin: 2rem;
+    padding: 2rem;
+
+    // background: #f5e6e6;
+    span {
+      font-family: "Barriecito", cursive;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 64px;
+
+      color: $Base-primary;
+    }
+
+    p {
+      margin-top: 4rem;
+      font-family: Scope One, Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 32px;
+
+      color: $Base-primary-1;
+    }
+  }
+}

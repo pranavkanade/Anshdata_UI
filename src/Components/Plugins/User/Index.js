@@ -21,6 +21,7 @@ import {
 } from "../../../Requests/Courses";
 import { renderPublishedCoursesList as CoursesList } from "../../Generic/CourseList/courselist";
 import { courseListType } from "../../../globals";
+import css from "./index.scss";
 import Link from "next/link";
 
 class Index extends Component {
@@ -189,26 +190,43 @@ class Index extends Component {
     }
   };
 
+  // render() {
+  //   console.log("User/Index - enrolled Courses", this.state.enrolledCourses);
+  //   return (
+  //     <Grid>
+  //       <Grid.Row columns={4}>
+  //         <Grid.Column width="1" />
+  //         <Grid.Column width="4">
+  //           <div style={{ height: "5rem" }} />
+  //           <div>{this.renderUserInfo()}</div>
+  //         </Grid.Column>
+  //         <Grid.Column width="10">
+  //           <div style={{ height: "15rem" }} />
+  //           <Segment basic>
+  //             {this.renderSecMenu()}
+  //             {this.renderCourseContent()}
+  //           </Segment>
+  //         </Grid.Column>
+  //         <Grid.Column width="1" />
+  //       </Grid.Row>
+  //     </Grid>
+  //   );
+  // }
   render() {
-    console.log("User/Index - enrolled Courses", this.state.enrolledCourses);
+    if (this.state.user === null || this.state.user === undefined) {
+      return null;
+    }
     return (
-      <Grid>
-        <Grid.Row columns={4}>
-          <Grid.Column width="1" />
-          <Grid.Column width="4">
-            <div style={{ height: "5rem" }} />
-            <div>{this.renderUserInfo()}</div>
-          </Grid.Column>
-          <Grid.Column width="10">
-            <div style={{ height: "15rem" }} />
-            <Segment basic>
-              {this.renderSecMenu()}
-              {this.renderCourseContent()}
-            </Segment>
-          </Grid.Column>
-          <Grid.Column width="1" />
-        </Grid.Row>
-      </Grid>
+      <div className={css.container}>
+        <img
+          src="../../../../static/assets/imgs/in_progress.svg"
+          alt="in progress"
+        />
+        <div>
+          <span>Hi there "{this.state.user.username}" !</span>
+          <p>Sorry but, we are still building this for you. 🖖</p>
+        </div>
+      </div>
     );
   }
 
