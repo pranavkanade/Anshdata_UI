@@ -5,11 +5,12 @@
 }
 
 .page {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .heading {
   @extend %heading-1;
+  text-align: center;
 }
 
 .courseCreationPlane {

@@ -26,14 +26,10 @@ class CourseForm extends Component {
     return (
       <div className={css.container}>
         <div className={css.page}>
-          <span className={css.heading}>Create New Course</span>
+          <h1 className={css.heading}>Create New Course</h1>
           <div className={css.courseCreationPlane}>
             {this.renderCourseForm()}
-            <div className={css.sidebar}>
-              <button>
-                <span>Save</span>
-              </button>
-            </div>
+            <div />
           </div>
         </div>
       </div>
