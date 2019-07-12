@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Ribbon from "../Components/Generic/Ribbon/ribbon";
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
@@ -64,6 +65,11 @@ class App extends Component {
     );
     return (
       <div className={"App"}>
+        <Ribbon
+          text={
+            "Welcome! and thank you for visiting Anshdata. The platform is currently in Alpha testing phase. We appreciate your support!"
+          }
+        />
         <Navbar
           isAuthenticated={this.state.isAuthenticated}
           showAuthFormHandler={this.showAuthFormHandler}
@@ -79,6 +85,11 @@ class App extends Component {
           />
         ) : null}
         <div>{this.renderChildren()}</div>
+        <Ribbon
+          text={
+            "Welcome! and thank you for visiting Anshdata. The platform is currently in Alpha testing phase. We appreciate your support!"
+          }
+        />
         <Footer />
       </div>
     );
