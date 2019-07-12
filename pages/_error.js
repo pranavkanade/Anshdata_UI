@@ -6,7 +6,7 @@ const PageNotFound = props => {
   return (
     <App page={"Platform"}>
       <div className={css.not_found}>
-        <img src="../static/assets/imgs/404_img.svg" />
+        <img src="../static/assets/imgs/404_not_found.svg" />
         <div>
           <span>We appreciate your curiosity!</span>
           <p>
