@@ -1,8 +1,13 @@
 import { getUserFromLocalStorage } from "../utils/localStorage";
-const URLS = {
-  USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
-  USERLOGIN: "http://127.0.0.1:8000/api/user/login/",
-  GETUSER: "http://127.0.0.1:8000/api/user/me/"
+
+export const getADUserInfo = () => {
+  try {
+    const userData = getUserFromLocalStorage();
+    return userData.user;
+  } catch {
+    console.log("User is not present in local storage");
+    return {};
+  }
 };
 
 export const getADUser = () => {
@@ -10,7 +15,7 @@ export const getADUser = () => {
 };
 
 export const getAuthToken = () => {
-  const adUser = getADUser();
+  const adUser = getUserFromLocalStorage();
   const token = "";
   return adUser !== null ? adUser.token : token;
 };

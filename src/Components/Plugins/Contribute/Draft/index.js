@@ -3,6 +3,7 @@ import Error from "../../../Generic/Error/error";
 import Router from "next/router";
 import css from "./index.scss";
 
+import { getADUserInfo } from "../../../../Requests/Authorization";
 import {
   getCourse,
   draftCourse,
@@ -202,9 +203,13 @@ class DraftedCourse extends Component {
   };
 
   render() {
+    const user = getADUserInfo();
     if (this.state.course === null) {
       return <div className={css.container}>{this.renderLoader()}</div>;
-    } else if (!this.state.course.is_published) {
+    } else if (this.state.course.author.id !== user.pk) {
+      console.log("Course Author mismatch!");
+      console.log("course author : ", this.state.course.author);
+      console.log("logged in user : ", user);
       return <Error />;
     }
     const { course } = this.state;
