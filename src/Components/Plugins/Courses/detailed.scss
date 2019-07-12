@@ -13,6 +13,23 @@
   }
 }
 
+.warningRibbon {
+  margin-top: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
+  background: $Yellow-10;
+  color: $White-0;
+  font-weight: 900;
+  text-align: center;
+
+  span {
+    font-size: 32px;
+    font-weight: 900;
+    background: $Base-primary;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 5px;
+  }
+}
+
 .courseInfo {
   margin: 0rem 5% 0rem 5%;
   padding: 1rem 2rem 1rem 2rem;
@@ -21,7 +38,7 @@
   grid-gap: 2rem;
   background: $grad-13;
   border-radius: 10px;
-  box-shadow: $shadow-all-3;
+  box-shadow: $shadow-all-1;
 
   .primaryInfo {
     display: flex;

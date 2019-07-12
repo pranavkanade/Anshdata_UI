@@ -134,7 +134,10 @@ class DetailedCourse extends Component {
   };
 
   renderActionBtn = () => {
-    if (this.state.isEnrolledIn) {
+    // if the course is not already published then you may not enroll or attend to the course
+    if (!this.state.course.is_published) {
+      return null;
+    } else if (this.state.isEnrolledIn) {
       return (
         <Link href={`/courses/attend/${this.state.course.id}`}>
           <button className={css.attend}>Attend</button>
@@ -222,6 +225,19 @@ class DetailedCourse extends Component {
     });
   };
 
+  renderUnpublishedWarning = () => {
+    if (this.state.course.is_published) {
+      return null;
+    }
+    return (
+      <div className={css.warningRibbon}>
+        <h1>
+          You are auditing an <span>unpublished</span> course!
+        </h1>
+      </div>
+    );
+  };
+
   render() {
     if (this.state.course === null || this.state.course === undefined) {
       return <div>{this.renderLoader()}</div>;
@@ -230,6 +246,7 @@ class DetailedCourse extends Component {
     return (
       <div className={css.container}>
         <div className={css.courseInfo}>{this.renderCourseInfo(course)}</div>
+        {this.renderUnpublishedWarning()}
         <div className={css.courseContent}>
           <span className={css.sectionTitle}>Modules</span>
           <div className={css.moduleList}>
