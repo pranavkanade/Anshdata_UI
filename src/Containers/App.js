@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Head from "next/head";
 
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Footer from "../Components/Generic/Footer/Footer";
@@ -7,7 +6,6 @@ import Auth from "../Components/Generic/Auth/Auth";
 import Router from "next/router";
 import { getADUserJson } from "../Requests/Authorization";
 import { verifyUserToken } from "../Requests/Authentication";
-import { Button } from "rsuite";
 
 class App extends Component {
   state = {
@@ -66,22 +64,6 @@ class App extends Component {
     );
     return (
       <div className={"App"}>
-        <Head>
-          <title>Anshdata</title>
-          <link rel="stylesheet" href="../../static/styles/rsuite.css" />
-          <link
-            href="https://fonts.googleapis.com/css?family=Scope+One&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css?family=Barriecito&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
         <Navbar
           isAuthenticated={this.state.isAuthenticated}
           showAuthFormHandler={this.showAuthFormHandler}
