@@ -1,4 +1,9 @@
-import { getAuthorization, getAuthToken, getADUser } from "./Authorization";
+import { getAuthorization, getAuthToken } from "./Authorization";
+import {
+  getUserFromLocalStorage,
+  setUserToLocalStorage,
+  removeUserFromLocalStorage
+} from "./../utils/localStorage";
 
 const URLS = {
   USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
@@ -21,9 +26,9 @@ export const signupHandler = async (event, signupData) => {
     const data = await siginupRes.json();
     console.log("signup sign up response: ", data);
     // remove if any thing is remaining of the previous user
-    localStorage.removeItem("AnshdataUser");
+    removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
-    localStorage.setItem("AnshdataUser", JSON.stringify(data));
+    setUserToLocalStorage(data);
   } catch (err) {
     console.log("[Auth.js] SIGNUP ERR : ", err);
   }
@@ -44,9 +49,9 @@ export const signinHandler = async (event, signinData) => {
     const data = await loginRes.json();
     console.log("signin response: ", data);
     // remove if any thing is remaining of the previous user
-    localStorage.removeItem("AnshdataUser");
+    removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
-    localStorage.setItem("AnshdataUser", JSON.stringify(data));
+    setUserToLocalStorage(data);
   } catch (err) {
     console.log("[Auth.js] SIGNIN ERR : ", err);
   }
@@ -66,7 +71,7 @@ export const logoutHandler = async event => {
     const data = await logoutRes.json();
     console.log("signout response: ", data);
     // remove if any thing is remaining of the previous user
-    localStorage.removeItem("AnshdataUser");
+    removeUserFromLocalStorage();
   } catch (err) {
     console.log("[Auth.js] Log out ERR : ", err);
   }
@@ -93,14 +98,14 @@ export const refreshUserToken = async () => {
     });
 
     let AnshdataToken = (await refreshRes.json()).token;
-    let AnshdataUser = JSON.parse(getADUser());
+    let AnshdataUser = getUserFromLocalStorage();
     AnshdataUser["token"] = AnshdataToken;
-    localStorage.removeItem("AnshdataUser");
-    localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
+    removeUserFromLocalStorage();
+    setUserToLocalStorage(AnshdataUser);
     console.log("[Authorization.js] Refreshed token");
   } catch (err) {
     console.log("[Authorization.js] Refresh ERR : ", err);
-    localStorage.removeItem("AnshdataUser");
+    removeUserFromLocalStorage();
   }
 };
 
@@ -139,6 +144,6 @@ export const verifyUserToken = async () => {
       });
   } catch (err) {
     console.log("[Authorization.js] Refresh ERR : ", err);
-    localStorage.removeItem("AnshdataUser");
+    removeUserFromLocalStorage();
   }
 };

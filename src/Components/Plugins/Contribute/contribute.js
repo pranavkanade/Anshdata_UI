@@ -11,7 +11,7 @@ import {
   getDraftedSelfCoursesList
 } from "../../../Requests/DraftCourses";
 import { getPublishedCoursesList } from "../../../Requests/Courses";
-import { getADUserJson } from "../../../Requests/Authorization";
+import { getADUser } from "../../../Requests/Authorization";
 
 class Contribute extends Component {
   state = {
@@ -165,7 +165,7 @@ class Contribute extends Component {
   }
 
   componentDidMount() {
-    const adUser = getADUserJson();
+    const adUser = getADUser();
     this.setState({ adUser });
     this.setDefaultSubMenu(adUser);
     console.log("Getting published courses : ", adUser);
