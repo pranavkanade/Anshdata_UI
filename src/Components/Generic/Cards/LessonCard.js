@@ -2,7 +2,7 @@ import React from "react";
 
 import css from "./LessonCard.scss";
 
-export default props => {
+export const draftLessonCard = props => {
   return (
     <div className={css.lessonCard}>
       <div className={css.lesson}>
@@ -27,6 +27,22 @@ export default props => {
             <img src="../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
           </button>
         </div>
+      </div>
+    </div>
+  );
+};
+
+export const LessonCard = props => {
+  return (
+    <div className={css.lessonCard}>
+      <div className={css.lesson}>
+        <iframe
+          src="https://www.youtube.com/embed/RKLKib4bHhA"
+          frameBorder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+        <span>{props.lesson.title}</span>
       </div>
     </div>
   );

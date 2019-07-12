@@ -1,8 +1,8 @@
 import React from "react";
 
 import css from "./ModuleCard.scss";
-import LessonCard from "./LessonCard";
-import AssignmentCard from "./AssignmentCard";
+import { draftLessonCard, LessonCard } from "./LessonCard";
+import { draftAssignmentCard, AssignmentCard } from "./AssignmentCard";
 
 const renderLoader = () => {
   return (
@@ -72,16 +72,31 @@ const renderEditActionBar = (moduleId, select, modify) => {
   );
 };
 
-const renderLessonsList = (lessons, onModify) => {
+const renderLessonsList = lessons => {
   return lessons.map(lsn => {
-    return <LessonCard lesson={lsn} id={lsn.id} modify={onModify} />;
+    return <LessonCard lesson={lsn} id={lsn.id} />;
   });
 };
 
-const renderAssignmentList = (assignments, onModify) => {
+const renderLessonsListDraft = (lessons, onModify) => {
+  return lessons.map(lsn => {
+    return <draftLessonCard lesson={lsn} id={lsn.id} modify={onModify} />;
+  });
+};
+
+const renderAssignmentList = assignments => {
+  return assignments.map(asgnmt => {
+    return <AssignmentCard assignment={asgnmt} id={asgnmt.id} />;
+  });
+};
+const renderAssignmentListDraft = (assignments, onModify) => {
   return assignments.map(asgnmt => {
     return (
-      <AssignmentCard assignment={asgnmt} id={asgnmt.id} modify={onModify} />
+      <draftAssignmentCard
+        assignment={asgnmt}
+        id={asgnmt.id}
+        modify={onModify}
+      />
     );
   });
 };
@@ -139,25 +154,6 @@ export const DetailedModuleCard = props => {
   }
 
   return (
-    // <div className={css.detailedModuleCard}>
-    //   <div className={css.head}>
-    //     <span>{module.title} : Lessons</span>
-    //     <button className={css.arrows} onClick={props.close}>
-    //       <img src="../../../../static/assets/icon/clear_24px_outlined.svg" />
-    //     </button>
-    //   </div>
-    //   <div className={css.lessonsBox}>
-    //     <button className={css.arrows}>
-    //       <img src="../../../../static/assets/icon/arrow_back_ios_24px_outlined.svg" />
-    //     </button>
-    //     <div className={css.lessonsList}>
-    //       {renderLessonsList(module.lessons)}
-    //     </div>
-    //     <button className={css.arrows}>
-    //       <img src="../../../../static/assets/icon/arrow_forward_ios_24px_outlined.svg" />
-    //     </button>
-    //   </div>
-    // </div>
     <div className={css.detailedModuleCard}>
       <div className={css.head}>
         <span>{module.title}</span>
@@ -206,7 +202,7 @@ export const DetailedModuleCardDraft = props => {
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
             <span>Add new lesson</span>
           </div>
-          {renderLessonsList(module.lessons, props.addNewBtn)}
+          {renderLessonsListDraft(module.lessons, props.addNewBtn)}
         </div>
       </div>
       <div className={css.itemBox}>
@@ -218,7 +214,7 @@ export const DetailedModuleCardDraft = props => {
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined_dark.svg" />
             <span>Add new assignment</span>
           </div>
-          {renderAssignmentList(module.assignments, props.addNewBtn)}
+          {renderAssignmentListDraft(module.assignments, props.addNewBtn)}
         </div>
       </div>
     </div>
