@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Error from "../../../Generic/Error/error";
 import Router from "next/router";
 import css from "./index.scss";
 
@@ -203,6 +204,8 @@ class DraftedCourse extends Component {
   render() {
     if (this.state.course === null) {
       return <div className={css.container}>{this.renderLoader()}</div>;
+    } else if (!this.state.course.is_published) {
+      return <Error />;
     }
     const { course } = this.state;
 
