@@ -13,13 +13,13 @@ const renderLoader = () => {
 };
 
 const renderLsnNAsign = (lessons, lessonSelectionHandler, assignments) => {
-  const Lessons = lessons.map(lsn => {
+  const Lessons = lessons.map((lsn, indx) => {
     return (
       <span
         className={css.lsn}
         key={lsn.id}
         onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
-        {lsn.title}
+        {indx + 1}. {lsn.title}
       </span>
     );
   });
@@ -90,7 +90,7 @@ const renderActiveMod = (
   lessonSelectionHandler,
   courseProgress
 ) => {
-  const Lessons = activeModule.lessons.map(lsn => {
+  const Lessons = activeModule.lessons.map((lsn, index) => {
     return (
       <span
         className={
@@ -258,9 +258,7 @@ const renderCurrentLecture = (
   // TODO: remove lesson id from title
   return (
     <>
-      <span className={css.title}>
-        {lesson.id}. {lesson.title}
-      </span>
+      <span className={css.title}>{lesson.title}</span>
       <div className={css.lecture}>
         <ReactPlayer
           url={lesson.lecture}
