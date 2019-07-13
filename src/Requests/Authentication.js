@@ -114,8 +114,9 @@ export const verifyUserToken = async () => {
   const URL = "http://127.0.0.1:8000/api/user/verify/";
   try {
     const adToken = getAuthToken();
-    if (adToken === "" || adToken === null) {
-      console.loog("User is not logged in not verifying the token");
+    console.log("Logging Auth Token : ", adToken);
+    if (adToken === "" || adToken === null || typeof adToken !== "string") {
+      console.log("User is not logged in not verifying the token");
       return;
     }
     const refreshData = {
@@ -137,7 +138,8 @@ export const verifyUserToken = async () => {
       })
       .catch(err => {
         console.log("Failed to verify the token will try to refresh", err);
-        refreshUserToken();
+        // TODO: give user a chance to refresh the token
+        removeUserFromLocalStorage();
       })
       .then(data => {
         console.log("Token verified successfully");
