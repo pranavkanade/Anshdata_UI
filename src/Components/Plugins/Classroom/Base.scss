@@ -2,7 +2,7 @@
 
 .classroomBase {
   padding: 1rem 5% 2rem 5%;
-  background: $White-1;
+  background: $White-2;
 }
 
 .loader {
@@ -50,7 +50,6 @@
     %box {
       display: flex;
       flex-direction: column;
-      background: $White-0;
       // border: 1px solid #ffffff;
       box-sizing: border-box;
 
@@ -198,16 +197,19 @@
         }
 
         .lsn {
-          background: #8376ca;
+          background: #ffffffc7;
           padding: 1rem;
           margin: 1px 0.5rem 0 0.5rem;
           transition: transform 0.1s ease;
           font-size: 16px;
+          color: $Black-1;
+          border: 1px solid #ded8ff;
           &:hover {
             cursor: pointer;
             transform: scale(1.02);
             font-weight: normal;
-            box-shadow: $shadow-2;
+            border: 1px solid #9f8eff;
+            box-shadow: $shadow-1;
           }
         }
 
