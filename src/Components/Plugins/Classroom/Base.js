@@ -141,11 +141,41 @@ const renderContent = (
   );
 };
 
-const renderActionBtns = () => {
+const findNextLesson = (currentLesson, lessonList) => {
+  const lessonIdx = lessonList.findIndex(lsn => {
+    return lsn.lsnId === currentLesson;
+  });
+  console.log("Current lesson Index : ", lessonIdx, typeof lessonIdx);
+  return lessonList[lessonIdx + 1];
+};
+
+const renderActionBtns = (lesson, lessonList, nextHandler, setCompleted) => {
+  const nextLesson = findNextLesson(lesson, lessonList);
   return (
     <>
-      <button className={css.mark}>Mark Done</button>
-      <button className={css.next}>Next Lesson</button>
+      <button
+        className={css.mark}
+        onClick={() => {
+          console.log("Setting Lesson completed");
+          setCompleted("LESSON", lesson);
+          if (nextLesson !== undefined) {
+            nextHandler(nextLesson.lsnId, nextLesson.modId);
+          }
+        }}>
+        Done
+        <img src="/static/assets/icon/done_all_24px_outlined.svg" />
+      </button>
+      {nextLesson !== undefined ? (
+        <button
+          className={css.next}
+          onClick={() => {
+            console.log("Next lesson : ", nextHandler);
+            nextHandler(nextLesson.lsnId, nextLesson.modId);
+          }}>
+          Next
+          <img src="/static/assets/icon/arrow_forward_ios_24px_outlined.svg" />
+        </button>
+      ) : null}
     </>
   );
 };
@@ -221,7 +251,9 @@ const renderCurrentLecture = (
   activeAsignmt,
   setActiveAsignmt,
   setCourseProgress,
-  setCompleted
+  setCompleted,
+  lessonList,
+  nextHandler
 ) => {
   // TODO: remove lesson id from title
   return (
@@ -243,7 +275,9 @@ const renderCurrentLecture = (
           onEnded={() => setCompleted("LESSON", lesson.id)}
         />
       </div>
-      <div className={css.actionBtns}>{renderActionBtns()}</div>
+      <div className={css.actionBtns}>
+        {renderActionBtns(lesson.id, lessonList, nextHandler, setCompleted)}
+      </div>
       <div className={css.description}>
         <span className={css.heading}>Description</span>
         <p>{lesson.description}</p>
@@ -257,6 +291,21 @@ const renderCurrentLecture = (
       </div>
     </>
   );
+};
+
+const getLessonList = course => {
+  let lessons = [];
+  course.modules.forEach(mod => {
+    lessons = lessons.concat(
+      mod.lessons.map(lsn => {
+        return {
+          lsnId: lsn.id,
+          modId: lsn.module
+        };
+      })
+    );
+  });
+  return lessons;
 };
 
 const ClassroomBase = props => {
@@ -296,7 +345,9 @@ const ClassroomBase = props => {
                 activeAsignmt,
                 setActiveAsignmt,
                 props.setCourseProgress,
-                props.setCompleted
+                props.setCompleted,
+                getLessonList(props.course),
+                props.lessonSelectionHandler
               )
             : null}
         </div>

@@ -261,11 +261,8 @@
       flex-direction: row-reverse;
 
       button {
-        width: 149px;
-        height: 55px;
-
         border-radius: 5px;
-
+        padding: 4px 8px 4px 8px;
         font-family: Barlow, Roboto;
         font-style: normal;
         font-weight: 500;
@@ -280,15 +277,37 @@
         &:hover {
           cursor: pointer;
         }
+
+        img {
+          transition: 0.2s ease;
+        }
       }
 
       .mark {
         margin-left: 1rem;
-        background: rgb(0, 128, 107);
+        background: #00cc66;
+        img {
+          margin-left: 0.5rem;
+          height: 24px;
+        }
+        &:hover {
+          img {
+            transform: scale(1.5);
+          }
+        }
       }
 
       .next {
-        background: #2d9cdb;
+        background: #e76d5d;
+        img {
+          margin-left: 0.5rem;
+          height: 24px;
+        }
+        &:hover {
+          img {
+            transform: translateX(8px);
+          }
+        }
       }
     }
 
