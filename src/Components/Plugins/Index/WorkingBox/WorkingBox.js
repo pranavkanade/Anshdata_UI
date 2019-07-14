@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import css from "./WorkingBox.scss";
+import ReactPlayer from "react-player";
 
 export default props => {
   return (
@@ -12,11 +13,12 @@ export default props => {
         </div>
         <div className={css.secondary}>
           <div className={css.introClip}>
-            <iframe
-              src="https://www.youtube.com/embed/RKLKib4bHhA"
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+            <ReactPlayer
+              url={"https://www.youtube.com/embed/RKLKib4bHhA"}
+              controls
+              pip={true}
+              height="100%"
+              width="100%"
             />
           </div>
           <button onClick={() => props.showAuthFormHandler("signup")}>

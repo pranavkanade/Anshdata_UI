@@ -1,19 +1,21 @@
 import React from "react";
 
+import ReactPlayer from "react-player";
 import css from "./LessonCard.scss";
 
 export const draftLessonCard = props => {
   return (
     <div className={css.lessonCard}>
       <div className={css.lesson}>
-        <iframe
-          src="https://www.youtube.com/embed/RKLKib4bHhA"
-          frameBorder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+        <ReactPlayer
+          url={props.lesson.lecture}
+          controls
+          pip={true}
+          height="100%"
+          width="100%"
         />
-        <span>{props.lesson.title}</span>
       </div>
+      <span>{props.lesson.title}</span>
       <div className={css.actionBox}>
         <div className={css.editBar}>
           <button
@@ -36,14 +38,15 @@ export const LessonCard = props => {
   return (
     <div className={css.lessonCard}>
       <div className={css.lesson}>
-        <iframe
-          src="https://www.youtube.com/embed/RKLKib4bHhA"
-          frameBorder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+        <ReactPlayer
+          url={props.lesson.lecture}
+          controls
+          pip={true}
+          height="100%"
+          width="100%"
         />
-        <span>{props.lesson.title}</span>
       </div>
+      <span>{props.lesson.title}</span>
     </div>
   );
 };

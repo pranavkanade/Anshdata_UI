@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import { getCourse } from "../../../Requests/Courses";
+import ReactPlayer from "react-player";
 import {
   ModuleCardMd,
   DetailedModuleCard
@@ -167,6 +168,15 @@ class DetailedCourse extends Component {
   };
 
   renderCourseInfo = course => {
+    let lecture = "https://www.youtube.com/embed/RKLKib4bHhA";
+    try {
+      const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
+      lecture = course.modules[0].lessons[0].lecture;
+      lecture = lecture === "" || lecture === null ? backup : lecture;
+      console.log("Found lecure : ", course.id, lecture);
+    } catch (err) {
+      console.log("Doest not have lectures : ", course.id);
+    }
     return (
       <>
         <div className={css.primaryInfo}>
@@ -184,11 +194,12 @@ class DetailedCourse extends Component {
         </div>
         <div className={css.secondaryInfo}>
           <div className={css.introClip}>
-            <iframe
-              src="https://www.youtube.com/embed/RKLKib4bHhA"
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+            <ReactPlayer
+              url={lecture}
+              controls
+              pip={true}
+              height="100%"
+              width="100%"
             />
           </div>
           <div className={css.extraInfo}>

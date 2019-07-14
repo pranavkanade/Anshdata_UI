@@ -1,7 +1,9 @@
 .lessonCard {
   width: 300px;
-  height: 210px;
-  background: #000000;
+  padding-bottom: 8px;
+  padding-right: 8px;
+  // height: 210px;
+  background: #000000bd;
 
   border-radius: 5px;
 
@@ -18,9 +20,10 @@
   span {
     position: relative;
     width: 252px;
-    height: 38px;
-    top: -3rem;
-    left: 2rem;
+    // height: 38px;
+    // top: -3rem;
+    left: 1rem;
+    text-align: justify;
 
     font-family: Barlow, Roboto;
     font-style: normal;
