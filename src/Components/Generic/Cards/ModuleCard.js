@@ -1,8 +1,11 @@
 import React from "react";
 
 import css from "./ModuleCard.scss";
-import { draftLessonCard, LessonCard } from "./LessonCard";
-import { draftAssignmentCard, AssignmentCard } from "./AssignmentCard";
+import { draftLessonCard as DraftLessonCard, LessonCard } from "./LessonCard";
+import {
+  draftAssignmentCard as DraftAssignmentCard,
+  AssignmentCard
+} from "./AssignmentCard";
 
 const renderLoader = () => {
   return (
@@ -80,7 +83,7 @@ const renderLessonsList = lessons => {
 
 const renderLessonsListDraft = (lessons, onModify) => {
   return lessons.map(lsn => {
-    return <draftLessonCard lesson={lsn} id={lsn.id} modify={onModify} />;
+    return <DraftLessonCard lesson={lsn} id={lsn.id} modify={onModify} />;
   });
 };
 
@@ -92,7 +95,7 @@ const renderAssignmentList = assignments => {
 const renderAssignmentListDraft = (assignments, onModify) => {
   return assignments.map(asgnmt => {
     return (
-      <draftAssignmentCard
+      <DraftAssignmentCard
         assignment={asgnmt}
         id={asgnmt.id}
         modify={onModify}
