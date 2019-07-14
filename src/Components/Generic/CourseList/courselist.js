@@ -5,7 +5,8 @@ import css from "./courselist.scss";
 import {
   PublishedCard,
   EnrolledCourseCard,
-  DraftCourseCard
+  DraftCourseCard,
+  TopCourseCard
 } from "../Cards/CourseCard";
 import LgDrafedCourseCard from "../Cards/LgCard/draftcard";
 import LgDetailedCourseCard from "../Cards/LgCard/publishedCard";
@@ -30,6 +31,17 @@ const getDetailedCard = (course, type, activeTab, closeSelectedCourse) => {
 };
 
 const getCourseList = (props, type) => {
+  let CourseCard = null;
+  if (type === "enrolled") {
+    CourseCard = EnrolledCourseCard;
+  } else if (type === "top") {
+    CourseCard = TopCourseCard;
+  } else if (type === "drafts" && props.activeTab !== "publication") {
+    CourseCard = DraftCourseCard;
+  } else {
+    CourseCard = PublishedCard;
+  }
+
   return props.courses.map(course => {
     return (
       <>
@@ -47,13 +59,7 @@ const getCourseList = (props, type) => {
               ? () => props.setSelectedCourse(course.id)
               : () => Router.push(`/courses/attend/${course.id}`)
           }>
-          {type === "enrolled" ? (
-            <EnrolledCourseCard course={course} />
-          ) : type === "drafts" && props.activeTab !== "publication" ? (
-            <DraftCourseCard course={course} />
-          ) : (
-            <PublishedCard course={course} />
-          )}
+          {<CourseCard course={course} />}
         </div>
         {course.id === props.selectedCourse && type !== "enrolled"
           ? getDetailedCard(
@@ -78,6 +84,10 @@ export const renderPublishedCoursesList = props => {
   return (
     <div className={css.courseList}>{getCourseList(props, "published")}</div>
   );
+};
+
+export const renderTopCoursesList = props => {
+  return <div className={css.courseList}>{getCourseList(props, "top")}</div>;
 };
 
 export const renderEnrolledCoursesList = props => {

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import css from "./TopCourses.scss";
 
 import { getTopPopularCourses } from "./../../../../Requests/Courses";
-import { renderPublishedCoursesList as CourseList } from "../../../Generic/CourseList/courselist";
+import { renderTopCoursesList as CourseList } from "../../../Generic/CourseList/courselist";
 export default class extends Component {
   state = {
     courses: null,
