@@ -2,57 +2,69 @@ import React, { Component } from "react";
 
 import css from "./TopCourses.scss";
 
-import { PublishedCard } from "./../../../Generic/Cards/CourseCard";
+import { getTopPopularCourses } from "./../../../../Requests/Courses";
+import { renderPublishedCoursesList as CourseList } from "../../../Generic/CourseList/courselist";
 export default class extends Component {
   state = {
-    activeCC: 0
+    courses: null,
+    crsCount: 5
   };
 
-  categoryCardClasses = [
-    css.cat1,
-    css.cat2,
-    css.cat3,
-    css.cat4,
-    css.cat5,
-    css.cat6
-  ];
+  coursesSaveHandler = courses => {
+    this.setState({ courses });
+  };
 
   renderCategoryCards = () => {
-    let { activeCC } = this.state;
+    console.log("top courses : ", this.state.courses);
+    if (this.state.courses === null) {
+      return null;
+    }
+    const courses = this.state.courses.slice(0, this.state.crsCount);
     return (
       <div className={css.categoryCarousel}>
-        <div className={css.primary}>
-          <div className={this.categoryCardClasses[activeCC]}>
-            <div className={css.options}>
-              <button>category</button>
-            </div>
-            <div className={css.courseCards}>
-              <PublishedCard />
-              <PublishedCard />
-            </div>
-          </div>
-          <div className={this.categoryCardClasses[activeCC + 1]}>
-            <div className={css.options}>
-              <button>category</button>
-            </div>
-            <div className={css.courseCards}>
-              <PublishedCard />
-              <PublishedCard />
-            </div>
-          </div>
-        </div>
-        <div className={css.secondary} />
+        <CourseList courses={courses} />
       </div>
     );
+  };
+
+  displayMore = () => {
+    const count = this.state.crsCount + 5;
+    // this.setState({ crsCount: count });
+    if (count <= this.state.courses.length) {
+      this.setState({ crsCount: count });
+    } else {
+      this.setState({ crsCount: this.state.courses.length });
+    }
+  };
+
+  displayLess = () => {
+    const count = this.state.crsCount - 5;
+    // this.setState({ crsCount: count });
+    if (count >= 5) {
+      this.setState({ crsCount: count });
+    } else {
+      this.setState({ crsCount: 5 });
+    }
   };
 
   render() {
     return (
       <div className={css.container}>
-        <span>Top Courses</span>
-        <div className={css.catlist} />
+        <span className={css.title}>Top Courses</span>
         {this.renderCategoryCards()}
+        <div className={css.actions}>
+          <button className={css.more} onClick={this.displayMore}>
+            <img src="/static/assets/icon/add_24px_outlined.svg" />
+          </button>
+          <button className={css.less} onClick={this.displayLess}>
+            <img src="/static/assets/icon/remove_24px_outlined.svg" />
+          </button>
+        </div>
       </div>
     );
   }
+
+  componentDidMount = () => {
+    getTopPopularCourses(this.coursesSaveHandler);
+  };
 }

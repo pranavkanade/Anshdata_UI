@@ -117,3 +117,21 @@ export const deleteCourse = async courseId => {
     console.log("[Courses.js] cannot draft the course: ", err);
   }
 };
+
+export const getTopPopularCourses = async saveHandler => {
+  const URL = `http://127.0.0.1:8000/api/course/top/`;
+  try {
+    await fetch(URL, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        saveHandler(data);
+      });
+  } catch (err) {
+    console.log("[Courses.js] failed to fetch most popular courses", err);
+  }
+};

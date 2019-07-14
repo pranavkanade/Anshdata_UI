@@ -1,9 +1,9 @@
 @import "../../../../../static/styles/globals.scss";
 
 .container {
-  padding: 1rem 5% 0 5%;
+  padding: 1rem 5% 2rem 5%;
 
-  span {
+  .title {
     padding-left: 4rem;
     font-family: Scope One, Roboto;
     font-style: normal;
@@ -13,79 +13,36 @@
 
     color: $Black-1;
   }
-}
 
-.categoryCarousel {
-  // This means the categories are active
-  .primary {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    place-items: center;
-    place-content: center;
-  }
+  .actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row-reverse;
 
-  // This will contain the categories that will be shown next
-  .secondary {
-  }
+    button {
+      margin-left: 8px;
+      border-radius: 5px;
+      padding: 4px;
 
-  .courseCards {
-    margin: 1.5rem 3rem 0 3rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-    align-items: center;
-    justify-items: center;
-  }
+      &:focus {
+        outline: none;
+      }
 
-  %categoryBox {
-    box-shadow: $shadow-1;
-    // border: 1px solid $White-3;
-    border-radius: 5px;
-    padding: 1rem;
-    background: $White-0;
+      transition: 0.2s ease;
+    }
 
-    .options {
-      button {
-        margin-left: 2.5rem;
-        height: 56px;
-        padding: 0rem;
-
-        background: transparent;
-
-        border-bottom: 5px solid $Yellow-2;
-        // box-sizing: border-box;
-        // border-radius: 5px;
-
-        font-family: Barlow, Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 28px;
-        line-height: 34px;
-        /* identical to box height */
-        text-align: center;
-
-        color: $Black-1;
-        transition: 0.3s ease;
-
-        &:hover {
-          cursor: pointer;
-          padding: 0 2rem 0 0rem;
-        }
-
-        @extend %no-focus;
+    .more {
+      background: #c9d1ff;
+      &:hover {
+        background: #798dff;
       }
     }
-  }
 
-  .cat1 {
-    @extend %categoryBox;
-    background: $White-0;
-  }
-
-  .cat2 {
-    @extend %categoryBox;
-    background: $White-0;
+    .less {
+      background: #ffd4b1;
+      &:hover {
+        background: #ffa65e;
+      }
+    }
   }
 }
