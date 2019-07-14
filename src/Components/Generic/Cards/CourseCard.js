@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactPlayer from "react-player";
 
 import css from "./CourseCard.scss";
 import { Progress } from "rsuite";
@@ -25,18 +26,18 @@ const RenderRating = (rating = 5) => {
   );
 };
 
-const renderHead = (title, lecture) => {
+const renderHead = (
+  title,
+  lecture = "https://www.youtube.com/embed/RKLKib4bHhA"
+) => {
   return (
     <div className={css.head}>
       <div className={css.intro}>
-        {/*
-  TODO: Edit this iframe as you create intro links for courses
-  */}
-        <iframe
-          src="https://www.youtube.com/embed/RKLKib4bHhA"
-          frameBorder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+        <ReactPlayer
+          url={lecture}
+          height="100%"
+          width="100%"
+          playing={false}
         />
       </div>
       <div className={css.title}>
@@ -48,13 +49,17 @@ const renderHead = (title, lecture) => {
 
 export const PublishedCard = props => {
   const course = props.course;
-  const title =
-    course !== null && course !== undefined
-      ? course.title
-      : "This is Course Title";
-
-  const creditPoints =
-    course !== null && course !== undefined ? course.credit_points : "10";
+  let lecture = "https://www.youtube.com/embed/RKLKib4bHhA";
+  try {
+    const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
+    lecture = props.course.modules[0].lessons[0].lecture;
+    lecture = lecture === "" || lecture === null ? backup : lecture;
+    console.log("Found lecure : ", course.id, lecture);
+  } catch (err) {
+    console.log("Doest not have lectures : ", course.id);
+  }
+  const title = course.title;
+  const creditPoints = course.credit_points;
   return (
     <div className={css.published}>
       {renderHead(title)}
@@ -62,6 +67,36 @@ export const PublishedCard = props => {
       <div className={css.credits}>
         <span>Credit Points</span>
         <span>{creditPoints}</span>
+      </div>
+    </div>
+  );
+};
+
+export const TopCourseCard = props => {
+  const course = props.course;
+  let lecture = "https://www.youtube.com/embed/RKLKib4bHhA";
+  try {
+    const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
+    lecture = props.course.modules[0].lessons[0].lecture;
+    lecture = lecture === "" || lecture === null ? backup : lecture;
+    console.log("Found lecure : ", course.id, lecture);
+  } catch (err) {
+    console.log("Doest not have lectures : ", course.id);
+  }
+  const title = course.title;
+  const creditPoints = course.credit_points;
+  const enrollments = course.students_count;
+  return (
+    <div className={css.published}>
+      {renderHead(title, lecture)}
+      <div className={css.rating}>{RenderRating()}</div>
+      <div className={css.credits}>
+        <span>Credit Points</span>
+        <span>{creditPoints}</span>
+      </div>
+      <div className={css.credits}>
+        <span>Students</span>
+        <span>{enrollments}</span>
       </div>
     </div>
   );
