@@ -18,6 +18,7 @@ const getDetailedCard = (course, type, activeTab, closeSelectedCourse) => {
         course={course}
         closeSelectedCourse={closeSelectedCourse}
         activeTab={activeTab}
+        key={`detailed_draft_course_${course.id}`}
       />
     );
   }
@@ -26,6 +27,7 @@ const getDetailedCard = (course, type, activeTab, closeSelectedCourse) => {
       course={course}
       closeSelectedCourse={closeSelectedCourse}
       courseListType={activeTab}
+      key={`detailed_course_${course.id}`}
     />
   );
 };
@@ -44,7 +46,7 @@ const getCourseList = (props, type) => {
 
   return props.courses.map(course => {
     return (
-      <>
+      <React.Fragment key={`fragment_course_${course.id}`}>
         <div
           className={
             css.courseCard +
@@ -69,7 +71,7 @@ const getCourseList = (props, type) => {
               props.closeSelectedCourse
             )
           : null}
-      </>
+      </React.Fragment>
     );
   });
 };

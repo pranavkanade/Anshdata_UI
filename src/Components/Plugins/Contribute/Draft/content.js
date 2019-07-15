@@ -126,10 +126,10 @@ class CourseContent extends Component {
     );
     const Modules = this.state.course.modules.map(mod => {
       return (
-        <>
+        <React.Fragment key={`fragment_mod_${mod.id}`}>
           <ModuleCardDraft
             module={mod}
-            key={mod.id}
+            key={`module_draft_${mod.id}`}
             select={this.setSelectedModule}
             modify={this.modifySelectedModule}
           />
@@ -137,12 +137,12 @@ class CourseContent extends Component {
           !this.state.shouldOpenAddModule ? (
             <DetailedModuleCardDraft
               module={mod}
-              key={`detailed_${mod.id}`}
+              key={`mod_detailed_${mod.id}`}
               close={this.closeSelectedModule}
               addNewBtn={this.addHandler}
             />
           ) : null}
-        </>
+        </React.Fragment>
       );
     });
 
