@@ -143,12 +143,12 @@ class Contribute extends Component {
   render() {
     return (
       <div className={css.contributePage}>
-        <SearchBar
+        {/*<SearchBar
           placeholder="Course Name"
           searchedValue={this.state.courseSearched}
           changeHandler={this.setSearchedCourseHandler}
           searchHandler={this.onSearched}
-        />
+        />*/}
         <div className={css.actionBar}>
           {this.renderSubMenu()}
           <Link href="/contribute/course">

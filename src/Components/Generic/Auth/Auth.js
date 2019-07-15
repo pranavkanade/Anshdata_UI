@@ -189,7 +189,7 @@ class Auth extends Component {
     }
     this.close();
     this.props.reloadOnAuthEvent();
-    Router.push(window.location.pathname);
+    Router.replace(window.location.pathname);
   };
 }
 

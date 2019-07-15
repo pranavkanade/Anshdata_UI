@@ -59,7 +59,7 @@ class Courses extends Component {
 
   renderCourses = (courses, listType) => {
     if (courses.length === 0) {
-      return <p>Take up some courses</p>;
+      return <p>Course List</p>;
     }
 
     if (listType === courseListType.ENROLLED) {
@@ -90,7 +90,7 @@ class Courses extends Component {
     console.log("Courses enrolled : ", courseEnrolledin);
     // return null;
     return courseEnrolledin === null ? (
-      <span>Courses you'll enroll in</span>
+      <span>Your Courses</span>
     ) : (
       this.renderCourses(courseEnrolledin, courseListType.ENROLLED)
     );
@@ -102,12 +102,6 @@ class Courses extends Component {
     return (
       <div className={"CoursesPlugin"}>
         <div className={css.ad_courses}>
-          <div className={css.ad_overlayBtn}>
-            <button onClick={this.handleShowClick}>
-              <span>My Courses</span>
-            </button>
-          </div>
-
           <Drawer
             show={this.state.visible}
             onHide={this.handleHideClick}
@@ -119,11 +113,15 @@ class Courses extends Component {
               <div>{this.renderMyCourses()}</div>
             </div>
           </Drawer>
-
+          <div className={css.ad_overlayBtn}>
+            <button onClick={this.handleShowClick}>
+              <span>My Courses</span>
+            </button>
+          </div>
           <div className={css.ad_catalog}>
             <div className={css.ad_heading}>
               <span>Course Catalog</span>
-              <div className={css.ad_searchBar}>
+              {/*<div className={css.ad_searchBar}>
                 <input
                   placeholder="Course Name"
                   name="courseSearched"
@@ -132,7 +130,7 @@ class Courses extends Component {
                   onChange={event => this.changeHandler(event)}
                 />
                 <button>Search</button>
-              </div>
+              </div>*/}
             </div>
             {courseListing === null ? (
               <Loader msg="Gathering all courses" />

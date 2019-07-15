@@ -42,7 +42,7 @@ class App extends Component {
   signOutHandler = () => {
     this.setState({ isAuthenticated: false, attemptingSignIn: false });
     this.authEventHandler();
-    Router.push("/");
+    Router.replace("/");
   };
 
   showAuthFormHandler = authOption => {
