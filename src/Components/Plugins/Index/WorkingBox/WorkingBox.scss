@@ -10,7 +10,7 @@
   grid-gap: 3rem;
   place-content: center;
   justify-content: center;
-  span {
+  .title {
     // padding-left: 1rem;
     font-family: Scope One, Roboto;
     font-style: normal;
@@ -31,6 +31,33 @@
     /* mild */
     box-shadow: $shadow-1;
     border-radius: 10px;
+
+    span {
+      padding: 2rem;
+      font-style: normal;
+      font-weight: bolder;
+      font-size: 28px;
+      line-height: 56px;
+    }
+    .list {
+      padding: 1rem 1rem 2rem 1rem;
+
+      p {
+        padding-left: 2rem;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 40px;
+      }
+
+      span {
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        margin-right: 1rem;
+        font-style: normal;
+        font-weight: bolder;
+        font-size: 28px;
+      }
+    }
   }
 
   .secondary {
