@@ -72,6 +72,11 @@ const navbar = props => {
         <div className={css.item}>
           {renderNavMenus(props)}
           {renderAuthMenuItem(props)}
+          <button
+            className={css.feedback}
+            onClick={props.shouldToggleFeedback}>
+            feedback 🤓
+          </button>
         </div>
       </div>
     </div>

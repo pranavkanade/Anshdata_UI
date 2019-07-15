@@ -18,6 +18,31 @@
   background: $Base-secondary;
 }
 
+.feedback {
+  // color: $Base-primary;
+  color: #ffffff;
+  position: fixed;
+  background: #ff1100;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 20;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  border: 0px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: #ffffff;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  box-shadow: $shadow-all-3;
+  transition: 0.3s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+}
+
 .brandLogo {
   button {
     background: inherit;

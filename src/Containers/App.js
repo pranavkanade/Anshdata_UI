@@ -4,6 +4,7 @@ import Ribbon from "../Components/Generic/Ribbon/ribbon";
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
+import Feedback from "../Components/Generic/Feedback/feedback";
 import Router from "next/router";
 import { getADUser } from "../Requests/Authorization";
 import { verifyUserToken } from "../Requests/Authentication";
@@ -14,7 +15,12 @@ class App extends Component {
     isAuthenticated: false,
     AnshdataUser: null,
     attemptingSignIn: false,
-    authOption: "signup"
+    authOption: "signup",
+    showFeedback: false
+  };
+
+  shouldToggleFeedback = () => {
+    this.setState({ showFeedback: !this.state.showFeedback });
   };
 
   hideAuthFormHandler = () => {
@@ -76,6 +82,7 @@ class App extends Component {
           user={this.state.AnshdataUser}
           activeMenu={this.state.page}
           signOutHandler={this.signOutHandler}
+          shouldToggleFeedback={this.shouldToggleFeedback}
         />
         {this.state.attemptingSignIn ? (
           <Auth
@@ -83,6 +90,9 @@ class App extends Component {
             hideAuthFormHandler={this.hideAuthFormHandler}
             authOption={this.state.authOption}
           />
+        ) : null}
+        {this.state.showFeedback ? (
+          <Feedback shouldToggleFeedback={this.shouldToggleFeedback} />
         ) : null}
         <div>{this.renderChildren()}</div>
         <Ribbon
@@ -106,11 +116,6 @@ class App extends Component {
 
   componentWillUnmount() {
     console.log("[App.js] component will unmount");
-  }
-
-  shouldComponentUpdate() {
-    console.log("[App.js] should component Update");
-    return true;
   }
 
   componentDidUpdate() {
