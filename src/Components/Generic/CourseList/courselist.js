@@ -57,7 +57,7 @@ const getCourseList = (props, type) => {
           }
           key={course.id}
           onClick={
-            type !== "enrolled"
+            type !== "enrolled" && type !== "top"
               ? () => props.setSelectedCourse(course.id)
               : () => Router.push(`/courses/attend/${course.id}`)
           }>

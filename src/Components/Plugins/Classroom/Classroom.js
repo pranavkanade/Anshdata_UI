@@ -67,7 +67,8 @@ class CourseClassroom extends Component {
   };
 
   ifEnrolledSaveHandler = data => {
-    if (data.length !== 0) {
+    console.log("Course Progress : ", data);
+    if (data !== undefined && data !== null && data.length !== 0) {
       console.log("Course Progress : ", data);
       this.setState({
         isEnrolledIn: true,
