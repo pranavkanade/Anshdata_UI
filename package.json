@@ -27,9 +27,11 @@
     "polished": "^3.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-no-ssr": "^1.1.0",
     "react-player": "^1.11.1",
-    "react-redux": "^7.0.3",
-    "redux": "^4.0.1",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
     "rsuite": "^3.8.6",
     "semantic-ui-react": "^0.86.0",
     "styled-components": "^4.3.1"
