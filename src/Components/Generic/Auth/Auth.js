@@ -195,7 +195,6 @@ class Auth extends Component {
       this.props.storeUserSignedIn(user);
     }
     this.close();
-    this.props.reloadOnAuthEvent();
     Router.replace(window.location.pathname);
   };
 }

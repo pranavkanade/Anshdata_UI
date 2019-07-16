@@ -6,7 +6,6 @@ import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
 import Feedback from "../Components/Generic/Feedback/feedback";
 import Router from "next/router";
-import { getADUser } from "../Requests/Authorization";
 import { verifyUserToken } from "../Requests/Authentication";
 import { connect } from "react-redux";
 import { storeUserSignedOut } from "../store/store";
@@ -14,8 +13,7 @@ import { storeUserSignedOut } from "../store/store";
 class App extends Component {
   state = {
     page: this.props.page,
-    isAuthenticated: false,
-    AnshdataUser: null,
+    isAuthenticated: this.props.isAuthenticated,
     attemptingSignIn: false,
     authOption: "signup",
     showFeedback: false
@@ -29,28 +27,8 @@ class App extends Component {
     this.setState({ attemptingSignIn: false });
   };
 
-  authEventHandler = () => {
-    // const rawUserData = localStorage.getItem("AnshdataUser");
-    const adUser = getADUser();
-    console.log("[App.js] auth Event handler", adUser);
-    let isAuthenticated = adUser === null ? false : !!adUser.token;
-    let user;
-    try {
-      user = adUser.user;
-    } catch (err) {
-      user = null;
-      isAuthenticated = false;
-    }
-    this.setState({
-      isAuthenticated: isAuthenticated,
-      AnshdataUser: user
-    });
-  };
-
   signOutHandler = () => {
-    this.setState({ isAuthenticated: false, attemptingSignIn: false });
     this.props.storeUserSignedOut();
-    this.authEventHandler();
     Router.replace("/");
   };
 
@@ -69,9 +47,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(
-      "[App.js] render\n-------------------------------------------"
-    );
     return (
       <div className={"App"}>
         <Ribbon
@@ -89,7 +64,6 @@ class App extends Component {
 
         {this.state.attemptingSignIn ? (
           <Auth
-            reloadOnAuthEvent={this.authEventHandler}
             hideAuthFormHandler={this.hideAuthFormHandler}
             authOption={this.state.authOption}
           />
@@ -117,9 +91,6 @@ class App extends Component {
       this.props
     );
     verifyUserToken();
-    if (!this.state.isAuthenticated) {
-      this.authEventHandler();
-    }
   }
 
   componentWillUnmount() {
@@ -132,8 +103,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { user, isAuthenticated } = state;
-  return { user, isAuthenticated };
+  const { isAuthenticated } = state;
+  return { isAuthenticated };
 }
 
 const mapDispatchToProps = { storeUserSignedOut };
