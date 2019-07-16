@@ -1,58 +1,37 @@
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import {
-  setADStateToLocalStorage,
-  getADStateFromLocalStorage
-} from "../utils/localStorage";
-import actionTypes from "./actionTypes";
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
-const initialPlatformState = {
-  user: null,
-  authToken: null,
-  isAuthenticated: false
-};
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./sagas";
 
-export const adReducer = (state = initialPlatformState, action) => {
-  let resp = null;
-  switch (action.type) {
-    case actionTypes.SIGN_IN:
-    case actionTypes.SIGN_UP:
-      resp = Object.assign({}, state, {
-        user: action.data.user,
-        authToken: action.data.token,
-        isAuthenticated: true
-      });
-      console.log("[Reducer Sign IN/UP] updated store : ", resp);
-      setADStateToLocalStorage(resp);
-      return resp;
-    case actionTypes.SIGN_OUT:
-      resp = Object.assign({}, state, initialPlatformState);
-      setADStateToLocalStorage(resp);
-      return resp;
-    default:
-      return state;
+import userReducer from "./reducers/user";
+import coursesReducer from "./reducers/courses";
+
+const rootReducer = combineReducers({
+  user: userReducer,
+  crs: coursesReducer
+});
+
+const sagaMiddleware = createSagaMiddleware();
+
+export function initializeADStore(initialState) {
+  const isServer = typeof window === "undefined";
+  if (isServer) {
+    return createStore(rootReducer, composeWithDevTools(applyMiddleware()));
   }
-};
-
-// Actions
-export const storeUserSignedIn = data => {
-  console.log("[Sign in action] Trying to store user: ", data);
-  return { type: actionTypes.SIGN_IN, data: data };
-};
-
-export const storeUserSignedUp = data => {
-  console.log("[Sign up action] Trying to store user: ", data);
-  return { type: actionTypes.SIGN_UP, data: data };
-};
-
-export const storeUserSignedOut = () => {
-  return { type: actionTypes.SIGN_OUT };
-};
-
-export function initializeADStore(initialState = initialPlatformState) {
-  return createStore(
-    adReducer,
-    initialState,
-    composeWithDevTools(applyMiddleware())
-  );
+  let store;
+  if (initialState !== null && initialState !== undefined) {
+    store = createStore(
+      rootReducer,
+      initialState,
+      composeWithDevTools(applyMiddleware(sagaMiddleware))
+    );
+  } else {
+    store = createStore(
+      rootReducer,
+      composeWithDevTools(applyMiddleware(sagaMiddleware))
+    );
+  }
+  sagaMiddleware.run(rootSaga);
+  return store;
 }

@@ -19,9 +19,6 @@ class AdApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
 
-    const store = getOrCreateStore();
-    ctx.store = store;
-
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
