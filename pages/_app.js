@@ -1,6 +1,7 @@
 import React from "react";
 import App, { Container } from "next/app";
 import { Provider } from "react-redux";
+import MyAppLayout from "../src/Containers/App";
 import { getOrCreateStore } from "../src/store/withStore";
 import Head from "../src/Components/app/head";
 
@@ -24,7 +25,9 @@ class AdApp extends App {
       <Container>
         <Head />
         <Provider store={getOrCreateStore()}>
-          <Component {...pageProps} />
+          <MyAppLayout>
+            <Component {...pageProps} />
+          </MyAppLayout>
         </Provider>
       </Container>
     );

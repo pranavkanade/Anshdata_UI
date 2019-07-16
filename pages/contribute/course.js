@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import App from "../../src/Containers/App";
 import CourseForm from "../../src/Components/Plugins/Contribute/Course/course";
 
 const getCourseId = props => {
@@ -13,11 +12,7 @@ const getCourseId = props => {
 };
 
 const contribCourse = props => {
-  return (
-    <App page={"ContribCourse"}>
-      <CourseForm courseId={getCourseId(props)} />
-    </App>
-  );
+  return <CourseForm courseId={getCourseId(props)} />;
 };
 
 export default contribCourse;

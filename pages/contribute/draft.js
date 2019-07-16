@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import App from "../../src/Containers/App";
+
 import DraftedCourse from "../../src/Components/Plugins/Contribute/Draft/index";
 
 const getCourseId = props => {
@@ -14,11 +14,7 @@ const getCourseId = props => {
 };
 
 const contribDraft = props => {
-  return (
-    <App page={"DraftCourse"}>
-      <DraftedCourse courseId={getCourseId(props)} />
-    </App>
-  );
+  return <DraftedCourse courseId={getCourseId(props)} />;
 };
 
 export default contribDraft;
