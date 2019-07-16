@@ -8,7 +8,7 @@ import Feedback from "../Components/Generic/Feedback/feedback";
 import Router from "next/router";
 import { verifyUserToken } from "../Requests/Authentication";
 import { connect } from "react-redux";
-import { storeUserSignedOut } from "../store/store";
+import { storeUserSignedOut } from "../store/actions";
 
 class App extends Component {
   state = {
@@ -103,7 +103,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { isAuthenticated } = state;
+  const { isAuthenticated } = state.user;
   return { isAuthenticated };
 }
 

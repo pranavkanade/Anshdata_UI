@@ -95,7 +95,7 @@ const navbar = props => {
 };
 
 function mapStateToProps(state) {
-  const { isAuthenticated, user } = state;
+  const { isAuthenticated, user } = state.user;
   return { isAuthenticated, user };
 }
 

@@ -169,7 +169,7 @@ class Courses extends Component {
 }
 
 function mapStateToProps(state) {
-  const { isAuthenticated } = state;
+  const { isAuthenticated } = state.user;
   return { isAuthenticated };
 }
 

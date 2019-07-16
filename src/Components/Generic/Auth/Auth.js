@@ -12,7 +12,7 @@ import {
 import Router from "next/router";
 
 import { connect } from "react-redux";
-import { storeUserSignedIn, storeUserSignedUp } from "../../../store/store";
+import { storeUserSignedIn, storeUserSignedUp } from "../../../store/actions";
 
 import Loader from "../../Generic/Loader/loader";
 
@@ -200,7 +200,7 @@ class Auth extends Component {
 }
 
 function mapStateToProps(state) {
-  const { user } = state;
+  const { user } = state.user;
   return { user };
 }
 
