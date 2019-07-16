@@ -62,43 +62,13 @@
 
   .secondary {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: column-reverse;
+    // justify-content: space-between;
     .introClip {
-      height: 320px;
+      height: 370px;
       width: 470px;
       justify-self: right;
-      iframe {
-        height: 100%;
-        width: 100%;
-      }
-    }
-
-    button {
-      align-self: center;
-      height: 64px;
-      padding: 0 4rem 0 4rem;
-
-      background: $Blue-3;
-      border-radius: 5px;
-      border: 0px;
-      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
-      font-family: Barlow, Roboto;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 28px;
-      line-height: 34px;
-      text-align: center;
-
-      color: $White-0;
-      transition: 0.3s ease;
-      &:hover {
-        cursor: pointer;
-        // color: $Blue-3;
-        background: $Blue-3b;
-        box-shadow: $shadow-all-2;
-        transform: translateY(-10px);
-      }
+      box-shadow: $shadow-all-3;
     }
   }
 }

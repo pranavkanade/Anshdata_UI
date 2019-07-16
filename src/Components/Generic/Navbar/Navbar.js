@@ -76,6 +76,13 @@ const navbar = props => {
           {isAuthenticated
             ? renderUserPopup(user, signOutHandler)
             : renderAuthBtns(showAuthFormHandler)}
+          {!isAuthenticated ? (
+            <button
+              className={css.float_join}
+              onClick={() => showAuthFormHandler("signup")}>
+              Join
+            </button>
+          ) : null}
           <button
             className={css.feedback}
             onClick={props.shouldToggleFeedback}>

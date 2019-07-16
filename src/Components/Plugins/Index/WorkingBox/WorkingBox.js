@@ -78,9 +78,6 @@ export default props => {
               width="100%"
             />
           </div>
-          <button onClick={() => props.showAuthFormHandler("signup")}>
-            Join Now
-          </button>
         </div>
       </div>
 
