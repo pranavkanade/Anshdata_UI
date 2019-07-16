@@ -29,6 +29,7 @@ export const signupHandler = async (event, signupData) => {
     removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
     setUserToLocalStorage(data);
+    return data;
   } catch (err) {
     console.log("[Auth.js] SIGNUP ERR : ", err);
   }
@@ -52,6 +53,7 @@ export const signinHandler = async (event, signinData) => {
     removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
     setUserToLocalStorage(data);
+    return data;
   } catch (err) {
     console.log("[Auth.js] SIGNIN ERR : ", err);
   }
