@@ -15,6 +15,14 @@ export const storeUserSignedOut = () => {
   return { type: actionTypes.SIGN_OUT };
 };
 
+export const storeUserVerify = data => {
+  return { type: actionTypes.USER_VERIFY, data: data };
+};
+
+export const makeUserVerify = () => {
+  return { type: actionTypes.MAKE_USER_VERIFY };
+};
+
 export const storeTopCourses = data => {
   return { type: actionTypes.STORE_TOP_COURSES, data: data };
 };

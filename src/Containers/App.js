@@ -6,9 +6,8 @@ import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
 import Feedback from "../Components/Generic/Feedback/feedback";
 import Router from "next/router";
-import { verifyUserToken } from "../Requests/Authentication";
 import { connect } from "react-redux";
-import { storeUserSignedOut } from "../store/actions";
+import { storeUserSignedOut, makeUserVerify } from "../store/actions";
 
 class App extends Component {
   state = {
@@ -90,7 +89,9 @@ class App extends Component {
       "Props : ",
       this.props
     );
-    verifyUserToken();
+    if (this.props.isAuthenticated) {
+      this.props.makeUserVerify();
+    }
   }
 
   componentWillUnmount() {
@@ -107,7 +108,7 @@ function mapStateToProps(state) {
   return { isAuthenticated };
 }
 
-const mapDispatchToProps = { storeUserSignedOut };
+const mapDispatchToProps = { storeUserSignedOut, makeUserVerify };
 
 export default connect(
   mapStateToProps,

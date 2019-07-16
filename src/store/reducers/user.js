@@ -27,6 +27,13 @@ const reducer = (state = initialState, action) => {
       resp = Object.assign({}, state, initialState);
       removeADStateFromLocalStorage();
       return resp;
+    case actionTypes.USER_VERIFY:
+      console.log("[USER VERIFY reducer] data recieved : ", action.data);
+      resp = Object.assign({}, state, {
+        authToken: action.data.token
+      });
+      setADStateToLocalStorage({ user: resp });
+      return resp;
     default:
       return state;
   }

@@ -16,7 +16,6 @@ class TopCourses extends Component {
 
   renderCategoryCards = () => {
     const { topCourses } = this.props;
-    console.log("top courses : ", topCourses);
     if (topCourses === null || topCourses === undefined) {
       return null;
     }
