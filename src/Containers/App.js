@@ -8,6 +8,8 @@ import Feedback from "../Components/Generic/Feedback/feedback";
 import Router from "next/router";
 import { getADUser } from "../Requests/Authorization";
 import { verifyUserToken } from "../Requests/Authentication";
+import { connect } from "react-redux";
+import { storeUserSignedOut } from "../store/store";
 
 class App extends Component {
   state = {
@@ -47,6 +49,7 @@ class App extends Component {
 
   signOutHandler = () => {
     this.setState({ isAuthenticated: false, attemptingSignIn: false });
+    this.props.storeUserSignedOut();
     this.authEventHandler();
     Router.replace("/");
   };
@@ -76,14 +79,14 @@ class App extends Component {
             "Welcome! and thank you for visiting Anshdata. The platform is currently in Alpha testing phase. We appreciate your support!"
           }
         />
+
         <Navbar
-          isAuthenticated={this.state.isAuthenticated}
           showAuthFormHandler={this.showAuthFormHandler}
-          user={this.state.AnshdataUser}
           activeMenu={this.state.page}
           signOutHandler={this.signOutHandler}
           shouldToggleFeedback={this.shouldToggleFeedback}
         />
+
         {this.state.attemptingSignIn ? (
           <Auth
             reloadOnAuthEvent={this.authEventHandler}
@@ -107,7 +110,12 @@ class App extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    console.log("[App.js] component did mount", this.state);
+    console.log(
+      "[App.js] component did mount State :",
+      this.state,
+      "Props : ",
+      this.props
+    );
     verifyUserToken();
     if (!this.state.isAuthenticated) {
       this.authEventHandler();
@@ -123,4 +131,14 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  const { user, isAuthenticated } = state;
+  return { user, isAuthenticated };
+}
+
+const mapDispatchToProps = { storeUserSignedOut };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

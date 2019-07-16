@@ -1,44 +1,45 @@
 import React from "react";
-
+import Link from "next/link";
 import css from "./navbar.scss";
 import { logoutHandler } from "../../../Requests/Authentication";
 import UserPopup from "./userpopup";
+import { connect } from "react-redux";
 
 const menus = ["Courses", "Contribute", "Blog"];
 
-const renderAuthMenuItem = props => {
-  if (!props.isAuthenticated) {
-    return (
-      <>
-        <div>
-          <button
-            className={css.join}
-            onClick={() => props.showAuthFormHandler("signup")}>
-            Join
-          </button>
-        </div>
-        <div>
-          <button
-            className={css.signIn}
-            onClick={() => props.showAuthFormHandler("signin")}>
-            Sign In
-          </button>
-        </div>
-      </>
-    );
-  } else {
-    return (
+const renderAuthBtns = showAuthFormHandler => {
+  return (
+    <React.Fragment>
       <div>
-        <UserPopup
-          user={props.user}
-          handleSignout={event => handleSignout(event, props.signOutHandler)}>
-          <button className={css.user}>
-            <img src="../../../../static/assets/icon/person_outline_24px_outlined.svg" />
-          </button>
-        </UserPopup>
+        <button
+          className={css.join}
+          onClick={() => showAuthFormHandler("signup")}>
+          Join
+        </button>
       </div>
-    );
-  }
+      <div>
+        <button
+          className={css.signIn}
+          onClick={() => showAuthFormHandler("signin")}>
+          Sign In
+        </button>
+      </div>
+    </React.Fragment>
+  );
+};
+
+const renderUserPopup = (user, signOutHandler) => {
+  return (
+    <div className={css.user_outlook}>
+      <UserPopup
+        user={user}
+        handleSignout={event => handleSignout(event, signOutHandler)}>
+        <button className={css.user}>
+          <img src="../../../../static/assets/icon/person_outline_24px_outlined.svg" />
+        </button>
+      </UserPopup>
+    </div>
+  );
 };
 
 const handleSignout = async (event, handler) => {
@@ -52,26 +53,29 @@ const renderNavMenus = props => {
   return menus.map((m, i) => {
     return (
       <div key={i}>
-        <a href={"/".concat(m.toLowerCase())}>
+        <Link href={"/".concat(m.toLowerCase())}>
           <button className={css.navLink}>{m}</button>
-        </a>
+        </Link>
       </div>
     );
   });
 };
 
 const navbar = props => {
+  const { isAuthenticated, user, signOutHandler, showAuthFormHandler } = props;
   return (
     <div className={css.navbar}>
       <div className={css.container}>
         <div className={css.brandLogo}>
-          <a href="/">
+          <Link href="/">
             <button>Anshdata</button>
-          </a>
+          </Link>
         </div>
         <div className={css.item}>
           {renderNavMenus(props)}
-          {renderAuthMenuItem(props)}
+          {isAuthenticated
+            ? renderUserPopup(user, signOutHandler)
+            : renderAuthBtns(showAuthFormHandler)}
           <button
             className={css.feedback}
             onClick={props.shouldToggleFeedback}>
@@ -83,4 +87,9 @@ const navbar = props => {
   );
 };
 
-export default navbar;
+function mapStateToProps(state) {
+  const { isAuthenticated, user } = state;
+  return { isAuthenticated, user };
+}
+
+export default connect(mapStateToProps)(navbar);
