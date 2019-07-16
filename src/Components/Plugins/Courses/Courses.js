@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Drawer } from "rsuite";
+import { connect } from "react-redux";
 import {
   renderPublishedCoursesList as PublishedCoursesList,
   renderEnrolledCoursesList as EnrolledCoursesList
@@ -19,7 +20,8 @@ class Courses extends Component {
     enrolledCourses: null,
     courseSearched: "",
     selectedCourse: 0,
-    visible: false
+    visible: false,
+    isAuthenticated: this.props.isAuthenticated
   };
 
   handleHideClick = () => this.setState({ visible: false });
@@ -146,7 +148,9 @@ class Courses extends Component {
   // Lifecycle methods
   componentDidMount() {
     console.log("[Courses.js] component did mount", this.state);
-    getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+    if (this.state.isAuthenticated) {
+      getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+    }
     getCoursesList(this.saveCoursesHandler);
   }
 
@@ -154,14 +158,19 @@ class Courses extends Component {
     console.log("[courses.js] component will unmount");
   }
 
-  // shouldComponentUpdate() {
-  //   console.log("[Courses.js] should component Update");
-  //   return true;
-  // }
-
   componentDidUpdate() {
     console.log("[Courses.js] component did update");
+    if (this.props.isAuthenticated && this.state.enrolledCourses === null) {
+      // NOTE: This is going to be hell merry .. when actually new user comes on this page.
+      getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+      getCoursesList(this.saveCoursesHandler);
+    }
   }
 }
 
-export default Courses;
+function mapStateToProps(state) {
+  const { isAuthenticated } = state;
+  return { isAuthenticated };
+}
+
+export default connect(mapStateToProps)(Courses);
