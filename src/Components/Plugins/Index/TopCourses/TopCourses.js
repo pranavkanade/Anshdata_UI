@@ -6,7 +6,7 @@ import css from "./TopCourses.scss";
 import { renderTopCoursesList as CourseList } from "../../../Generic/CourseList/courselist";
 class TopCourses extends Component {
   state = {
-    courses: this.props.topCourses,
+    courses: null,
     crsCount: 5
   };
 
@@ -15,7 +15,7 @@ class TopCourses extends Component {
   };
 
   renderCategoryCards = () => {
-    const { topCourses } = this.props;
+    const topCourses = this.state.courses;
     if (topCourses === null || topCourses === undefined) {
       return null;
     }
@@ -28,7 +28,7 @@ class TopCourses extends Component {
   };
 
   displayMore = () => {
-    const { topCourses } = this.props;
+    const topCourses = this.state.courses;
     const count = this.state.crsCount + 5;
     // this.setState({ crsCount: count });
     if (count <= topCourses.length) {
@@ -71,6 +71,15 @@ class TopCourses extends Component {
       this.props.topCourses === undefined
     ) {
       this.props.getTopCourses();
+    }
+    if (this.state.courses === null) {
+      this.setState({ courses: this.props.topCourses });
+    }
+  };
+
+  componentDidUpdate = () => {
+    if (this.state.courses === null) {
+      this.setState({ courses: this.props.topCourses });
     }
   };
 }
