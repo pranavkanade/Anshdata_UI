@@ -140,13 +140,17 @@ class DetailedCourse extends Component {
       return null;
     } else if (this.state.isEnrolledIn) {
       return (
-        <Link href={`/courses/attend/${this.state.course.id}`}>
+        <Link
+          href="/courses/attend/[crsId]"
+          as={`/courses/attend/${this.state.course.id}`}>
           <button className={css.attend}>Attend</button>
         </Link>
       );
     } else {
       return (
-        <Link href={`/courses/attend/${this.state.course.id}`}>
+        <Link
+          href="/courses/attend/[crsId]"
+          as={`/courses/attend/${this.state.course.id}`}>
           <button
             className={css.enroll}
             onClick={() => enrollEventHandler(this.state.course.id)}>

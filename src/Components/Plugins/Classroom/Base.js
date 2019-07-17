@@ -321,7 +321,7 @@ const ClassroomBase = props => {
   return (
     <div className={css.classroomBase}>
       <div className={css.head}>
-        <Link href={`/courses/${props.course.id}`}>
+        <Link href="/courses/[crsId]" as={`/courses/${props.course.id}`}>
           <span>{props.course.title}</span>
         </Link>
       </div>

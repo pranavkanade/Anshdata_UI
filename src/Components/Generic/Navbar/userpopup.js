@@ -13,7 +13,7 @@ const Speaker = (username, handleSignout) => {
       </div>
       <Divider />
       <div className={css.ad_popup}>
-        <Link href={`/u/${username}`}>
+        <Link href="/user/[usrName]" as={`/user/${username}`}>
           <span className={css.ad_link}>Your Profile</span>
         </Link>
         <span className={css.ad_link}>Your Courses</span>

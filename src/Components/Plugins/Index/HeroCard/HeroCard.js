@@ -14,11 +14,11 @@ export default props => {
         <div />
         <div />
         <div className={css.heroBtns}>
-          <Link href={props.explore}>
+          <Link href="/courses">
             <button className={css.exploreBtn}>Start Exploring</button>
           </Link>
           <span />
-          <Link href={props.contribute}>
+          <Link href="/contribute">
             <button className={css.contributeBtn}>Contribute Now</button>
           </Link>
         </div>

@@ -13,7 +13,7 @@ const index = props => {
   return (
     <div className={"IndexPlugin"}>
       <div className={css.landing}>
-        <Hero explore="/courses" contribute="/contribute" />
+        <Hero />
         <img
           className={css.backWorking}
           src="../../../../static/assets/back/howWorks.svg"
@@ -27,7 +27,7 @@ const index = props => {
         </div>
 
         <div className={css.testimonials}>
-          <Testimonials explore="/courses" contribute="/contribute" />
+          <Testimonials />
         </div>
 
         <div className={css.mentions}>
