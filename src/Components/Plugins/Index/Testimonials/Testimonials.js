@@ -52,10 +52,10 @@ export default props => {
       <div className={css.btnBox}>
         <div />
         <div className={css.btns}>
-          <Link href={props.explore}>
+          <Link href="/courses">
             <button className={css.exploreBtn}>Start Exploring</button>
           </Link>
-          <Link href={props.contribute}>
+          <Link href="/contribute">
             <button className={css.contributeBtn}>Contribute Now</button>
           </Link>
         </div>

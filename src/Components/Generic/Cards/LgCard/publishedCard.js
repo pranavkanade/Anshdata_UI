@@ -35,7 +35,9 @@ class DetailedCourseCard extends Component {
   renderActionBtn = courseId => {
     if (this.props.courseListType === courseListType.ENROLLED) {
       return (
-        <Link href={`/courses/attend/${courseId}`}>
+        <Link
+          href="/courses/attend/[crsId]"
+          as={`/courses/attend/${courseId}`}>
           <button className={css.attend}>
             <span>Attend</span>
             <img
@@ -48,7 +50,9 @@ class DetailedCourseCard extends Component {
       );
     } else {
       return (
-        <Link href={`/courses/attend/${courseId}`}>
+        <Link
+          href="/courses/attend/[crsId]"
+          as={`/courses/attend/${courseId}`}>
           <button
             className={css.enroll}
             onClick={() => enrollEventHandler(courseId)}>
@@ -110,7 +114,7 @@ class DetailedCourseCard extends Component {
     return (
       <div className={css.detailedCourse}>
         <div className={css.head}>
-          <Link href={`/courses/${course.id}`}>
+          <Link href="/courses/[crsId]" as={`/courses/${course.id}`}>
             <span>{course.title}</span>
           </Link>
           <button

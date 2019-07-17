@@ -12,6 +12,11 @@ const renderHead = (id, title, closeHandler, activeTab) => {
     <div className={css.head}>
       <Link
         href={
+          activeTab === "drafts"
+            ? "/contribute/draft/[crsId]"
+            : "/courses/[crsId]"
+        }
+        as={
           activeTab === "drafts" ? `/contribute/draft/${id}` : `/courses/${id}`
         }>
         <span>{title}</span>
@@ -83,7 +88,9 @@ const renderActionBar = props => {
   }
   return (
     <div className={css.actionBar}>
-      <Link href={`/contribute/draft/${props.course.id}`}>
+      <Link
+        href="/contribute/draft/[crsId]"
+        as={`/contribute/draft/${props.course.id}`}>
         <button className={css.modify}>
           <span>Modify</span>
           <img src="./../../../../../static/assets/icon/create_24px_outlined.svg" />
