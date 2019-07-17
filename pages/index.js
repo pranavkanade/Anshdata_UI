@@ -1,13 +1,8 @@
-import React from 'react';
-import App from "../src/Containers/App";
+import React from "react";
 import Index from "../src/Components/Plugins/Index/Index";
 
 const index = () => {
-  return (
-    <App page={"Home"}>
-      <Index/>
-    </App>
-  )
-}
+  return <Index />;
+};
 
 export default index;

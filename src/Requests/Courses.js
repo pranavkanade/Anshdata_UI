@@ -118,19 +118,17 @@ export const deleteCourse = async courseId => {
   }
 };
 
-export const getTopPopularCourses = async saveHandler => {
+export const getTopPopularCoursesWithSaga = async () => {
   const URL = `http://127.0.0.1:8000/api/course/top/`;
   try {
-    await fetch(URL, {
+    const response = await fetch(URL, {
       method: "GET",
       headers: {
         "content-type": "application/json"
       }
-    })
-      .then(resp => resp.json())
-      .then(data => {
-        saveHandler(data);
-      });
+    });
+    const data = await response.json();
+    return data;
   } catch (err) {
     console.log("[Courses.js] failed to fetch most popular courses", err);
   }

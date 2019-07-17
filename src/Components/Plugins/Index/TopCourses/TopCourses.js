@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
+import { getTopCourses } from "../../../../store/actions";
 import css from "./TopCourses.scss";
 
-import { getTopPopularCourses } from "./../../../../Requests/Courses";
 import { renderTopCoursesList as CourseList } from "../../../Generic/CourseList/courselist";
-export default class extends Component {
+class TopCourses extends Component {
   state = {
     courses: null,
     crsCount: 5
@@ -15,11 +15,11 @@ export default class extends Component {
   };
 
   renderCategoryCards = () => {
-    console.log("top courses : ", this.state.courses);
-    if (this.state.courses === null) {
+    const topCourses = this.state.courses;
+    if (topCourses === null || topCourses === undefined) {
       return null;
     }
-    const courses = this.state.courses.slice(0, this.state.crsCount);
+    const courses = topCourses.slice(0, this.state.crsCount);
     return (
       <div className={css.categoryCarousel}>
         <CourseList courses={courses} />
@@ -28,12 +28,13 @@ export default class extends Component {
   };
 
   displayMore = () => {
+    const topCourses = this.state.courses;
     const count = this.state.crsCount + 5;
     // this.setState({ crsCount: count });
-    if (count <= this.state.courses.length) {
+    if (count <= topCourses.length) {
       this.setState({ crsCount: count });
     } else {
-      this.setState({ crsCount: this.state.courses.length });
+      this.setState({ crsCount: topCourses.length });
     }
   };
 
@@ -65,6 +66,33 @@ export default class extends Component {
   }
 
   componentDidMount = () => {
-    getTopPopularCourses(this.coursesSaveHandler);
+    if (
+      this.props.topCourses === null ||
+      this.props.topCourses === undefined
+    ) {
+      this.props.getTopCourses();
+    }
+    if (this.state.courses === null) {
+      this.setState({ courses: this.props.topCourses });
+    }
+  };
+
+  componentDidUpdate = () => {
+    if (this.state.courses === null) {
+      this.setState({ courses: this.props.topCourses });
+    }
   };
 }
+
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  const { topCourses } = state.crs;
+  return { isAuthenticated, topCourses };
+}
+
+const mapDispatchToProps = { getTopCourses };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopCourses);

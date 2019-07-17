@@ -20,12 +20,37 @@
 
 .feedback {
   // color: $Base-primary;
-  color: #ffffff;
+  width: 8rem;
+  color: #000000;
   position: fixed;
-  background: #ff1100;
+  background: #bbff00;
   bottom: 2rem;
-  right: 2rem;
+  right: 1rem;
   z-index: 20;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  border: 0px;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+
+  transition: 0.3s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    box-shadow: $shadow-all-3;
+  }
+}
+
+.float_join {
+  position: fixed;
+  bottom: 5rem;
+  right: 1rem;
+  z-index: 20;
+  padding: 0 2rem 0 2rem;
+  background: $Blue-3;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -34,11 +59,16 @@
   font-size: 20px;
   color: #ffffff;
   padding: 0.5rem 1rem 0.5rem 1rem;
-  box-shadow: $shadow-all-3;
-  transition: 0.3s ease;
 
+  transition: 0.3s ease;
+  border-radius: 5px;
+  width: 6rem;
+  box-shadow: 10px 10px 20px #00000026;
+
+  transition: 0.3s ease;
   &:hover {
     cursor: pointer;
+    box-shadow: $shadow-all-3;
     transform: scale(1.2);
   }
 }
@@ -164,7 +194,7 @@
   transition: 0.2s ease;
   border-radius: 5px;
   &:hover {
-    // background: $Blue-3b;
+    background: $Blue-3b;
     cursor: pointer;
     transform: translateY(-5px);
   }

@@ -4,6 +4,7 @@ import {
   setUserToLocalStorage,
   removeUserFromLocalStorage
 } from "./../utils/localStorage";
+import buildCustomResponse from "./response";
 
 const URLS = {
   USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
@@ -29,6 +30,7 @@ export const signupHandler = async (event, signupData) => {
     removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
     setUserToLocalStorage(data);
+    return data;
   } catch (err) {
     console.log("[Auth.js] SIGNUP ERR : ", err);
   }
@@ -52,6 +54,7 @@ export const signinHandler = async (event, signinData) => {
     removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
     setUserToLocalStorage(data);
+    return data;
   } catch (err) {
     console.log("[Auth.js] SIGNIN ERR : ", err);
   }
@@ -123,29 +126,19 @@ export const verifyUserToken = async () => {
       token: adToken
     };
     // console.log("[Authorization.js] : Refresh Handler", refreshData);
-    fetch(URL, {
+    const response = await fetch(URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(refreshData)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .catch(err => {
-        console.log("Failed to verify the token will try to refresh", err);
-        // TODO: give user a chance to refresh the token
-        removeUserFromLocalStorage();
-      })
-      .then(data => {
-        console.log("Token verified successfully");
-      });
+    });
+
+    const data = await buildCustomResponse(response);
+    return data;
   } catch (err) {
     console.log("[Authorization.js] Refresh ERR : ", err);
-    removeUserFromLocalStorage();
+    // removeUserFromLocalStorage();
+    return err;
   }
 };

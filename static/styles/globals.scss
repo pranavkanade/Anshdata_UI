@@ -42,7 +42,7 @@ $Black-1: #3f3e3e;
 
 // Gradients
 $grad-card-1: linear-gradient(205.09deg, #dd13dd -12.19%, #2469de 101.17%);
-$grad-2: linear-gradient(27.72deg, #8400ff 0%, #ff786c 98.34%);
+$grad-2: linear-gradient(27.72deg, #9843ff 0%, #ffa26c 98.34%);
 $grad-3: linear-gradient(204.02deg, #70ff6b -20.48%, #1389f7 101.17%);
 $grad-4: linear-gradient(250.54deg, #0779eb -32.44%, #c9ffd8 100%);
 $grad-5: linear-gradient(109.15deg, #27d2a9 0%, #e2d245 100%);
@@ -62,6 +62,7 @@ $rgrad-1: radial-gradient(
 );
 
 // Shadow
+$shadow-0: 10px 10px 20px #0000001f;
 $shadow-1: 10px 10px 20px rgba(0, 0, 0, 0.15);
 $shadow-2: 10px 10px 20px rgba(0, 0, 0, 0.342);
 $shadow-all-1: 4px 0px 10px rgba(0, 0, 0, 0.06),

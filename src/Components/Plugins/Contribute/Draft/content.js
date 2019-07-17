@@ -6,7 +6,7 @@ import {
   DetailedModuleCardDraft
 } from "../../../Generic/Cards/ModuleCard";
 
-import AssignmentCard from "../../../Generic/Cards/AssignmentCard";
+import { draftAssignmentCard as AssignmentCard } from "../../../Generic/Cards/AssignmentCard";
 
 import ModuleForm from "../../../Generic/Forms/module";
 import LessonForm from "../../../Generic/Forms/lesson";

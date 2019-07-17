@@ -11,6 +11,9 @@ import {
 } from "rsuite";
 import Router from "next/router";
 
+import { connect } from "react-redux";
+import { storeUserSignedIn, storeUserSignedUp } from "../../../store/actions";
+
 import Loader from "../../Generic/Loader/loader";
 
 import {
@@ -183,14 +186,27 @@ class Auth extends Component {
     const isSignup = this.state.formType === "signup" ? true : false;
 
     if (isSignup) {
-      await signupHandler(event, this.getSignupData());
+      const user = await signupHandler(event, this.getSignupData());
+      console.log("[Sign UP] user  : ", user);
+      this.props.storeUserSignedUp(user);
     } else {
-      await signinHandler(event, this.getSignInData());
+      console.log("[Sign IN] user  : ", user);
+      const user = await signinHandler(event, this.getSignInData());
+      this.props.storeUserSignedIn(user);
     }
     this.close();
-    this.props.reloadOnAuthEvent();
     Router.replace(window.location.pathname);
   };
 }
 
-export default Auth;
+function mapStateToProps(state) {
+  const { user } = state.user;
+  return { user };
+}
+
+const mapDispatchToProps = { storeUserSignedIn, storeUserSignedUp };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth);
