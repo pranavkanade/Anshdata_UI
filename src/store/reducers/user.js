@@ -25,7 +25,7 @@ const reducer = (state = initialState, action) => {
       return resp;
     case actionTypes.SIGN_OUT:
       resp = Object.assign({}, state, initialState);
-      removeADStateFromLocalStorage();
+      setADStateToLocalStorage({ user: resp });
       return resp;
     case actionTypes.USER_VERIFY:
       console.log("[USER VERIFY reducer] data recieved : ", action.data);

@@ -25,7 +25,7 @@ function* sagaGetTopCourses() {
 }
 
 function* watchGetTopCourses() {
-  yield takeLatest(actionTypes.GET_TOP_COURSES, sagaGetTopCourses);
+  yield takeLeading(actionTypes.GET_TOP_COURSES, sagaGetTopCourses);
 }
 
 function* sagaUserVerify() {

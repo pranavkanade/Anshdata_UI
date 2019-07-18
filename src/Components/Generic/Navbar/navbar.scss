@@ -49,6 +49,7 @@
   bottom: 5rem;
   right: 1rem;
   z-index: 20;
+  text-align: center;
   padding: 0 2rem 0 2rem;
   background: $Blue-3;
   font-family: Roboto;
@@ -67,7 +68,9 @@
 
   transition: 0.3s ease;
   &:hover {
+    text-decoration: none;
     cursor: pointer;
+    color: #ffffff;
     box-shadow: $shadow-all-3;
     transform: scale(1.2);
   }
@@ -164,7 +167,7 @@
 .user {
   @extend %nav;
   transition: 0.2s ease-in;
-  padding: 0 0.6rem 0 0.6rem;
+  padding: 0.4rem 0.6rem 0 0.6rem;
 
   &:hover {
     cursor: pointer;

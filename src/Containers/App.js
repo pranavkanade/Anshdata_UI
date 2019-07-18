@@ -5,9 +5,8 @@ import Navbar from "../Components/Generic/Navbar/Navbar";
 import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
 import Feedback from "../Components/Generic/Feedback/feedback";
-import Router from "next/router";
 import { connect } from "react-redux";
-import { storeUserSignedOut, makeUserVerify } from "../store/actions";
+import { makeUserVerify, getTopCourses } from "../store/actions";
 
 class App extends Component {
   state = {
@@ -24,11 +23,6 @@ class App extends Component {
 
   hideAuthFormHandler = () => {
     this.setState({ attemptingSignIn: false });
-  };
-
-  signOutHandler = () => {
-    this.props.storeUserSignedOut();
-    Router.replace("/");
   };
 
   showAuthFormHandler = authOption => {
@@ -57,7 +51,6 @@ class App extends Component {
         <Navbar
           showAuthFormHandler={this.showAuthFormHandler}
           activeMenu={this.state.page}
-          signOutHandler={this.signOutHandler}
           shouldToggleFeedback={this.shouldToggleFeedback}
         />
 
@@ -92,6 +85,7 @@ class App extends Component {
     if (this.props.isAuthenticated) {
       this.props.makeUserVerify();
     }
+    this.props.getTopCourses();
   }
 
   componentWillUnmount() {
@@ -108,7 +102,7 @@ function mapStateToProps(state) {
   return { isAuthenticated };
 }
 
-const mapDispatchToProps = { storeUserSignedOut, makeUserVerify };
+const mapDispatchToProps = { makeUserVerify, getTopCourses };
 
 export default connect(
   mapStateToProps,

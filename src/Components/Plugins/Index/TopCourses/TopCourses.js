@@ -1,98 +1,71 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { getTopCourses } from "../../../../store/actions";
 import css from "./TopCourses.scss";
-
 import { renderTopCoursesList as CourseList } from "../../../Generic/CourseList/courselist";
-class TopCourses extends Component {
-  state = {
-    courses: null,
-    crsCount: 5
-  };
 
-  coursesSaveHandler = courses => {
-    this.setState({ courses });
-  };
-
-  renderCategoryCards = () => {
-    const topCourses = this.state.courses;
-    if (topCourses === null || topCourses === undefined) {
-      return null;
-    }
-    const courses = topCourses.slice(0, this.state.crsCount);
-    return (
-      <div className={css.categoryCarousel}>
-        <CourseList courses={courses} />
-      </div>
-    );
-  };
-
-  displayMore = () => {
-    const topCourses = this.state.courses;
-    const count = this.state.crsCount + 5;
-    // this.setState({ crsCount: count });
-    if (count <= topCourses.length) {
-      this.setState({ crsCount: count });
-    } else {
-      this.setState({ crsCount: topCourses.length });
-    }
-  };
-
-  displayLess = () => {
-    const count = this.state.crsCount - 5;
-    // this.setState({ crsCount: count });
-    if (count >= 5) {
-      this.setState({ crsCount: count });
-    } else {
-      this.setState({ crsCount: 5 });
-    }
-  };
-
-  render() {
-    return (
-      <div className={css.container}>
-        <span className={css.title}>Top Courses</span>
-        {this.renderCategoryCards()}
-        <div className={css.actions}>
-          <button className={css.more} onClick={this.displayMore}>
-            <img src="/static/assets/icon/add_24px_outlined.svg" />
-          </button>
-          <button className={css.less} onClick={this.displayLess}>
-            <img src="/static/assets/icon/remove_24px_outlined.svg" />
-          </button>
-        </div>
-      </div>
-    );
+const displayMore = (totalCrs, dispCount) => {
+  const count = dispCount + 5;
+  // this.setState({ crsCount: count });
+  if (count <= totalCrs) {
+    return count;
+  } else {
+    return totalCrs;
   }
+};
 
-  componentDidMount = () => {
-    if (
-      this.props.topCourses === null ||
-      this.props.topCourses === undefined
-    ) {
-      this.props.getTopCourses();
-    }
-    if (this.state.courses === null) {
-      this.setState({ courses: this.props.topCourses });
-    }
-  };
+const displayLess = dispCount => {
+  const count = dispCount - 5;
+  // this.setState({ crsCount: count });
+  if (count >= 5) {
+    return count;
+  } else {
+    return 5;
+  }
+};
 
-  componentDidUpdate = () => {
-    if (this.state.courses === null) {
-      this.setState({ courses: this.props.topCourses });
-    }
-  };
-}
+const renderCourseList = (topCourses, dispCount) => {
+  if (topCourses === null || topCourses === undefined) {
+    return null;
+  }
+  const courses = topCourses.slice(0, dispCount);
+  return (
+    <div className={css.categoryCarousel}>
+      <CourseList courses={courses} />
+    </div>
+  );
+};
+
+const popularCourses = props => {
+  const { topCourses } = props;
+  if (topCourses === null) {
+    return null;
+  }
+  const [dispCount, setDispCount] = useState(5);
+  return (
+    <div className={css.container}>
+      <span className={css.title}>Top Courses</span>
+      {renderCourseList(topCourses, dispCount)}
+      <div className={css.actions}>
+        <button
+          className={css.more}
+          onClick={() =>
+            setDispCount(displayMore(topCourses.length, dispCount))
+          }>
+          <img src="/static/assets/icon/add_24px_outlined.svg" />
+        </button>
+        <button
+          className={css.less}
+          onClick={() => setDispCount(displayLess(dispCount))}>
+          <img src="/static/assets/icon/remove_24px_outlined.svg" />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 function mapStateToProps(state) {
-  const { isAuthenticated } = state.user;
   const { topCourses } = state.crs;
-  return { isAuthenticated, topCourses };
+  return { topCourses };
 }
 
-const mapDispatchToProps = { getTopCourses };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TopCourses);
+export default connect(mapStateToProps)(popularCourses);
