@@ -249,15 +249,14 @@ class DraftedCourse extends Component {
 
   componentDidMount() {
     // getCourse(this.state.courseId, this.courseSaveHandler);
-    if (this.props.course === null) {
-      this.props.fetchDetailedDraftCourse(this.state.courseId);
-    } else {
-      this.setState({ course: this.props.course });
-    }
+    this.props.fetchDetailedDraftCourse(this.state.courseId);
   }
 
   componentDidUpdate() {
-    if (this.props.is_published !== this.state.course.is_published) {
+    if (
+      this.state.course === null ||
+      this.props.is_published !== this.state.course.is_published
+    ) {
       this.setState({ course: this.props.course });
     }
   }

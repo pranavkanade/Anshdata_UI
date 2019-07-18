@@ -3,8 +3,8 @@
 .container {
   width: 100%;
 
-  background-color: $White-2;
-  padding: 2rem 0 2rem 0;
+  background-color: $White-4;
+  padding: 0rem 0 2rem 0;
 }
 
 @media (max-width: 1024px) {
@@ -36,9 +36,9 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 2rem;
-  background: $grad-13;
-  border-radius: 10px;
-  box-shadow: $shadow-all-1;
+  background: #9c92f8;
+  border-radius: 0 0 10px 10px;
+  box-shadow: $shadow-2;
 
   .primaryInfo {
     display: flex;
@@ -69,14 +69,13 @@
         font-weight: normal;
         font-size: 20px;
         line-height: 24px;
-        background: $White-0;
+        background: $White-0b;
         color: $Black-1;
 
         height: 210px;
 
         border: 1px solid $White-3;
         box-sizing: border-box;
-        box-shadow: $shadow-all-1;
         border-radius: 5px;
       }
 
@@ -140,8 +139,7 @@
           // border: 1px solid $White-3;
           box-sizing: border-box;
           border-radius: 2px;
-          background: $White-0;
-          box-shadow: $shadow-all-1;
+          background: $White-0b;
           border-radius: 5px;
           padding: 1rem;
 
@@ -183,8 +181,7 @@
     .tagBox {
       margin-top: 1.5rem;
       height: 72px;
-      background: $White-0;
-      box-shadow: $shadow-all-1;
+      background: $White-0b;
       border-radius: 5px;
       padding: 1rem;
       border: 0px;
@@ -226,8 +223,7 @@
       padding: 1rem;
       // width: 380px;
       // height: 161px;
-      background: $White-1;
-      box-shadow: $shadow-all-1;
+      background: $White-0b;
       border-radius: 5px;
 
       box-sizing: border-box;
@@ -240,7 +236,6 @@
         width: 160px;
         // height: 6px;
         padding: 0.5rem 0 0.5rem 0;
-        box-shadow: $shadow-all-1;
         // border: 1px solid $White-3;
         box-sizing: border-box;
         border-radius: 2px;
@@ -285,14 +280,14 @@
         }
       }
       .lsn {
-        background: #4240be;
+        background: #bcbe40;
         border-radius: 5px;
         span {
           color: $White-0;
         }
       }
       .asign {
-        background: #08afa1;
+        background: #0888af;
         border-radius: 5px;
         span {
           color: $White-0;
@@ -322,4 +317,15 @@
     place-items: center;
     grid-auto-flow: dense;
   }
+}
+
+.section {
+  margin-top: 2rem;
+}
+
+.assignmentList {
+  margin: 2rem 1rem 1rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1rem;
 }

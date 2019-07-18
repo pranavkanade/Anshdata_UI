@@ -7,6 +7,8 @@ import {
   DetailedModuleCard
 } from "../../Generic/Cards/ModuleCard";
 
+import { AssignmentCard } from "../../Generic/Cards/AssignmentCard";
+
 import {
   getIfEnrolled,
   enrollEventHandler
@@ -112,7 +114,7 @@ class DetailedCourse extends Component {
     );
   };
 
-  renderStats = (creditPoints, enrollments = 203, rating = 5) => {
+  renderStats = (creditPoints, enrollments, rating = 5) => {
     return (
       <>
         <div className={css.stat}>
@@ -191,7 +193,7 @@ class DetailedCourse extends Component {
             <div className={css.advance}>
               {this.renderActionBtn()}
               <div className={css.statsBox}>
-                {this.renderStats(course.credit_points)}
+                {this.renderStats(course.credit_points, course.students_count)}
               </div>
             </div>
           </div>
@@ -240,6 +242,21 @@ class DetailedCourse extends Component {
     });
   };
 
+  renderCourseLevelAssignments = assignments => {
+    return assignments.map(asgnmt => {
+      if (asgnmt.module !== null || asgnmt.lesson !== null) {
+        return null;
+      }
+      return (
+        <AssignmentCard
+          assignment={asgnmt}
+          id={asgnmt.id}
+          modify={this.addHandler}
+        />
+      );
+    });
+  };
+
   renderUnpublishedWarning = () => {
     if (this.state.course.is_published) {
       return null;
@@ -263,9 +280,17 @@ class DetailedCourse extends Component {
         <div className={css.courseInfo}>{this.renderCourseInfo(course)}</div>
         {this.renderUnpublishedWarning()}
         <div className={css.courseContent}>
-          <span className={css.sectionTitle}>Modules</span>
-          <div className={css.moduleList}>
-            {this.renderModulesList(course.modules)}
+          <div className={css.section}>
+            <span className={css.sectionTitle}>Modules</span>
+            <div className={css.moduleList}>
+              {this.renderModulesList(course.modules)}
+            </div>
+          </div>
+          <div className={css.section}>
+            <span className={css.sectionTitle}>Assignments</span>
+            <div className={css.assignmentList}>
+              {this.renderCourseLevelAssignments(course.assignments)}
+            </div>
           </div>
         </div>
       </div>
