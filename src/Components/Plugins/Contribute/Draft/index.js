@@ -100,18 +100,6 @@ class DraftedCourse extends Component {
           <img src="../../../../../static/assets/icon/create_24px_outlined.svg" />
         </button>
         <button
-          className={css.open_course}
-          onClick={() => draftCourse(this.state.courseId)}>
-          <span>Open for Modification</span>
-          <img src="../../../../../static/assets/icon/tune_24px_outlined.svg" />
-        </button>
-        <button
-          className={css.publish}
-          onClick={() => publishCourse(this.state.courseId)}>
-          <span>Publish</span>
-          <img src="../../../../../static/assets/icon/upload_24px_outlined.svg" />
-        </button>
-        <button
           className={css.delete}
           onClick={() => {
             deleteCourse(this.state.courseId);
@@ -176,10 +164,6 @@ class DraftedCourse extends Component {
             <div className={css.description}>
               <p>{this.state.course.description}</p>
             </div>
-            <div className={css.tagBox}>{this.renderTags()}</div>
-            {this.renderActionBar()}
-          </div>
-          <div className={css.secondary}>
             <div className={css.extra}>
               {this.renderAuthorNSub(
                 this.state.course.author.username,
@@ -191,11 +175,34 @@ class DraftedCourse extends Component {
                 this.getLessonsCount(this.state.course.modules)
               )}
             </div>
-            <div className={css.optionsBox}>
-              <button className={css.save}>
-                <span>Save</span>
-              </button>
-            </div>
+            <div className={css.tagBox}>{this.renderTags()}</div>
+          </div>
+          <div className={css.secondary}>
+            {this.renderActionBar()}
+            {this.state.course.is_published ? (
+              <div className={css.warning}>
+                <p>
+                  This course is not open for modification. To be able to edit
+                  the course, please consider opening the course.
+                </p>
+                <button
+                  className={css.open_course}
+                  onClick={() => draftCourse(this.state.courseId)}>
+                  <span>Open for Modification</span>
+                  <img src="../../../../../static/assets/icon/tune_24px_outlined.svg" />
+                </button>
+              </div>
+            ) : (
+              <div className={css.message}>
+                <p>You may modify the course.!</p>
+                <button
+                  className={css.publish}
+                  onClick={() => publishCourse(this.state.courseId)}>
+                  <span>Publish</span>
+                  <img src="../../../../../static/assets/icon/upload_24px_outlined.svg" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
