@@ -12,7 +12,7 @@ import {
 import Router from "next/router";
 
 import { connect } from "react-redux";
-import { storeUserSignedIn, storeUserSignedUp } from "../../../store/actions";
+import { requestUserSignIn, storeUserSignedUp } from "../../../store/actions";
 
 import Loader from "../../Generic/Loader/loader";
 
@@ -183,16 +183,16 @@ class Auth extends Component {
 
   handleAuthentication = async event => {
     this.setState({ isLoading: true });
+    event.preventDefault();
     const isSignup = this.state.formType === "signup" ? true : false;
 
     if (isSignup) {
-      const user = await signupHandler(event, this.getSignupData());
+      const user = await signupHandler(this.getSignupData());
       console.log("[Sign UP] user  : ", user);
       this.props.storeUserSignedUp(user);
     } else {
-      console.log("[Sign IN] user  : ", user);
-      const user = await signinHandler(event, this.getSignInData());
-      this.props.storeUserSignedIn(user);
+      const resp = await signinHandler(this.getSignInData());
+      this.props.requestUserSignIn(resp);
     }
     this.close();
     Router.replace(window.location.pathname);
@@ -204,7 +204,10 @@ function mapStateToProps(state) {
   return { user };
 }
 
-const mapDispatchToProps = { storeUserSignedIn, storeUserSignedUp };
+const mapDispatchToProps = {
+  requestUserSignIn,
+  storeUserSignedUp
+};
 
 export default connect(
   mapStateToProps,

@@ -6,10 +6,12 @@ import rootSaga from "./sagas";
 
 import userReducer from "./reducers/user";
 import coursesReducer from "./reducers/courses";
+import notificationReducer from "./reducers/notification";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  crs: coursesReducer
+  crs: coursesReducer,
+  note: notificationReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

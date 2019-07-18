@@ -1,5 +1,6 @@
 const user = {
   SIGN_UP: "SIGN_UP",
+  REQUEST_USER_SIGN_IN: "REQUEST_USER_SIGN_IN",
   SIGN_IN: "SIGN_IN",
   SIGN_OUT: "SIGN_OUT",
 
@@ -12,7 +13,15 @@ const course = {
   STORE_TOP_COURSES: "STORE_TOP_COURSES"
 };
 
+const notification = {
+  ADD_NOTIFICATION_INFO: "ADD_NOTIFICATION_INFO",
+  ADD_NOTIFICATION_ERROR: "ADD_NOTIFICATION_ERROR",
+  ADD_NOTIFICATION_WARNING: "ADD_NOTIFICATION_WARNING",
+  ADD_NOTIFICATION_SUCCESS: "ADD_NOTIFICATION_SUCCESS"
+};
+
 export default {
   ...user,
-  ...course
+  ...course,
+  ...notification
 };

@@ -36,9 +36,8 @@ export const signupHandler = async (event, signupData) => {
   }
 };
 
-export const signinHandler = async (event, signinData) => {
+export const signinHandler = async signinData => {
   console.log("[Auth.js] Log In Handler", signinData);
-  event.preventDefault();
   try {
     console.log("[Auth] : Sign In Handler", signinData);
     const loginRes = await fetch(URLS.USERLOGIN, {
@@ -48,13 +47,13 @@ export const signinHandler = async (event, signinData) => {
       },
       body: JSON.stringify(signinData)
     });
-    const data = await loginRes.json();
-    console.log("signin response: ", data);
     // remove if any thing is remaining of the previous user
     removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
-    setUserToLocalStorage(data);
-    return data;
+    const dataWithError = await buildCustomResponse(loginRes);
+    setUserToLocalStorage(dataWithError.data);
+    console.log("signin response: ", dataWithError.data);
+    return dataWithError;
   } catch (err) {
     console.log("[Auth.js] SIGNIN ERR : ", err);
   }

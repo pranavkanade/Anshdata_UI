@@ -102,6 +102,7 @@ const navbar = props => {
 
 function mapStateToProps(state) {
   const { isAuthenticated, user } = state.user;
+  console.log("Setting up maps to props for navbar : ", state.user);
   return { isAuthenticated, user };
 }
 

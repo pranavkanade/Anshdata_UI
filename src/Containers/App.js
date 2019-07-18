@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import dynamic from "next/dynamic";
 import Ribbon from "../Components/Generic/Ribbon/ribbon";
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Footer from "../Components/Generic/Footer/Footer";
@@ -7,7 +7,10 @@ import Auth from "../Components/Generic/Auth/Auth";
 import Feedback from "../Components/Generic/Feedback/feedback";
 import { connect } from "react-redux";
 import { makeUserVerify, getTopCourses } from "../store/actions";
-
+const DynamicNotification = dynamic(
+  () => import("../Components/Generic/Notifications/notification"),
+  { ssr: false }
+);
 class App extends Component {
   state = {
     page: this.props.page,
@@ -53,6 +56,7 @@ class App extends Component {
           activeMenu={this.state.page}
           shouldToggleFeedback={this.shouldToggleFeedback}
         />
+        <DynamicNotification />
 
         {this.state.attemptingSignIn ? (
           <Auth
