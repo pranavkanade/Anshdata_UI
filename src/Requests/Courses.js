@@ -1,4 +1,5 @@
 import { getAuthorization } from "./Authorization";
+import getAdvResponse from "./response";
 
 const URLS = {
   LIST_COURSE: "http://127.0.0.1:8000/api/course/",
@@ -62,7 +63,6 @@ export const getPublishedCoursesList = async (usrId, saveHandler) => {
 export const getCourse = async (courseId, courseSaveHandler) => {
   const URL = `http://127.0.0.1:8000/api/course/${courseId}/`;
 
-  console.log("[Courses/Detailed-request] Retrieve course details");
   try {
     const retrieveCourse = await fetch(URL, {
       method: "GET",
@@ -70,9 +70,13 @@ export const getCourse = async (courseId, courseSaveHandler) => {
         "Content-Type": "application/json"
       }
     });
-    let course = await retrieveCourse.json();
-    console.log("Course Details : ", course);
-    courseSaveHandler(course);
+
+    const resp = await getAdvResponse(retrieveCourse);
+    console.log("[Courses/Detailed-request] Retrieve course details", resp);
+    if (resp.ok && typeof courseSaveHandler === "function") {
+      courseSaveHandler(resp.data);
+    }
+    return resp;
   } catch (err) {
     console.log("[Courses/Detailed-request] user is not logged in : ", err);
   }
@@ -82,17 +86,15 @@ export const draftCourse = async courseId => {
   console.log("[Courses.js] draft the course");
   const URL = `http://127.0.0.1:8000/api/course/${courseId}/draft/`;
   try {
-    await fetch(URL, {
+    const response = await fetch(URL, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
         Authorization: getAuthorization()
       }
-    })
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
-      });
+    });
+    const advResp = await getAdvResponse(response);
+    return advResp;
   } catch (err) {
     console.log("[Courses.js] cannot draft the course: ", err);
   }

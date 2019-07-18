@@ -37,6 +37,18 @@ export const getTopCourses = () => {
   return { type: actionTypes.GET_TOP_COURSES };
 };
 
+export const fetchDetailedDraftCourse = data => {
+  return { type: actionTypes.FETCH_DETAILED_DRAFT_COURSE, data: data };
+};
+
+export const updateDetailedDraftCourse = data => {
+  return { type: actionTypes.UPDATE_DETAILED_DRAFT_COURSE, data: data };
+};
+
+export const storeDetailedDraftCourse = data => {
+  return { type: actionTypes.STORE_DETAILED_DRAFT_COURSE, data: data };
+};
+
 // Actions Notifications
 export const addNotificationError = data => {
   return { type: actionTypes.ADD_NOTIFICATION_ERROR, data: data };

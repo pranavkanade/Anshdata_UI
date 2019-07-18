@@ -1,20 +1,22 @@
 import {
   call,
   put,
-  takeEvery,
+  takeLatest,
   take,
   all,
   takeLeading
 } from "redux-saga/effects";
 import actionTypes from "./actionTypes";
-import { getTopPopularCoursesWithSaga } from "../Requests/Courses";
+import { getTopPopularCoursesWithSaga, getCourse } from "../Requests/Courses";
 import { verifyUserToken } from "../Requests/Authentication";
 import {
   storeTopCourses,
+  storeDetailedDraftCourse,
   storeUserVerify,
   storeUserSignedOut,
   storeUserSignedIn,
-  addNotificationError
+  addNotificationError,
+  fetchDetailedDraftCourse
 } from "./actions";
 
 function* helloSaga() {
@@ -55,11 +57,50 @@ function* sagaRequestUserSignIn() {
   }
 }
 
+function* sagaFetchDetailedDraftCourse(action) {
+  console.log("[ SAGA FETCH DRAFT COURSE ] : ", action);
+  const resp = yield call(getCourse, action.data);
+  console.log("[ SAGA FETCHED COURSE ] : ", resp);
+  if (resp.ok) {
+    yield put(storeDetailedDraftCourse(resp.data));
+  } else {
+    console.log("Error !! storing the error", resp);
+    yield put(addNotificationError(resp));
+  }
+}
+
+function* watchFetchDetailedDraftCourse() {
+  yield takeLatest(
+    actionTypes.FETCH_DETAILED_DRAFT_COURSE,
+    sagaFetchDetailedDraftCourse
+  );
+}
+
+function* sagaUpdateDetailedDraftCourse(action) {
+  console.log("[ SAGA DRAFT COURSE UPDATE ] :", action);
+  const resp = action.data;
+  if (resp.ok) {
+    yield put(fetchDetailedDraftCourse(resp.data.id));
+  } else {
+    console.log("Error !! storing the error", resp);
+    yield put(addNotificationError(resp));
+  }
+}
+
+function* watchUpdateDetailedDraftCourse() {
+  yield takeLatest(
+    actionTypes.UPDATE_DETAILED_DRAFT_COURSE,
+    sagaUpdateDetailedDraftCourse
+  );
+}
+
 export default function* adSaga() {
   yield all([
     helloSaga(),
     watchGetTopCourses(),
     watchMakeUserVerify(),
-    sagaRequestUserSignIn()
+    sagaRequestUserSignIn(),
+    watchFetchDetailedDraftCourse(),
+    watchUpdateDetailedDraftCourse()
   ]);
 }

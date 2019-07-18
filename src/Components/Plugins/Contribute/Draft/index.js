@@ -12,11 +12,17 @@ import {
 import { publishCourse } from "../../../../Requests/DraftCourses";
 import CourseForm from "../../../Generic/Forms/course";
 import CourseContent from "./content";
+import { connect } from "react-redux";
+import {
+  fetchDetailedDraftCourse,
+  updateDetailedDraftCourse
+} from "../../../../store/actions";
 
 class DraftedCourse extends Component {
   state = {
     courseId: this.props.courseId,
     course: null,
+    is_published: this.props.is_published,
     shouldOpenAddModule: false,
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
@@ -155,6 +161,16 @@ class DraftedCourse extends Component {
     }, 0);
   };
 
+  publishCourse = async () => {
+    const resp = await publishCourse(this.state.courseId);
+    this.props.updateDetailedDraftCourse(resp);
+  };
+
+  draftCourse = async () => {
+    const resp = await draftCourse(this.state.courseId);
+    this.props.updateDetailedDraftCourse(resp);
+  };
+
   renderCourseInfo = () => {
     return (
       <div className={css.course}>
@@ -185,19 +201,18 @@ class DraftedCourse extends Component {
                   This course is not open for modification. To be able to edit
                   the course, please consider opening the course.
                 </p>
-                <button
-                  className={css.open_course}
-                  onClick={() => draftCourse(this.state.courseId)}>
+                <button className={css.open_course} onClick={this.draftCourse}>
                   <span>Open for Modification</span>
                   <img src="../../../../../static/assets/icon/tune_24px_outlined.svg" />
                 </button>
               </div>
             ) : (
               <div className={css.message}>
-                <p>You may modify the course.!</p>
-                <button
-                  className={css.publish}
-                  onClick={() => publishCourse(this.state.courseId)}>
+                <p>
+                  You may modify the course.! And do not forget to publish once
+                  you are done. 😉
+                </p>
+                <button className={css.publish} onClick={this.publishCourse}>
                   <span>Publish</span>
                   <img src="../../../../../static/assets/icon/upload_24px_outlined.svg" />
                 </button>
@@ -233,8 +248,43 @@ class DraftedCourse extends Component {
   }
 
   componentDidMount() {
-    getCourse(this.state.courseId, this.courseSaveHandler);
+    // getCourse(this.state.courseId, this.courseSaveHandler);
+    if (this.props.course === null) {
+      this.props.fetchDetailedDraftCourse(this.state.courseId);
+    } else {
+      this.setState({ course: this.props.course });
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.is_published !== this.state.course.is_published) {
+      this.setState({ course: this.props.course });
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(" Props comparison : ", nextProps, this.props);
+    console.log(" State Comparison : ", nextState, this.state);
+    return true;
   }
 }
 
-export default DraftedCourse;
+const mapStateToProps = state => {
+  return {
+    course: state.crs.draftCourse,
+    is_published:
+      state.crs.draftCourse !== null
+        ? state.crs.draftCourse.is_published
+        : false
+  };
+};
+
+const mapDispatchToProps = {
+  fetchDetailedDraftCourse,
+  updateDetailedDraftCourse
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DraftedCourse);

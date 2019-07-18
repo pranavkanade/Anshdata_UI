@@ -1,4 +1,5 @@
 import { getAuthorization } from "./Authorization";
+import getAdvResponse from "./response";
 
 const URLS = {
   LIST_DRAFTED_COURSES_COMUNITY:
@@ -49,17 +50,15 @@ export const publishCourse = async courseId => {
   console.log("[DraftCourses.js] publish the course");
   const URL = `http://127.0.0.1:8000/api/course/${courseId}/pub/`;
   try {
-    await fetch(URL, {
+    const response = await fetch(URL, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
         Authorization: getAuthorization()
       }
-    })
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
-      });
+    });
+    const advResp = await getAdvResponse(response);
+    return advResp;
   } catch (err) {
     console.log("[DraftCourses.js] cannot published the course: ", err);
   }
