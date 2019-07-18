@@ -15,7 +15,10 @@ export const draftLessonCard = props => {
           width="100%"
         />
       </div>
-      <span>{props.lesson.title}</span>
+      <p>
+        {props.lesson.title.substring(0, 50)}
+        {props.lesson.title.length > 50 ? "..." : ""}
+      </p>
       <div className={css.actionBox}>
         <div className={css.editBar}>
           <button
@@ -46,7 +49,10 @@ export const LessonCard = props => {
           width="100%"
         />
       </div>
-      <span>{props.lesson.title}</span>
+      <p>
+        {props.lesson.title.substring(0, 50)}
+        {props.lesson.title.length > 50 ? "..." : ""}
+      </p>
     </div>
   );
 };

@@ -41,7 +41,10 @@ const renderHead = (
         />
       </div>
       <div className={css.title}>
-        <span>{title}</span>
+        <span>
+          {title.substring(0, 25)}
+          {title.length > 25 ? "..." : ""}
+        </span>
       </div>
     </div>
   );

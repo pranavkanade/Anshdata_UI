@@ -16,9 +16,9 @@
   .title {
     font-family: Scope One, Roboto;
     font-style: normal;
-    font-weight: normal;
-    font-size: 28px;
-    line-height: 39px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
 
     color: $Black-1;
   }
@@ -171,11 +171,12 @@
 
 .detailedModuleCard {
   // height: 300px;
-  width: 105%;
+  width: 115%;
   padding: 1rem 2rem 1rem 2rem;
   grid-column: 1 / -1;
-  background: $grad-12;
+  background: $Yellow-11;
   border-radius: 10px;
+  box-shadow: $shadow-1;
 
   .head {
     display: flex;
@@ -312,5 +313,25 @@
 
     color: #000000;
     transform: scale(1.07);
+  }
+}
+
+.noAssign {
+  background: #d6fd7a;
+  width: inherit;
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: $shadow-all-1;
+
+  p {
+    color: $Black-1;
+  }
+
+  span {
+    background: $Base-primary;
+    color: $White-0;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    font-size: 20px;
+    border-radius: 5px;
   }
 }

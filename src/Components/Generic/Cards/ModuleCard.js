@@ -88,6 +88,15 @@ const renderLessonsListDraft = (lessons, onModify) => {
 };
 
 const renderAssignmentList = assignments => {
+  if (assignments === null || assignments.length === 0) {
+    return (
+      <div className={css.noAssign}>
+        <p>
+          There are <span>no assignments</span> attached to this module!
+        </p>
+      </div>
+    );
+  }
   return assignments.map(asgnmt => {
     return <AssignmentCard assignment={asgnmt} id={asgnmt.id} />;
   });
@@ -114,7 +123,10 @@ export const ModuleCardMd = props => {
 
   return (
     <div className={css.mdModuleCard}>
-      <h3 className={css.title}>{module.title}</h3>
+      <h3 className={css.title}>
+        {module.title.substring(0, 50)}
+        {module.title.length > 50 ? "..." : ""}
+      </h3>
       <p>{module.description.substring(0, 50)}...</p>
       {renderStats(
         module.lessons.length,
@@ -136,7 +148,10 @@ export const ModuleCardDraft = props => {
 
   return (
     <div className={css.mdModuleCard}>
-      <h3 className={css.title}>{module.title}</h3>
+      <h3 className={css.title}>
+        {module.title.substring(0, 50)}
+        {module.title.length > 50 ? "..." : ""}
+      </h3>
       <p>{module.description.substring(0, 50)}...</p>
       {renderStats(
         module.lessons.length,
