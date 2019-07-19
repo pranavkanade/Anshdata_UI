@@ -10,7 +10,6 @@ import { storeUserSignedOut } from "../../../store/actions";
 const menus = ["Courses", "Contribute", "Blog"];
 
 const handleSignout = async (event, props) => {
-  event.preventDefault();
   props.storeUserSignedOut();
   await logoutHandler(event);
   Router.push("/");

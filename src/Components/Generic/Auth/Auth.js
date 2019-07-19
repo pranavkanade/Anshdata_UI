@@ -165,7 +165,6 @@ class Auth extends Component {
 
   handleAuthentication = async event => {
     this.setState({ isLoading: true });
-    event.preventDefault();
     const isSignup = this.state.formType === "signup" ? true : false;
 
     if (isSignup) {

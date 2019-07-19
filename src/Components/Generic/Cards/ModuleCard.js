@@ -77,13 +77,20 @@ const renderEditActionBar = (moduleId, select, modify) => {
 
 const renderLessonsList = lessons => {
   return lessons.map(lsn => {
-    return <LessonCard lesson={lsn} id={lsn.id} />;
+    return <LessonCard lesson={lsn} key={lsn.id} id={lsn.id} />;
   });
 };
 
 const renderLessonsListDraft = (lessons, onModify) => {
   return lessons.map(lsn => {
-    return <DraftLessonCard lesson={lsn} id={lsn.id} modify={onModify} />;
+    return (
+      <DraftLessonCard
+        lesson={lsn}
+        key={lsn.id}
+        id={lsn.id}
+        modify={onModify}
+      />
+    );
   });
 };
 
@@ -98,7 +105,9 @@ const renderAssignmentList = assignments => {
     );
   }
   return assignments.map(asgnmt => {
-    return <AssignmentCard assignment={asgnmt} id={asgnmt.id} />;
+    return (
+      <AssignmentCard assignment={asgnmt} key={asgnmt.id} id={asgnmt.id} />
+    );
   });
 };
 const renderAssignmentListDraft = (assignments, onModify) => {
@@ -106,6 +115,7 @@ const renderAssignmentListDraft = (assignments, onModify) => {
     return (
       <DraftAssignmentCard
         assignment={asgnmt}
+        key={asgnmt.id}
         id={asgnmt.id}
         modify={onModify}
       />

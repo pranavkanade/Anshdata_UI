@@ -11,8 +11,7 @@ export const getCoursesList = async coursesSaveHandler => {
     await fetch(URLS.LIST_COURSE, {
       method: "GET",
       headers: {
-        "content-type": "application/json",
-        Authorization: getAuthorization()
+        "content-type": "application/json"
       }
     })
       .then(response => response.json())

@@ -12,8 +12,7 @@ const URLS = {
   USERLOGOUT: "http://127.0.0.1:8000/api/user/logout/"
 };
 
-export const signupHandler = async (event, signupData) => {
-  event.preventDefault();
+export const signupHandler = async signupData => {
   try {
     const siginupRes = await fetch(URLS.USERSIGNUP, {
       method: "POST",

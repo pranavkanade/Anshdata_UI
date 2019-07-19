@@ -221,7 +221,7 @@ class DetailedCourse extends Component {
   renderModulesList = modules => {
     return modules.map(mod => {
       return (
-        <>
+        <React.Fragment key={mod.id}>
           <ModuleCardMd
             module={mod}
             key={mod.id}
@@ -234,7 +234,7 @@ class DetailedCourse extends Component {
               close={this.closeSelectedModule}
             />
           ) : null}
-        </>
+        </React.Fragment>
       );
     });
   };

@@ -29,7 +29,24 @@ const getData = async (URL, saveCourseHandler) => {
 };
 
 export const getDraftedCommunityCoursesList = async saveCourseHandler => {
-  getData(URLS.LIST_DRAFTED_COURSES_COMUNITY, saveCourseHandler);
+  const URL = URLS.LIST_DRAFTED_COURSES_COMUNITY;
+  try {
+    await fetch(URL, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        saveCourseHandler(data);
+      });
+  } catch (err) {
+    console.log(
+      "[Contrib.js] Failed to collect the list of drafted courses : ",
+      err
+    );
+  }
 };
 
 export const getDraftedSelfCoursesList = async saveCourseHandler => {

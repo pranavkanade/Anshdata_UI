@@ -227,6 +227,7 @@ const renderAssignmetns = (assignments, activeAsignmt, setActiveAsignmt) => {
                 `${css.item} ` +
                 (asignmt.id === activeAsignmt ? css.active : "")
               }
+              key={asignmt.id}
               onClick={() => setActiveAsignmt(asignmt.id)}>
               <span key={asignmt.id}>{asignmt.title}</span>
             </div>
