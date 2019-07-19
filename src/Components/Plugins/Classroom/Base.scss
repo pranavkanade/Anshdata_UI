@@ -2,7 +2,7 @@
 
 .classroomBase {
   padding: 1rem 5% 2rem 5%;
-  background: $White-2;
+  background: $White-1;
 }
 
 .loader {
@@ -47,21 +47,30 @@
   grid-gap: 2rem;
 }
 
-.fullCourseBar {
-  padding: 0rem 0 1rem 0;
+.floatBtn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
   button {
-    width: 100%;
-    font-size: 24px;
+    border-radius: 2rem;
+    padding: 1rem;
+    box-shadow: $shadow-all-2;
   }
 }
 
+.adSidenav {
+  box-shadow: $shadow-all-1;
+}
+
 .lesson {
-  background: $White-0;
-  border: 1px solid #e7e7e7;
+  background: $White-0b;
+  // border: 1px solid #e7e7e7;
+  box-shadow: $shadow-all-2;
   box-sizing: border-box;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
 
   .title {
     margin: 1rem 2rem 1rem 4rem;
@@ -77,6 +86,7 @@
     width: 840px;
     height: 570px;
     border: 1px solid #cfcfcf;
+    box-shadow: $shadow-all-1;
   }
 
   .actionBtns {
@@ -142,10 +152,10 @@
     width: 840px;
     // height: 128px;
     padding: 1rem 2rem 1rem 2rem;
-
-    border: 1px solid #e7e7e7;
+    background: #ffecc9;
+    // border: 1px solid #e7e7e7;
     box-sizing: border-box;
-    border-radius: 2px;
+    border-radius: 10px;
 
     .heading {
       @extend %heading;

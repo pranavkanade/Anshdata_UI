@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import ReactPlayer from "react-player";
-import { Sidenav, Nav, Button, Icon, Drawer, Dropdown } from "rsuite";
+import {
+  Sidenav,
+  Nav,
+  Button,
+  Icon,
+  Drawer,
+  Dropdown,
+  Whisper,
+  Tooltip
+} from "rsuite";
 import css from "./Base.scss";
 
 const renderLoader = () => {
@@ -219,14 +228,6 @@ const renderFullCourseContent = (
           </Sidenav.Body>
         </Sidenav>
       </Drawer.Body>
-      <Drawer.Footer>
-        <Button onClick={closeHandler} appearance="primary">
-          Confirm
-        </Button>
-        <Button onClick={closeHandler} appearance="subtle">
-          Cancel
-        </Button>
-      </Drawer.Footer>
     </Drawer>
   );
 };
@@ -295,12 +296,6 @@ const ClassroomBase = props => {
       <div className={css.board}>
         <div className={css.courseContent}>
           <div className={css.fullCourseBar}>
-            <Button
-              color="violet"
-              size="lg"
-              onClick={() => setOpenDrawer(true)}>
-              <Icon icon="book2" size="lg" /> Full Course Content
-            </Button>
             {renderFullCourseContent(
               openDrawer,
               () => setOpenDrawer(false),
@@ -315,6 +310,23 @@ const ClassroomBase = props => {
             props.activeLesson,
             props.lessonSelectionHandler
           )}
+          <div className={css.floatBtn}>
+            <Whisper
+              trigger="hover"
+              placement="right"
+              speaker={
+                <Tooltip style={{ fontSize: "20px" }}>
+                  View full course content.
+                </Tooltip>
+              }>
+              <Button
+                color="violet"
+                size="lg"
+                onClick={() => setOpenDrawer(true)}>
+                <Icon icon="book2" size="3x" />
+              </Button>
+            </Whisper>
+          </div>
         </div>
         <div className={css.lesson}>
           {props.activeLesson !== null && props.activeLesson !== undefined
