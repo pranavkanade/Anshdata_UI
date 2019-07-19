@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import ReactPlayer from "react-player";
-
+import { Sidenav, Nav, Button, Icon, Drawer, Dropdown } from "rsuite";
 import css from "./Base.scss";
 
 const renderLoader = () => {
@@ -9,134 +9,6 @@ const renderLoader = () => {
     <div className={css.loader}>
       <div className={"ui active inverted centered inline loader massive"} />;
     </div>
-  );
-};
-
-const renderLsnNAsign = (lessons, lessonSelectionHandler, assignments) => {
-  const Lessons = lessons.map((lsn, indx) => {
-    return (
-      <span
-        className={css.lsn}
-        key={lsn.id}
-        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
-        {indx + 1}. {lsn.title}
-      </span>
-    );
-  });
-
-  const Assignments = assignments.map(asignmt => {
-    // TODO: This is a hack to skip any assignment that may belong to a lesson.
-    // Fix this in back so that only those asign will be here which need to
-    //  e.g - course level and module level.
-    if (asignmt.lesson !== null) {
-      return null;
-    }
-    return (
-      <span className={css.asignmt} key={asignmt.id}>
-        {asignmt.title}
-      </span>
-    );
-  });
-
-  return (
-    <>
-      {Lessons}
-      {Assignments}
-    </>
-  );
-};
-
-const renderCourseContent = (
-  course,
-  lessonSelectionHandler,
-  openMod,
-  setOpenMod
-) => {
-  const Modules = course.modules.map(mod => {
-    return (
-      <div className={css.module} key={mod.id}>
-        <span
-          className={css.card}
-          onClick={() => {
-            mod.id === openMod ? setOpenMod(0) : setOpenMod(mod.id);
-          }}>
-          {mod.title}
-        </span>
-        {mod.id === openMod
-          ? renderLsnNAsign(
-              mod.lessons,
-              lessonSelectionHandler,
-              mod.assignments
-            )
-          : null}
-      </div>
-    );
-  });
-
-  return (
-    <div className={css.course}>
-      <div className={css.title}>
-        <span>Course Content</span>
-      </div>
-
-      {Modules}
-    </div>
-  );
-};
-
-const renderActiveMod = (
-  activeModule,
-  lessonSelectionHandler,
-  courseProgress
-) => {
-  const Lessons = activeModule.lessons.map((lsn, index) => {
-    return (
-      <span
-        className={
-          courseProgress !== null &&
-          courseProgress.current_lesson !== null &&
-          courseProgress.current_lesson.id === lsn.id
-            ? css.active_lsn
-            : css.lsn
-        }
-        key={lsn.id}
-        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
-        {lsn.title}
-      </span>
-    );
-  });
-
-  return (
-    <div className={css.activeMod}>
-      <span className={css.title}>Active Module</span>
-      <span className={css.modBox}>{activeModule.title}</span>
-      {renderLsnNAsign(
-        activeModule.lessons,
-        lessonSelectionHandler,
-        activeModule.assignments
-      )}
-    </div>
-  );
-};
-
-const renderContent = (
-  course,
-  activeModule,
-  lessonSelectionHandler,
-  openMod,
-  setOpenMod,
-  courseProgress
-) => {
-  return (
-    <>
-      {renderActiveMod(activeModule, lessonSelectionHandler, courseProgress)}
-      {renderCourseContent(
-        course,
-        lessonSelectionHandler,
-        openMod,
-        setOpenMod
-      )}
-    </>
   );
 };
 
@@ -301,8 +173,109 @@ const getLessonList = course => {
   return lessons;
 };
 
+const renderFullCourseContent = (
+  shouldShow,
+  closeHandler,
+  course,
+  activeLsn,
+  activeMod,
+  selectionHandler
+) => {
+  return (
+    <Drawer size="xs" placement="left" show={shouldShow} onHide={closeHandler}>
+      <Drawer.Header>
+        <Drawer.Title>{course.title}</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        <Sidenav appearance="subtle" defaultOpenKeys={[activeMod]}>
+          <Sidenav.Body>
+            <Nav>
+              {course.modules.map(mod => {
+                return (
+                  <Dropdown
+                    placement="rightTop"
+                    eventKey={mod.id}
+                    key={mod.id}
+                    title={mod.title}
+                    icon={<Icon icon="magic" />}>
+                    {mod.lessons.map(lsn => {
+                      const active = lsn.id === activeLsn;
+                      const icon = active ? <Icon icon="arrow-right" /> : null;
+                      return (
+                        <Dropdown.Item
+                          eventKey={lsn.id}
+                          key={lsn.id}
+                          active={active}
+                          icon={icon}
+                          onClick={() => selectionHandler(lsn.id, mod.id)}>
+                          {lsn.title}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown>
+                );
+              })}
+            </Nav>
+          </Sidenav.Body>
+        </Sidenav>
+      </Drawer.Body>
+      <Drawer.Footer>
+        <Button onClick={closeHandler} appearance="primary">
+          Confirm
+        </Button>
+        <Button onClick={closeHandler} appearance="subtle">
+          Cancel
+        </Button>
+      </Drawer.Footer>
+    </Drawer>
+  );
+};
+
+const activeModuleSidebar = (
+  activeModule,
+  activeLesson,
+  lessonSelectionHandler
+) => {
+  const lessons = activeModule.lessons.map(lsn => {
+    const active = lsn.id === activeLesson.id;
+    const icon = active ? <Icon icon="arrow-right" /> : null;
+    return (
+      <Nav.Item
+        key={lsn.id}
+        eventKey={lsn.id}
+        active={active}
+        icon={icon}
+        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
+        {lsn.title}
+      </Nav.Item>
+    );
+  });
+  const headerStyles = {
+    padding: 20,
+    fontSize: 20,
+    fontWeight: 600,
+    background: "#34c3ff",
+    color: " #fff"
+  };
+  return (
+    <div className={css.adSidenav}>
+      <Sidenav appearance="subtle">
+        <Sidenav.Header>
+          <div className={css.title} style={headerStyles}>
+            <Icon className={css.icon} icon="cube" size="2x" />{" "}
+            {activeModule.title}
+          </div>
+        </Sidenav.Header>
+        <Sidenav.Body>
+          <Nav>{lessons}</Nav>
+        </Sidenav.Body>
+      </Sidenav>
+    </div>
+  );
+};
+
 const ClassroomBase = props => {
-  const [openMod, setOpenMod] = useState(0);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [activeAsignmt, setActiveAsignmt] = useState(0);
   if (
     props.course === undefined ||
@@ -320,14 +293,27 @@ const ClassroomBase = props => {
         </Link>
       </div>
       <div className={css.board}>
-        <div className={css.content}>
-          {renderContent(
-            props.course,
+        <div className={css.courseContent}>
+          <div className={css.fullCourseBar}>
+            <Button
+              color="violet"
+              size="lg"
+              onClick={() => setOpenDrawer(true)}>
+              <Icon icon="book2" size="lg" /> Full Course Content
+            </Button>
+            {renderFullCourseContent(
+              openDrawer,
+              () => setOpenDrawer(false),
+              props.course,
+              props.activeLesson.id,
+              props.activeModule.id,
+              props.lessonSelectionHandler
+            )}
+          </div>
+          {activeModuleSidebar(
             props.activeModule,
-            props.lessonSelectionHandler,
-            openMod,
-            setOpenMod,
-            props.courseProgress
+            props.activeLesson,
+            props.lessonSelectionHandler
           )}
         </div>
         <div className={css.lesson}>

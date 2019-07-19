@@ -131,7 +131,6 @@ class CourseClassroom extends Component {
         course={this.state.course}
         activeModule={this.state.activeModule}
         activeLesson={this.state.activeLesson}
-        moduleSelectionHandler={this.moduleSelectionHandler}
         lessonSelectionHandler={this.lessonSelectionHandler}
         setCourseProgress={this.setCourseProgress}
         setCompleted={this.setCompleted}

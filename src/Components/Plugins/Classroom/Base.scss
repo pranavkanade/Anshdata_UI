@@ -45,437 +45,259 @@
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 2rem;
+}
 
-  .content {
-    %box {
-      display: flex;
-      flex-direction: column;
-      // border: 1px solid #ffffff;
-      box-sizing: border-box;
+.fullCourseBar {
+  padding: 0rem 0 1rem 0;
+  button {
+    width: 100%;
+    font-size: 24px;
+  }
+}
 
-      .title {
-        text-align: center;
-        padding-top: 1rem;
-        font-family: Barlow, Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 24px;
-        line-height: 34px;
-        /* identical to box height */
+.lesson {
+  background: $White-0;
+  border: 1px solid #e7e7e7;
+  box-sizing: border-box;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
 
-        color: #3f3e3e;
-        width: 100%;
-        height: 64px;
-        background: #e9e9e9;
-        span {
-          font-family: Barlow, Roboto;
-          font-style: normal;
-          font-weight: bold;
-          font-size: 24px;
-          line-height: 34px;
-          /* identical to box height */
+  .title {
+    margin: 1rem 2rem 1rem 4rem;
+    @extend %font;
+    font-size: 24px;
+    line-height: 29px;
+  }
 
-          color: #3f3e3e;
-        }
+  .lecture {
+    // justify-self: center;
+    margin: 2rem 0 2rem 0;
+    align-self: center;
+    width: 840px;
+    height: 570px;
+    border: 1px solid #cfcfcf;
+  }
+
+  .actionBtns {
+    margin: 0 2rem 1rem 2rem;
+    display: flex;
+    flex-direction: row-reverse;
+
+    button {
+      border-radius: 5px;
+      padding: 4px 8px 4px 8px;
+      font-family: Barlow, Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      /* identical to box height */
+      text-align: center;
+      border: 0px;
+
+      color: #ffffff;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      img {
+        transition: 0.2s ease;
+        margin-bottom: 3px;
       }
     }
-    .activeMod {
-      @extend %box;
-      // height: 320px;
 
-      margin-bottom: 2rem;
-
-      .modBox {
-        width: 100%;
-
-        // height: 90px;
-        vertical-align: middle;
-        padding: 1rem;
-
-        background: #267aa9;
-        border: 1px solid #267aa9;
-
-        font-family: Scope One, Roboto;
-        font-style: normal;
-        font-weight: 900;
-        font-size: 20px;
-        line-height: 33px;
-
-        color: #ffffff;
+    .mark {
+      margin-left: 1rem;
+      background: #00cc66;
+      img {
+        margin-left: 0.5rem;
+        height: 24px;
       }
-      .lsn {
-        margin-top: 1px;
-        padding: 1rem;
-        background: #6babcf;
-        font-family: Lato, Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 24px;
-
-        color: #ffffff;
-        // border: 1px solid #ffffff;
-
-        transition: transform 0.1s ease;
-        &:hover {
-          cursor: pointer;
-          transform: scale(1.02);
-          font-weight: bold;
-          box-shadow: $shadow-1;
-        }
-      }
-
-      .active_lsn {
-        margin-top: 1px;
-        padding: 1rem;
-        background: #6babcf;
-        font-family: Lato, Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 24px;
-
-        color: #ffffff;
-        // border: 1px solid #ffffff;
-
-        transition: transform 0.1s ease;
-        transform: scale(1.02);
-        font-weight: bold;
-        box-shadow: $shadow-1;
-      }
-
-      .asignmt {
-        margin-top: 1px;
-        padding: 1rem;
-        background: #5e92b1;
-        font-family: Lato, Roboto;
-        font-style: normal;
-        font-weight: lighter;
-        font-size: 20px;
-        line-height: 24px;
-
-        color: #ffffff;
-        // border: 1px solid #ffffff;
-
-        transition: transform 0.1s ease;
-        &:hover {
-          cursor: pointer;
-          transform: scale(1.02);
-          font-weight: normal;
-          box-shadow: $shadow-1;
+      &:hover {
+        img {
+          transform: scale(1.5);
         }
       }
     }
 
-    .course {
-      @extend %box;
-
-      .module {
-        margin-top: 3px;
-
-        font-family: Lato, Roboto;
-        font-style: normal;
-        font-weight: lighter;
-
-        line-height: 24px;
-
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-
-        .card {
-          background: #7c6cda;
-          padding: 1rem;
-          transition: transform 0.1s ease;
-          font-size: 20px;
-          &:hover {
-            cursor: pointer;
-            transform: scale(1.02);
-            font-weight: normal;
-            box-shadow: $shadow-1;
-          }
-        }
-
-        .lsn {
-          background: #ffffffc7;
-          padding: 1rem;
-          margin: 1px 0.5rem 0 0.5rem;
-          transition: transform 0.1s ease;
-          font-size: 16px;
-          color: $Black-1;
-          border: 1px solid #ded8ff;
-          &:hover {
-            cursor: pointer;
-            transform: scale(1.02);
-            font-weight: normal;
-            border: 1px solid #9f8eff;
-            box-shadow: $shadow-1;
-          }
-        }
-
-        .asignmt {
-          background: #62579e;
-          padding: 1rem;
-          margin: 1px 0.5rem 0 0.5rem;
-          transition: transform 0.1s ease;
-          font-size: 16px;
-          &:hover {
-            cursor: pointer;
-            transform: scale(1.02);
-            font-weight: normal;
-            box-shadow: $shadow-2;
-          }
+    .next {
+      background: #e76d5d;
+      img {
+        margin-left: 0.5rem;
+        height: 24px;
+      }
+      &:hover {
+        img {
+          transform: translateX(8px);
         }
       }
     }
   }
 
-  .lesson {
-    background: $White-0;
+  .description {
+    margin-top: 1rem;
+    align-self: center;
+    width: 840px;
+    // height: 128px;
+    padding: 1rem 2rem 1rem 2rem;
+
     border: 1px solid #e7e7e7;
     box-sizing: border-box;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
+    border-radius: 2px;
 
-    .title {
-      margin: 1rem 2rem 1rem 4rem;
-      @extend %font;
+    .heading {
+      @extend %heading;
+    }
+
+    p {
+      padding: 1rem 2rem 1rem 2rem;
+      font-family: Lato, Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 19px;
+      text-align: justify;
+
+      color: #494848;
+    }
+  }
+
+  .assignmentsBoard {
+    align-self: center;
+    margin-top: 2rem;
+    width: 840px;
+    // height: 435px;
+    padding: 1rem 2rem 1rem 2rem;
+
+    border: 1px solid #e7e7e7;
+    box-sizing: border-box;
+    border-radius: 2px;
+
+    .heading {
+      @extend %heading;
+    }
+
+    .notice {
+      border: 1px solid #809604;
+      margin-top: 2rem;
+      padding: 2rem 2rem 2rem 2rem;
+      font-family: Lato, Roboto;
+      font-style: normal;
+      font-weight: lighter;
       font-size: 24px;
       line-height: 29px;
+      text-align: justify;
+      border-radius: 5px;
+
+      color: #809604;
     }
 
-    .lecture {
-      // justify-self: center;
-      margin: 2rem 0 2rem 0;
-      align-self: center;
-      width: 840px;
-      height: 570px;
-      iframe {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .actionBtns {
-      margin: 0 2rem 1rem 2rem;
-      display: flex;
-      flex-direction: row-reverse;
-
-      button {
-        border-radius: 5px;
-        padding: 4px 8px 4px 8px;
-        font-family: Barlow, Roboto;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 24px;
-        /* identical to box height */
-        text-align: center;
-        border: 0px;
-
-        color: #ffffff;
-
-        &:hover {
-          cursor: pointer;
-        }
-
-        img {
-          transition: 0.2s ease;
-        }
-      }
-
-      .mark {
-        margin-left: 1rem;
-        background: #00cc66;
-        img {
-          margin-left: 0.5rem;
-          height: 24px;
-        }
-        &:hover {
-          img {
-            transform: scale(1.5);
-          }
-        }
-      }
-
-      .next {
-        background: #e76d5d;
-        img {
-          margin-left: 0.5rem;
-          height: 24px;
-        }
-        &:hover {
-          img {
-            transform: translateX(8px);
-          }
-        }
-      }
-    }
-
-    .description {
+    .assignments {
       margin-top: 1rem;
-      align-self: center;
-      width: 840px;
-      // height: 128px;
-      padding: 1rem 2rem 1rem 2rem;
+      display: grid;
+      grid-template-columns: 1.3fr 2px 2fr;
+      grid-gap: 1rem;
 
-      border: 1px solid #e7e7e7;
-      box-sizing: border-box;
-      border-radius: 2px;
+      .listing {
+        display: flex;
+        flex-direction: column;
+        height: min(200px);
+        .item {
+          margin-top: 1rem;
+          padding: 1rem;
+          // height: 96px;
+          text-align: justify;
+          box-sizing: border-box;
+          border-radius: 2px;
 
-      .heading {
-        @extend %heading;
+          font-family: Barlow, Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 20px;
+          line-height: 24px;
+
+          border: 0px;
+          background: #897df7;
+          color: $White-0;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .active {
+          border: 0px;
+          background: #5544eb;
+          color: $White-0;
+        }
+      }
+      .divider {
+        background: #dadada;
       }
 
-      p {
-        padding: 1rem 2rem 1rem 2rem;
-        font-family: Lato, Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 19px;
-        text-align: justify;
+      .detailed {
+        display: flex;
+        flex-direction: column;
+        span {
+          font-family: Lato, Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 20px;
+          line-height: 24px;
 
-        color: #494848;
-      }
-    }
+          color: #000000;
+        }
 
-    .assignmentsBoard {
-      align-self: center;
-      margin-top: 2rem;
-      width: 840px;
-      // height: 435px;
-      padding: 1rem 2rem 1rem 2rem;
+        .instructions {
+          margin-top: 1rem;
+          padding: 1rem;
+          border: 1px solid #dadada;
 
-      border: 1px solid #e7e7e7;
-      box-sizing: border-box;
-      border-radius: 2px;
+          span {
+            font-size: 18px;
+            line-height: 22px;
+            font-weight: 700;
+            color: $Black-1;
+          }
 
-      .heading {
-        @extend %heading;
-      }
-
-      .notice {
-        border: 1px solid #809604;
-        margin-top: 2rem;
-        padding: 2rem 2rem 2rem 2rem;
-        font-family: Lato, Roboto;
-        font-style: normal;
-        font-weight: lighter;
-        font-size: 24px;
-        line-height: 29px;
-        text-align: justify;
-        border-radius: 5px;
-
-        color: #809604;
-      }
-
-      .assignments {
-        margin-top: 1rem;
-        display: grid;
-        grid-template-columns: 1.3fr 2px 2fr;
-        grid-gap: 1rem;
-
-        .listing {
-          display: flex;
-          flex-direction: column;
-          height: min(200px);
-          .item {
-            margin-top: 1rem;
-            padding: 1rem;
-            // height: 96px;
+          p {
+            padding: 1rem 2rem 1rem 2rem;
+            font-family: Lato, Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 19px;
             text-align: justify;
-            box-sizing: border-box;
+
+            color: #494848;
+          }
+        }
+        .action {
+          display: flex;
+          flex-direction: row-reverse;
+          margin-top: 1rem;
+          button {
+            width: 128px;
+            height: 48px;
+            justify-self: right;
+
             border-radius: 2px;
 
             font-family: Barlow, Roboto;
             font-style: normal;
-            font-weight: normal;
+            font-weight: 500;
             font-size: 20px;
             line-height: 24px;
-
+            /* identical to box height */
+            text-align: center;
             border: 0px;
-            background: #897df7;
-            color: $White-0;
 
+            color: #ffffff;
+            background: #5544eb;
             &:hover {
               cursor: pointer;
-            }
-          }
-
-          .active {
-            border: 0px;
-            background: #5544eb;
-            color: $White-0;
-          }
-        }
-        .divider {
-          background: #dadada;
-        }
-
-        .detailed {
-          display: flex;
-          flex-direction: column;
-          span {
-            font-family: Lato, Roboto;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 20px;
-            line-height: 24px;
-
-            color: #000000;
-          }
-
-          .instructions {
-            margin-top: 1rem;
-            padding: 1rem;
-            border: 1px solid #dadada;
-
-            span {
-              font-size: 18px;
-              line-height: 22px;
-              font-weight: 700;
-              color: $Black-1;
-            }
-
-            p {
-              padding: 1rem 2rem 1rem 2rem;
-              font-family: Lato, Roboto;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 16px;
-              line-height: 19px;
-              text-align: justify;
-
-              color: #494848;
-            }
-          }
-          .action {
-            display: flex;
-            flex-direction: row-reverse;
-            margin-top: 1rem;
-            button {
-              width: 128px;
-              height: 48px;
-              justify-self: right;
-
-              border-radius: 2px;
-
-              font-family: Barlow, Roboto;
-              font-style: normal;
-              font-weight: 500;
-              font-size: 20px;
-              line-height: 24px;
-              /* identical to box height */
-              text-align: center;
-              border: 0px;
-
-              color: #ffffff;
-              background: #5544eb;
-              &:hover {
-                cursor: pointer;
-              }
             }
           }
         }
