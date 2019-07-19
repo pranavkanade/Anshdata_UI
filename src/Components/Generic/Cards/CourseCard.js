@@ -64,7 +64,7 @@ export const PublishedCard = props => {
   const creditPoints = course.credit_points;
   return (
     <div className={css.published}>
-      {renderHead(title)}
+      {renderHead(title, lecture)}
       <div className={css.rating}>{RenderRating()}</div>
       <div className={css.credits}>
         <span>Credit Points</span>
@@ -110,10 +110,17 @@ export const EnrolledCourseCard = props => {
       ? course.title
       : "This is Course Title";
   const progress = 63;
-
+  let lecture = "https://www.youtube.com/embed/RKLKib4bHhA";
+  try {
+    const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
+    lecture = props.course.modules[0].lessons[0].lecture;
+    lecture = lecture === "" || lecture === null ? backup : lecture;
+  } catch (err) {
+    console.log("Doest not have lecture : ", course.id);
+  }
   return (
     <div className={css.enrolled}>
-      {renderHead(title)}
+      {renderHead(title, lecture)}
       <div className={css.progress}>
         <Line percent={progress} strokeColor="#2e229e" status={null} />
       </div>
@@ -127,10 +134,18 @@ export const DraftCourseCard = props => {
     course !== null && course !== undefined
       ? course.title
       : "This is Course Title";
+  let lecture = "https://www.youtube.com/embed/RKLKib4bHhA";
+  try {
+    const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
+    lecture = props.course.modules[0].lessons[0].lecture;
+    lecture = lecture === "" || lecture === null ? backup : lecture;
+  } catch (err) {
+    console.log("Doest not have lecture : ", course.id);
+  }
 
   return (
     <div className={css.drafted}>
-      {renderHead(title)}
+      {renderHead(title, lecture)}
       <div className={css.category}>
         <span className={css.value}>{course.category.title}</span>
         <br />

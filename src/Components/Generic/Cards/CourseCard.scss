@@ -73,6 +73,7 @@
   .intro {
     padding: 1rem;
     width: auto;
+    pointer-events: none;
   }
   .title {
     padding-top: 2rem;
@@ -89,6 +90,7 @@
 
 .intro {
   width: 220px;
+  pointer-events: none;
   iframe {
     width: 220px;
   }
