@@ -3,7 +3,6 @@ import React from "react";
 import css from "./AssignmentCard.scss";
 
 export const draftAssignmentCard = props => {
-  console.log("assignment : ", props.assignment);
   return (
     <div className={css.assignmentCard}>
       <span>{props.assignment.title}</span>
@@ -36,7 +35,6 @@ export const draftAssignmentCard = props => {
 };
 
 export const AssignmentCard = props => {
-  console.log("assignment : ", props.assignment);
   return (
     <div className={css.assignmentCard}>
       <span>{props.assignment.title}</span>

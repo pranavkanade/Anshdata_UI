@@ -26,10 +26,6 @@ class ModuleForm extends Component {
   };
 
   createModule = async () => {
-    console.log(
-      "[Module/Form.js] Create Module clicked",
-      this.state.moduleForm
-    );
     const courseId = await createModuleHandler(
       this.state.moduleForm,
       this.props.moduleId
@@ -94,7 +90,6 @@ class ModuleForm extends Component {
       this.props.moduleId === undefined ||
       this.props.moduleId === 0
     ) {
-      console.log("Creating new module");
       this.setState({ type: "create" });
       return null;
     }
@@ -104,7 +99,6 @@ class ModuleForm extends Component {
         return mod.id === this.props.moduleId;
       })
     };
-    console.log("mod to update", mod);
     this.setState({
       modToUpdate: mod,
       moduleForm: {
@@ -117,7 +111,6 @@ class ModuleForm extends Component {
   };
 
   componentDidMount() {
-    console.log("[Contrib/Module/Form.js] component did mount");
     this.getModuleToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }

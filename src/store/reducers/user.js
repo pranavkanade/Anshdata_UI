@@ -20,7 +20,6 @@ const reducer = (state = initialState, action) => {
         authToken: action.data.token,
         isAuthenticated: true
       });
-      console.log("[Reducer Sign IN/UP] updated store : ", resp);
       setADStateToLocalStorage({ user: resp });
       return resp;
     case actionTypes.SIGN_OUT:
@@ -28,7 +27,6 @@ const reducer = (state = initialState, action) => {
       setADStateToLocalStorage({ user: resp });
       return resp;
     case actionTypes.USER_VERIFY:
-      console.log("[USER VERIFY reducer] data recieved : ", action.data);
       resp = Object.assign({}, state, {
         authToken: action.data.token
       });

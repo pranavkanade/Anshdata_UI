@@ -47,24 +47,19 @@ function* watchMakeUserVerify() {
 
 function* sagaRequestUserSignIn() {
   const resp = yield take(actionTypes.REQUEST_USER_SIGN_IN);
-  console.log("IN sign in request saga with data : ", resp);
   const data = resp.data;
   if (data.ok) {
     yield put(storeUserSignedIn(data.data));
   } else {
-    console.log("Error !! storing the error", data);
     yield put(addNotificationError(data));
   }
 }
 
 function* sagaFetchDetailedDraftCourse(action) {
-  console.log("[ SAGA FETCH DRAFT COURSE ] : ", action);
   const resp = yield call(getCourse, action.data);
-  console.log("[ SAGA FETCHED COURSE ] : ", resp);
   if (resp.ok) {
     yield put(storeDetailedDraftCourse(resp.data));
   } else {
-    console.log("Error !! storing the error", resp);
     yield put(addNotificationError(resp));
   }
 }
@@ -77,12 +72,10 @@ function* watchFetchDetailedDraftCourse() {
 }
 
 function* sagaUpdateDetailedDraftCourse(action) {
-  console.log("[ SAGA DRAFT COURSE UPDATE ] :", action);
   const resp = action.data;
   if (resp.ok) {
     yield put(fetchDetailedDraftCourse(resp.data.id));
   } else {
-    console.log("Error !! storing the error", resp);
     yield put(addNotificationError(resp));
   }
 }

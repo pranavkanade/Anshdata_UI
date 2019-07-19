@@ -6,7 +6,6 @@ import DraftedCourse from "../../../src/Components/Plugins/Contribute/Draft/inde
 const contribDraft = props => {
   const router = useRouter();
   const { crsId } = router.query;
-  console.log("course ID ", crsId);
   return <DraftedCourse courseId={crsId} />;
 };
 

@@ -14,10 +14,6 @@ const reducer = (state = initialState, action) => {
       resp = Object.assign({}, state, {
         error: action.data
       });
-      console.log(
-        "[ADD_NOTIFICATION_ERROR reducer] Storing the error : ",
-        resp
-      );
       return resp;
     default:
       return state;

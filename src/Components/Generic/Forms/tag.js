@@ -13,7 +13,6 @@ class TagForm extends Component {
   };
 
   handleChange = value => {
-    console.log("handle change : ", value);
     this.setState({
       tagForm: value
     });

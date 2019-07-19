@@ -9,12 +9,9 @@ export const giveFeedback = async data => {
       body: JSON.stringify(data)
     })
       .then(response => {
-        console.log(response);
         return response.json();
       })
-      .then(resp => {
-        console.log("Feedback Submitted : ", resp);
-      });
+      .then(resp => resp);
   } catch (err) {
     console.log("Error when giving feedback to a course : ", err);
   }

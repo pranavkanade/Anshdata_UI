@@ -11,8 +11,6 @@ const menus = ["Courses", "Contribute", "Blog"];
 
 const handleSignout = async (event, props) => {
   event.preventDefault();
-  console.log("logging out of here");
-  // this.setState({ isAuthenticated: false, user: null });
   props.storeUserSignedOut();
   await logoutHandler(event);
   Router.push("/");
@@ -102,7 +100,6 @@ const navbar = props => {
 
 function mapStateToProps(state) {
   const { isAuthenticated, user } = state.user;
-  console.log("Setting up maps to props for navbar : ", state.user);
   return { isAuthenticated, user };
 }
 

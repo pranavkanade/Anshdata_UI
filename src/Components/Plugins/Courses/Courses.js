@@ -89,7 +89,6 @@ class Courses extends Component {
 
   renderMyCourses = () => {
     const courseEnrolledin = this.state.enrolledCourses;
-    console.log("Courses enrolled : ", courseEnrolledin);
     // return null;
     return courseEnrolledin === null ? (
       <span>Your Courses</span>
@@ -147,19 +146,13 @@ class Courses extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    console.log("[Courses.js] component did mount", this.state);
     if (this.state.isAuthenticated) {
       getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
     }
     getCoursesList(this.saveCoursesHandler);
   }
 
-  componentWillUnmount() {
-    console.log("[courses.js] component will unmount");
-  }
-
   componentDidUpdate() {
-    console.log("[Courses.js] component did update");
     if (this.props.isAuthenticated && this.state.enrolledCourses === null) {
       // NOTE: This is going to be hell merry .. when actually new user comes on this page.
       getEnrolledCoursesList(this.saveEnrolledCoursesHandler);

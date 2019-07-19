@@ -46,7 +46,6 @@ class DraftedCourse extends Component {
     lessonId = null,
     assignmentId = null
   ) => {
-    console.log("[Contrib/Course.js] Add New Clicked : ", btn);
     if (btn === "course") {
       this.setState({
         shouldOpenAddCourse: true,
@@ -57,7 +56,6 @@ class DraftedCourse extends Component {
 
   renderAddNewForm = () => {
     const btn = this.state.elementBeingAdded;
-    console.log("[Contrib/Course.js] render add new form : ", btn);
     if (this.state.shouldOpenAddCourse) {
       return (
         <CourseForm
@@ -229,9 +227,6 @@ class DraftedCourse extends Component {
     if (this.state.course === null) {
       return <div className={css.container}>{this.renderLoader()}</div>;
     } else if (this.state.course.author.id !== user.pk) {
-      console.log("Course Author mismatch!");
-      console.log("course author : ", this.state.course.author);
-      console.log("logged in user : ", user);
       return <Error />;
     }
     const { course } = this.state;
@@ -262,8 +257,6 @@ class DraftedCourse extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(" Props comparison : ", nextProps, this.props);
-    console.log(" State Comparison : ", nextState, this.state);
     return true;
   }
 }

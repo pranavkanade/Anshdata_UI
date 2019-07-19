@@ -2,17 +2,14 @@ import actionTypes from "./actionTypes";
 
 // Actions Users
 export const storeUserSignedIn = data => {
-  console.log("[Sign in action] Trying to store user: ", data);
   return { type: actionTypes.SIGN_IN, data: data };
 };
 
 export const requestUserSignIn = data => {
-  console.log("[Request Sign in action] Trying authenticate user: ", data);
   return { type: actionTypes.REQUEST_USER_SIGN_IN, data: data };
 };
 
 export const storeUserSignedUp = data => {
-  console.log("[Sign up action] Trying to store user: ", data);
   return { type: actionTypes.SIGN_UP, data: data };
 };
 

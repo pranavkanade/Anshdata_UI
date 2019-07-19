@@ -115,7 +115,6 @@ const renderAssignmentListDraft = (assignments, onModify) => {
 
 export const ModuleCardMd = props => {
   const module = props.module;
-  console.log("Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.mdModuleCard}>{renderLoader()}</div>;
@@ -140,7 +139,6 @@ export const ModuleCardMd = props => {
 
 export const ModuleCardDraft = props => {
   const module = props.module;
-  console.log("Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.mdModuleCard}>{renderLoader()}</div>;
@@ -165,7 +163,6 @@ export const ModuleCardDraft = props => {
 
 export const DetailedModuleCard = props => {
   const module = props.module;
-  console.log("Detailed Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.detailedModuleCard}>{renderLoader()}</div>;
@@ -196,7 +193,6 @@ export const DetailedModuleCard = props => {
 
 export const DetailedModuleCardDraft = props => {
   const module = props.module;
-  console.log("Detailed Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.detailedModuleCard}>{renderLoader()}</div>;

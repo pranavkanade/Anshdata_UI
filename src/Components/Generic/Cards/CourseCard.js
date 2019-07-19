@@ -57,9 +57,8 @@ export const PublishedCard = props => {
     const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
     lecture = props.course.modules[0].lessons[0].lecture;
     lecture = lecture === "" || lecture === null ? backup : lecture;
-    console.log("Found lecure : ", course.id, lecture);
   } catch (err) {
-    console.log("Doest not have lectures : ", course.id);
+    console.log("Doest not have lecture : ", course.id);
   }
   const title = course.title;
   const creditPoints = course.credit_points;
@@ -82,9 +81,8 @@ export const TopCourseCard = props => {
     const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
     lecture = props.course.modules[0].lessons[0].lecture;
     lecture = lecture === "" || lecture === null ? backup : lecture;
-    console.log("Found lecure : ", course.id, lecture);
   } catch (err) {
-    console.log("Doest not have lectures : ", course.id);
+    console.log("Doest not have lecture : ", course.id);
   }
   const title = course.title;
   const creditPoints = course.credit_points;

@@ -15,7 +15,6 @@ function open(data) {
 
 // {props.error !== null ? open({ type: "error", ...error }) : null}
 const notifications = props => {
-  console.log("This is notification props : ", props.error);
   const Errors =
     props.error !== null && props.error !== undefined
       ? open({ type: "error", key: v4(), ...props.error })

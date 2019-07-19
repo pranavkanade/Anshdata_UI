@@ -80,24 +80,10 @@ class App extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    console.log(
-      "[App.js] component did mount State :",
-      this.state,
-      "Props : ",
-      this.props
-    );
     if (this.props.isAuthenticated) {
       this.props.makeUserVerify();
     }
     this.props.getTopCourses();
-  }
-
-  componentWillUnmount() {
-    console.log("[App.js] component will unmount");
-  }
-
-  componentDidUpdate() {
-    console.log("[App.js] component did update");
   }
 }
 

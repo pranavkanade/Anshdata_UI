@@ -2,7 +2,6 @@ import React from "react";
 import css from "./searchbar.scss";
 
 export default props => {
-  // console.log("Initial Props: ", props.searchedValue);
   return (
     <div className={css.searchBar}>
       <div />

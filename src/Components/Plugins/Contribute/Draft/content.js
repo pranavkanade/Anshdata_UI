@@ -54,7 +54,6 @@ class CourseContent extends Component {
     lessonId = null,
     assignmentId = null
   ) => {
-    console.log("[Contrib/Course.js] Add New Clicked : ", btn);
     if (btn === "assignment") {
       this.setState({
         shouldOpenAddAssignment: true,
@@ -81,7 +80,6 @@ class CourseContent extends Component {
 
   renderAddNewForm = () => {
     const btn = this.state.elementBeingAdded;
-    console.log("[Contrib/Course.js] render add new form : ", btn);
     if (this.state.shouldOpenAddModule) {
       return (
         <ModuleForm

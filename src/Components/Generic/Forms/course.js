@@ -32,7 +32,6 @@ class CourseForm extends Component {
   };
 
   creditSelectionHandler = (event, { value }) => {
-    console.log("[Course/Form.js] creaditSelection ", value);
     this.setState({ creditPoints: value });
   };
 
@@ -61,16 +60,10 @@ class CourseForm extends Component {
   };
 
   createCourse = async () => {
-    console.log(
-      "[Course/Form.js] Create Course clicked:  ",
-      this.state.courseForm,
-      this.state.courseId
-    );
     const courseId = await createCourseHandler(
       this.state.courseForm,
       this.state.courseId
     );
-    console.log("Course Created : ", courseId);
     Router.push(
       `/contribute/draft/${
         courseId !== undefined && courseId !== null
@@ -95,7 +88,6 @@ class CourseForm extends Component {
           value: cat.id
         };
       });
-      console.log(" cat list is up");
     } catch (err) {
       console.log("did not pull up the cat list yet");
     }
@@ -122,7 +114,6 @@ class CourseForm extends Component {
           value: tag.id
         };
       });
-      console.log(" tag list is up");
     } catch (err) {
       console.log("did not pull up the tag list yet");
     }
@@ -240,7 +231,6 @@ class CourseForm extends Component {
   };
 
   componentDidMount() {
-    console.log("[Course/Form.js] component did mount");
     getCategoryList(this.catSaveHandler);
     getTagList(this.tagSaveHandler);
     this.getCourseToUpdate();

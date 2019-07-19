@@ -28,10 +28,6 @@ class LessonForm extends Component {
   };
 
   createLesson = () => {
-    console.log(
-      "[Lesson/Form.js] Create Lesson clicked",
-      this.state.lessonForm
-    );
     createLessonHandler(this.state.lessonForm, this.props.lessonId);
     const page = window.location.pathname;
     Router.push(page);
@@ -39,7 +35,6 @@ class LessonForm extends Component {
   };
 
   renderModuleChoise = () => {
-    console.log("[Lesson/Form.js] List the modules");
     let modOptions = [];
     try {
       modOptions = this.state.modList.map(mod => {
@@ -123,7 +118,6 @@ class LessonForm extends Component {
       this.props.lessonId === undefined ||
       this.props.lessonId === 0
     ) {
-      console.log("Creating new lesson");
       this.setState({ type: "create" });
       return null;
     }
@@ -139,7 +133,6 @@ class LessonForm extends Component {
         return lsn.id === this.props.lessonId;
       })
     };
-    console.log("lesson to update", lesson);
     this.setState({
       lsnToUpdate: lesson,
       lessonForm: {
@@ -153,7 +146,6 @@ class LessonForm extends Component {
   };
 
   componentDidMount() {
-    console.log("[Contrib/Lesson/Form.js] component did mount");
     this.getLessonToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }

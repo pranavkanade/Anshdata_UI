@@ -20,12 +20,10 @@ class CourseClassroom extends Component {
   };
 
   moduleSelectionHandler = module => {
-    console.log("module switched : ", module.id);
     this.setState({ activeModule: module });
   };
 
   lessonSelectionHandler = (lsnId, modId) => {
-    console.log("lesson activated : ", lsnId);
     let activatedMod = null;
 
     if (modId === this.state.activeModule.id) {
@@ -44,7 +42,6 @@ class CourseClassroom extends Component {
         return lsnId === lsn.id;
       })
     };
-    console.log("lesson activated : ", activatedLsn);
     this.setState({ activeLesson: activatedLsn });
   };
 
@@ -67,9 +64,7 @@ class CourseClassroom extends Component {
   };
 
   ifEnrolledSaveHandler = data => {
-    console.log("Course Progress : ", data);
     if (data !== undefined && data !== null && data.length !== 0) {
-      console.log("Course Progress : ", data);
       this.setState({
         isEnrolledIn: true,
         courseProgress: data[0]
@@ -82,7 +77,6 @@ class CourseClassroom extends Component {
 
   // type : {LESSON, ASSIGNMENT}
   setCourseProgress = (type, componentId) => {
-    console.log("Set course progress : ", componentId, type);
     if (type === "LESSON") {
       setProgress(this.state.courseProgress.id, {
         current_lesson: componentId
@@ -95,8 +89,6 @@ class CourseClassroom extends Component {
   };
 
   setCompleted = (type, componentId) => {
-    // mark done
-    console.log("Set component completed : ", componentId, type);
     if (type === "LESSON") {
       markLessonDone({
         enrollment: this.state.courseProgress.id,
@@ -111,7 +103,6 @@ class CourseClassroom extends Component {
   };
 
   initialize = course => {
-    // TODO: un comment following
     if (this.state.activeLesson === null) {
       this.setState({
         activeModule: course.modules[0],
@@ -127,12 +118,9 @@ class CourseClassroom extends Component {
         activeModule
       });
     }
-
-    console.log("module initiated");
   };
 
   courseSaveHandler = course => {
-    console.log("[Attend.js] saving course");
     this.setState({ course });
     this.initialize(course);
   };

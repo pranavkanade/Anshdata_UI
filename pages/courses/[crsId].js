@@ -5,7 +5,6 @@ import DetailedCourse from "../../src/Components/Plugins/Courses/Detailed";
 const courses = () => {
   const router = useRouter();
   const { crsId } = router.query;
-  console.log("course ID ", crsId);
   return <DetailedCourse courseId={crsId} />;
 };
 

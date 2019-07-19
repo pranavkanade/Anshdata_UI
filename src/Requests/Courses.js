@@ -7,7 +7,6 @@ const URLS = {
 };
 
 export const getCoursesList = async coursesSaveHandler => {
-  console.log("[Courses.js] get courses");
   try {
     await fetch(URLS.LIST_COURSE, {
       method: "GET",
@@ -25,7 +24,6 @@ export const getCoursesList = async coursesSaveHandler => {
 };
 
 export const getEnrolledCoursesList = async coursesSaveHandler => {
-  console.log("[Courses.js] get courses enrolled in");
   try {
     await fetch(URLS.LIST_COURSES_ENROLLED_IN, {
       method: "GET",
@@ -43,7 +41,6 @@ export const getEnrolledCoursesList = async coursesSaveHandler => {
 };
 
 export const getPublishedCoursesList = async (usrId, saveHandler) => {
-  console.log("[Courses.js] get courses enrolled in");
   const URL = `http://127.0.0.1:8000/api/course/pub/${usrId}/`;
   try {
     await fetch(URL, {
@@ -72,7 +69,6 @@ export const getCourse = async (courseId, courseSaveHandler) => {
     });
 
     const resp = await getAdvResponse(retrieveCourse);
-    console.log("[Courses/Detailed-request] Retrieve course details", resp);
     if (resp.ok && typeof courseSaveHandler === "function") {
       courseSaveHandler(resp.data);
     }
@@ -83,7 +79,6 @@ export const getCourse = async (courseId, courseSaveHandler) => {
 };
 
 export const draftCourse = async courseId => {
-  console.log("[Courses.js] draft the course");
   const URL = `http://127.0.0.1:8000/api/course/${courseId}/draft/`;
   try {
     const response = await fetch(URL, {
@@ -101,7 +96,6 @@ export const draftCourse = async courseId => {
 };
 
 export const deleteCourse = async courseId => {
-  console.log("[Courses.js] draft the course");
   const URL = `http://127.0.0.1:8000/api/course/${courseId}/`;
   try {
     await fetch(URL, {
@@ -112,9 +106,7 @@ export const deleteCourse = async courseId => {
       }
     })
       .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
-      });
+      .then(data => data);
   } catch (err) {
     console.log("[Courses.js] cannot draft the course: ", err);
   }

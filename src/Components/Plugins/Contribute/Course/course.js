@@ -8,7 +8,6 @@ class CourseForm extends Component {
   };
 
   courseSaveHandler = course => {
-    console.log("[Contrib/Course.js] Course has been saved");
     this.setState({
       courseId: course.id
     });

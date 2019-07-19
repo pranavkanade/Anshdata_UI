@@ -36,7 +36,6 @@ class Auth extends Component {
   };
 
   handleChange = value => {
-    console.log("handle change : ", value);
     this.setState({
       formValue: value
     });
@@ -101,10 +100,6 @@ class Auth extends Component {
   };
 
   render() {
-    console.log(
-      "[Auth.js] render\n-------------------------------------------"
-    );
-
     if (this.state.isLoading) {
       return <Loader msg="Working on User Authentication" />;
     }
@@ -138,19 +133,6 @@ class Auth extends Component {
         </div>
       </Dialog>
     );
-  }
-
-  // Lifecycle methods
-  componentDidMount() {
-    console.log("[Auth.js] component did mount");
-  }
-
-  componentWillUnmount() {
-    console.log("[Auth.js] component will unmount");
-  }
-
-  componentDidUpdate() {
-    console.log("[Auth.js] component did update");
   }
 
   // Backend Calls
@@ -188,7 +170,6 @@ class Auth extends Component {
 
     if (isSignup) {
       const user = await signupHandler(this.getSignupData());
-      console.log("[Sign UP] user  : ", user);
       this.props.storeUserSignedUp(user);
     } else {
       const resp = await signinHandler(this.getSignInData());

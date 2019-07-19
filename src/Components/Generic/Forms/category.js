@@ -13,7 +13,6 @@ class CategoryForm extends Component {
   };
 
   handleChange = value => {
-    console.log("handle change : ", value);
     this.setState({
       catForm: value
     });

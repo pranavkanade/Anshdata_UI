@@ -41,14 +41,12 @@ class DetailedCourse extends Component {
   };
 
   ifEnrolledSaveHandler = data => {
-    console.log("Check If enrolled - response data:", data);
     if (data !== undefined && data.length === 1 && data[0].id !== undefined) {
       this.setState({ isEnrolledIn: true });
     }
   };
 
   courseSaveHandler = course => {
-    console.log("[Detailed.js] saving course");
     this.setState({ course });
     this.props.setCourse(course);
   };
@@ -179,7 +177,6 @@ class DetailedCourse extends Component {
       const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
       lecture = course.modules[0].lessons[0].lecture;
       lecture = lecture === "" || lecture === null ? backup : lecture;
-      console.log("Found lecure : ", course.id, lecture);
     } catch (err) {
       console.log("Doest not have lectures : ", course.id);
     }

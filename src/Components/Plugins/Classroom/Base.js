@@ -31,7 +31,6 @@ const renderLsnNAsign = (lessons, lessonSelectionHandler, assignments) => {
     if (asignmt.lesson !== null) {
       return null;
     }
-    console.log("rendering assignment : ", asignmt);
     return (
       <span className={css.asignmt} key={asignmt.id}>
         {asignmt.title}
@@ -145,7 +144,6 @@ const findNextLesson = (currentLesson, lessonList) => {
   const lessonIdx = lessonList.findIndex(lsn => {
     return lsn.lsnId === currentLesson;
   });
-  console.log("Current lesson Index : ", lessonIdx, typeof lessonIdx);
   return lessonList[lessonIdx + 1];
 };
 
@@ -156,7 +154,6 @@ const renderActionBtns = (lesson, lessonList, nextHandler, setCompleted) => {
       <button
         className={css.mark}
         onClick={() => {
-          console.log("Setting Lesson completed");
           setCompleted("LESSON", lesson);
           if (nextLesson !== undefined) {
             nextHandler(nextLesson.lsnId, nextLesson.modId);
@@ -169,7 +166,6 @@ const renderActionBtns = (lesson, lessonList, nextHandler, setCompleted) => {
         <button
           className={css.next}
           onClick={() => {
-            console.log("Next lesson : ", nextHandler);
             nextHandler(nextLesson.lsnId, nextLesson.modId);
           }}>
           Next
@@ -220,7 +216,6 @@ const renderAssignmetns = (assignments, activeAsignmt, setActiveAsignmt) => {
     })
   };
 
-  console.log("Assignment Detailed : ", detailedAssignment);
   return (
     <>
       <span className={css.heading}>Assignments</span>
@@ -267,7 +262,6 @@ const renderCurrentLecture = (
           height="100%"
           width="100%"
           onStart={() => {
-            console.log("Starting the lecture : ", lesson.id);
             setCourseProgress("LESSON", lesson.id);
           }}
           onEnded={() => setCompleted("LESSON", lesson.id)}
@@ -309,7 +303,6 @@ const getLessonList = course => {
 const ClassroomBase = props => {
   const [openMod, setOpenMod] = useState(0);
   const [activeAsignmt, setActiveAsignmt] = useState(0);
-  console.log("active module => ", props.activeModule);
   if (
     props.course === undefined ||
     props.course === null ||

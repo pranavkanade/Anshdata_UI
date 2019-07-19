@@ -13,15 +13,12 @@ const reducer = (state = initialState, action) => {
       resp = Object.assign({}, state, {
         topCourses: action.data
       });
-      console.log("[Course Reducer] Storing Top Courses : ", resp);
       setADStateToLocalStorage({ crs: resp });
       return resp;
     case actionTypes.STORE_DETAILED_DRAFT_COURSE:
-      console.log("Trying to store draft course : ", action);
       resp = Object.assign({}, state, {
         draftCourse: action.data
       });
-      console.log("[Course Reducer] Storing course being drafted : ", resp);
       return resp;
     default:
       return state;

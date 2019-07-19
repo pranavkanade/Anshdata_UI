@@ -17,14 +17,12 @@ class Feedback extends Component {
   };
 
   handleChange = value => {
-    console.log("handle change : ", value);
     this.setState({
       formValue: value
     });
   };
 
   submitFeedback = () => {
-    console.log("Feedback : ", this.state.formValue);
     giveFeedback(this.state.formValue);
     this.close();
   };
@@ -56,10 +54,6 @@ class Feedback extends Component {
   };
 
   render() {
-    console.log(
-      "[Auth.js] render\n-------------------------------------------"
-    );
-
     if (this.state.isLoading) {
       return <Loader msg="Thanks for submitting your feedback" />;
     }
@@ -77,19 +71,6 @@ class Feedback extends Component {
         </div>
       </Dialog>
     );
-  }
-
-  // Lifecycle methods
-  componentDidMount() {
-    console.log("[Auth.js] component did mount");
-  }
-
-  componentWillUnmount() {
-    console.log("[Auth.js] component will unmount");
-  }
-
-  componentDidUpdate() {
-    console.log("[Auth.js] component did update");
   }
 
   open = () => {

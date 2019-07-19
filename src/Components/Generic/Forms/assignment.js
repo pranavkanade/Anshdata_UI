@@ -31,10 +31,6 @@ class AssignmentForm extends Component {
   };
 
   createAssignment = () => {
-    console.log(
-      "[Assignment/Form.js] Create Assignment clicked",
-      this.state.assignmentForm
-    );
     createAssignmentHandler(
       this.state.assignmentForm,
       this.props.assignmentId
@@ -45,7 +41,6 @@ class AssignmentForm extends Component {
   };
 
   creditSelectionHandler = (event, { value }) => {
-    // console.log("[Assignment/Form.js] creaditSelection ", value);
     this.setState({ creditPoints: value });
   };
 
@@ -71,7 +66,6 @@ class AssignmentForm extends Component {
   };
 
   renderModuleChoise = () => {
-    console.log("[Assignment/Form.js] List the modules");
     let modOptions = [];
     try {
       modOptions = this.state.modList.map(mod => {
@@ -84,7 +78,6 @@ class AssignmentForm extends Component {
       console.log("did not pull up the mod list yet");
     }
 
-    console.log("Module Options ", modOptions);
     return (
       <CustomField
         className={css.ad_mod_choise}
@@ -104,7 +97,6 @@ class AssignmentForm extends Component {
 
   renderLessonChoise = () => {
     // TODO: This function is not working properly
-    // console.log("[Assignment/Form.js] List the lessons,", this.state.modList);
     let lessonOptions = [];
     try {
       const mod = {
@@ -113,7 +105,6 @@ class AssignmentForm extends Component {
         })
       };
 
-      console.log(mod);
       lessonOptions = mod.lessons.map(each_lesson => {
         return {
           label: each_lesson.title,
@@ -123,7 +114,6 @@ class AssignmentForm extends Component {
     } catch (err) {
       console.log("Failed to get the list of lessons");
     }
-    console.log("Lesson Options", lessonOptions);
     return (
       <CustomField
         className={css.ad_mod_choise}
@@ -208,7 +198,6 @@ class AssignmentForm extends Component {
       })
     };
 
-    console.log("assignment to update", assignment);
     this.setState({
       assingToUpdate: assignment,
       assignmentForm: {
@@ -224,7 +213,6 @@ class AssignmentForm extends Component {
   };
 
   componentDidMount() {
-    console.log("[Contrib/Assignment/Form.js] component did mount");
     this.getaAssignmentToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }

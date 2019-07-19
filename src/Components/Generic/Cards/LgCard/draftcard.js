@@ -7,7 +7,6 @@ import { getCourse } from "../../../../Requests/Courses";
 import { cardType } from "../../../../globals";
 
 const renderHead = (id, title, closeHandler, activeTab) => {
-  console.log("[draft card ] active tab ", activeTab);
   return (
     <div className={css.head}>
       <Link
@@ -116,7 +115,6 @@ class LgDrafedCourseCard extends Component {
 
   render() {
     const course = this.state.course;
-    console.log("active tab : ", this.props.activeTab);
     if (course === null) {
       return (
         <div className={css.draftedCourseCardLg}>{this.renderLoader()}</div>

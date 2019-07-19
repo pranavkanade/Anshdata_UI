@@ -8,7 +8,6 @@ const URLS = {
 };
 
 const getData = async (URL, saveCourseHandler) => {
-  console.log("[Contrib.js] get Courses user has not yet published");
   try {
     await fetch(URL, {
       method: "GET",
@@ -19,7 +18,6 @@ const getData = async (URL, saveCourseHandler) => {
     })
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
         saveCourseHandler(data);
       });
   } catch (err) {
@@ -31,23 +29,14 @@ const getData = async (URL, saveCourseHandler) => {
 };
 
 export const getDraftedCommunityCoursesList = async saveCourseHandler => {
-  // Only if the user is logged in
-  console.log(
-    "[Contrib.js] get Courses user has not yet published by community"
-  );
   getData(URLS.LIST_DRAFTED_COURSES_COMUNITY, saveCourseHandler);
 };
 
 export const getDraftedSelfCoursesList = async saveCourseHandler => {
-  // Only if the user is logged in
-  console.log(
-    "[Contrib.js] get Courses user has not yet published by current user"
-  );
   getData(URLS.LIST_DRAFTED_COURSES_ME, saveCourseHandler);
 };
 
 export const publishCourse = async courseId => {
-  console.log("[DraftCourses.js] publish the course");
   const URL = `http://127.0.0.1:8000/api/course/${courseId}/pub/`;
   try {
     const response = await fetch(URL, {

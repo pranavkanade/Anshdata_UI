@@ -58,7 +58,6 @@ class Contribute extends Component {
 
   subMenuChangeHandler = selectedSubMenu => {
     this.setState({ activeSubMenu: selectedSubMenu });
-    console.log("SubMenu Selected : ", selectedSubMenu);
   };
 
   setDefaultSubMenu = adUser => {
@@ -168,7 +167,6 @@ class Contribute extends Component {
     const adUser = getADUser();
     this.setState({ adUser });
     this.setDefaultSubMenu(adUser);
-    console.log("Getting published courses : ", adUser);
     try {
       getPublishedCoursesList(adUser.user.pk, this.myPublicationSaveHandler);
       getDraftedSelfCoursesList(this.myDraftsSaveHandler);

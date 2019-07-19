@@ -13,10 +13,8 @@ const URLS = {
 };
 
 export const signupHandler = async (event, signupData) => {
-  console.log("[Requests/Authentication.js] signUp Data : ", signupData);
   event.preventDefault();
   try {
-    console.log("[Auth.js] : Sign Up Data", signupData);
     const siginupRes = await fetch(URLS.USERSIGNUP, {
       method: "POST",
       headers: {
@@ -25,7 +23,6 @@ export const signupHandler = async (event, signupData) => {
       body: JSON.stringify(signupData)
     });
     const data = await siginupRes.json();
-    console.log("signup sign up response: ", data);
     // remove if any thing is remaining of the previous user
     removeUserFromLocalStorage();
     // Following action will automatically store all the data we need.
@@ -37,9 +34,7 @@ export const signupHandler = async (event, signupData) => {
 };
 
 export const signinHandler = async signinData => {
-  console.log("[Auth.js] Log In Handler", signinData);
   try {
-    console.log("[Auth] : Sign In Handler", signinData);
     const loginRes = await fetch(URLS.USERLOGIN, {
       method: "POST",
       headers: {
@@ -52,7 +47,6 @@ export const signinHandler = async signinData => {
     // Following action will automatically store all the data we need.
     const dataWithError = await buildCustomResponse(loginRes);
     setUserToLocalStorage(dataWithError.data);
-    console.log("signin response: ", dataWithError.data);
     return dataWithError;
   } catch (err) {
     console.log("[Auth.js] SIGNIN ERR : ", err);
@@ -60,8 +54,6 @@ export const signinHandler = async signinData => {
 };
 
 export const logoutHandler = async event => {
-  console.log("[Auth.js] Log Out Handler");
-
   try {
     const logoutRes = await fetch(URLS.USERLOGOUT, {
       method: "POST",
@@ -71,7 +63,6 @@ export const logoutHandler = async event => {
       }
     });
     const data = await logoutRes.json();
-    console.log("signout response: ", data);
     // remove if any thing is remaining of the previous user
     removeUserFromLocalStorage();
   } catch (err) {
@@ -80,7 +71,6 @@ export const logoutHandler = async event => {
 };
 
 export const refreshUserToken = async () => {
-  console.log("[Authorization.js] Refresh Handler");
   const URL = "http://127.0.0.1:8000/api/user/refresh/";
   try {
     const adToken = getAuthToken();
@@ -90,7 +80,6 @@ export const refreshUserToken = async () => {
     const refreshData = {
       token: adToken
     };
-    // console.log("[Authorization.js] : Refresh Handler", refreshData);
     const refreshRes = await fetch(URL, {
       method: "POST",
       headers: {
@@ -104,7 +93,6 @@ export const refreshUserToken = async () => {
     AnshdataUser["token"] = AnshdataToken;
     removeUserFromLocalStorage();
     setUserToLocalStorage(AnshdataUser);
-    console.log("[Authorization.js] Refreshed token");
   } catch (err) {
     console.log("[Authorization.js] Refresh ERR : ", err);
     removeUserFromLocalStorage();
@@ -112,19 +100,15 @@ export const refreshUserToken = async () => {
 };
 
 export const verifyUserToken = async () => {
-  console.log("[Authorization.js] Verify Handler");
   const URL = "http://127.0.0.1:8000/api/user/verify/";
   try {
     const adToken = getAuthToken();
-    console.log("Logging Auth Token : ", adToken);
     if (adToken === "" || adToken === null || typeof adToken !== "string") {
-      console.log("User is not logged in not verifying the token");
       return;
     }
     const refreshData = {
       token: adToken
     };
-    // console.log("[Authorization.js] : Refresh Handler", refreshData);
     const response = await fetch(URL, {
       method: "POST",
       headers: {

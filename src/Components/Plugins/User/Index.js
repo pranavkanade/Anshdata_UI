@@ -36,7 +36,6 @@ class Index extends Component {
 
   userSaveHandler = user => {
     this.setState({ user });
-    console.log("user saved ", user);
   };
 
   enrolledCoursesSaveHandler = enrolledCourses => {
@@ -191,7 +190,6 @@ class Index extends Component {
   };
 
   // render() {
-  //   console.log("User/Index - enrolled Courses", this.state.enrolledCourses);
   //   return (
   //     <Grid>
   //       <Grid.Row columns={4}>

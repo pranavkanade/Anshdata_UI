@@ -3,7 +3,6 @@ import { getAuthorization } from "./Authorization";
 const URL = "http://127.0.0.1:8000/api/plat/tag/";
 
 export const getTagList = async tagsSaveHandler => {
-  console.log("[Course/Form.js] get tags");
   try {
     await fetch(URL, {
       method: "GET",
@@ -20,7 +19,6 @@ export const getTagList = async tagsSaveHandler => {
 };
 
 export const createTag = async (title, wiki) => {
-  console.log("Create tag");
   const tagData = {
     title: title,
     wiki: wiki

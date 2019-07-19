@@ -3,7 +3,6 @@ import { getAuthorization } from "./Authorization";
 const URL = "http://127.0.0.1:8000/api/plat/cat/";
 
 export const getCategoryList = async catSaveHandler => {
-  console.log("[Course/Form.js] get categories");
   try {
     await fetch(URL, {
       method: "GET",
@@ -20,7 +19,6 @@ export const getCategoryList = async catSaveHandler => {
 };
 
 export const createCategory = async (title, wiki) => {
-  console.log("Create category");
   const catData = {
     title: title,
     wiki: wiki
