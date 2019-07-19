@@ -109,6 +109,7 @@
 
 %nav {
   top: 2px;
+  margin-top: 0.3rem;
   height: 45px;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -149,18 +150,16 @@
 
 .signIn {
   @extend %nav;
-  background: $Base-primary;
   color: $White-0;
   padding: 0 2rem 0 2rem;
-  transition: 0.2s ease;
+  transition: 0.4s ease;
   margin-left: 1rem;
-  border-radius: 5px;
+  border-radius: 2px;
 
+  background: $Base-primary;
   &:hover {
-    // background: $White-0;
+    border-radius: 20px;
     cursor: pointer;
-    // color: $Base-primary;
-    transform: translateY(-5px);
   }
 }
 
@@ -192,13 +191,14 @@
 
 .join {
   @extend %nav;
-  background: $Blue-3b;
   padding: 0 2rem 0 2rem;
-  transition: 0.2s ease;
-  border-radius: 5px;
+  border: 2px solid $White-0;
+  transition: 0.3s ease;
+  border-radius: 2px;
+  background: $Base-secondary;
   &:hover {
+    border: 2px solid $Blue-3b;
     background: $Blue-3b;
     cursor: pointer;
-    transform: translateY(-5px);
   }
 }
