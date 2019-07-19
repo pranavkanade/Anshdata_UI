@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 import css from "./course.scss";
 import Form from "../../../Generic/Forms/course";
+import Auth from "../../../Generic/Auth/Auth";
 
 class CourseForm extends Component {
   state = {
-    courseId: 0
+    courseId: 0,
+    askToJoin: false
+  };
+
+  closeAuthForm = () => {
+    this.setState({ askToJoin: false });
+  };
+
+  askUserToJoin = () => {
+    this.setState({ askToJoin: true });
   };
 
   courseSaveHandler = course => {
@@ -16,7 +26,11 @@ class CourseForm extends Component {
   renderCourseForm = () => {
     return (
       <div className={css.courseForm}>
-        <Form onSaveHandler={this.courseSaveHandler} closeHandler={() => {}} />
+        <Form
+          onSaveHandler={this.courseSaveHandler}
+          askToJoin={this.askUserToJoin}
+          closeHandler={() => {}}
+        />
       </div>
     );
   };
@@ -24,6 +38,9 @@ class CourseForm extends Component {
   render() {
     return (
       <div className={css.container}>
+        {this.state.askToJoin ? (
+          <Auth hideAuthFormHandler={this.closeAuthForm} authOption="signup" />
+        ) : null}
         <div className={css.page}>
           <h1 className={css.heading}>Create New Course</h1>
           <div className={css.courseCreationPlane}>

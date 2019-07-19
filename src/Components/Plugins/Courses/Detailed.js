@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import { Whisper, Tooltip } from "rsuite";
 import { getCourse } from "../../../Requests/Courses";
 import ReactPlayer from "react-player";
 import {
   ModuleCardMd,
   DetailedModuleCard
 } from "../../Generic/Cards/ModuleCard";
-
+import Auth from "../../Generic/Auth/Auth";
 import { AssignmentCard } from "../../Generic/Cards/AssignmentCard";
+import { connect } from "react-redux";
 
 import {
   getIfEnrolled,
@@ -29,7 +31,16 @@ class DetailedCourse extends Component {
   state = {
     course: null,
     activeModule: 1,
-    isEnrolledIn: false
+    isEnrolledIn: false,
+    askToJoin: false
+  };
+
+  closeAuthForm = () => {
+    this.setState({ askToJoin: false });
+  };
+
+  askUserToJoin = () => {
+    this.setState({ askToJoin: true });
   };
 
   setSelectedModule = courseId => {
@@ -146,7 +157,7 @@ class DetailedCourse extends Component {
           <button className={css.attend}>Attend</button>
         </Link>
       );
-    } else {
+    } else if (this.props.isAuthenticated) {
       return (
         <Link
           href="/courses/attend/[crsId]"
@@ -157,6 +168,25 @@ class DetailedCourse extends Component {
             Enroll
           </button>
         </Link>
+      );
+    } else {
+      return (
+        <Whisper
+          trigger="hover"
+          placement="top"
+          speaker={
+            <Tooltip>
+              User should be logged in to Enroll to this course.
+            </Tooltip>
+          }>
+          <button className={css.enroll} onClick={this.askUserToJoin}>
+            Enroll{" "}
+            <img
+              src="/static/assets/icon/lock_24px_outlined.svg"
+              alt="locked"
+            />
+          </button>
+        </Whisper>
       );
     }
   };
@@ -274,6 +304,9 @@ class DetailedCourse extends Component {
     const { course } = this.state;
     return (
       <div className={css.container}>
+        {this.state.askToJoin ? (
+          <Auth hideAuthFormHandler={this.closeAuthForm} authOption="signup" />
+        ) : null}
         <div className={css.courseInfo}>{this.renderCourseInfo(course)}</div>
         {this.renderUnpublishedWarning()}
         <div className={css.courseContent}>
@@ -296,10 +329,17 @@ class DetailedCourse extends Component {
 
   componentDidMount() {
     getCourse(this.props.courseId, this.courseSaveHandler);
-    getIfEnrolled(this.props.courseId, this.ifEnrolledSaveHandler);
+    if (this.props.isAuthenticated) {
+      getIfEnrolled(this.props.courseId, this.ifEnrolledSaveHandler);
+    }
   }
 }
 
-export default DetailedCourse;
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  return { isAuthenticated };
+}
+
+export default connect(mapStateToProps)(DetailedCourse);
 
 // TODO: Show course level assignments

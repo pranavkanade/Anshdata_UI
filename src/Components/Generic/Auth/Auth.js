@@ -175,7 +175,8 @@ class Auth extends Component {
       this.props.requestUserSignIn(resp);
     }
     this.close();
-    Router.replace(window.location.pathname);
+    // TODO: This should not be here
+    // Router.replace(window.location.pathname);
   };
 }
 

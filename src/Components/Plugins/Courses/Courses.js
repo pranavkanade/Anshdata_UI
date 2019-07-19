@@ -5,6 +5,7 @@ import {
   renderPublishedCoursesList as PublishedCoursesList,
   renderEnrolledCoursesList as EnrolledCoursesList
 } from "../../Generic/CourseList/courselist";
+import Auth from "../../Generic/Auth/Auth";
 import Loader from "../../Generic/Loader/loader";
 import { courseListType } from "../../../globals";
 import {
@@ -21,11 +22,20 @@ class Courses extends Component {
     courseSearched: "",
     selectedCourse: 0,
     visible: false,
-    isAuthenticated: this.props.isAuthenticated
+    isAuthenticated: this.props.isAuthenticated,
+    askToJoin: false
   };
 
   handleHideClick = () => this.setState({ visible: false });
   handleShowClick = () => this.setState({ visible: true });
+
+  closeAuthForm = () => {
+    this.setState({ askToJoin: false });
+  };
+
+  askUserToJoin = () => {
+    this.setState({ askToJoin: true });
+  };
 
   changeHandler = event => {
     const name = event.target.name;
@@ -77,6 +87,7 @@ class Courses extends Component {
     } else {
       return (
         <PublishedCoursesList
+          askToJoin={this.askUserToJoin}
           courses={courses}
           courseListType={listType}
           setSelectedCourse={this.setSelectedCourse}
@@ -102,6 +113,9 @@ class Courses extends Component {
 
     return (
       <div className={"CoursesPlugin"}>
+        {this.state.askToJoin ? (
+          <Auth hideAuthFormHandler={this.closeAuthForm} authOption="signup" />
+        ) : null}
         <div className={css.ad_courses}>
           <Drawer
             show={this.state.visible}

@@ -7,6 +7,8 @@ import { getTagList } from "../../../Requests/Tag";
 import { createCourseHandler } from "../../../Requests/courseCreation";
 import css from "./course.scss";
 import Router from "next/router";
+import { connect } from "react-redux";
+import { Whisper, Tooltip } from "rsuite";
 
 class CourseForm extends Component {
   state = {
@@ -149,6 +151,36 @@ class CourseForm extends Component {
     );
   };
 
+  renderCreateBtn = () => {
+    if (this.props.isAuthenticated) {
+      return (
+        <button type="submit" onClick={this.createCourse}>
+          <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
+          <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+        </button>
+      );
+    } else {
+      return (
+        <Whisper
+          trigger="hover"
+          placement="top"
+          speaker={
+            <Tooltip>
+              User should be logged in to Enroll to this course.
+            </Tooltip>
+          }>
+          <button type="submit" onClick={this.props.askToJoin}>
+            <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
+            <img
+              src="/static/assets/icon/lock_24px_outlined.svg"
+              alt="locked"
+            />
+          </button>
+        </Whisper>
+      );
+    }
+  };
+
   renderForm() {
     // TODO: Add button to send it for review
     // TODO: Add a muted button to publish the courses
@@ -186,12 +218,7 @@ class CourseForm extends Component {
           rows={10}
           componentClass="textarea"
         />
-        <div className={css.ad_reverse}>
-          <button type="submit" onClick={this.createCourse}>
-            <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
-            <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-          </button>
-        </div>
+        <div className={css.ad_reverse}>{this.renderCreateBtn()}</div>
       </Form>
     );
   }
@@ -238,4 +265,9 @@ class CourseForm extends Component {
   }
 }
 
-export default CourseForm;
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  return { isAuthenticated };
+}
+
+export default connect(mapStateToProps)(CourseForm);

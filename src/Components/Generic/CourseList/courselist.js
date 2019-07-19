@@ -11,7 +11,13 @@ import {
 import LgDrafedCourseCard from "../Cards/LgCard/draftcard";
 import LgDetailedCourseCard from "../Cards/LgCard/publishedCard";
 
-const getDetailedCard = (course, type, activeTab, closeSelectedCourse) => {
+const getDetailedCard = (
+  course,
+  type,
+  activeTab,
+  closeSelectedCourse,
+  askToJoin = () => {}
+) => {
   if (type === "drafts") {
     return (
       <LgDrafedCourseCard
@@ -28,6 +34,7 @@ const getDetailedCard = (course, type, activeTab, closeSelectedCourse) => {
       closeSelectedCourse={closeSelectedCourse}
       courseListType={activeTab}
       key={`detailed_course_${course.id}`}
+      askToJoin={askToJoin}
     />
   );
 };
@@ -68,7 +75,8 @@ const getCourseList = (props, type) => {
               course,
               type,
               type === "drafts" ? props.activeTab : props.courseListType,
-              props.closeSelectedCourse
+              props.closeSelectedCourse,
+              props.askToJoin
             )
           : null}
       </React.Fragment>

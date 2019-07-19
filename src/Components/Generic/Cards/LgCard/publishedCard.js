@@ -7,6 +7,8 @@ import { ModuleCardMd } from "../ModuleCard";
 import { getCourse } from "../../../../Requests/Courses";
 import { enrollEventHandler } from "../../../../Requests/Enrollment";
 import { courseListType } from "../../../../globals";
+import { connect } from "react-redux";
+import { Whisper, Tooltip } from "rsuite";
 
 class DetailedCourseCard extends Component {
   state = {
@@ -33,22 +35,7 @@ class DetailedCourseCard extends Component {
   };
 
   renderActionBtn = courseId => {
-    if (this.props.courseListType === courseListType.ENROLLED) {
-      return (
-        <Link
-          href="/courses/attend/[crsId]"
-          as={`/courses/attend/${courseId}`}>
-          <button className={css.attend}>
-            <span>Attend</span>
-            <img
-              src={
-                "../../../../static/assets/icon/play_circle_outline_24px_outlined.svg"
-              }
-            />
-          </button>
-        </Link>
-      );
-    } else {
+    if (this.props.isAuthenticated) {
       return (
         <Link
           href="/courses/attend/[crsId]"
@@ -62,6 +49,22 @@ class DetailedCourseCard extends Component {
             />
           </button>
         </Link>
+      );
+    } else {
+      return (
+        <Whisper
+          trigger="hover"
+          placement="top"
+          speaker={
+            <Tooltip>
+              User should be logged in to Enroll to this course.
+            </Tooltip>
+          }>
+          <button className={css.enroll} onClick={this.props.askToJoin}>
+            <span>Enroll</span>
+            <img src={"/static/assets/icon/lock_24px_outlined.svg"} />
+          </button>
+        </Whisper>
       );
     }
   };
@@ -166,4 +169,9 @@ class DetailedCourseCard extends Component {
   }
 }
 
-export default DetailedCourseCard;
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  return { isAuthenticated };
+}
+
+export default connect(mapStateToProps)(DetailedCourseCard);
