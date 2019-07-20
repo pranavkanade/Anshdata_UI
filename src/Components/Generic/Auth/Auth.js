@@ -7,7 +7,10 @@ import {
   FormGroup,
   ControlLabel,
   HelpBlock,
-  FormControl
+  FormControl,
+  Schema,
+  ButtonToolbar,
+  Button
 } from "rsuite";
 import Router from "next/router";
 
@@ -23,6 +26,8 @@ import {
 
 import css from "./auth.scss";
 
+const { StringType } = Schema.Types;
+
 class Auth extends Component {
   state = {
     formValue: {
@@ -30,10 +35,24 @@ class Auth extends Component {
       email: "",
       password: ""
     },
+    formError: {},
     shouldOpen: true,
     formType: this.props.authOption,
     isLoading: false
   };
+
+  signupModel = Schema.Model({
+    username: StringType().isRequired("This field is required."),
+    email: StringType()
+      .isEmail("Please enter a valid email address.")
+      .isRequired("This field is required."),
+    password: StringType().isRequired("This field is required.")
+  });
+
+  signinModel = Schema.Model({
+    username: StringType().isRequired("This field is required."),
+    password: StringType().isRequired("This field is required.")
+  });
 
   handleChange = value => {
     this.setState({
@@ -69,6 +88,11 @@ class Auth extends Component {
     return (
       <Form
         fluid
+        ref={ref => (this.form = ref)}
+        model={isSignup ? this.signupModel : this.signinModel}
+        onCheck={formError => {
+          this.setState({ formError });
+        }}
         onChange={this.handleChange}
         formValue={this.state.formValue}>
         <FormGroup>
@@ -85,16 +109,17 @@ class Auth extends Component {
             className={css.ad_auth_form_input}
           />
         </FormGroup>
-
-        <button
-          className={
-            css.ad_authBtn +
-            " " +
-            (isSignup ? css.ad_signupBtn : css.ad_signinBtn)
-          }
-          onClick={this.handleAuthentication}>
-          {isSignup ? "Sign Up" : "Sign In"}
-        </button>
+        <ButtonToolbar>
+          <Button
+            className={
+              css.ad_authBtn +
+              " " +
+              (isSignup ? css.ad_signupBtn : css.ad_signinBtn)
+            }
+            onClick={this.handleAuthentication}>
+            {isSignup ? "Sign Up" : "Sign In"}
+          </Button>
+        </ButtonToolbar>
       </Form>
     );
   };
@@ -165,6 +190,9 @@ class Auth extends Component {
   };
 
   handleAuthentication = async event => {
+    if (!this.form.check()) {
+      return;
+    }
     this.setState({ isLoading: true });
     const isSignup = this.state.formType === "signup" ? true : false;
 

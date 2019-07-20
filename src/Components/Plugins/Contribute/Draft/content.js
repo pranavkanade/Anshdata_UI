@@ -160,6 +160,7 @@ class CourseContent extends Component {
       return (
         <AssignmentCard
           assignment={asgnmt}
+          key={asgnmt.id}
           id={asgnmt.id}
           modify={this.addHandler}
         />

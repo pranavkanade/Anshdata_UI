@@ -1,12 +1,22 @@
 import React, { Component } from "react";
 import FormModal from "./formmodal";
-import { Form, Input, SelectPicker, InputNumber } from "rsuite";
+import {
+  Form,
+  Input,
+  SelectPicker,
+  InputNumber,
+  Schema,
+  Button,
+  ButtonToolbar
+} from "rsuite";
 import CustomField from "./customformfield";
 import Router from "next/router";
 
 import { createAssignmentHandler } from "../../../Requests/courseCreation";
 
 import css from "./assignment.scss";
+
+const { StringType } = Schema.Types;
 
 class AssignmentForm extends Component {
   state = {
@@ -23,6 +33,11 @@ class AssignmentForm extends Component {
       credit_points: 0
     }
   };
+
+  assignmentFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required."),
+    instruction: StringType().isRequired("This field is required.")
+  });
 
   handleChange = value => {
     this.setState({
@@ -140,6 +155,8 @@ class AssignmentForm extends Component {
         <h3>{this.props.course.title}</h3>
         <Form
           fluid
+          ref={ref => (this.assignmentForm = ref)}
+          model={this.assignmentFormModel}
           onChange={this.handleChange}
           formValue={this.state.assignmentForm}>
           {this.renderModuleChoise()}
@@ -170,10 +187,19 @@ class AssignmentForm extends Component {
             componentClass="textarea"
           />
           <div className={css.reverse}>
-            <button type="submit" onClick={this.createAssignment}>
-              <span>{this.state.type === "create" ? "Create" : "Save"}</span>
-              <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-            </button>
+            <ButtonToolbar>
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (!this.assignmentForm.check()) {
+                    return;
+                  }
+                  this.createAssignment();
+                }}>
+                <span>{this.state.type === "create" ? "Create" : "Save"}</span>
+                <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+              </Button>
+            </ButtonToolbar>
           </div>
         </Form>
       </FormModal>

@@ -13,7 +13,7 @@ class CustomField extends React.PureComponent {
           errorMessage={error}
           {...props}
         />
-        <HelpBlock>{message}</HelpBlock>
+        <HelpBlock style={{ color: "red" }}>{message}</HelpBlock>
       </FormGroup>
     );
   }

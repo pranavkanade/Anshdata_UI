@@ -1,8 +1,19 @@
 import React, { Component } from "react";
-import { Form, FormControl, ControlLabel, FormGroup, HelpBlock } from "rsuite";
+import {
+  Form,
+  FormControl,
+  ControlLabel,
+  FormGroup,
+  HelpBlock,
+  Schema,
+  ButtonToolbar,
+  Button
+} from "rsuite";
 import { createTag } from "../../../Requests/Tag";
 
 import css from "./tagcat.scss";
+
+const { StringType } = Schema.Types;
 
 class TagForm extends Component {
   state = {
@@ -18,11 +29,18 @@ class TagForm extends Component {
     });
   };
 
+  tagModel = Schema.Model({
+    title: StringType().isRequired("This field is required."),
+    wiki: StringType().isURL("Please enter a valid URL.")
+  });
+
   render() {
     return (
       <div className={css.ad_pane}>
         <Form
           fluid
+          ref={ref => (this.tagForm = ref)}
+          model={this.tagModel}
           onChange={this.handleChange}
           formValue={this.state.tagForm}>
           <FormGroup>
@@ -43,15 +61,19 @@ class TagForm extends Component {
               className={css.ad_inp}
             />
           </FormGroup>
-
-          <button
-            className={css.ad_btn}
-            onClick={() => {
-              createTag(this.state.tagForm.title, this.state.tagForm.wiki);
-              this.props.onClose();
-            }}>
-            Create Tag
-          </button>
+          <ButtonToolbar>
+            <Button
+              className={css.ad_btn}
+              onClick={() => {
+                if (!this.tagForm.check()) {
+                  return;
+                }
+                createTag(this.state.tagForm.title, this.state.tagForm.wiki);
+                this.props.onClose();
+              }}>
+              Create Tag
+            </Button>
+          </ButtonToolbar>
         </Form>
       </div>
     );

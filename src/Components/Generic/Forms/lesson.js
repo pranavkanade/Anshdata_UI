@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 import FormModal from "./formmodal";
-import { Form, Input, SelectPicker } from "rsuite";
+import {
+  Form,
+  Input,
+  SelectPicker,
+  Schema,
+  Button,
+  ButtonToolbar
+} from "rsuite";
 import CustomField from "./customformfield";
 import Router from "next/router";
 
 import { createLessonHandler } from "../../../Requests/courseCreation";
 import css from "./lesson.scss";
+
+const { StringType, NumberType } = Schema.Types;
 
 class LessonForm extends Component {
   state = {
@@ -20,6 +29,11 @@ class LessonForm extends Component {
       module: this.props.moduleId
     }
   };
+
+  lessonFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required."),
+    module: NumberType().isRequired("This field is required.")
+  });
 
   handleChange = value => {
     this.setState({
@@ -72,6 +86,8 @@ class LessonForm extends Component {
         <h3>{this.props.course.title}</h3>
         <Form
           fluid
+          ref={ref => (this.lessonForm = ref)}
+          model={this.lessonFormModel}
           onChange={this.handleChange}
           formValue={this.state.lessonForm}>
           {this.renderModuleChoise()}
@@ -100,10 +116,19 @@ class LessonForm extends Component {
             componentClass="textarea"
           />
           <div className={css.ad_reverse}>
-            <button type="submit" onClick={this.createLesson}>
-              <span>{this.state.type === "create" ? "Create" : "Save"}</span>
-              <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-            </button>
+            <ButtonToolbar>
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (!this.lessonForm.check()) {
+                    return;
+                  }
+                  this.createLesson();
+                }}>
+                <span>{this.state.type === "create" ? "Create" : "Save"}</span>
+                <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+              </Button>
+            </ButtonToolbar>
           </div>
         </Form>
       </FormModal>

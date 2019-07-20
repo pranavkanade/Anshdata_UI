@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Form, SelectPicker, TagPicker, InputNumber, Input } from "rsuite";
+import {
+  Form,
+  SelectPicker,
+  TagPicker,
+  InputNumber,
+  Input,
+  Schema,
+  Button,
+  ButtonToolbar
+} from "rsuite";
 import FormModal from "./formmodal";
 import CustomField from "./customformfield";
 import { getCategoryList } from "../../../Requests/Category";
@@ -10,6 +19,7 @@ import Router from "next/router";
 import { connect } from "react-redux";
 import { Whisper, Tooltip } from "rsuite";
 
+const { StringType, NumberType } = Schema.Types;
 class CourseForm extends Component {
   state = {
     courseId: null,
@@ -24,6 +34,12 @@ class CourseForm extends Component {
       isPublished: false
     }
   };
+
+  courseFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required."),
+    subject: StringType().isRequired("This field is required."),
+    category: NumberType().isRequired("This field is required.")
+  });
 
   catSaveHandler = data => {
     this.setState({ catList: data });
@@ -154,10 +170,19 @@ class CourseForm extends Component {
   renderCreateBtn = () => {
     if (this.props.isAuthenticated) {
       return (
-        <button type="submit" onClick={this.createCourse}>
-          <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
-          <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-        </button>
+        <ButtonToolbar>
+          <Button
+            type="submit"
+            onClick={() => {
+              if (!this.courseForm.check()) {
+                return;
+              }
+              this.createCourse();
+            }}>
+            <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
+            <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+          </Button>
+        </ButtonToolbar>
       );
     } else {
       return (
@@ -187,6 +212,8 @@ class CourseForm extends Component {
     return (
       <Form
         fluid
+        ref={ref => (this.courseForm = ref)}
+        model={this.courseFormModel}
         onChange={this.handleChange}
         formValue={this.state.courseForm}>
         <CustomField

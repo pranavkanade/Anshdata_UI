@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import FormModal from "./formmodal";
-import { Form, Input } from "rsuite";
+import { Form, Input, Button, ButtonToolbar, Schema } from "rsuite";
 import CustomField from "./customformfield";
 import Router from "next/router";
 
 import { createModuleHandler } from "../../../Requests/courseCreation";
 import css from "./module.scss";
+
+const { StringType } = Schema.Types;
 
 class ModuleForm extends Component {
   state = {
@@ -18,6 +20,10 @@ class ModuleForm extends Component {
       course: this.props.course.id
     }
   };
+
+  moduleFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required.")
+  });
 
   handleChange = value => {
     this.setState({
@@ -46,6 +52,8 @@ class ModuleForm extends Component {
         <h3>{this.props.course.title}</h3>
         <Form
           fluid
+          ref={ref => (this.moduleForm = ref)}
+          model={this.moduleFormModel}
           onChange={this.handleChange}
           formValue={this.state.moduleForm}>
           <CustomField
@@ -73,10 +81,19 @@ class ModuleForm extends Component {
             componentClass="textarea"
           />
           <div className={css.ad_reverse}>
-            <button type="submit" onClick={this.createModule}>
-              <span>{this.state.type === "create" ? "Create" : "Save"}</span>
-              <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-            </button>
+            <ButtonToolbar>
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (!this.moduleForm.check()) {
+                    return;
+                  }
+                  this.createModule();
+                }}>
+                <span>{this.state.type === "create" ? "Create" : "Save"}</span>
+                <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+              </Button>
+            </ButtonToolbar>
           </div>
         </Form>
       </FormModal>

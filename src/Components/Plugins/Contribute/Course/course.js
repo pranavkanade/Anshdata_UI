@@ -41,13 +41,15 @@ class CourseForm extends Component {
         {this.state.askToJoin ? (
           <Auth hideAuthFormHandler={this.closeAuthForm} authOption="signup" />
         ) : null}
+        <div />
         <div className={css.page}>
-          <h1 className={css.heading}>Create New Course</h1>
+          <span className={css.heading}>Create New Course</span>
           <div className={css.courseCreationPlane}>
             {this.renderCourseForm()}
             <div />
           </div>
         </div>
+        <div />
       </div>
     );
   }
