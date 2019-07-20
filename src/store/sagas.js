@@ -23,10 +23,10 @@ import {
   storeUserSignedIn,
   addNotificationError,
   fetchDetailedDraftCourse,
-  storeCourse,
   storeEnrolledCourses,
   storeCatalogCourses,
-  fetchUpdatedCourses
+  fetchUpdatedCourses,
+  updateCurrentCourse
 } from "./actions";
 
 function* helloSaga() {
@@ -98,10 +98,8 @@ function* watchUpdateDetailedDraftCourse() {
 }
 
 function* sagaFetchEnrolledCourses() {
-  console.log("Will try to get and store enrolled courses");
   const resp = yield call(getEnrolledCoursesList);
   if (resp.ok) {
-    console.log("Successfully fetched new courses!", resp.data);
     yield put(storeEnrolledCourses(resp.data));
   } else {
     yield put(addNotificationError(resp));
@@ -116,10 +114,8 @@ function* watchFetchEnrolledCourses() {
 }
 
 function* sagaFetchCatalogCourses() {
-  console.log("Will try to get and store enrolled courses");
   const resp = yield call(getCoursesList);
   if (resp.ok) {
-    console.log("Successfully fetched new courses!", resp.data);
     yield put(storeCatalogCourses(resp.data));
   } else {
     yield put(addNotificationError(resp));
@@ -131,7 +127,6 @@ function* watchFetchCatalogCourses() {
 }
 
 function* sagaUpdateCourses() {
-  console.log("Will try to fetch catalog and enrolled courses");
   yield all([sagaFetchEnrolledCourses(), sagaFetchCatalogCourses()]);
 }
 
@@ -140,11 +135,9 @@ function* watchRequestUpdateCourses() {
 }
 
 function* sagaEnrollToCourse(action) {
-  console.log("Will try to enroll to the course : ", action.data);
   const resp = yield call(enrollEventHandler, action.data.id);
   if (resp.ok) {
-    console.log("Enrolled Request Successful!");
-    yield put(storeCourse(action.data));
+    yield put(updateCurrentCourse(action.data));
     yield put(fetchUpdatedCourses());
   } else {
     yield put(addNotificationError(resp));
@@ -153,6 +146,19 @@ function* sagaEnrollToCourse(action) {
 
 function* watchEnrollToCourse() {
   yield takeLeading(actionTypes.ENTOLL_TO_COURSE, sagaEnrollToCourse);
+}
+
+function* sagaFetchACourse(action) {
+  const resp = yield call(getCourse, action.data);
+  if (resp.ok) {
+    yield put(updateCurrentCourse(resp.data));
+  } else {
+    yield put(addNotificationError(resp));
+  }
+}
+
+function* watchFetchACourse() {
+  yield takeLatest(actionTypes.FETCH_A_COURSE, sagaFetchACourse);
 }
 
 export default function* adSaga() {
@@ -166,6 +172,7 @@ export default function* adSaga() {
     watchEnrollToCourse(),
     watchRequestUpdateCourses(),
     watchFetchCatalogCourses(),
-    watchFetchEnrolledCourses()
+    watchFetchEnrolledCourses(),
+    watchFetchACourse()
   ]);
 }

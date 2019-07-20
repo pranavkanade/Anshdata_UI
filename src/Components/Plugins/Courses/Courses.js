@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { Drawer } from "rsuite";
 import { connect } from "react-redux";
-import {
-  renderPublishedCoursesList as PublishedCoursesList,
-  renderEnrolledCoursesList as EnrolledCoursesList
-} from "../../Generic/CourseList/courselist";
+import { renderPublishedCoursesList as PublishedCoursesList } from "../../Generic/CourseList/courselist";
+import EnrolledCoursesList from "../../Generic/CourseList/enrolledCourseList";
 import Auth from "../../Generic/Auth/Auth";
 import Loader from "../../Generic/Loader/loader";
 import { courseListType } from "../../../globals";
-import {
-  getCoursesList,
-  getEnrolledCoursesList
-} from "../../../Requests/Courses";
 
 import {
   fetchCatalogCourses,
@@ -143,16 +137,6 @@ class Courses extends Component {
           <div className={css.ad_catalog}>
             <div className={css.ad_heading}>
               <span>Course Catalog</span>
-              {/*<div className={css.ad_searchBar}>
-                <input
-                  placeholder="Course Name"
-                  name="courseSearched"
-                  type="text"
-                  value={this.state.courseSearched}
-                  onChange={event => this.changeHandler(event)}
-                />
-                <button>Search</button>
-              </div>*/}
             </div>
             {courseListing === null || courseListing === undefined ? (
               <Loader msg="Gathering all courses" />
@@ -174,19 +158,6 @@ class Courses extends Component {
     // getCoursesList(this.saveCoursesHandler);
     this.props.fetchCatalogCourses();
   }
-
-  // shouldComponentUpdate = (nextProps, nextState) => {
-  //   console.group("props_test");
-  //   console.log("Current Props : ", this.props);
-  //   console.log("Next Props : ", nextProps);
-  //   console.groupEnd("props_test");
-
-  //   console.group("state_test");
-  //   console.log("Current state : ", this.state);
-  //   console.log("Next state : ", nextState);
-  //   console.groupEnd("state_test");
-  //   return true;
-  // };
 
   componentDidUpdate() {
     if (this.props.isAuthenticated !== this.state.isAuthenticated) {

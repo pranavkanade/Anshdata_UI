@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
         draftCourse: action.data
       });
       return resp;
-    case actionTypes.STORE_COURSE:
+    case actionTypes.UPDATE_CURRENT_COURSE:
       console.log("Will store the data to currentCourse : ", action.data);
       resp = Object.assign({}, state, {
         currentCourse: action.data

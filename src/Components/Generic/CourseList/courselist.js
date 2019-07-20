@@ -1,5 +1,6 @@
 import React from "react";
 import Router from "next/router";
+import Link from "next/link";
 import css from "./courselist.scss";
 import { Whisper, Popover } from "rsuite";
 import DetailedPop from "../Cards/LgCard/detailedPop";
@@ -117,12 +118,4 @@ export const renderPublishedCoursesList = props => {
 
 export const renderTopCoursesList = props => {
   return <div className={css.courseList}>{getCourseList(props, "top")}</div>;
-};
-
-export const renderEnrolledCoursesList = props => {
-  return (
-    <div className={css.courseList + " " + css.enrolled}>
-      {getCourseList(props, "enrolled")}
-    </div>
-  );
 };

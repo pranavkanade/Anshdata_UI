@@ -46,9 +46,13 @@ export const storeDetailedDraftCourse = data => {
   return { type: actionTypes.STORE_DETAILED_DRAFT_COURSE, data: data };
 };
 
-export const storeCourse = data => {
-  console.log("Will try to store the data : ", data);
-  return { type: actionTypes.STORE_COURSE, data: data };
+export const fetchACourse = data => {
+  console.log("Fetching a course : ", data);
+  return { type: actionTypes.FETCH_A_COURSE, data: data };
+};
+
+export const updateCurrentCourse = data => {
+  return { type: actionTypes.UPDATE_CURRENT_COURSE, data: data };
 };
 
 export const enrollToCourse = data => {
