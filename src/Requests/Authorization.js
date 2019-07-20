@@ -5,7 +5,6 @@ export const getADUserInfo = () => {
     const userData = getUserFromLocalStorage();
     return userData.user;
   } catch {
-    console.log("User is not present in local storage");
     return {};
   }
 };

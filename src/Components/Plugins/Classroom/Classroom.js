@@ -46,6 +46,10 @@ class CourseClassroom extends Component {
   };
 
   recoverCurrentModNLsn = currentLesson => {
+    if (currentLesson === null || currentLesson === undefined) {
+      this.initialize(this.state.course);
+      return;
+    }
     if (this.state.course !== null && this.state.course !== undefined) {
       const activeModule = {
         ...this.state.course.modules.find(mod => {
@@ -139,16 +143,16 @@ class CourseClassroom extends Component {
     );
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     // Here assume if the course is undefined then we are directly comming
     // from the tile representaion and not the detailed course.
     // In that case only we should fetch the course else use the earliear data.
     if (this.state.course === undefined || this.state.course === null) {
-      getCourse(this.state.courseId, this.courseSaveHandler);
+      await getCourse(this.state.courseId, this.courseSaveHandler);
     }
 
     getIfEnrolled(this.state.courseId, this.ifEnrolledSaveHandler);
-  }
+  };
 
   componentDidUpdate() {}
 }

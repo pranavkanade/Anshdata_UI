@@ -24,19 +24,16 @@ const reducer = (state = initialState, action) => {
       });
       return resp;
     case actionTypes.UPDATE_CURRENT_COURSE:
-      console.log("Will store the data to currentCourse : ", action.data);
       resp = Object.assign({}, state, {
         currentCourse: action.data
       });
       return resp;
     case actionTypes.STORE_ENROLLED_COURSES:
-      console.log("Will store the data to enrolledCourses : ", action.data);
       resp = Object.assign({}, state, {
         enrolledCourses: action.data
       });
       return resp;
     case actionTypes.STORE_CATALOG_COURSES:
-      console.log("Will store the data to catalogCourses : ", action.data);
       resp = Object.assign({}, state, {
         catalogCourses: action.data
       });

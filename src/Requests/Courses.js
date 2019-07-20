@@ -8,7 +8,6 @@ const URLS = {
 
 export const getCoursesList = async (coursesSaveHandler = () => {}) => {
   const auth = getAuthorization();
-  console.log("Looking at auth in get Course list  : ", auth);
   let headers = null;
   if (auth !== "") {
     headers = {
@@ -20,7 +19,6 @@ export const getCoursesList = async (coursesSaveHandler = () => {}) => {
       "content-type": "application/json"
     };
   }
-  console.log("Headers : ", headers);
   try {
     const resp = await fetch(URLS.LIST_COURSE, {
       method: "GET",
