@@ -1,0 +1,103 @@
+@import "../../../../../static/styles/globals.scss";
+
+.detailedPop {
+  height: 480px;
+  width: 360px;
+  border-radius: 5px;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    background: $Base-primary;
+    color: $White-0;
+    padding: 1rem;
+    border-radius: 2px 2px;
+  }
+
+  .description {
+    padding: 0rem 1rem 1rem 1rem;
+    font-size: 14px;
+    text-align: justify;
+    min-height: 100px;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 0.3rem;
+    // grid-gap: 0.5rem;
+    align-content: space-around;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+
+    .item {
+      img {
+        margin-right: 4px;
+      }
+
+      .label {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .actionBtn {
+    position: fixed;
+    align-self: flex-end;
+    bottom: 1rem;
+    place-self: center;
+    // width: 100%;
+    // height: 64px;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+
+    background: $Blue-1;
+    /* mild */
+
+    border-radius: 5px;
+    border: 0px;
+    box-shadow: $shadow-1;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    color: $White-0;
+    transition: 0.2s ease;
+
+    img {
+      margin-left: 1rem;
+      transition: 0.3s ease;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: $Blue-3b;
+      box-shadow: $shadow-all-3;
+      img {
+        transform: scale(1.3);
+      }
+    }
+
+    span {
+      width: 64px;
+      font-family: Lato, Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 24px;
+      line-height: 29px;
+      /* identical to box height */
+
+      color: inherit;
+    }
+
+    img {
+      color: inherit;
+    }
+  }
+}

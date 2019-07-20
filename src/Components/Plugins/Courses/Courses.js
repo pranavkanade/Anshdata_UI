@@ -112,7 +112,7 @@ class Courses extends Component {
     const courseListing = this.state.courses;
 
     return (
-      <div className={"CoursesPlugin"}>
+      <div className={css.coursesPlugin}>
         {this.state.askToJoin ? (
           <Auth hideAuthFormHandler={this.closeAuthForm} authOption="signup" />
         ) : null}

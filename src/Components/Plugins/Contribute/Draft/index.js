@@ -248,8 +248,9 @@ class DraftedCourse extends Component {
   }
 
   componentDidUpdate() {
+    // TODO: Need better logic here
     if (
-      this.state.course === null ||
+      (this.props.course !== null && this.state.course === null) ||
       this.props.is_published !== this.state.course.is_published
     ) {
       this.setState({ course: this.props.course });

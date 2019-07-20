@@ -115,7 +115,8 @@ class Auth extends Component {
         }
         onCloseComplete={this.close}
         hasFooter={false}
-        padding={16}>
+        padding={16}
+        style={{ position: "relative", zIndex: "1024" }}>
         <div>
           <Nav
             appearance="subtle"

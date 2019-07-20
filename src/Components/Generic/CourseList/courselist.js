@@ -1,7 +1,8 @@
 import React from "react";
 import Router from "next/router";
 import css from "./courselist.scss";
-
+import { Whisper, Popover } from "rsuite";
+import DetailedPop from "../Cards/LgCard/detailedPop";
 import {
   PublishedCard,
   EnrolledCourseCard,
@@ -9,7 +10,6 @@ import {
   TopCourseCard
 } from "../Cards/CourseCard";
 import LgDrafedCourseCard from "../Cards/LgCard/draftcard";
-import LgDetailedCourseCard from "../Cards/LgCard/publishedCard";
 
 const getDetailedCard = (
   course,
@@ -28,15 +28,7 @@ const getDetailedCard = (
       />
     );
   }
-  return (
-    <LgDetailedCourseCard
-      course={course}
-      closeSelectedCourse={closeSelectedCourse}
-      courseListType={activeTab}
-      key={`detailed_course_${course.id}`}
-      askToJoin={askToJoin}
-    />
-  );
+  return null;
 };
 
 const getCourseList = (props, type) => {
@@ -70,7 +62,7 @@ const getCourseList = (props, type) => {
           }>
           {<CourseCard course={course} />}
         </div>
-        {course.id === props.selectedCourse && type !== "enrolled"
+        {course.id === props.selectedCourse
           ? getDetailedCard(
               course,
               type,
@@ -92,7 +84,34 @@ export const renderDraftCoursesList = props => {
 
 export const renderPublishedCoursesList = props => {
   return (
-    <div className={css.courseList}>{getCourseList(props, "published")}</div>
+    <div className={css.courseList}>
+      {props.courses.map(course => {
+        return (
+          <React.Fragment key={`fragment_course_${course.id}`}>
+            <Whisper
+              placement="autoHorizontal"
+              trigger="click"
+              onClose={props.closeSelectedCourse}
+              speaker={
+                <Popover title={null} style={{ padding: "0px", zIndex: "3" }}>
+                  <DetailedPop course={course} askToJoin={props.askToJoin} />
+                </Popover>
+              }>
+              <div
+                className={
+                  css.courseCard +
+                  " " +
+                  (course.id === props.selectedCourse ? css.active : "")
+                }
+                key={course.id}
+                onClick={() => props.setSelectedCourse(course.id)}>
+                {<PublishedCard course={course} />}
+              </div>
+            </Whisper>
+          </React.Fragment>
+        );
+      })}
+    </div>
   );
 };
 

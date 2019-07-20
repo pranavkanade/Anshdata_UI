@@ -1,5 +1,10 @@
 @import "../../../../static/styles/globals.scss";
 
+.authForm {
+  position: relative;
+  z-index: 1024;
+}
+
 .ad_nav_tab_title {
   text-align: center;
 

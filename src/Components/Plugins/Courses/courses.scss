@@ -1,6 +1,6 @@
 @import "../../../../static/styles/globals.scss";
-
 .ad_courses {
+  background: $White-2c;
   p {
     font-family: lato;
     font-size: 20px;
@@ -16,7 +16,7 @@
     float: right;
     height: 48px;
     border: 0px;
-    margin: 0 2rem;
+    margin: 2rem 2rem;
     border-radius: 5px;
     span {
       font-family: lato;
@@ -161,5 +161,5 @@
 }
 
 .ad_catalog {
-  margin: 2rem 5% 4rem 5%;
+  padding: 2rem 5% 4rem 5%;
 }
