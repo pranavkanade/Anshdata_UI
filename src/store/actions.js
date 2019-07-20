@@ -46,6 +46,35 @@ export const storeDetailedDraftCourse = data => {
   return { type: actionTypes.STORE_DETAILED_DRAFT_COURSE, data: data };
 };
 
+export const storeCourse = data => {
+  console.log("Will try to store the data : ", data);
+  return { type: actionTypes.STORE_COURSE, data: data };
+};
+
+export const enrollToCourse = data => {
+  return { type: actionTypes.ENTOLL_TO_COURSE, data: data };
+};
+
+export const storeEnrolledCourses = data => {
+  return { type: actionTypes.STORE_ENROLLED_COURSES, data: data };
+};
+
+export const storeCatalogCourses = data => {
+  return { type: actionTypes.STORE_CATALOG_COURSES, data: data };
+};
+
+export const fetchEnrolledCourses = () => {
+  return { type: actionTypes.FETCH_ENROLLED_COURSES };
+};
+
+export const fetchCatalogCourses = () => {
+  return { type: actionTypes.FETCH_CATALOG_COURSES };
+};
+
+export const fetchUpdatedCourses = () => {
+  return { type: actionTypes.FETCH_UPDATED_COURSES };
+};
+
 // Actions Notifications
 export const addNotificationError = data => {
   return { type: actionTypes.ADD_NOTIFICATION_ERROR, data: data };

@@ -73,15 +73,19 @@
     img {
       margin-left: 1rem;
       transition: 0.3s ease;
+      pointer-events: none;
     }
 
     &:hover {
       cursor: pointer;
-      background: $Blue-3b;
+      background: $Blue-1;
       box-shadow: $shadow-all-3;
       img {
         transform: scale(1.3);
       }
+    }
+    &:focus {
+      background: $Blue-1;
     }
 
     span {

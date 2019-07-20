@@ -17,7 +17,7 @@ export const getADUser = () => {
 export const getAuthToken = () => {
   const adUser = getUserFromLocalStorage();
   const token = "";
-  return adUser !== null ? adUser.token : token;
+  return adUser !== null && adUser !== undefined ? adUser.token : token;
 };
 
 export const getAuthorization = () => {

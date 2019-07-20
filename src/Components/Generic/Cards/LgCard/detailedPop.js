@@ -1,21 +1,32 @@
-import React from "react";
-import Link from "next/link";
-import { Whisper, Tooltip } from "rsuite";
+import React, { useState } from "react";
+import { Whisper, Tooltip, Button } from "rsuite";
 import css from "./detailedPop.scss";
 import { connect } from "react-redux";
-import { enrollEventHandler } from "../../../../Requests/Enrollment";
+import { enrollToCourse } from "../../../../store/actions";
 
-const renderActionBtn = (courseId, isAuthenticated, askToJoin) => {
+const renderActionBtn = (
+  course,
+  isAuthenticated,
+  enrollToCourse,
+  askToJoin,
+  isEnrolling,
+  setEnrolling
+) => {
   if (isAuthenticated) {
     return (
-      <Link href="/courses/attend/[crsId]" as={`/courses/attend/${courseId}`}>
-        <button
-          className={css.actionBtn}
-          onClick={() => enrollEventHandler(courseId)}>
-          <span>Enroll</span>
+      <Button
+        appearance="primary"
+        className={css.actionBtn}
+        onClick={() => {
+          setEnrolling(true);
+          enrollToCourse(course);
+        }}
+        loading={isEnrolling}>
+        <span>Enroll</span>
+        {!isEnrolling ? (
           <img src={"/static/assets/icon/add_24px_outlined.svg"} />
-        </button>
-      </Link>
+        ) : null}
+      </Button>
     );
   } else {
     return (
@@ -39,7 +50,8 @@ const renderActionBtn = (courseId, isAuthenticated, askToJoin) => {
 };
 
 const speaker = props => {
-  const { course } = props;
+  const [isEnrolling, setIfEnrolling] = useState(false);
+  const { course, currentCourse } = props;
   return (
     <div className={css.detailedPop}>
       <p className={css.title}>{course.title}</p>
@@ -71,10 +83,21 @@ const speaker = props => {
           <span className={css.label}>Award Credits</span>
         </div>
       </div>
-      {renderActionBtn(course.id, props.isAuthenticated, props.askToJoin)}
+      {renderActionBtn(
+        course,
+        props.isAuthenticated,
+        props.enrollToCourse,
+        props.askToJoin,
+        isEnrolling,
+        setIfEnrolling
+      )}
       <div />
     </div>
   );
+};
+
+const mapDispatchToProps = {
+  enrollToCourse
 };
 
 function mapStateToProps(state) {
@@ -82,4 +105,7 @@ function mapStateToProps(state) {
   return { isAuthenticated };
 }
 
-export default connect(mapStateToProps)(speaker);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(speaker);

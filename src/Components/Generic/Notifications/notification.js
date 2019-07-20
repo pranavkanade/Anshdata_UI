@@ -4,11 +4,13 @@ import { Notification } from "rsuite";
 import { connect } from "react-redux";
 
 function open(data) {
+  const desc =
+    data.data !== null ? data.data.non_field_errors : data.statusText;
   Notification[data.type]({
     title: data.type,
     duration: 6000,
     placement: "topRight",
-    description: <p>{data.data.non_field_errors}</p>,
+    description: <p>{desc}</p>,
     key: data.key
   });
 }

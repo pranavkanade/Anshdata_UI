@@ -13,12 +13,18 @@ import {
   getEnrolledCoursesList
 } from "../../../Requests/Courses";
 
+import {
+  fetchCatalogCourses,
+  fetchEnrolledCourses,
+  fetchUpdatedCourses
+} from "../../../store/actions";
+
 import css from "./courses.scss";
 
 class Courses extends Component {
   state = {
-    courses: null,
-    enrolledCourses: null,
+    courses: this.props.catalogCourses,
+    enrolledCourses: this.props.enrolledCourses,
     courseSearched: "",
     selectedCourse: 0,
     visible: false,
@@ -70,7 +76,8 @@ class Courses extends Component {
   };
 
   renderCourses = (courses, listType) => {
-    if (courses.length === 0) {
+    // console.log("Trying to render courses : ", courses);
+    if (courses === null || courses === undefined || courses.length === 0) {
       return <p>Course List</p>;
     }
 
@@ -99,7 +106,7 @@ class Courses extends Component {
   };
 
   renderMyCourses = () => {
-    const courseEnrolledin = this.state.enrolledCourses;
+    const courseEnrolledin = this.props.enrolledCourses;
     // return null;
     return courseEnrolledin === null ? (
       <span>Your Courses</span>
@@ -109,7 +116,7 @@ class Courses extends Component {
   };
 
   render() {
-    const courseListing = this.state.courses;
+    const courseListing = this.props.catalogCourses;
 
     return (
       <div className={css.coursesPlugin}>
@@ -147,7 +154,7 @@ class Courses extends Component {
                 <button>Search</button>
               </div>*/}
             </div>
-            {courseListing === null ? (
+            {courseListing === null || courseListing === undefined ? (
               <Loader msg="Gathering all courses" />
             ) : (
               this.renderCourses(courseListing, courseListType.CATALOG)
@@ -160,24 +167,48 @@ class Courses extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    if (this.state.isAuthenticated) {
-      getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+    if (this.props.isAuthenticated) {
+      // getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+      this.props.fetchEnrolledCourses();
     }
-    getCoursesList(this.saveCoursesHandler);
+    // getCoursesList(this.saveCoursesHandler);
+    this.props.fetchCatalogCourses();
   }
 
+  // shouldComponentUpdate = (nextProps, nextState) => {
+  //   console.group("props_test");
+  //   console.log("Current Props : ", this.props);
+  //   console.log("Next Props : ", nextProps);
+  //   console.groupEnd("props_test");
+
+  //   console.group("state_test");
+  //   console.log("Current state : ", this.state);
+  //   console.log("Next state : ", nextState);
+  //   console.groupEnd("state_test");
+  //   return true;
+  // };
+
   componentDidUpdate() {
-    if (this.props.isAuthenticated && this.state.enrolledCourses === null) {
-      // NOTE: This is going to be hell merry .. when actually new user comes on this page.
-      getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
-      getCoursesList(this.saveCoursesHandler);
+    if (this.props.isAuthenticated !== this.state.isAuthenticated) {
+      this.setState({ isAuthenticated: this.props.isAuthenticated });
+      this.props.fetchUpdatedCourses();
     }
   }
 }
+
+const mapDispatchToProps = {
+  fetchCatalogCourses,
+  fetchEnrolledCourses,
+  fetchUpdatedCourses
+};
 
 function mapStateToProps(state) {
   const { isAuthenticated } = state.user;
-  return { isAuthenticated };
+  const { currentCourse, catalogCourses, enrolledCourses } = state.crs;
+  return { isAuthenticated, currentCourse, catalogCourses, enrolledCourses };
 }
 
-export default connect(mapStateToProps)(Courses);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Courses);

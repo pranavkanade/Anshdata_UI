@@ -6,33 +6,49 @@ const URLS = {
   LIST_COURSES_ENROLLED_IN: "http://127.0.0.1:8000/api/course/enrolled/"
 };
 
-export const getCoursesList = async coursesSaveHandler => {
+export const getCoursesList = async (coursesSaveHandler = () => {}) => {
+  const auth = getAuthorization();
+  console.log("Looking at auth in get Course list  : ", auth);
+  let headers = null;
+  if (auth !== "") {
+    headers = {
+      "content-type": "application/json",
+      Authorization: auth
+    };
+  } else {
+    headers = {
+      "content-type": "application/json"
+    };
+  }
+  console.log("Headers : ", headers);
   try {
-    await fetch(URLS.LIST_COURSE, {
+    const resp = await fetch(URLS.LIST_COURSE, {
       method: "GET",
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(data => coursesSaveHandler(data));
+      headers: headers
+    });
+    const advResp = await getAdvResponse(resp);
+    coursesSaveHandler(advResp.data);
+    return advResp;
   } catch (err) {
     // This means we are dealing with anonymous user
     console.log(err);
   }
 };
 
-export const getEnrolledCoursesList = async coursesSaveHandler => {
+export const getEnrolledCoursesList = async (
+  coursesSaveHandler = () => {}
+) => {
   try {
-    await fetch(URLS.LIST_COURSES_ENROLLED_IN, {
+    const resp = await fetch(URLS.LIST_COURSES_ENROLLED_IN, {
       method: "GET",
       headers: {
         "content-type": "application/json",
         Authorization: getAuthorization()
       }
-    })
-      .then(response => response.json())
-      .then(data => coursesSaveHandler(data));
+    });
+    const advResp = await getAdvResponse(resp);
+    coursesSaveHandler(advResp.data);
+    return advResp;
   } catch (err) {
     // This means we are dealing with anonymous user
     console.log(err);

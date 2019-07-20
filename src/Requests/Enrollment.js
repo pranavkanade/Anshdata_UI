@@ -1,5 +1,6 @@
 import Router from "next/router";
 import { getAuthorization } from "./Authorization";
+import getAdvResponse from "./response";
 const URLS = {
   PATCH_COURSE_ENROLL: "http://127.0.0.1:8000/api/course/enroll/"
 };
@@ -9,18 +10,19 @@ export const enrollEventHandler = async courseKey => {
     const enrollmentData = {
       course: String(courseKey)
     };
-    await fetch(URLS.PATCH_COURSE_ENROLL, {
+    const response = await fetch(URLS.PATCH_COURSE_ENROLL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: getAuthorization()
       },
       body: JSON.stringify(enrollmentData)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => data);
+    });
+    const actualResp = await response;
+    console.log("Actual response from server : ", actualResp);
+    const resp = await getAdvResponse(response);
+    console.log("Got response to enroll request : ", resp);
+    return resp;
   } catch (err) {
     console.log("[Enroll.js] Error when enrolling to a course : ", err);
   }

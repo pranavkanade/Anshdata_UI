@@ -7,8 +7,14 @@ import {
   takeLeading
 } from "redux-saga/effects";
 import actionTypes from "./actionTypes";
-import { getTopPopularCoursesWithSaga, getCourse } from "../Requests/Courses";
+import {
+  getTopPopularCoursesWithSaga,
+  getCourse,
+  getCoursesList,
+  getEnrolledCoursesList
+} from "../Requests/Courses";
 import { verifyUserToken } from "../Requests/Authentication";
+import { enrollEventHandler } from "../Requests/Enrollment";
 import {
   storeTopCourses,
   storeDetailedDraftCourse,
@@ -16,7 +22,11 @@ import {
   storeUserSignedOut,
   storeUserSignedIn,
   addNotificationError,
-  fetchDetailedDraftCourse
+  fetchDetailedDraftCourse,
+  storeCourse,
+  storeEnrolledCourses,
+  storeCatalogCourses,
+  fetchUpdatedCourses
 } from "./actions";
 
 function* helloSaga() {
@@ -87,6 +97,64 @@ function* watchUpdateDetailedDraftCourse() {
   );
 }
 
+function* sagaFetchEnrolledCourses() {
+  console.log("Will try to get and store enrolled courses");
+  const resp = yield call(getEnrolledCoursesList);
+  if (resp.ok) {
+    console.log("Successfully fetched new courses!", resp.data);
+    yield put(storeEnrolledCourses(resp.data));
+  } else {
+    yield put(addNotificationError(resp));
+  }
+}
+
+function* watchFetchEnrolledCourses() {
+  yield takeLatest(
+    actionTypes.FETCH_ENROLLED_COURSES,
+    sagaFetchEnrolledCourses
+  );
+}
+
+function* sagaFetchCatalogCourses() {
+  console.log("Will try to get and store enrolled courses");
+  const resp = yield call(getCoursesList);
+  if (resp.ok) {
+    console.log("Successfully fetched new courses!", resp.data);
+    yield put(storeCatalogCourses(resp.data));
+  } else {
+    yield put(addNotificationError(resp));
+  }
+}
+
+function* watchFetchCatalogCourses() {
+  yield takeLatest(actionTypes.FETCH_CATALOG_COURSES, sagaFetchCatalogCourses);
+}
+
+function* sagaUpdateCourses() {
+  console.log("Will try to fetch catalog and enrolled courses");
+  yield all([sagaFetchEnrolledCourses(), sagaFetchCatalogCourses()]);
+}
+
+function* watchRequestUpdateCourses() {
+  yield takeLatest(actionTypes.FETCH_UPDATED_COURSES, sagaUpdateCourses);
+}
+
+function* sagaEnrollToCourse(action) {
+  console.log("Will try to enroll to the course : ", action.data);
+  const resp = yield call(enrollEventHandler, action.data.id);
+  if (resp.ok) {
+    console.log("Enrolled Request Successful!");
+    yield put(storeCourse(action.data));
+    yield put(fetchUpdatedCourses());
+  } else {
+    yield put(addNotificationError(resp));
+  }
+}
+
+function* watchEnrollToCourse() {
+  yield takeLeading(actionTypes.ENTOLL_TO_COURSE, sagaEnrollToCourse);
+}
+
 export default function* adSaga() {
   yield all([
     helloSaga(),
@@ -94,6 +162,10 @@ export default function* adSaga() {
     watchMakeUserVerify(),
     sagaRequestUserSignIn(),
     watchFetchDetailedDraftCourse(),
-    watchUpdateDetailedDraftCourse()
+    watchUpdateDetailedDraftCourse(),
+    watchEnrollToCourse(),
+    watchRequestUpdateCourses(),
+    watchFetchCatalogCourses(),
+    watchFetchEnrolledCourses()
   ]);
 }
