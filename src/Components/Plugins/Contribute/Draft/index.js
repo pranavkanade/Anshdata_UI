@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import Error from "../../../Generic/Error/error";
+import Loader from "../../../Generic/Loader/loader";
 import Router from "next/router";
 import css from "./index.scss";
 
-import { getADUserInfo } from "../../../../Requests/Authorization";
-import {
-  getCourse,
-  draftCourse,
-  deleteCourse
-} from "../../../../Requests/Courses";
+import { draftCourse, deleteCourse } from "../../../../Requests/Courses";
 import { publishCourse } from "../../../../Requests/DraftCourses";
 import CourseForm from "../../../Generic/Forms/course";
 import CourseContent from "./content";
@@ -26,8 +22,7 @@ class DraftedCourse extends Component {
     shouldOpenAddModule: false,
     shouldOpenAddLesson: false,
     shouldOpenAddAssignment: false,
-    shouldOpenAddCourse: false,
-    elementBeingAdded: ""
+    shouldOpenAddCourse: false
   };
 
   closeHandler = () => {
@@ -35,33 +30,25 @@ class DraftedCourse extends Component {
       shouldOpenAddModule: false,
       shouldOpenAddLesson: false,
       shouldOpenAddAssignment: false,
-      shouldOpenAddCourse: false,
-      elementBeingAdded: ""
+      shouldOpenAddCourse: false
     });
   };
 
-  addHandler = (
-    btn,
-    moduleId = null,
-    lessonId = null,
-    assignmentId = null
-  ) => {
+  addHandler = btn => {
     if (btn === "course") {
       this.setState({
-        shouldOpenAddCourse: true,
-        elementBeingAdded: btn
+        shouldOpenAddCourse: true
       });
     }
   };
 
   renderAddNewForm = () => {
-    const btn = this.state.elementBeingAdded;
     if (this.state.shouldOpenAddCourse) {
       return (
         <CourseForm
           open={true}
           closeHandler={this.closeHandler}
-          course={this.state.course}
+          course={this.props.course}
           edit={true}
         />
       );
@@ -86,7 +73,7 @@ class DraftedCourse extends Component {
   };
 
   renderTags = () => {
-    const tags = this.state.course.tagged_to;
+    const tags = this.props.course.tagged_to;
     return tags.map(tag => {
       return (
         <span className={css.tag} key={tag.id}>
@@ -172,28 +159,28 @@ class DraftedCourse extends Component {
   renderCourseInfo = () => {
     return (
       <div className={css.course}>
-        <span className={css.title}>{this.state.course.title}</span>
+        <span className={css.title}>{this.props.course.title}</span>
         <div className={css.info}>
           <div className={css.primary}>
             <div className={css.description}>
-              <p>{this.state.course.description}</p>
+              <p>{this.props.course.description}</p>
             </div>
             <div className={css.extra}>
               {this.renderAuthorNSub(
-                this.state.course.author.username,
-                this.state.course.subject
+                this.props.course.author.username,
+                this.props.course.subject
               )}
               {this.renderStats(
-                this.state.course.credit_points,
-                this.state.course.assignments.length,
-                this.getLessonsCount(this.state.course.modules)
+                this.props.course.credit_points,
+                this.props.course.assignments.length,
+                this.getLessonsCount(this.props.course.modules)
               )}
             </div>
             <div className={css.tagBox}>{this.renderTags()}</div>
           </div>
           <div className={css.secondary}>
             {this.renderActionBar()}
-            {this.state.course.is_published ? (
+            {this.props.course.is_published ? (
               <div className={css.warning}>
                 <p>
                   This course is not open for modification. To be able to edit
@@ -223,13 +210,17 @@ class DraftedCourse extends Component {
   };
 
   render() {
-    const user = getADUserInfo();
-    if (this.state.course === null) {
-      return <div className={css.container}>{this.renderLoader()}</div>;
-    } else if (this.state.course.author.id !== user.pk) {
+    const user = this.props.user;
+    if (this.props.course === null || this.props.course === undefined) {
+      return (
+        <div className={css.container}>
+          <Loader msg="Loading..." />
+        </div>
+      );
+    }
+    if (this.props.course.author.id !== user.pk) {
       return <Error />;
     }
-    const { course } = this.state;
 
     return (
       <div className={css.page}>
@@ -237,28 +228,21 @@ class DraftedCourse extends Component {
           {this.renderCourseInfo()}
           {this.renderAddNewForm()}
         </div>
-        <CourseContent course={this.state.course} />
+        <CourseContent course={this.props.course} />
       </div>
     );
   }
 
   componentDidMount() {
     // getCourse(this.state.courseId, this.courseSaveHandler);
-    this.props.fetchDetailedDraftCourse(this.state.courseId);
-  }
-
-  componentDidUpdate() {
-    // TODO: Need better logic here
+    console.log("We are fetching : ", this.props.courseId, Router.query);
     if (
-      (this.props.course !== null && this.state.course === null) ||
-      this.props.is_published !== this.state.course.is_published
+      this.props.course === undefined ||
+      this.props.course === null ||
+      this.props.course.id !== this.props.courseId
     ) {
-      this.setState({ course: this.props.course });
+      this.props.fetchDetailedDraftCourse(this.props.courseId);
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
   }
 }
 
@@ -266,9 +250,10 @@ const mapStateToProps = state => {
   return {
     course: state.crs.draftCourse,
     is_published:
-      state.crs.draftCourse !== null
+      state.crs.draftCourse !== null && state.crs.draftCourse !== undefined
         ? state.crs.draftCourse.is_published
-        : false
+        : false,
+    user: state.user.user
   };
 };
 
