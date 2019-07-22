@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Router from "next/router";
+import Loader from "../../Generic/Loader/loader";
+import Error from "../../Generic/Error/error";
 import { getCourse } from "../../../Requests/Courses";
 import { getIfEnrolled } from "../../../Requests/Enrollment";
 import {
@@ -15,7 +17,7 @@ class CourseClassroom extends Component {
     courseId: this.props.courseId,
     activeModule: null,
     activeLesson: null,
-    isEnrolledIn: false,
+    isEnrolledIn: null,
     courseProgress: null
   };
 
@@ -75,7 +77,10 @@ class CourseClassroom extends Component {
       });
       this.recoverCurrentModNLsn(data[0].current_lesson);
     } else {
-      Router.push(`/courses/${this.state.courseId}`);
+      this.setState({
+        isEnrolledIn: false,
+        courseProgress: data[0]
+      });
     }
   };
 
@@ -130,6 +135,11 @@ class CourseClassroom extends Component {
   };
 
   render() {
+    if (this.state.isEnrolledIn === null) {
+      return <Loader msg="Loading ..." />;
+    } else if (!this.state.isEnrolledIn) {
+      return <Error />;
+    }
     return (
       <ClassroomBase
         course={this.state.course}
@@ -147,14 +157,17 @@ class CourseClassroom extends Component {
     // Here assume if the course is undefined then we are directly comming
     // from the tile representaion and not the detailed course.
     // In that case only we should fetch the course else use the earliear data.
-    if (this.state.course === undefined || this.state.course === null) {
-      await getCourse(this.state.courseId, this.courseSaveHandler);
-    }
-
     getIfEnrolled(this.state.courseId, this.ifEnrolledSaveHandler);
   };
 
-  componentDidUpdate() {}
+  componentDidUpdate = async () => {
+    if (
+      (this.state.course === undefined || this.state.course === null) &&
+      this.state.isEnrolledIn
+    ) {
+      await getCourse(this.state.courseId, this.courseSaveHandler);
+    }
+  };
 }
 
 export default CourseClassroom;
