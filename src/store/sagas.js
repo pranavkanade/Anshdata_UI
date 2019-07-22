@@ -29,10 +29,6 @@ import {
   updateCurrentCourse
 } from "./actions";
 
-function* helloSaga() {
-  console.log("Hello Saga!");
-}
-
 function* sagaGetTopCourses() {
   const topCourses = yield call(getTopPopularCoursesWithSaga);
   yield put(storeTopCourses(topCourses));
@@ -163,7 +159,6 @@ function* watchFetchACourse() {
 
 export default function* adSaga() {
   yield all([
-    helloSaga(),
     watchGetTopCourses(),
     watchMakeUserVerify(),
     sagaRequestUserSignIn(),

@@ -208,7 +208,6 @@ class DetailedCourse extends Component {
       lecture = course.modules[0].lessons[0].lecture;
       lecture = lecture === "" || lecture === null ? backup : lecture;
     } catch (err) {
-      console.log("Doest not have lectures : ", course.id);
     }
     return (
       <>

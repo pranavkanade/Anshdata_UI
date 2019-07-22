@@ -12,7 +12,5 @@ export const giveFeedback = async data => {
         return response.json();
       })
       .then(resp => resp);
-  } catch (err) {
-    console.log("Error when giving feedback to a course : ", err);
-  }
+  } catch (err) {}
 };

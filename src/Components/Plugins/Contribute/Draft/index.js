@@ -233,17 +233,7 @@ class DraftedCourse extends Component {
     );
   }
 
-  shouldComponentUpdate = (nextProps, nextState) => {
-    console.group("test");
-    console.log("Current Props : ", this.props);
-    console.log("Updated Props : ", nextProps);
-    console.groupEnd("test");
-    return true;
-  };
-
   componentDidMount() {
-    // getCourse(this.state.courseId, this.courseSaveHandler);
-    console.log("We are fetching : ", this.props.courseId, Router.query);
     if (
       this.props.course === undefined ||
       this.props.course === null ||

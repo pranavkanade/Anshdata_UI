@@ -52,10 +52,6 @@ class Contribute extends Component {
     this.setState({ courseSearched: courseName });
   };
 
-  onSearched = () => {
-    console.log("Clicked Course Search : ", this.state.courseSearched);
-  };
-
   subMenuChangeHandler = selectedSubMenu => {
     this.setState({ activeSubMenu: selectedSubMenu });
   };
@@ -170,11 +166,7 @@ class Contribute extends Component {
     try {
       getPublishedCoursesList(adUser.user.pk, this.myPublicationSaveHandler);
       getDraftedSelfCoursesList(this.myDraftsSaveHandler);
-    } catch (err) {
-      console.log(
-        "User may not be logged in. Failed to fetch the list of published and drafted courses."
-      );
-    }
+    } catch (err) {}
     getDraftedCommunityCoursesList(this.communityDraftsSaveHandler);
   }
 }

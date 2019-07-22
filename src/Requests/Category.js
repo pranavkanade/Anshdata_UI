@@ -13,7 +13,6 @@ export const getCategoryList = async catSaveHandler => {
       .then(response => response.json())
       .then(data => catSaveHandler(data));
   } catch (err) {
-    console.log("[Course/Form.js] user is not logged in : ", err);
     return [];
   }
 };
@@ -34,7 +33,5 @@ export const createCategory = async (title, wiki) => {
     })
       .then(response => response.json())
       .then(data => data);
-  } catch (err) {
-    console.log("Error during category creations");
-  }
+  } catch (err) {}
 };

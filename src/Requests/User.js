@@ -13,6 +13,5 @@ export const getUserDetails = async (userName, userSaveHandler) => {
       .then(response => response.json())
       .then(data => userSaveHandler(data[0]));
   } catch (err) {
-    console.log("get User Detail", err);
   }
 };

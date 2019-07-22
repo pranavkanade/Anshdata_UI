@@ -20,12 +20,7 @@ const getData = async (URL, saveCourseHandler) => {
       .then(data => {
         saveCourseHandler(data);
       });
-  } catch (err) {
-    console.log(
-      "[Contrib.js] Failed to collect the list of drafted courses : ",
-      err
-    );
-  }
+  } catch (err) {}
 };
 
 export const getDraftedCommunityCoursesList = async saveCourseHandler => {
@@ -41,12 +36,7 @@ export const getDraftedCommunityCoursesList = async saveCourseHandler => {
       .then(data => {
         saveCourseHandler(data);
       });
-  } catch (err) {
-    console.log(
-      "[Contrib.js] Failed to collect the list of drafted courses : ",
-      err
-    );
-  }
+  } catch (err) {}
 };
 
 export const getDraftedSelfCoursesList = async saveCourseHandler => {
@@ -65,7 +55,5 @@ export const publishCourse = async courseId => {
     });
     const advResp = await getAdvResponse(response);
     return advResp;
-  } catch (err) {
-    console.log("[DraftCourses.js] cannot published the course: ", err);
-  }
+  } catch (err) {}
 };

@@ -13,7 +13,6 @@ export const getTagList = async tagsSaveHandler => {
       .then(response => response.json())
       .then(data => tagsSaveHandler(data));
   } catch (err) {
-    console.log("[Course/Form.js] user is not logged in : ", err);
     return [];
   }
 };
@@ -34,7 +33,5 @@ export const createTag = async (title, wiki) => {
     })
       .then(response => response.json())
       .then(data => data);
-  } catch (err) {
-    console.log("Error during tag creation");
-  }
+  } catch (err) {}
 };

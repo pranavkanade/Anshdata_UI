@@ -85,7 +85,6 @@ class CourseForm extends Component {
     });
     const courseId = resp.data.id;
     if (!!this.state.courseId) {
-      console.log("Update course response : ", resp);
       this.props.updateDetailedDraftCourse(resp);
     } else {
       Router.push(
@@ -114,9 +113,7 @@ class CourseForm extends Component {
           value: cat.id
         };
       });
-    } catch (err) {
-      console.log("did not pull up the cat list yet");
-    }
+    } catch (err) {}
 
     return (
       <CustomField
@@ -141,7 +138,6 @@ class CourseForm extends Component {
         };
       });
     } catch (err) {
-      console.log("did not pull up the tag list yet");
     }
 
     return (

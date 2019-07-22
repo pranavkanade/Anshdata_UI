@@ -70,7 +70,6 @@ class Courses extends Component {
   };
 
   renderCourses = (courses, listType) => {
-    // console.log("Trying to render courses : ", courses);
     if (courses === null || courses === undefined || courses.length === 0) {
       return <p>Course List</p>;
     }

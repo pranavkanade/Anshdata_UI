@@ -18,11 +18,9 @@ export const setProgress = async (enrollment_id, data) => {
         }
         return response.json();
       })
-      .catch(err => console.log("Error when setting progress ", err))
+      .catch(err => err)
       .then(data => data);
-  } catch (err) {
-    console.log("Error when setting progress ", err);
-  }
+  } catch (err) {}
 };
 
 export const markLessonDone = async data => {
@@ -42,11 +40,9 @@ export const markLessonDone = async data => {
         }
         return response.json();
       })
-      .catch(err => console.log("Error when marking completed lesson ", err))
+      .catch(err => err)
       .then(data => data);
-  } catch (err) {
-    console.log("Error when marking completed lesson ", err);
-  }
+  } catch (err) {}
 };
 
 export const markAssignmentDone = async data => {
@@ -66,11 +62,7 @@ export const markAssignmentDone = async data => {
         }
         return response.json();
       })
-      .catch(err =>
-        console.log("Error when marking completed assignment ", err)
-      )
+      .catch(err => err)
       .then(data => data);
-  } catch (err) {
-    console.log("Error when marking completed assignment ", err);
-  }
+  } catch (err) {}
 };

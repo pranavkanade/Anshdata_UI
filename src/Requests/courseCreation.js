@@ -19,9 +19,7 @@ export const createCourseHandler = async ({ courseData, courseId }) => {
     });
     const advResponse = await getAdvResponse(createCourseRes);
     return advResponse;
-  } catch (err) {
-    console.log("[Course/Form.js] user is not logged in : ", err);
-  }
+  } catch (err) {}
 };
 
 export const createModuleHandler = async ({ modData, modId }) => {
@@ -43,9 +41,7 @@ export const createModuleHandler = async ({ modData, modId }) => {
     });
     const advResponse = await getAdvResponse(moduleCreated);
     return advResponse;
-  } catch (err) {
-    console.log("[Module/Action.js] Error when creating a module : ", err);
-  }
+  } catch (err) {}
 };
 
 export const createLessonHandler = async ({ lsnData, lsnId }) => {
@@ -67,9 +63,7 @@ export const createLessonHandler = async ({ lsnData, lsnId }) => {
     });
     const advResponse = await getAdvResponse(lessonCreated);
     return advResponse;
-  } catch (err) {
-    console.log("[Lesson/Action.js] Error when creating a lesson : ", err);
-  }
+  } catch (err) {}
 };
 
 export const createAssignmentHandler = async ({ assignmentData, exId }) => {
@@ -91,10 +85,5 @@ export const createAssignmentHandler = async ({ assignmentData, exId }) => {
     });
     const advResponse = await getAdvResponse(resp);
     return advResponse;
-  } catch (err) {
-    console.log(
-      "[Assignment/Action.js] Error when creating an assignment : ",
-      err
-    );
-  }
+  } catch (err) {}
 };

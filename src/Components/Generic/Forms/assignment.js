@@ -101,9 +101,7 @@ class AssignmentForm extends Component {
           value: mod.id
         };
       });
-    } catch (err) {
-      console.log("did not pull up the mod list yet");
-    }
+    } catch (err) {}
 
     return (
       <CustomField
@@ -138,9 +136,7 @@ class AssignmentForm extends Component {
           value: each_lesson.id
         };
       });
-    } catch (err) {
-      console.log("Failed to get the list of lessons");
-    }
+    } catch (err) {}
     return (
       <CustomField
         className={css.ad_mod_choise}
@@ -226,7 +222,6 @@ class AssignmentForm extends Component {
       this.props.lessonId === null ||
       this.props.assignmentId === 0
     ) {
-      console.log("Creating new assignment");
       return null;
     }
     const course = this.props.course;

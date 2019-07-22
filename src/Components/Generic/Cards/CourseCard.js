@@ -57,9 +57,7 @@ export const PublishedCard = props => {
     const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
     lecture = props.course.modules[0].lessons[0].lecture;
     lecture = lecture === "" || lecture === null ? backup : lecture;
-  } catch (err) {
-    console.log("Doest not have lecture : ", course.id);
-  }
+  } catch (err) {}
   const title = course.title;
   const creditPoints = course.credit_points;
   return (
@@ -81,9 +79,7 @@ export const TopCourseCard = props => {
     const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
     lecture = props.course.modules[0].lessons[0].lecture;
     lecture = lecture === "" || lecture === null ? backup : lecture;
-  } catch (err) {
-    console.log("Doest not have lecture : ", course.id);
-  }
+  } catch (err) {}
   const title = course.title;
   const creditPoints = course.credit_points;
   const enrollments = course.students_count;
@@ -115,9 +111,7 @@ export const EnrolledCourseCard = props => {
     const backup = "https://www.youtube.com/embed/RKLKib4bHhA";
     lecture = props.course.modules[0].lessons[0].lecture;
     lecture = lecture === "" || lecture === null ? backup : lecture;
-  } catch (err) {
-    console.log("Doest not have lecture : ", course.id);
-  }
+  } catch (err) {}
   return (
     <div className={css.enrolled}>
       {renderHead(title, lecture)}
@@ -140,7 +134,6 @@ export const DraftCourseCard = props => {
     lecture = props.course.modules[0].lessons[0].lecture;
     lecture = lecture === "" || lecture === null ? backup : lecture;
   } catch (err) {
-    console.log("Doest not have lecture : ", course.id);
   }
 
   return (

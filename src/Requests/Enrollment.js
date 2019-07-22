@@ -19,13 +19,9 @@ export const enrollEventHandler = async courseKey => {
       body: JSON.stringify(enrollmentData)
     });
     const actualResp = await response;
-    console.log("Actual response from server : ", actualResp);
     const resp = await getAdvResponse(response);
-    console.log("Got response to enroll request : ", resp);
     return resp;
-  } catch (err) {
-    console.log("[Enroll.js] Error when enrolling to a course : ", err);
-  }
+  } catch (err) {}
 };
 
 export const getIfEnrolled = async (courseId, ifEnrolledSaveHandler) => {
@@ -44,10 +40,9 @@ export const getIfEnrolled = async (courseId, ifEnrolledSaveHandler) => {
         }
         return response.json();
       })
-      .catch(err => console.log("Enrollment err ", err))
+      .catch(err => err)
       .then(data => ifEnrolledSaveHandler(data));
   } catch (err) {
     // This means we are dealing with anonymous user
-    console.log(err);
   }
 };

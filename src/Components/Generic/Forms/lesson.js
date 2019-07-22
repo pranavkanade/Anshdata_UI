@@ -71,9 +71,7 @@ class LessonForm extends Component {
           value: mod.id
         };
       });
-    } catch (err) {
-      console.log("did not pull up the mod list yet");
-    }
+    } catch (err) {}
 
     return (
       <CustomField

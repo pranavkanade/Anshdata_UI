@@ -27,9 +27,7 @@ export const signupHandler = async signupData => {
     // Following action will automatically store all the data we need.
     setUserToLocalStorage(data);
     return data;
-  } catch (err) {
-    console.log("[Auth.js] SIGNUP ERR : ", err);
-  }
+  } catch (err) {}
 };
 
 export const signinHandler = async signinData => {
@@ -47,9 +45,7 @@ export const signinHandler = async signinData => {
     const dataWithError = await buildCustomResponse(loginRes);
     setUserToLocalStorage(dataWithError.data);
     return dataWithError;
-  } catch (err) {
-    console.log("[Auth.js] SIGNIN ERR : ", err);
-  }
+  } catch (err) {}
 };
 
 export const logoutHandler = async event => {
@@ -64,9 +60,7 @@ export const logoutHandler = async event => {
     const data = await logoutRes.json();
     // remove if any thing is remaining of the previous user
     removeUserFromLocalStorage();
-  } catch (err) {
-    console.log("[Auth.js] Log out ERR : ", err);
-  }
+  } catch (err) {}
 };
 
 export const refreshUserToken = async () => {
@@ -93,7 +87,6 @@ export const refreshUserToken = async () => {
     removeUserFromLocalStorage();
     setUserToLocalStorage(AnshdataUser);
   } catch (err) {
-    console.log("[Authorization.js] Refresh ERR : ", err);
     removeUserFromLocalStorage();
   }
 };
@@ -119,8 +112,6 @@ export const verifyUserToken = async () => {
     const data = await buildCustomResponse(response);
     return data;
   } catch (err) {
-    console.log("[Authorization.js] Refresh ERR : ", err);
-    // removeUserFromLocalStorage();
     return err;
   }
 };

@@ -47,7 +47,6 @@ export const storeDetailedDraftCourse = data => {
 };
 
 export const fetchACourse = data => {
-  console.log("Fetching a course : ", data);
   return { type: actionTypes.FETCH_A_COURSE, data: data };
 };
 

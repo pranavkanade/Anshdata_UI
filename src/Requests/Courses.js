@@ -27,10 +27,7 @@ export const getCoursesList = async (coursesSaveHandler = () => {}) => {
     const advResp = await getAdvResponse(resp);
     coursesSaveHandler(advResp.data);
     return advResp;
-  } catch (err) {
-    // This means we are dealing with anonymous user
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const getEnrolledCoursesList = async (
@@ -47,10 +44,7 @@ export const getEnrolledCoursesList = async (
     const advResp = await getAdvResponse(resp);
     coursesSaveHandler(advResp.data);
     return advResp;
-  } catch (err) {
-    // This means we are dealing with anonymous user
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const getPublishedCoursesList = async (usrId, saveHandler) => {
@@ -65,9 +59,7 @@ export const getPublishedCoursesList = async (usrId, saveHandler) => {
     })
       .then(response => response.json())
       .then(data => saveHandler(data));
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const getCourse = async (courseId, courseSaveHandler) => {
@@ -86,9 +78,7 @@ export const getCourse = async (courseId, courseSaveHandler) => {
       courseSaveHandler(resp.data);
     }
     return resp;
-  } catch (err) {
-    console.log("[Courses/Detailed-request] user is not logged in : ", err);
-  }
+  } catch (err) {}
 };
 
 export const draftCourse = async courseId => {
@@ -103,9 +93,7 @@ export const draftCourse = async courseId => {
     });
     const advResp = await getAdvResponse(response);
     return advResp;
-  } catch (err) {
-    console.log("[Courses.js] cannot draft the course: ", err);
-  }
+  } catch (err) {}
 };
 
 export const deleteCourse = async courseId => {
@@ -120,9 +108,7 @@ export const deleteCourse = async courseId => {
     })
       .then(resp => resp.json())
       .then(data => data);
-  } catch (err) {
-    console.log("[Courses.js] cannot draft the course: ", err);
-  }
+  } catch (err) {}
 };
 
 export const getTopPopularCoursesWithSaga = async () => {
@@ -136,7 +122,5 @@ export const getTopPopularCoursesWithSaga = async () => {
     });
     const data = await response.json();
     return data;
-  } catch (err) {
-    console.log("[Courses.js] failed to fetch most popular courses", err);
-  }
+  } catch (err) {}
 };
