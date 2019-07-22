@@ -145,7 +145,7 @@ function* sagaEnrollToCourse(action) {
 }
 
 function* watchEnrollToCourse() {
-  yield takeLeading(actionTypes.ENTOLL_TO_COURSE, sagaEnrollToCourse);
+  yield takeLatest(actionTypes.ENTOLL_TO_COURSE, sagaEnrollToCourse);
 }
 
 function* sagaFetchACourse(action) {
