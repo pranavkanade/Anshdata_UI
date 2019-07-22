@@ -5,7 +5,7 @@ const index = props => {
   return <User user_name={props.usrName} />;
 };
 
-courses.getInitialProps = async ({ query }) => {
+index.getInitialProps = async ({ query }) => {
   const ursName = query.ursName;
   return { ursName: ursName };
 };

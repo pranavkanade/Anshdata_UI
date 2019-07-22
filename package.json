@@ -4,6 +4,7 @@
   "private": true,
   "description": "frontend prototype",
   "scripts": {
+    "flow": "flow",
     "dev": "next",
     "start": "next start",
     "build": "next build"
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
-    "eslint": "^6.0.1"
+    "eslint": "^6.0.1",
+    "flow-bin": "^0.103.0"
   }
 }
