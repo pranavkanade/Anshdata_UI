@@ -26,8 +26,10 @@ import {
   storeEnrolledCourses,
   storeCatalogCourses,
   fetchUpdatedCourses,
-  updateCurrentCourse
+  updateCurrentCourse,
+  storeUserProgress
 } from "./actions";
+import { getUserProgress } from "../Requests/courseProgress";
 
 function* sagaGetTopCourses() {
   const topCourses = yield call(getTopPopularCoursesWithSaga);
@@ -123,7 +125,11 @@ function* watchFetchCatalogCourses() {
 }
 
 function* sagaUpdateCourses() {
-  yield all([sagaFetchEnrolledCourses(), sagaFetchCatalogCourses()]);
+  yield all([
+    sagaFetchEnrolledCourses(),
+    sagaFetchCatalogCourses(),
+    sagaFetchUserProgress()
+  ]);
 }
 
 function* watchRequestUpdateCourses() {
@@ -157,6 +163,19 @@ function* watchFetchACourse() {
   yield takeLatest(actionTypes.FETCH_A_COURSE, sagaFetchACourse);
 }
 
+function* sagaFetchUserProgress() {
+  const resp = yield call(getUserProgress);
+  if (resp.ok) {
+    yield put(storeUserProgress(resp.data));
+  } else {
+    yield put(addNotificationError(resp));
+  }
+}
+
+function* watchFetchUserProgress() {
+  yield takeLatest(actionTypes.FETCH_USER_PROGRESS, sagaFetchUserProgress);
+}
+
 export default function* adSaga() {
   yield all([
     watchGetTopCourses(),
@@ -168,6 +187,7 @@ export default function* adSaga() {
     watchRequestUpdateCourses(),
     watchFetchCatalogCourses(),
     watchFetchEnrolledCourses(),
-    watchFetchACourse()
+    watchFetchACourse(),
+    watchFetchUserProgress()
   ]);
 }

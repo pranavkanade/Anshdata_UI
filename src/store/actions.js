@@ -78,6 +78,14 @@ export const fetchUpdatedCourses = () => {
   return { type: actionTypes.FETCH_UPDATED_COURSES };
 };
 
+export const fetchUserProgress = () => {
+  return { type: actionTypes.FETCH_USER_PROGRESS };
+};
+
+export const storeUserProgress = data => {
+  return { type: actionTypes.STORE_USER_PROGRESS, data: data };
+};
+
 // Actions Notifications
 export const addNotificationError = data => {
   return { type: actionTypes.ADD_NOTIFICATION_ERROR, data: data };

@@ -1,4 +1,5 @@
 import { getAuthorization } from "./Authorization";
+import getAdvResponse from "./response";
 
 export const setProgress = async (enrollment_id, data) => {
   const URL = `http://127.0.0.1:8000/api/course/progress/${enrollment_id}/`;
@@ -64,5 +65,20 @@ export const markAssignmentDone = async data => {
       })
       .catch(err => err)
       .then(data => data);
+  } catch (err) {}
+};
+
+export const getUserProgress = async () => {
+  const URL = "http://127.0.0.1:8000/api/course/enroll/";
+  try {
+    const resp = await fetch(URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getAuthorization()
+      }
+    });
+    const advResp = await getAdvResponse(resp);
+    return advResp;
   } catch (err) {}
 };

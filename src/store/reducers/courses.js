@@ -6,7 +6,8 @@ const initialState = {
   draftCourse: null,
   currentCourse: null,
   catalogCourses: null,
-  enrolledCourses: null
+  enrolledCourses: null,
+  userProgress: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,6 +37,11 @@ const reducer = (state = initialState, action) => {
     case actionTypes.STORE_CATALOG_COURSES:
       resp = Object.assign({}, state, {
         catalogCourses: action.data
+      });
+      return resp;
+    case actionTypes.STORE_USER_PROGRESS:
+      resp = Object.assign({}, state, {
+        userProgress: action.data
       });
       return resp;
     default:

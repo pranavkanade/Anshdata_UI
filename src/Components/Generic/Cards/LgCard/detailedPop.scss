@@ -8,11 +8,12 @@
   display: flex;
   flex-direction: column;
   z-index: 2;
+  box-shadow: $shadow-all-3;
 
   .title {
     font-size: 18px;
     font-weight: 600;
-    background: $Base-primary;
+    background: $Base-secondary;
     color: $White-0;
     padding: 1rem;
     border-radius: 2px 2px;
@@ -106,6 +107,17 @@
 
     img {
       color: inherit;
+    }
+  }
+
+  .attend {
+    background: $Purple-1b;
+
+    &:hover {
+      background: $Purple-1b;
+    }
+    &:focus {
+      background: $Purple-1b;
     }
   }
 }
