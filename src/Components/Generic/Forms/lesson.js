@@ -13,6 +13,8 @@ import Router from "next/router";
 
 import { createLessonHandler } from "../../../Requests/courseCreation";
 import css from "./lesson.scss";
+import { connect } from "react-redux";
+import { updateDetailedDraftCourse } from "../../../store/actions";
 
 const { StringType, NumberType } = Schema.Types;
 
@@ -41,10 +43,22 @@ class LessonForm extends Component {
     });
   };
 
-  createLesson = () => {
-    createLessonHandler(this.state.lessonForm, this.props.lessonId);
-    const page = window.location.pathname;
-    Router.push(page);
+  createLesson = async () => {
+    const resp = await createLessonHandler({
+      lsnData: this.state.lessonForm,
+      lsnId: this.props.lessonId
+    });
+    if (!resp.ok) {
+      this.props.updateDetailedDraftCourse(resp);
+    } else {
+      const modResp = {
+        ...resp,
+        data: {
+          id: this.props.course.id
+        }
+      };
+      this.props.updateDetailedDraftCourse(modResp);
+    }
     this.props.closeHandler();
   };
 
@@ -176,4 +190,11 @@ class LessonForm extends Component {
   }
 }
 
-export default LessonForm;
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LessonForm);

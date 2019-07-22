@@ -16,6 +16,9 @@ import { createAssignmentHandler } from "../../../Requests/courseCreation";
 
 import css from "./assignment.scss";
 
+import { connect } from "react-redux";
+import { updateDetailedDraftCourse } from "../../../store/actions";
+
 const { StringType } = Schema.Types;
 
 class AssignmentForm extends Component {
@@ -45,13 +48,22 @@ class AssignmentForm extends Component {
     });
   };
 
-  createAssignment = () => {
-    createAssignmentHandler(
-      this.state.assignmentForm,
-      this.props.assignmentId
-    );
-    const page = window.location.pathname;
-    Router.push(page);
+  createAssignment = async () => {
+    const resp = await createAssignmentHandler({
+      assignmentData: this.state.assignmentForm,
+      exId: this.props.assignmentId
+    });
+    if (!resp.ok) {
+      this.props.updateDetailedDraftCourse(resp);
+    } else {
+      const modResp = {
+        ...resp,
+        data: {
+          id: this.props.course.id
+        }
+      };
+      this.props.updateDetailedDraftCourse(modResp);
+    }
     this.props.closeHandler();
   };
 
@@ -244,4 +256,11 @@ class AssignmentForm extends Component {
   }
 }
 
-export default AssignmentForm;
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AssignmentForm);

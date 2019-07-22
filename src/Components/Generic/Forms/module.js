@@ -6,6 +6,8 @@ import Router from "next/router";
 
 import { createModuleHandler } from "../../../Requests/courseCreation";
 import css from "./module.scss";
+import { connect } from "react-redux";
+import { updateDetailedDraftCourse } from "../../../store/actions";
 
 const { StringType } = Schema.Types;
 
@@ -32,12 +34,22 @@ class ModuleForm extends Component {
   };
 
   createModule = async () => {
-    const courseId = await createModuleHandler(
-      this.state.moduleForm,
-      this.props.moduleId
-    );
-    const page = window.location.pathname;
-    Router.push(page);
+    const resp = await createModuleHandler({
+      modData: this.state.moduleForm,
+      modId: this.props.moduleId
+    });
+    if (resp.ok) {
+      const modResp = {
+        ...resp,
+        data: {
+          id: this.props.course.id
+        }
+      };
+      this.props.updateDetailedDraftCourse(modResp);
+    } else {
+      this.props.updateDetailedDraftCourse(resp);
+    }
+
     this.props.closeHandler();
   };
 
@@ -133,4 +145,11 @@ class ModuleForm extends Component {
   }
 }
 
-export default ModuleForm;
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModuleForm);

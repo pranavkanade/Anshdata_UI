@@ -1,10 +1,11 @@
 import { getAuthorization } from "./Authorization";
+import getAdvResponse from "./response";
 
-export const createCourseHandler = async (courseData, courseId = null) => {
+export const createCourseHandler = async ({ courseData, courseId }) => {
   try {
     let mthd = "POST";
     let URL = "http://127.0.0.1:8000/api/course/";
-    if (courseId !== null) {
+    if (courseId !== null && courseId !== undefined && courseId !== 0) {
       mthd = "PATCH";
       URL = `http://127.0.0.1:8000/api/course/${courseId}/`;
     }
@@ -16,14 +17,14 @@ export const createCourseHandler = async (courseData, courseId = null) => {
       },
       body: JSON.stringify(courseData)
     });
-    let newCourse = await createCourseRes.json();
-    return newCourse.id;
+    const advResponse = await getAdvResponse(createCourseRes);
+    return advResponse;
   } catch (err) {
     console.log("[Course/Form.js] user is not logged in : ", err);
   }
 };
 
-export const createModuleHandler = async (modData, modId = null) => {
+export const createModuleHandler = async ({ modData, modId }) => {
   try {
     let mthd = "POST";
     let URL = `http://127.0.0.1:8000/api/course/mod/`;
@@ -40,14 +41,14 @@ export const createModuleHandler = async (modData, modId = null) => {
       },
       body: JSON.stringify(modData)
     });
-    let newModule = await moduleCreated.json();
-    return newModule.course;
+    const advResponse = await getAdvResponse(moduleCreated);
+    return advResponse;
   } catch (err) {
     console.log("[Module/Action.js] Error when creating a module : ", err);
   }
 };
 
-export const createLessonHandler = async (lsnData, lsnId = null) => {
+export const createLessonHandler = async ({ lsnData, lsnId }) => {
   try {
     let mthd = "POST";
     let URL = "http://127.0.0.1:8000/api/course/lsn/";
@@ -64,14 +65,14 @@ export const createLessonHandler = async (lsnData, lsnId = null) => {
       },
       body: JSON.stringify(lsnData)
     });
-
-    let newLesson = await lessonCreated.json();
+    const advResponse = await getAdvResponse(lessonCreated);
+    return advResponse;
   } catch (err) {
     console.log("[Lesson/Action.js] Error when creating a lesson : ", err);
   }
 };
 
-export const createAssignmentHandler = async (assignmentData, exId = null) => {
+export const createAssignmentHandler = async ({ assignmentData, exId }) => {
   try {
     let mthd = "POST";
     let URL = "http://127.0.0.1:8000/api/course/ex/";
@@ -80,18 +81,16 @@ export const createAssignmentHandler = async (assignmentData, exId = null) => {
       URL = `http://127.0.0.1:8000/api/course/ex/${exId}/`;
     }
 
-    await fetch(URL, {
+    const resp = await fetch(URL, {
       method: mthd,
       headers: {
         "Content-Type": "application/json",
         Authorization: getAuthorization()
       },
       body: JSON.stringify(assignmentData)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => data);
+    });
+    const advResponse = await getAdvResponse(resp);
+    return advResponse;
   } catch (err) {
     console.log(
       "[Assignment/Action.js] Error when creating an assignment : ",

@@ -228,10 +228,18 @@ class DraftedCourse extends Component {
           {this.renderCourseInfo()}
           {this.renderAddNewForm()}
         </div>
-        <CourseContent course={this.props.course} />
+        <CourseContent />
       </div>
     );
   }
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    console.group("test");
+    console.log("Current Props : ", this.props);
+    console.log("Updated Props : ", nextProps);
+    console.groupEnd("test");
+    return true;
+  };
 
   componentDidMount() {
     // getCourse(this.state.courseId, this.courseSaveHandler);

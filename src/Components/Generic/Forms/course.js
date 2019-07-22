@@ -18,6 +18,7 @@ import css from "./course.scss";
 import Router from "next/router";
 import { connect } from "react-redux";
 import { Whisper, Tooltip } from "rsuite";
+import { updateDetailedDraftCourse } from "../../../store/actions";
 
 const { StringType, NumberType } = Schema.Types;
 class CourseForm extends Component {
@@ -78,17 +79,24 @@ class CourseForm extends Component {
   };
 
   createCourse = async () => {
-    const courseId = await createCourseHandler(
-      this.state.courseForm,
-      this.state.courseId
-    );
-    Router.push(
-      `/contribute/draft/${
-        courseId !== undefined && courseId !== null
-          ? courseId
-          : this.state.courseId
-      }`
-    );
+    const resp = await createCourseHandler({
+      courseData: this.state.courseForm,
+      courseId: this.state.courseId
+    });
+    const courseId = resp.data.id;
+    if (!!this.state.courseId) {
+      console.log("Update course response : ", resp);
+      this.props.updateDetailedDraftCourse(resp);
+    } else {
+      Router.push(
+        `/contribute/draft/${
+          courseId !== undefined && courseId !== null
+            ? courseId
+            : this.state.courseId
+        }`
+      );
+    }
+
     if (
       this.props.closeHandler !== null ||
       this.props.closeHandler !== undefined
@@ -292,9 +300,16 @@ class CourseForm extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
 function mapStateToProps(state) {
   const { isAuthenticated } = state.user;
   return { isAuthenticated };
 }
 
-export default connect(mapStateToProps)(CourseForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CourseForm);

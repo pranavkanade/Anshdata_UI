@@ -11,6 +11,7 @@ import { draftAssignmentCard as AssignmentCard } from "../../../Generic/Cards/As
 import ModuleForm from "../../../Generic/Forms/module";
 import LessonForm from "../../../Generic/Forms/lesson";
 import AssignmentForm from "../../../Generic/Forms/assignment";
+import { connect } from "react-redux";
 
 class CourseContent extends Component {
   state = {
@@ -41,10 +42,7 @@ class CourseContent extends Component {
       shouldOpenAddModule: false,
       shouldOpenAddLesson: false,
       shouldOpenAddAssignment: false,
-      elementBeingAdded: "",
-      activeModule: 0,
-      activeLesson: 0,
-      activeAssignment: 0
+      elementBeingAdded: ""
     });
   };
 
@@ -84,7 +82,7 @@ class CourseContent extends Component {
       return (
         <ModuleForm
           open={true}
-          course={this.state.course}
+          course={this.props.course}
           closeHandler={this.closeHandler}
           edit={true}
           moduleId={this.state.activeModule}
@@ -97,7 +95,7 @@ class CourseContent extends Component {
           closeHandler={this.closeHandler}
           moduleId={this.state.activeModule}
           lessonId={this.state.activeLesson}
-          course={this.state.course}
+          course={this.props.course}
         />
       );
     } else if (this.state.shouldOpenAddAssignment) {
@@ -108,7 +106,7 @@ class CourseContent extends Component {
           moduleId={this.state.activeModule}
           lessonId={this.state.activeLesson}
           assignmentId={this.state.activeAssignment}
-          course={this.state.course}
+          course={this.props.course}
         />
       );
     }
@@ -122,7 +120,7 @@ class CourseContent extends Component {
         <span>Add New Module</span>
       </div>
     );
-    const Modules = this.state.course.modules.map(mod => {
+    const Modules = this.props.course.modules.map(mod => {
       return (
         <React.Fragment key={`fragment_mod_${mod.id}`}>
           <ModuleCardDraft
@@ -194,7 +192,7 @@ class CourseContent extends Component {
           </div>
           <div className={css.section}>
             <span className={css.sectionTitle}>Assignments</span>
-            {this.renderCourseLevelAssignments(this.state.course.assignments)}
+            {this.renderCourseLevelAssignments(this.props.course.assignments)}
           </div>
           {this.renderAddNewForm()}
         </div>
@@ -203,4 +201,10 @@ class CourseContent extends Component {
   }
 }
 
-export default CourseContent;
+function mapStateToProps(state) {
+  return {
+    course: state.crs.draftCourse
+  };
+}
+
+export default connect(mapStateToProps)(CourseContent);
