@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import css from "./TopCourses.scss";
-import { renderTopCoursesList as CourseList } from "../../../Generic/CourseList/courselist";
+import CourseList from "../../../Generic/CourseList/topCourseList";
 
 const displayMore = (totalCrs, dispCount) => {
   const count = dispCount + 5;
@@ -23,14 +23,14 @@ const displayLess = dispCount => {
   }
 };
 
-const renderCourseList = (topCourses, dispCount) => {
+const renderCourseList = (topCourses, dispCount, askToJoin) => {
   if (topCourses === null || topCourses === undefined) {
     return null;
   }
   const courses = topCourses.slice(0, dispCount);
   return (
     <div className={css.categoryCarousel}>
-      <CourseList courses={courses} />
+      <CourseList courses={courses} askToJoin={askToJoin} />
     </div>
   );
 };
@@ -44,7 +44,7 @@ const popularCourses = props => {
   return (
     <div className={css.container}>
       <span className={css.title}>Top Courses</span>
-      {renderCourseList(topCourses, dispCount)}
+      {renderCourseList(topCourses, dispCount, props.askToJoin)}
       <div className={css.actions}>
         <button
           className={css.more}

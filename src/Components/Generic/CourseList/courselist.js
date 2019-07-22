@@ -1,5 +1,4 @@
 import React from "react";
-import Router from "next/router";
 import Link from "next/link";
 import css from "./courselist.scss";
 import { Whisper, Popover } from "rsuite";
@@ -56,11 +55,7 @@ const getCourseList = (props, type) => {
               : "")
           }
           key={course.id}
-          onClick={
-            type !== "enrolled" && type !== "top"
-              ? () => props.setSelectedCourse(course.id)
-              : () => Router.push(`/courses/attend/${course.id}`)
-          }>
+          onClick={() => props.setSelectedCourse(course.id)}>
           {<CourseCard course={course} />}
         </div>
         {course.id === props.selectedCourse
@@ -117,5 +112,33 @@ export const renderPublishedCoursesList = props => {
 };
 
 export const renderTopCoursesList = props => {
-  return <div className={css.courseList}>{getCourseList(props, "top")}</div>;
+  return (
+    <div className={css.courseList}>
+      {props.courses.map(course => {
+        return (
+          <React.Fragment key={`fragment_course_${course.id}`}>
+            <Whisper
+              placement="autoHorizontal"
+              trigger="click"
+              onClose={props.closeSelectedCourse}
+              speaker={
+                <Popover title={null} style={{ padding: "0px", zIndex: "3" }}>
+                  <DetailedPop course={course} askToJoin={props.askToJoin} />
+                </Popover>
+              }>
+              <div
+                className={
+                  css.courseCard +
+                  " " +
+                  (course.id === props.selectedCourse ? css.active : "")
+                }
+                key={course.id}>
+                {<TopCourseCard course={course} />}
+              </div>
+            </Whisper>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
 };

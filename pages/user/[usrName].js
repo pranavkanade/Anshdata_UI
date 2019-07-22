@@ -1,11 +1,13 @@
 import React from "react";
-import { useRouter } from "next/router";
 import User from "../../src/Components/Plugins/User/Index";
 
 const index = props => {
-  const router = useRouter();
-  const { usrName } = router.query;
-  return <User user_name={usrName} />;
+  return <User user_name={props.usrName} />;
+};
+
+courses.getInitialProps = async ({ query }) => {
+  const ursName = query.ursName;
+  return { ursName: ursName };
 };
 
 export default index;

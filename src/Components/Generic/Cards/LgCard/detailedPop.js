@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Link from "next/link";
 import { Whisper, Tooltip, Button } from "rsuite";
 import css from "./detailedPop.scss";
 import { connect } from "react-redux";
@@ -54,7 +55,9 @@ const speaker = props => {
   const { course, currentCourse } = props;
   return (
     <div className={css.detailedPop}>
-      <p className={css.title}>{course.title}</p>
+      <Link href="/courses/[crsId]" as={`/courses/${course.id}`}>
+        <p className={css.title}>{course.title}</p>
+      </Link>
       <p className={css.description}>
         {course.description.substring(0, 192)}..
       </p>

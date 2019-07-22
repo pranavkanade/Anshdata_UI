@@ -16,6 +16,10 @@
     color: $White-0;
     padding: 1rem;
     border-radius: 2px 2px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .description {
