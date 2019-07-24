@@ -1,0 +1,6 @@
+.idea
+.next
+.vscode
+.eslintrc
+.flowconfig
+node_modules

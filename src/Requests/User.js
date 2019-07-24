@@ -1,7 +1,7 @@
 import { getAuthorization } from "./Authorization";
 
 export const getUserDetails = async (userName, userSaveHandler) => {
-  const URL = `http://127.0.0.1:8000/api/user/${userName}/`;
+  const URL = `/api/user/${userName}/`;
   try {
     await fetch(URL, {
       method: "GET",

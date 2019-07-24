@@ -2,8 +2,8 @@ import { getAuthorization } from "./Authorization";
 import getAdvResponse from "./response";
 
 const URLS = {
-  LIST_COURSE: "http://127.0.0.1:8000/api/course/",
-  LIST_COURSES_ENROLLED_IN: "http://127.0.0.1:8000/api/course/enrolled/"
+  LIST_COURSE: "/api/course/",
+  LIST_COURSES_ENROLLED_IN: "/api/course/enrolled/"
 };
 
 export const getCoursesList = async (coursesSaveHandler = () => {}) => {
@@ -48,7 +48,7 @@ export const getEnrolledCoursesList = async (
 };
 
 export const getPublishedCoursesList = async (usrId, saveHandler) => {
-  const URL = `http://127.0.0.1:8000/api/course/pub/${usrId}/`;
+  const URL = `/api/course/pub/${usrId}/`;
   try {
     await fetch(URL, {
       method: "GET",
@@ -63,7 +63,7 @@ export const getPublishedCoursesList = async (usrId, saveHandler) => {
 };
 
 export const getCourse = async (courseId, courseSaveHandler) => {
-  const URL = `http://127.0.0.1:8000/api/course/${courseId}/`;
+  const URL = `/api/course/${courseId}/`;
 
   try {
     const retrieveCourse = await fetch(URL, {
@@ -82,7 +82,7 @@ export const getCourse = async (courseId, courseSaveHandler) => {
 };
 
 export const draftCourse = async courseId => {
-  const URL = `http://127.0.0.1:8000/api/course/${courseId}/draft/`;
+  const URL = `/api/course/${courseId}/draft/`;
   try {
     const response = await fetch(URL, {
       method: "PATCH",
@@ -97,7 +97,7 @@ export const draftCourse = async courseId => {
 };
 
 export const deleteCourse = async courseId => {
-  const URL = `http://127.0.0.1:8000/api/course/${courseId}/`;
+  const URL = `/api/course/${courseId}/`;
   try {
     await fetch(URL, {
       method: "DELETE",
@@ -112,7 +112,7 @@ export const deleteCourse = async courseId => {
 };
 
 export const getTopPopularCoursesWithSaga = async () => {
-  const URL = `http://127.0.0.1:8000/api/course/top/`;
+  const URL = `/api/course/top/`;
   try {
     const response = await fetch(URL, {
       method: "GET",

@@ -2,7 +2,7 @@ import { getAuthorization } from "./Authorization";
 import getAdvResponse from "./response";
 
 export const setProgress = async (enrollment_id, data) => {
-  const URL = `http://127.0.0.1:8000/api/course/progress/${enrollment_id}/`;
+  const URL = `/api/course/progress/${enrollment_id}/`;
   try {
     let mthd = "PATCH";
     fetch(URL, {
@@ -25,7 +25,7 @@ export const setProgress = async (enrollment_id, data) => {
 };
 
 export const markLessonDone = async data => {
-  const URL = `http://127.0.0.1:8000/api/course/progress/done_lsn/`;
+  const URL = `/api/course/progress/done_lsn/`;
   try {
     fetch(URL, {
       method: "POST",
@@ -47,7 +47,7 @@ export const markLessonDone = async data => {
 };
 
 export const markAssignmentDone = async data => {
-  const URL = `http://127.0.0.1:8000/api/course/progress/done_ex/`;
+  const URL = `/api/course/progress/done_ex/`;
   try {
     fetch(URL, {
       method: "POST",
@@ -69,7 +69,7 @@ export const markAssignmentDone = async data => {
 };
 
 export const getUserProgress = async () => {
-  const URL = "http://127.0.0.1:8000/api/course/enroll/";
+  const URL = "/api/course/enroll/";
   try {
     const resp = await fetch(URL, {
       method: "GET",
