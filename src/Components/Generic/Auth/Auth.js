@@ -37,7 +37,7 @@ class Auth extends Component {
     },
     formError: {},
     shouldOpen: true,
-    formType: this.props.authOption,
+    formType: !!this.props.authOption ? this.props.authOption : "signup",
     isLoading: false
   };
 

@@ -50,7 +50,11 @@ export default props => {
         <div className={css.primary}>
           <span className={css.title}>How It Works?</span>
           <div className={css.actions}>
-            <Nav activeKey={tab} onSelect={e => setTab(e)} justified>
+            <Nav
+              activeKey={tab}
+              onSelect={e => setTab(e)}
+              justified
+              appearance="subtle">
               <Nav.Item eventKey="learn" className={css.ad_nav_tab_title}>
                 Learn
               </Nav.Item>
