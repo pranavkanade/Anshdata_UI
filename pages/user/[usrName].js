@@ -6,8 +6,8 @@ const index = props => {
 };
 
 index.getInitialProps = async ({ query }) => {
-  const ursName = query.ursName;
-  return { ursName: ursName };
+  const usrName = query.usrName;
+  return { usrName: usrName };
 };
 
 export default index;
