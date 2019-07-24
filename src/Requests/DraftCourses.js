@@ -3,8 +3,8 @@ import getAdvResponse from "./response";
 
 const URLS = {
   LIST_DRAFTED_COURSES_COMUNITY:
-    "http://127.0.0.1:8000/api/course/drafts/comm/",
-  LIST_DRAFTED_COURSES_ME: "http://127.0.0.1:8000/api/course/drafts/me/"
+    "/api/course/drafts/comm/",
+  LIST_DRAFTED_COURSES_ME: "/api/course/drafts/me/"
 };
 
 const getData = async (URL, saveCourseHandler) => {
@@ -44,7 +44,7 @@ export const getDraftedSelfCoursesList = async saveCourseHandler => {
 };
 
 export const publishCourse = async courseId => {
-  const URL = `http://127.0.0.1:8000/api/course/${courseId}/pub/`;
+  const URL = `/api/course/${courseId}/pub/`;
   try {
     const response = await fetch(URL, {
       method: "PATCH",

@@ -7,9 +7,9 @@ import {
 import buildCustomResponse from "./response";
 
 const URLS = {
-  USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
-  USERLOGIN: "http://127.0.0.1:8000/api/user/login/",
-  USERLOGOUT: "http://127.0.0.1:8000/api/user/logout/"
+  USERSIGNUP: "/api/user/signup/",
+  USERLOGIN: "/api/user/login/",
+  USERLOGOUT: "/api/user/logout/"
 };
 
 export const signupHandler = async signupData => {
@@ -64,7 +64,7 @@ export const logoutHandler = async event => {
 };
 
 export const refreshUserToken = async () => {
-  const URL = "http://127.0.0.1:8000/api/user/refresh/";
+  const URL = "/api/user/refresh/";
   try {
     const adToken = getAuthToken();
     if (adToken === "" || adToken === null) {
@@ -92,7 +92,7 @@ export const refreshUserToken = async () => {
 };
 
 export const verifyUserToken = async () => {
-  const URL = "http://127.0.0.1:8000/api/user/verify/";
+  const URL = "/api/user/verify/";
   try {
     const adToken = getAuthToken();
     if (adToken === "" || adToken === null || typeof adToken !== "string") {

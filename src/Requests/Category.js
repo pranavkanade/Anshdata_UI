@@ -1,6 +1,6 @@
 import { getAuthorization } from "./Authorization";
 
-const URL = "http://127.0.0.1:8000/api/plat/cat/";
+const URL = "/api/plat/cat/";
 
 export const getCategoryList = async catSaveHandler => {
   try {

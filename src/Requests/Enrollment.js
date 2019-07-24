@@ -2,7 +2,7 @@ import Router from "next/router";
 import { getAuthorization } from "./Authorization";
 import getAdvResponse from "./response";
 const URLS = {
-  PATCH_COURSE_ENROLL: "http://127.0.0.1:8000/api/course/enroll/"
+  PATCH_COURSE_ENROLL: "/api/course/enroll/"
 };
 
 export const enrollEventHandler = async courseKey => {
@@ -25,7 +25,7 @@ export const enrollEventHandler = async courseKey => {
 };
 
 export const getIfEnrolled = async (courseId, ifEnrolledSaveHandler) => {
-  const GET_IF_ENROLLED = `http://127.0.0.1:8000/api/course/enrolledin/${courseId}`;
+  const GET_IF_ENROLLED = `/api/course/enrolledin/${courseId}`;
   try {
     await fetch(GET_IF_ENROLLED, {
       method: "GET",

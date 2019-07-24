@@ -1,6 +1,6 @@
 import { getAuthorization } from "./Authorization";
 
-const URL = "http://127.0.0.1:8000/api/plat/tag/";
+const URL = "/api/plat/tag/";
 
 export const getTagList = async tagsSaveHandler => {
   try {

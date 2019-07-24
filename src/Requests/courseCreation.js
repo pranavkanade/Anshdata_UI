@@ -4,10 +4,10 @@ import getAdvResponse from "./response";
 export const createCourseHandler = async ({ courseData, courseId }) => {
   try {
     let mthd = "POST";
-    let URL = "http://127.0.0.1:8000/api/course/";
+    let URL = "/api/course/";
     if (courseId !== null && courseId !== undefined && courseId !== 0) {
       mthd = "PATCH";
-      URL = `http://127.0.0.1:8000/api/course/${courseId}/`;
+      URL = `/api/course/${courseId}/`;
     }
     const createCourseRes = await fetch(URL, {
       method: mthd,
@@ -25,10 +25,10 @@ export const createCourseHandler = async ({ courseData, courseId }) => {
 export const createModuleHandler = async ({ modData, modId }) => {
   try {
     let mthd = "POST";
-    let URL = `http://127.0.0.1:8000/api/course/mod/`;
+    let URL = `/api/course/mod/`;
     if (modId !== null && modId !== undefined && modId !== 0) {
       mthd = "PATCH";
-      URL = `http://127.0.0.1:8000/api/course/mod/${modId}/`;
+      URL = `/api/course/mod/${modId}/`;
     }
 
     const moduleCreated = await fetch(URL, {
@@ -47,10 +47,10 @@ export const createModuleHandler = async ({ modData, modId }) => {
 export const createLessonHandler = async ({ lsnData, lsnId }) => {
   try {
     let mthd = "POST";
-    let URL = "http://127.0.0.1:8000/api/course/lsn/";
+    let URL = "/api/course/lsn/";
     if (lsnId !== null && lsnId !== undefined && lsnId !== 0) {
       mthd = "PATCH";
-      URL = `http://127.0.0.1:8000/api/course/lsn/${lsnId}/`;
+      URL = `/api/course/lsn/${lsnId}/`;
     }
 
     const lessonCreated = await fetch(URL, {
@@ -69,10 +69,10 @@ export const createLessonHandler = async ({ lsnData, lsnId }) => {
 export const createAssignmentHandler = async ({ assignmentData, exId }) => {
   try {
     let mthd = "POST";
-    let URL = "http://127.0.0.1:8000/api/course/ex/";
+    let URL = "/api/course/ex/";
     if (exId !== null && exId !== undefined && exId !== 0) {
       mthd = "PATCH";
-      URL = `http://127.0.0.1:8000/api/course/ex/${exId}/`;
+      URL = `/api/course/ex/${exId}/`;
     }
 
     const resp = await fetch(URL, {
