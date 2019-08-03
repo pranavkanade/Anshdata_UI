@@ -1,8 +1,11 @@
 import React from "react";
 
 import css from "./ModuleCard.scss";
-import LessonCard from "./LessonCard";
-import AssignmentCard from "./AssignmentCard";
+import { draftLessonCard as DraftLessonCard, LessonCard } from "./LessonCard";
+import {
+  draftAssignmentCard as DraftAssignmentCard,
+  AssignmentCard
+} from "./AssignmentCard";
 
 const renderLoader = () => {
   return (
@@ -72,23 +75,56 @@ const renderEditActionBar = (moduleId, select, modify) => {
   );
 };
 
-const renderLessonsList = (lessons, onModify) => {
+const renderLessonsList = lessons => {
   return lessons.map(lsn => {
-    return <LessonCard lesson={lsn} id={lsn.id} modify={onModify} />;
+    return <LessonCard lesson={lsn} key={lsn.id} id={lsn.id} />;
   });
 };
 
-const renderAssignmentList = (assignments, onModify) => {
+const renderLessonsListDraft = (lessons, onModify) => {
+  return lessons.map(lsn => {
+    return (
+      <DraftLessonCard
+        lesson={lsn}
+        key={lsn.id}
+        id={lsn.id}
+        modify={onModify}
+      />
+    );
+  });
+};
+
+const renderAssignmentList = assignments => {
+  if (assignments === null || assignments.length === 0) {
+    return (
+      <div className={css.noAssign}>
+        <p>
+          There are <span>no assignments</span> attached to this module!
+        </p>
+      </div>
+    );
+  }
   return assignments.map(asgnmt => {
     return (
-      <AssignmentCard assignment={asgnmt} id={asgnmt.id} modify={onModify} />
+      <AssignmentCard assignment={asgnmt} key={asgnmt.id} id={asgnmt.id} />
+    );
+  });
+};
+const renderAssignmentListDraft = (assignments, onModify) => {
+  return assignments.map(asgnmt => {
+    return (
+      <DraftAssignmentCard
+        assignment={asgnmt}
+        key={asgnmt.id}
+        id={asgnmt.id}
+        modify={onModify}
+      />
     );
   });
 };
 
 export const ModuleCardMd = props => {
   const module = props.module;
-  console.log("Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.mdModuleCard}>{renderLoader()}</div>;
@@ -96,7 +132,10 @@ export const ModuleCardMd = props => {
 
   return (
     <div className={css.mdModuleCard}>
-      <h3 className={css.title}>{module.title}</h3>
+      <h3 className={css.title}>
+        {module.title.substring(0, 50)}
+        {module.title.length > 50 ? "..." : ""}
+      </h3>
       <p>{module.description.substring(0, 50)}...</p>
       {renderStats(
         module.lessons.length,
@@ -110,7 +149,6 @@ export const ModuleCardMd = props => {
 
 export const ModuleCardDraft = props => {
   const module = props.module;
-  console.log("Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.mdModuleCard}>{renderLoader()}</div>;
@@ -118,7 +156,10 @@ export const ModuleCardDraft = props => {
 
   return (
     <div className={css.mdModuleCard}>
-      <h3 className={css.title}>{module.title}</h3>
+      <h3 className={css.title}>
+        {module.title.substring(0, 50)}
+        {module.title.length > 50 ? "..." : ""}
+      </h3>
       <p>{module.description.substring(0, 50)}...</p>
       {renderStats(
         module.lessons.length,
@@ -132,32 +173,12 @@ export const ModuleCardDraft = props => {
 
 export const DetailedModuleCard = props => {
   const module = props.module;
-  console.log("Detailed Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.detailedModuleCard}>{renderLoader()}</div>;
   }
 
   return (
-    // <div className={css.detailedModuleCard}>
-    //   <div className={css.head}>
-    //     <span>{module.title} : Lessons</span>
-    //     <button className={css.arrows} onClick={props.close}>
-    //       <img src="../../../../static/assets/icon/clear_24px_outlined.svg" />
-    //     </button>
-    //   </div>
-    //   <div className={css.lessonsBox}>
-    //     <button className={css.arrows}>
-    //       <img src="../../../../static/assets/icon/arrow_back_ios_24px_outlined.svg" />
-    //     </button>
-    //     <div className={css.lessonsList}>
-    //       {renderLessonsList(module.lessons)}
-    //     </div>
-    //     <button className={css.arrows}>
-    //       <img src="../../../../static/assets/icon/arrow_forward_ios_24px_outlined.svg" />
-    //     </button>
-    //   </div>
-    // </div>
     <div className={css.detailedModuleCard}>
       <div className={css.head}>
         <span>{module.title}</span>
@@ -182,7 +203,6 @@ export const DetailedModuleCard = props => {
 
 export const DetailedModuleCardDraft = props => {
   const module = props.module;
-  console.log("Detailed Module Card = ", module);
 
   if (module === null || module.lessons === undefined) {
     return <div className={css.detailedModuleCard}>{renderLoader()}</div>;
@@ -206,7 +226,7 @@ export const DetailedModuleCardDraft = props => {
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined.svg" />
             <span>Add new lesson</span>
           </div>
-          {renderLessonsList(module.lessons, props.addNewBtn)}
+          {renderLessonsListDraft(module.lessons, props.addNewBtn)}
         </div>
       </div>
       <div className={css.itemBox}>
@@ -218,7 +238,7 @@ export const DetailedModuleCardDraft = props => {
             <img src="../../../../static/assets/icon/add_circle_outline_24px_outlined_dark.svg" />
             <span>Add new assignment</span>
           </div>
-          {renderAssignmentList(module.assignments, props.addNewBtn)}
+          {renderAssignmentListDraft(module.assignments, props.addNewBtn)}
         </div>
       </div>
     </div>

@@ -1,118 +1,114 @@
 import React, { Component } from "react";
-import {
-  Modal,
-  Button,
-  Segment,
-  Header,
-  Form,
-  Divider,
-  Grid
-} from "semantic-ui-react";
+import FormModal from "./formmodal";
+import { Form, Input, Button, ButtonToolbar, Schema } from "rsuite";
+import CustomField from "./customformfield";
 import Router from "next/router";
 
 import { createModuleHandler } from "../../../Requests/courseCreation";
 import css from "./module.scss";
+import { connect } from "react-redux";
+import { updateDetailedDraftCourse } from "../../../store/actions";
+
+const { StringType } = Schema.Types;
 
 class ModuleForm extends Component {
   state = {
     courseId: this.props.course.id,
-    shouldOpen: false,
-    title: "",
-    description: "",
-    reference: "",
-    type: "create"
+    type: "create",
+    moduleForm: {
+      title: "",
+      description: "",
+      reference: "",
+      course: this.props.course.id
+    }
   };
 
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    // console.log("[Module/Form.js] onChangeHandler");
-    // console.log(name, value);
-    this.setState(prevstate => {
-      const newState = { ...prevstate };
-      newState[name] = value;
-      return newState;
+  moduleFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required.")
+  });
+
+  handleChange = value => {
+    this.setState({
+      moduleForm: value
     });
   };
 
   createModule = async () => {
-    console.log("[Module/Form.js] Create Module clicked");
-    const moduleData = {
-      title: this.state.title,
-      description: this.state.description,
-      reference: this.state.reference,
-      course: this.props.course.id
-    };
-    const courseId = await createModuleHandler(
-      moduleData,
-      this.props.moduleId
-    );
-    Router.push(`/contribute/draft/${courseId}`);
+    const resp = await createModuleHandler({
+      modData: this.state.moduleForm,
+      modId: this.props.moduleId
+    });
+    if (resp.ok) {
+      const modResp = {
+        ...resp,
+        data: {
+          id: this.props.course.id
+        }
+      };
+      this.props.updateDetailedDraftCourse(modResp);
+    } else {
+      this.props.updateDetailedDraftCourse(resp);
+    }
+
     this.props.closeHandler();
   };
 
   render() {
-    const open = this.state.shouldOpen;
     return (
-      <Modal
-        size="large"
+      <FormModal
         open={true}
-        onClose={this.props.closeHandler}
-        closeOnDimmerClick={false}
-        closeOnEscape={false}
-        centered={false}>
-        <Modal.Header className={css.header}>
-          <span>
-            {this.state.type === "create" ? "Add New" : "Modify"} Module
-          </span>
-          <button onClick={this.props.closeHandler}>
-            <img src="./../../../../static/assets/icon/clear_24px_outlined_dark.svg" />
-          </button>
-        </Modal.Header>
-        <Modal.Content>
-          <Segment basic>
-            <h3>{this.props.course.title}</h3>
-            <Form onSubmit={this.createModule}>
-              <span>Module Title</span>
-              <Form.Input
-                placeholder="Introduction"
-                value={this.state.title}
-                name="title"
-                size="large"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <span>Module Description</span>
-              <Form.TextArea
-                rows={6}
-                className={css.inp}
-                placeholder="Describe purpose of this module in short..."
-                value={this.state.description}
-                name="description"
-                onChange={event => this.changeHandler(event)}
-              />
-              <span>{"References (Help)"}</span>
-              <Form.TextArea
-                rows={6}
-                className={css.inp}
-                placeholder="Add references .."
-                value={this.state.reference}
-                name="reference"
-                onChange={event => this.changeHandler(event)}
-              />
-              <Divider hidden />
-              <div className={css.reverse}>
-                <button type="submit">
-                  <span>
-                    {this.state.type === "create" ? "Create" : "Save"}
-                  </span>
-                  <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-                </button>
-              </div>
-            </Form>
-          </Segment>
-        </Modal.Content>
-      </Modal>
+        closeHandler={this.props.closeHandler}
+        title={
+          this.state.type === "create" ? "Add New Module" : "Modify Module"
+        }>
+        <h3>{this.props.course.title}</h3>
+        <Form
+          fluid
+          ref={ref => (this.moduleForm = ref)}
+          model={this.moduleFormModel}
+          onChange={this.handleChange}
+          formValue={this.state.moduleForm}>
+          <CustomField
+            className={css.ad_inp}
+            name="title"
+            label="Module Title"
+            placeholder="Introduction"
+            message="required"
+            accepter={Input}
+          />
+          <CustomField
+            className={css.ad_inp}
+            label="Description"
+            name="description"
+            placeholder="Describe this module in short..."
+            rows={6}
+            componentClass="textarea"
+          />
+          <CustomField
+            className={css.ad_inp}
+            label="Reference (Extra)"
+            name="reference"
+            placeholder="Add references .."
+            rows={6}
+            componentClass="textarea"
+          />
+          <div className={css.ad_reverse}>
+            <ButtonToolbar>
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (!this.moduleForm.check()) {
+                    return;
+                  }
+                  this.createModule();
+                }}>
+                <span>{this.state.type === "create" ? "Create" : "Save"}</span>
+                <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+              </Button>
+            </ButtonToolbar>
+          </div>
+        </Form>
+      </FormModal>
     );
   }
 
@@ -123,7 +119,6 @@ class ModuleForm extends Component {
       this.props.moduleId === undefined ||
       this.props.moduleId === 0
     ) {
-      console.log("Creating new module");
       this.setState({ type: "create" });
       return null;
     }
@@ -133,22 +128,28 @@ class ModuleForm extends Component {
         return mod.id === this.props.moduleId;
       })
     };
-    console.log("mod to update", mod);
     this.setState({
       modToUpdate: mod,
-      title: mod.title,
-      description: mod.description,
-      reference: mod.reference,
+      moduleForm: {
+        title: mod.title,
+        description: mod.description,
+        reference: mod.reference
+      },
       type: "edit"
     });
   };
 
   componentDidMount() {
-    console.log("[Contrib/Module/Form.js] component did mount");
     this.getModuleToUpdate();
-    // this.setUpdateState();
     this.setState({ shouldOpen: this.props.open });
   }
 }
 
-export default ModuleForm;
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModuleForm);

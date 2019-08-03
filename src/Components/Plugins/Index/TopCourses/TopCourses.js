@@ -1,65 +1,71 @@
-import React, { Component } from "react";
-
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import css from "./TopCourses.scss";
+import CourseList from "../../../Generic/CourseList/topCourseList";
 
-import { PublishedCard } from "./../../../Generic/Cards/CourseCard";
-export default class extends Component {
-  state = {
-    activeCC: 0
-  };
-
-  categoryCardClasses = [
-    css.cat1,
-    css.cat2,
-    css.cat3,
-    css.cat4,
-    css.cat5,
-    css.cat6
-  ];
-
-  renderCategoryCards = () => {
-    let { activeCC } = this.state;
-    return (
-      <div className={css.categoryCarousel}>
-        <div className={css.primary}>
-          <div className={this.categoryCardClasses[activeCC]}>
-            <div className={css.options}>
-              <button>category</button>
-              <img
-                src="./../../../../../static/assets/icon/more_horiz_24px_outlined.svg"
-                floated="right"
-              />
-            </div>
-            <div className={css.courseCards}>
-              <PublishedCard />
-              <PublishedCard />
-            </div>
-          </div>
-          <div className={this.categoryCardClasses[activeCC + 1]}>
-            <div className={css.options}>
-              <button>category</button>
-              <img
-                src="./../../../../../static/assets/icon/more_horiz_24px_outlined.svg"
-                floated="right"
-              />
-            </div>
-            <div className={css.courseCards}>
-              <PublishedCard />
-              <PublishedCard />
-            </div>
-          </div>
-        </div>
-        <div className={css.secondary} />
-      </div>
-    );
-  };
-
-  render() {
-    return (
-      <div className={css.container}>
-        <span>Top Courses</span>
-        {this.renderCategoryCards()}
-      </div>
-    );
+const displayMore = (totalCrs, dispCount) => {
+  const count = dispCount + 5;
+  // this.setState({ crsCount: count });
+  if (count <= totalCrs) {
+    return count;
+  } else {
+    return totalCrs;
   }
+};
+
+const displayLess = dispCount => {
+  const count = dispCount - 5;
+  // this.setState({ crsCount: count });
+  if (count >= 5) {
+    return count;
+  } else {
+    return 5;
+  }
+};
+
+const renderCourseList = (topCourses, dispCount, askToJoin) => {
+  if (topCourses === null || topCourses === undefined) {
+    return null;
+  }
+  const courses = topCourses.slice(0, dispCount);
+  return (
+    <div className={css.categoryCarousel}>
+      <CourseList courses={courses} askToJoin={askToJoin} />
+    </div>
+  );
+};
+
+const popularCourses = props => {
+  const { topCourses } = props;
+  if (topCourses === null) {
+    return null;
+  }
+  const [dispCount, setDispCount] = useState(5);
+  return (
+    <div className={css.container}>
+      <span className={css.title}>Top Courses</span>
+      {renderCourseList(topCourses, dispCount, props.askToJoin)}
+      <div className={css.actions}>
+        <button
+          className={css.more}
+          onClick={() =>
+            setDispCount(displayMore(topCourses.length, dispCount))
+          }>
+          <img src="/static/assets/icon/add_24px_outlined.svg" />
+        </button>
+        <button
+          className={css.less}
+          onClick={() => setDispCount(displayLess(dispCount))}>
+          <img src="/static/assets/icon/remove_24px_outlined.svg" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+function mapStateToProps(state) {
+  const { topCourses } = state.crs;
+  return { topCourses };
 }
+
+export default connect(mapStateToProps)(popularCourses);

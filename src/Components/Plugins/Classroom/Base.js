@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import Link from "next/link";
-
+import ReactPlayer from "react-player";
+import {
+  Sidenav,
+  Nav,
+  Button,
+  Icon,
+  Drawer,
+  Dropdown,
+  Whisper,
+  Tooltip
+} from "rsuite";
 import css from "./Base.scss";
 
 const renderLoader = () => {
@@ -11,129 +21,38 @@ const renderLoader = () => {
   );
 };
 
-const renderLsnNAsign = (lessons, lessonSelectionHandler, assignments) => {
-  const Lessons = lessons.map(lsn => {
-    return (
-      <span
-        className={css.lsn}
-        key={lsn.id}
-        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
-        {lsn.title}
-      </span>
-    );
+const findNextLesson = (currentLesson, lessonList) => {
+  const lessonIdx = lessonList.findIndex(lsn => {
+    return lsn.lsnId === currentLesson;
   });
-
-  const Assignments = assignments.map(asignmt => {
-    // TODO: This is a hack to skip any assignment that may belong to a lesson.
-    // Fix this in back so that only those asign will be here which need to
-    //  e.g - course level and module level.
-    if (asignmt.lesson !== null) {
-      return null;
-    }
-    console.log("rendering assignment : ", asignmt);
-    return (
-      <span className={css.asignmt} key={asignmt.id}>
-        {asignmt.title}
-      </span>
-    );
-  });
-
-  return (
-    <>
-      {Lessons}
-      {Assignments}
-    </>
-  );
+  return lessonList[lessonIdx + 1];
 };
 
-const renderCourseContent = (
-  course,
-  lessonSelectionHandler,
-  openMod,
-  setOpenMod
-) => {
-  const Modules = course.modules.map(mod => {
-    return (
-      <div className={css.module} key={mod.id}>
-        <span
-          className={css.card}
+const renderActionBtns = (lesson, lessonList, nextHandler, setCompleted) => {
+  const nextLesson = findNextLesson(lesson, lessonList);
+  return (
+    <>
+      <button
+        className={css.mark}
+        onClick={() => {
+          setCompleted("LESSON", lesson);
+          if (nextLesson !== undefined) {
+            nextHandler(nextLesson.lsnId, nextLesson.modId);
+          }
+        }}>
+        Done
+        <img src="/static/assets/icon/done_all_24px_outlined.svg" />
+      </button>
+      {nextLesson !== undefined ? (
+        <button
+          className={css.next}
           onClick={() => {
-            mod.id === openMod ? setOpenMod(0) : setOpenMod(mod.id);
+            nextHandler(nextLesson.lsnId, nextLesson.modId);
           }}>
-          {mod.title}
-        </span>
-        {mod.id === openMod
-          ? renderLsnNAsign(
-              mod.lessons,
-              lessonSelectionHandler,
-              mod.assignments
-            )
-          : null}
-      </div>
-    );
-  });
-
-  return (
-    <div className={css.course}>
-      <div className={css.title}>
-        <span>Course Content</span>
-      </div>
-
-      {Modules}
-    </div>
-  );
-};
-
-const renderActiveMod = (activeModule, lessonSelectionHandler) => {
-  const Lessons = activeModule.lessons.map(lsn => {
-    return (
-      <span
-        className={css.lsn}
-        key={lsn.id}
-        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
-        {lsn.title}
-      </span>
-    );
-  });
-
-  return (
-    <div className={css.activeMod}>
-      <span className={css.title}>Active Module</span>
-      <span className={css.modBox}>{activeModule.title}</span>
-      {renderLsnNAsign(
-        activeModule.lessons,
-        lessonSelectionHandler,
-        activeModule.assignments
-      )}
-    </div>
-  );
-};
-
-const renderContent = (
-  course,
-  activeModule,
-  lessonSelectionHandler,
-  openMod,
-  setOpenMod
-) => {
-  return (
-    <>
-      {renderActiveMod(activeModule, lessonSelectionHandler)}
-      {renderCourseContent(
-        course,
-        lessonSelectionHandler,
-        openMod,
-        setOpenMod
-      )}
-    </>
-  );
-};
-
-const renderActionBtns = () => {
-  return (
-    <>
-      <button className={css.mark}>Mark Done</button>
-      <button className={css.next}>Next Lesson</button>
+          Next
+          <img src="/static/assets/icon/arrow_forward_ios_24px_outlined.svg" />
+        </button>
+      ) : null}
     </>
   );
 };
@@ -178,7 +97,6 @@ const renderAssignmetns = (assignments, activeAsignmt, setActiveAsignmt) => {
     })
   };
 
-  console.log("Assignment Detailed : ", detailedAssignment);
   return (
     <>
       <span className={css.heading}>Assignments</span>
@@ -190,6 +108,7 @@ const renderAssignmetns = (assignments, activeAsignmt, setActiveAsignmt) => {
                 `${css.item} ` +
                 (asignmt.id === activeAsignmt ? css.active : "")
               }
+              key={asignmt.id}
               onClick={() => setActiveAsignmt(asignmt.id)}>
               <span key={asignmt.id}>{asignmt.title}</span>
             </div>
@@ -204,22 +123,35 @@ const renderAssignmetns = (assignments, activeAsignmt, setActiveAsignmt) => {
   );
 };
 
-const renderCurrentLecture = (lesson, activeAsignmt, setActiveAsignmt) => {
-  // TODO: change the iframe -
-  // URLs like - "https://www.youtube.com/watch?v=RKLKib4bHhA" won't work dynamically.
-  // change `watch?v=` to `embed/` and it'll start working
+const renderCurrentLecture = (
+  lesson,
+  activeAsignmt,
+  setActiveAsignmt,
+  setCourseProgress,
+  setCompleted,
+  lessonList,
+  nextHandler
+) => {
+  // TODO: remove lesson id from title
   return (
     <>
       <span className={css.title}>{lesson.title}</span>
       <div className={css.lecture}>
-        <iframe
-          src={"https://www.youtube.com/embed/RKLKib4bHhA"}
-          frameBorder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+        <ReactPlayer
+          url={lesson.lecture}
+          controls
+          pip={true}
+          height="100%"
+          width="100%"
+          onStart={() => {
+            setCourseProgress("LESSON", lesson.id);
+          }}
+          onEnded={() => setCompleted("LESSON", lesson.id)}
         />
       </div>
-      <div className={css.actionBtns}>{renderActionBtns()}</div>
+      <div className={css.actionBtns}>
+        {renderActionBtns(lesson.id, lessonList, nextHandler, setCompleted)}
+      </div>
       <div className={css.description}>
         <span className={css.heading}>Description</span>
         <p>{lesson.description}</p>
@@ -235,10 +167,117 @@ const renderCurrentLecture = (lesson, activeAsignmt, setActiveAsignmt) => {
   );
 };
 
+const getLessonList = course => {
+  let lessons = [];
+  course.modules.forEach(mod => {
+    lessons = lessons.concat(
+      mod.lessons.map(lsn => {
+        return {
+          lsnId: lsn.id,
+          modId: lsn.module
+        };
+      })
+    );
+  });
+  return lessons;
+};
+
+const renderFullCourseContent = (
+  shouldShow,
+  closeHandler,
+  course,
+  activeLsn,
+  activeMod,
+  selectionHandler
+) => {
+  return (
+    <Drawer size="xs" placement="left" show={shouldShow} onHide={closeHandler}>
+      <Drawer.Header>
+        <Drawer.Title>{course.title}</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        <Sidenav appearance="subtle" defaultOpenKeys={[activeMod]}>
+          <Sidenav.Body>
+            <Nav>
+              {course.modules.map(mod => {
+                return (
+                  <Dropdown
+                    placement="rightTop"
+                    eventKey={mod.id}
+                    key={mod.id}
+                    title={mod.title}
+                    icon={<Icon icon="magic" />}>
+                    {mod.lessons.map(lsn => {
+                      const active = lsn.id === activeLsn;
+                      const icon = active ? <Icon icon="arrow-right" /> : null;
+                      return (
+                        <Dropdown.Item
+                          eventKey={lsn.id}
+                          key={lsn.id}
+                          active={active}
+                          icon={icon}
+                          onClick={() => selectionHandler(lsn.id, mod.id)}>
+                          {lsn.title}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown>
+                );
+              })}
+            </Nav>
+          </Sidenav.Body>
+        </Sidenav>
+      </Drawer.Body>
+    </Drawer>
+  );
+};
+
+const activeModuleSidebar = (
+  activeModule,
+  activeLesson,
+  lessonSelectionHandler
+) => {
+  const lessons = activeModule.lessons.map(lsn => {
+    const active = lsn.id === activeLesson.id;
+    const icon = active ? <Icon icon="arrow-right" /> : null;
+    return (
+      <Nav.Item
+        key={lsn.id}
+        eventKey={lsn.id}
+        active={active}
+        icon={icon}
+        onClick={() => lessonSelectionHandler(lsn.id, lsn.module)}>
+        {lsn.title}
+      </Nav.Item>
+    );
+  });
+  const headerStyles = {
+    padding: 20,
+    fontSize: 20,
+    fontWeight: 600,
+    background: "#34c3ff",
+    color: " #fff"
+  };
+  return (
+    <div className={css.adSidenav}>
+      <Sidenav appearance="subtle">
+        <Sidenav.Header>
+          <div className={css.title} style={headerStyles}>
+            <Icon className={css.icon} icon="cube" size="2x" />{" "}
+            {activeModule.title}
+          </div>
+        </Sidenav.Header>
+        <Sidenav.Body>
+          <Nav>{lessons}</Nav>
+        </Sidenav.Body>
+      </Sidenav>
+    </div>
+  );
+};
+
 const ClassroomBase = props => {
-  const [openMod, setOpenMod] = useState(0);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [activeAsignmt, setActiveAsignmt] = useState(0);
-  console.log("active module => ", props.activeModule);
   if (
     props.course === undefined ||
     props.course === null ||
@@ -250,26 +289,57 @@ const ClassroomBase = props => {
   return (
     <div className={css.classroomBase}>
       <div className={css.head}>
-        <Link href={`/courses/${props.course.id}`}>
+        <Link href="/courses/[crsId]" as={`/courses/${props.course.id}`}>
           <span>{props.course.title}</span>
         </Link>
       </div>
       <div className={css.board}>
-        <div className={css.content}>
-          {renderContent(
-            props.course,
+        <div className={css.courseContent}>
+          <div className={css.fullCourseBar}>
+            {renderFullCourseContent(
+              openDrawer,
+              () => setOpenDrawer(false),
+              props.course,
+              props.activeLesson.id,
+              props.activeModule.id,
+              props.lessonSelectionHandler
+            )}
+          </div>
+          {activeModuleSidebar(
             props.activeModule,
-            props.lessonSelectionHandler,
-            openMod,
-            setOpenMod
+            props.activeLesson,
+            props.lessonSelectionHandler
           )}
+          <div className={css.floatBtn}>
+            <Whisper
+              trigger="hover"
+              placement="right"
+              speaker={
+                <Tooltip style={{ fontSize: "20px" }}>
+                  View full course content.
+                </Tooltip>
+              }>
+              <Button
+                color="violet"
+                size="lg"
+                onClick={() => setOpenDrawer(true)}>
+                <Icon icon="book2" size="3x" />
+              </Button>
+            </Whisper>
+          </div>
         </div>
         <div className={css.lesson}>
-          {renderCurrentLecture(
-            props.activeLesson,
-            activeAsignmt,
-            setActiveAsignmt
-          )}
+          {props.activeLesson !== null && props.activeLesson !== undefined
+            ? renderCurrentLecture(
+                props.activeLesson,
+                activeAsignmt,
+                setActiveAsignmt,
+                props.setCourseProgress,
+                props.setCompleted,
+                getLessonList(props.course),
+                props.lessonSelectionHandler
+              )
+            : null}
         </div>
       </div>
     </div>

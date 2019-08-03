@@ -4,7 +4,7 @@
   height: 160px;
   background: #ffffff;
 
-  padding: 1rem 2rem 1rem 2rem;
+  padding: 1rem;
 
   border-radius: 5px;
   border: 1px solid #dfdfdf;
@@ -12,14 +12,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.1s ease;
+  transition: transform 0.2s ease;
   &:hover {
     box-shadow: $shadow-2;
-    // transform: scale(1.05);
+    transform: translateY(-5px);
+    cursor: pointer;
   }
 
   span {
-    font-family: Lato;
+    font-family: Lato, Roboto;
     font-style: normal;
     font-weight: lighter;
     font-size: 20px;
@@ -39,7 +40,7 @@
       padding: 0 0.5rem 0 0.5rem;
       text-align: center;
       .value {
-        font-family: Barlow;
+        font-family: Barlow, Roboto;
         font-style: normal;
         font-weight: 900;
         font-size: 24px;
@@ -48,7 +49,7 @@
         color: #e47a23;
       }
       .label {
-        font-family: Barlow;
+        font-family: Barlow, Roboto;
         font-style: normal;
         font-weight: 400;
         font-size: 16px;

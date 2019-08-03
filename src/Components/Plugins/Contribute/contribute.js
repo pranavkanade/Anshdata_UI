@@ -11,7 +11,7 @@ import {
   getDraftedSelfCoursesList
 } from "../../../Requests/DraftCourses";
 import { getPublishedCoursesList } from "../../../Requests/Courses";
-import { getADUserJson } from "../../../Requests/Authorization";
+import { getADUser } from "../../../Requests/Authorization";
 
 class Contribute extends Component {
   state = {
@@ -52,13 +52,8 @@ class Contribute extends Component {
     this.setState({ courseSearched: courseName });
   };
 
-  onSearched = () => {
-    console.log("Clicked Course Search : ", this.state.courseSearched);
-  };
-
   subMenuChangeHandler = selectedSubMenu => {
     this.setState({ activeSubMenu: selectedSubMenu });
-    console.log("SubMenu Selected : ", selectedSubMenu);
   };
 
   setDefaultSubMenu = adUser => {
@@ -143,12 +138,12 @@ class Contribute extends Component {
   render() {
     return (
       <div className={css.contributePage}>
-        <SearchBar
+        {/*<SearchBar
           placeholder="Course Name"
           searchedValue={this.state.courseSearched}
           changeHandler={this.setSearchedCourseHandler}
           searchHandler={this.onSearched}
-        />
+        />*/}
         <div className={css.actionBar}>
           {this.renderSubMenu()}
           <Link href="/contribute/course">
@@ -165,17 +160,13 @@ class Contribute extends Component {
   }
 
   componentDidMount() {
-    const adUser = getADUserJson();
+    const adUser = getADUser();
     this.setState({ adUser });
     this.setDefaultSubMenu(adUser);
     try {
-      getPublishedCoursesList(adUser.id, this.myPublicationSaveHandler);
+      getPublishedCoursesList(adUser.user.pk, this.myPublicationSaveHandler);
       getDraftedSelfCoursesList(this.myDraftsSaveHandler);
-    } catch (err) {
-      console.log(
-        "User may not be logged in. Failed to fetch the list of published and drafted courses."
-      );
-    }
+    } catch (err) {}
     getDraftedCommunityCoursesList(this.communityDraftsSaveHandler);
   }
 }

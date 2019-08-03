@@ -1,29 +1,41 @@
 import React, { Component } from "react";
-import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
-import { SideSheet, Position } from "evergreen-ui";
-import {
-  renderPublishedCoursesList as PublishedCoursesList,
-  renderEnrolledCoursesList as EnrolledCoursesList
-} from "../../Generic/CourseList/courselist";
+import { Drawer } from "rsuite";
+import { connect } from "react-redux";
+import { renderPublishedCoursesList as PublishedCoursesList } from "../../Generic/CourseList/courselist";
+import EnrolledCoursesList from "../../Generic/CourseList/enrolledCourseList";
+import Auth from "../../Generic/Auth/Auth";
+import Loader from "../../Generic/Loader/loader";
 import { courseListType } from "../../../globals";
+
 import {
-  getCoursesList,
-  getEnrolledCoursesList
-} from "../../../Requests/Courses";
+  fetchCatalogCourses,
+  fetchEnrolledCourses,
+  fetchUpdatedCourses
+} from "../../../store/actions";
 
 import css from "./courses.scss";
 
 class Courses extends Component {
   state = {
-    courses: null,
-    enrolledCourses: null,
+    courses: this.props.catalogCourses,
+    enrolledCourses: this.props.enrolledCourses,
     courseSearched: "",
     selectedCourse: 0,
-    visible: false
+    visible: false,
+    isAuthenticated: this.props.isAuthenticated,
+    askToJoin: false
   };
 
   handleHideClick = () => this.setState({ visible: false });
   handleShowClick = () => this.setState({ visible: true });
+
+  closeAuthForm = () => {
+    this.setState({ askToJoin: false });
+  };
+
+  askUserToJoin = () => {
+    this.setState({ askToJoin: true });
+  };
 
   changeHandler = event => {
     const name = event.target.name;
@@ -57,25 +69,9 @@ class Courses extends Component {
     }
   };
 
-  renderLoader = () => {
-    return (
-      <Container>
-        <br />
-        <br />
-        <br />
-        <br />
-        <Segment basic>
-          <Dimmer active inverted>
-            <Loader size="large">Loading</Loader>
-          </Dimmer>
-        </Segment>
-      </Container>
-    );
-  };
-
   renderCourses = (courses, listType) => {
-    if (courses.length === 0) {
-      return <p>Take up some courses</p>;
+    if (courses === null || courses === undefined || courses.length === 0) {
+      return <p>Course List</p>;
     }
 
     if (listType === courseListType.ENROLLED) {
@@ -91,6 +87,7 @@ class Courses extends Component {
     } else {
       return (
         <PublishedCoursesList
+          askToJoin={this.askUserToJoin}
           courses={courses}
           courseListType={listType}
           setSelectedCourse={this.setSelectedCourse}
@@ -102,58 +99,49 @@ class Courses extends Component {
   };
 
   renderMyCourses = () => {
-    const courseEnrolledin = this.state.enrolledCourses;
-    console.log("Courses enrolled : ", courseEnrolledin);
+    const courseEnrolledin = this.props.enrolledCourses;
     // return null;
     return courseEnrolledin === null ? (
-      <span>Courses you'll enroll in</span>
+      <span>Your Courses</span>
     ) : (
       this.renderCourses(courseEnrolledin, courseListType.ENROLLED)
     );
   };
 
   render() {
-    const courseListing = this.state.courses;
+    const courseListing = this.props.catalogCourses;
 
     return (
-      <div className={"CoursesPlugin"}>
-        <div className={css.courses}>
-          <div className={css.overlayBtn}>
+      <div className={css.coursesPlugin}>
+        {this.state.askToJoin ? (
+          <Auth hideAuthFormHandler={this.closeAuthForm} authOption="signup" />
+        ) : null}
+        <div className={css.ad_courses}>
+          <Drawer
+            show={this.state.visible}
+            onHide={this.handleHideClick}
+            size="sm">
+            <Drawer.Header className={css.ad_drawer_title}>
+              <span>My Courses</span>
+            </Drawer.Header>
+            <div className={css.ad_myCourses}>
+              <div>{this.renderMyCourses()}</div>
+            </div>
+          </Drawer>
+          <div className={css.ad_overlayBtn}>
             <button onClick={this.handleShowClick}>
               <span>My Courses</span>
             </button>
           </div>
-
-          <SideSheet
-            isShown={this.state.visible}
-            onCloseComplete={this.handleHideClick}
-            preventBodyScrolling
-            width={600}>
-            <div className={css.myCourses}>
-              <div className={css.heading}>
-                <span>My Courses</span>
-              </div>
-              {this.renderMyCourses()}
-            </div>
-          </SideSheet>
-
-          <div className={css.catalog}>
-            <div className={css.heading}>
+          <div className={css.ad_catalog}>
+            <div className={css.ad_heading}>
               <span>Course Catalog</span>
-              <div className={css.searchBar}>
-                <input
-                  placeholder="Course Name"
-                  name="courseSearched"
-                  type="text"
-                  value={this.state.courseSearched}
-                  onChange={event => this.changeHandler(event)}
-                />
-                <button>Search</button>
-              </div>
             </div>
-            {courseListing === null
-              ? this.renderLoader()
-              : this.renderCourses(courseListing, courseListType.CATALOG)}
+            {courseListing === null || courseListing === undefined ? (
+              <Loader msg="Gathering all courses" />
+            ) : (
+              this.renderCourses(courseListing, courseListType.CATALOG)
+            )}
           </div>
         </div>
       </div>
@@ -162,23 +150,35 @@ class Courses extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    console.log("[Courses.js] component did mount", this.state);
-    getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
-    getCoursesList(this.saveCoursesHandler);
+    if (this.props.isAuthenticated) {
+      // getEnrolledCoursesList(this.saveEnrolledCoursesHandler);
+      this.props.fetchEnrolledCourses();
+    }
+    // getCoursesList(this.saveCoursesHandler);
+    this.props.fetchCatalogCourses();
   }
-
-  componentWillUnmount() {
-    console.log("[courses.js] component will unmount");
-  }
-
-  // shouldComponentUpdate() {
-  //   console.log("[Courses.js] should component Update");
-  //   return true;
-  // }
 
   componentDidUpdate() {
-    console.log("[Courses.js] component did update");
+    if (this.props.isAuthenticated !== this.state.isAuthenticated) {
+      this.setState({ isAuthenticated: this.props.isAuthenticated });
+      this.props.fetchUpdatedCourses();
+    }
   }
 }
 
-export default Courses;
+const mapDispatchToProps = {
+  fetchCatalogCourses,
+  fetchEnrolledCourses,
+  fetchUpdatedCourses
+};
+
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  const { currentCourse, catalogCourses, enrolledCourses } = state.crs;
+  return { isAuthenticated, currentCourse, catalogCourses, enrolledCourses };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Courses);

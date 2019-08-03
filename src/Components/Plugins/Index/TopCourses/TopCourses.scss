@@ -1,95 +1,48 @@
 @import "../../../../../static/styles/globals.scss";
 
 .container {
-  padding: 3rem 8rem 0 8rem;
+  padding: 1rem 5% 2rem 5%;
 
-  span {
+  .title {
     padding-left: 4rem;
-    font-family: Scope One;
+    font-family: Scope One, Roboto;
     font-style: normal;
     font-weight: bolder;
     font-size: 48px;
     line-height: 66px;
 
-    color: $White-0;
-  }
-}
-
-.categoryCarousel {
-  // This means the categories are active
-  .primary {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    align-items: center;
-    justify-items: center;
+    color: $Black-1;
   }
 
-  // This will contain the categories that will be shown next
-  .secondary {
-  }
+  .actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row-reverse;
 
-  .courseCards {
-    margin: 1.5rem 4rem 0 4rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    align-items: center;
-    justify-items: center;
-  }
+    button {
+      margin-left: 8px;
+      border-radius: 5px;
+      padding: 4px;
 
-  %categoryBox {
-    width: 610px;
-    height: 270px;
-
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
-    border-radius: 20px 0px 20px 20px;
-
-    .options {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-
-      button {
-        margin: 1.5rem 0 0 2.5rem;
-        width: 180px;
-        height: 60px;
-        background: transparent;
-
-        border: 2px solid #ffffff;
-        box-sizing: border-box;
-        border-radius: 10px;
-
-        font-family: Barlow;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 28px;
-        line-height: 34px;
-        /* identical to box height */
-        text-align: center;
-
-        color: #ffffff;
-
-        &:hover {
-          cursor: pointer;
-        }
+      &:focus {
+        outline: none;
       }
 
-      img {
-        margin: 1rem 5rem 0 0;
-        justify-self: end;
-        // align-self: center;
+      transition: 0.2s ease;
+    }
+
+    .more {
+      background: #c9d1ff;
+      &:hover {
+        background: #798dff;
       }
     }
-  }
 
-  .cat1 {
-    @extend %categoryBox;
-    background: $grad-7;
-  }
-
-  .cat2 {
-    @extend %categoryBox;
-    background: $grad-8;
+    .less {
+      background: #ffd4b1;
+      &:hover {
+        background: #ffa65e;
+      }
+    }
   }
 }

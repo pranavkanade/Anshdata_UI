@@ -1,58 +1,81 @@
 import React, { Component } from "react";
 
+import { Dialog } from "evergreen-ui";
 import {
+  Nav,
   Form,
-  Modal,
-  Menu,
-  Segment,
-  Grid,
-  Button,
-  Divider
-} from "semantic-ui-react";
+  FormGroup,
+  ControlLabel,
+  HelpBlock,
+  FormControl,
+  Schema,
+  ButtonToolbar,
+  Button
+} from "rsuite";
 import Router from "next/router";
 
-const URLS = {
-  USERSIGNUP: "http://127.0.0.1:8000/api/user/signup/",
-  USERLOGIN: "http://127.0.0.1:8000/api/user/login/",
-  GETUSER: "http://127.0.0.1:8000/api/user/me/"
-};
+import { connect } from "react-redux";
+import { requestUserSignIn, storeUserSignedUp } from "../../../store/actions";
+
+import Loader from "../../Generic/Loader/loader";
+
+import {
+  signinHandler,
+  signupHandler
+} from "./../../../Requests/Authentication";
+
+import css from "./auth.scss";
+
+const { StringType } = Schema.Types;
 
 class Auth extends Component {
   state = {
-    username: "",
-    email: "",
-    password: "",
+    formValue: {
+      username: "",
+      email: "",
+      password: ""
+    },
+    formError: {},
     shouldOpen: true,
-    formType: this.props.authOption
+    formType: !!this.props.authOption ? this.props.authOption : "signup",
+    isLoading: false
+  };
+
+  signupModel = Schema.Model({
+    username: StringType().isRequired("This field is required."),
+    email: StringType()
+      .isEmail("Please enter a valid email address.")
+      .isRequired("This field is required."),
+    password: StringType().isRequired("This field is required.")
+  });
+
+  signinModel = Schema.Model({
+    username: StringType().isRequired("This field is required."),
+    password: StringType().isRequired("This field is required.")
+  });
+
+  handleChange = value => {
+    this.setState({
+      formValue: value
+    });
   };
 
   tabSwitchHandler = tabKey => {
     this.setState({ formType: tabKey });
   };
 
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState(prevstate => {
-      const newState = { ...prevstate };
-      newState[name] = value;
-      return newState;
-    });
-  };
-
   renderEmailField = isSignup => {
     if (isSignup) {
       return (
-        <Form.Field>
-          <label>Email</label>
-          <input
-            type="email"
-            placeholder="pskanade@gmail.com"
+        <FormGroup>
+          <ControlLabel>Email</ControlLabel>
+          <FormControl
             name="email"
-            value={this.state.email}
-            onChange={event => this.changeHandler(event)}
+            type="email"
+            className={css.ad_auth_form_input}
           />
-        </Form.Field>
+          <HelpBlock>Required</HelpBlock>
+        </FormGroup>
       );
     } else {
       return null;
@@ -63,113 +86,79 @@ class Auth extends Component {
     const isSignup = this.state.formType === "signup" ? true : false;
 
     return (
-      <Grid stackable>
-        <Grid.Row columns={1}>
-          <Grid.Column>
-            <Form
-              onSubmit={event => {
-                isSignup
-                  ? this.signupHandler(event)
-                  : this.signinHandler(event);
-              }}
-              size="large">
-              <Form.Field>
-                <label>User Name</label>
-                <input
-                  placeholder="pskanade"
-                  name="username"
-                  type="text"
-                  value={this.state.username}
-                  onChange={event => this.changeHandler(event)}
-                />
-              </Form.Field>
-              {this.renderEmailField(isSignup)}
-              <Form.Field>
-                <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={event => this.changeHandler(event)}
-                />
-              </Form.Field>
-              <Divider hidden />
-              <Form.Button type="submit" size="large" color="violet" fluid>
-                {isSignup ? "Sign Up" : "Sign In"}
-              </Form.Button>
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <Form
+        fluid
+        ref={ref => (this.form = ref)}
+        model={isSignup ? this.signupModel : this.signinModel}
+        onCheck={formError => {
+          this.setState({ formError });
+        }}
+        onChange={this.handleChange}
+        formValue={this.state.formValue}>
+        <FormGroup>
+          <ControlLabel>Username</ControlLabel>
+          <FormControl name="username" className={css.ad_auth_form_input} />
+          <HelpBlock>Required</HelpBlock>
+        </FormGroup>
+        {this.renderEmailField(isSignup)}
+        <FormGroup>
+          <ControlLabel>Password</ControlLabel>
+          <FormControl
+            name="password"
+            type="password"
+            className={css.ad_auth_form_input}
+          />
+        </FormGroup>
+        <ButtonToolbar>
+          <Button
+            className={
+              css.ad_authBtn +
+              " " +
+              (isSignup ? css.ad_signupBtn : css.ad_signinBtn)
+            }
+            onClick={this.handleAuthentication}>
+            {isSignup ? "Sign Up" : "Sign In"}
+          </Button>
+        </ButtonToolbar>
+      </Form>
     );
   };
 
   render() {
-    console.log(
-      "[Auth.js] render\n-------------------------------------------"
-    );
+    if (this.state.isLoading) {
+      return <Loader msg="Working on User Authentication" />;
+    }
+
     return (
-      <div>
-        <Modal
-          size="tiny"
-          dimmer="blurring"
-          open={this.state.shouldOpen}
-          closeOnDimmerClick={false}
-          closeOnEscape={false}
-          onClose={this.close}
-          centered>
-          <Modal.Header as={"div"}>
-            <text>
-              {this.state.formType === "signin"
-                ? "Sign in to your account"
-                : "Create your new account"}
-            </text>
-            <Button
-              icon="close"
-              floated="right"
-              color="red"
-              basic
-              onClick={this.props.hideAuthFormHandler}
-            />
-          </Modal.Header>
-          <Modal.Content>
-            <Menu attached="top" tabular size="massive" borderless widths={2}>
-              <Menu.Item
-                name="Sign In"
-                active={this.state.formType === "signin"}
-                onClick={() => this.tabSwitchHandler("signin")}
-              />
-              <Menu.Item
-                position="right"
-                name="Sign Up"
-                active={this.state.formType === "signup"}
-                onClick={() => this.tabSwitchHandler("signup")}
-              />
-            </Menu>
-            <Segment attached="bottom"> {this.renderAuthForm()} </Segment>
-          </Modal.Content>
-        </Modal>
-      </div>
+      <Dialog
+        preventBodyScrolling
+        isShown={this.state.shouldOpen}
+        title={
+          this.state.formType === "signin"
+            ? "Sign in to your account"
+            : "Create your new account"
+        }
+        onCloseComplete={this.close}
+        hasFooter={false}
+        padding={16}
+        style={{ position: "relative", zIndex: "1024" }}>
+        <div>
+          <Nav
+            appearance="subtle"
+            activeKey={this.state.formType}
+            onSelect={this.tabSwitchHandler}
+            justified>
+            <Nav.Item eventKey="signin" className={css.ad_nav_tab_title}>
+              <span>Sign In</span>
+            </Nav.Item>
+            <Nav.Item eventKey="signup" className={css.ad_nav_tab_title}>
+              <span>Sign Up</span>
+            </Nav.Item>
+          </Nav>
+          <div className={css.ad_auth_form_pane}>{this.renderAuthForm()}</div>
+        </div>
+      </Dialog>
     );
-  }
-
-  // Lifecycle methods
-  componentDidMount() {
-    console.log("[Auth.js] component did mount");
-  }
-
-  componentWillUnmount() {
-    console.log("[Auth.js] component will unmount");
-  }
-
-  shouldComponentUpdate() {
-    console.log("[Auth.js] should component Update");
-    return true;
-  }
-
-  componentDidUpdate() {
-    console.log("[Auth.js] component did update");
   }
 
   // Backend Calls
@@ -178,97 +167,59 @@ class Auth extends Component {
   };
 
   close = () => {
-    this.setState({ shouldOpen: false, formType: "" });
+    this.setState({ shouldOpen: false, formType: "", isLoading: false });
+    this.props.hideAuthFormHandler();
   };
 
   getSignupData = () => {
-    const data = { ...this.state };
+    const data = {
+      username: this.state.formValue.username,
+      password1: this.state.formValue.password,
+      password2: this.state.formValue.password,
+      email: this.state.formValue.email
+    };
     return data;
   };
 
   getSignInData = () => {
-    const data = { ...this.state };
+    const data = {
+      username: this.state.formValue.username,
+      password: this.state.formValue.password
+    };
     return data;
   };
 
-  signupHandler = async event => {
-    console.log("[Auth.js] Sign Up Handler", this.state);
-    event.preventDefault();
-
-    try {
-      const signupData = this.getSignupData();
-      console.log("[Auth.js] : Sign Up Data", signupData);
-      const siginupRes = await fetch(URLS.USERSIGNUP, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(signupData)
-      });
-      const data = await siginupRes.json();
-      console.log("signup data : ", data);
-      localStorage.setItem("AnshdataUser", JSON.stringify(data));
-    } catch (err) {
-      console.log("[Auth.js] SIGNUP ERR : ", err);
-      this.close();
+  handleAuthentication = async event => {
+    if (!this.form.check()) {
       return;
     }
+    this.setState({ isLoading: true });
+    const isSignup = this.state.formType === "signup" ? true : false;
 
-    try {
-      const signinData = this.getSignInData();
-      console.log("[Auth.js] Sign In Data", signinData);
-      const loginRes = await fetch(URLS.USERLOGIN, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(signinData)
-      });
-      let AnshdataUser = JSON.parse(localStorage.getItem("AnshdataUser"));
-      AnshdataUser["token"] = (await loginRes.json()).token;
-      localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
-    } catch (err) {
-      console.log("[Auth.js] SIGNIN ERR : ", err);
+    if (isSignup) {
+      const user = await signupHandler(this.getSignupData());
+      this.props.storeUserSignedUp(user);
+    } else {
+      const resp = await signinHandler(this.getSignInData());
+      this.props.requestUserSignIn(resp);
     }
     this.close();
-    this.props.reloadOnAuthEvent();
-    const page = window.location.pathname;
-    Router.push("/");
-  };
-
-  signinHandler = async event => {
-    console.log("[Auth.js] Log In Handler", this.state);
-    event.preventDefault();
-    try {
-      const signinData = this.getSignInData();
-      console.log("[Auth] : Sign In Handler", signinData);
-      const loginRes = await fetch(URLS.USERLOGIN, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(signinData)
-      });
-
-      let AnshdataToken = (await loginRes.json()).token;
-      const userRes = await fetch(URLS.GETUSER, {
-        headers: {
-          Authorization: `JWT ${AnshdataToken}`
-        }
-      });
-      // NOTE: Here assume no error will occur
-      // we get list so ..
-      let AnshdataUser = (await userRes.json())[0];
-      AnshdataUser["token"] = AnshdataToken;
-      localStorage.setItem("AnshdataUser", JSON.stringify(AnshdataUser));
-    } catch (err) {
-      console.log("[Auth.js] SIGNIN ERR : ", err);
-    }
-    this.close();
-    this.props.reloadOnAuthEvent();
-    const page = window.location.pathname;
-    Router.push("/");
+    // TODO: This should not be here
+    // Router.replace(window.location.pathname);
   };
 }
 
-export default Auth;
+function mapStateToProps(state) {
+  const { user } = state.user;
+  return { user };
+}
+
+const mapDispatchToProps = {
+  requestUserSignIn,
+  storeUserSignedUp
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth);

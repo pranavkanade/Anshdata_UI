@@ -1,21 +1,18 @@
 import React from "react";
-import App from "../../src/Containers/App";
+import { useRouter } from "next/router";
 import CourseForm from "../../src/Components/Plugins/Contribute/Course/course";
 
 const getCourseId = props => {
+  const router = useRouter();
   try {
-    const courseId = props.url.query.id;
-    return courseId;
+    const { id } = router.query;
+    return id;
   } catch (err) {}
   return undefined;
 };
 
 const contribCourse = props => {
-  return (
-    <App page={"ContribCourse"}>
-      <CourseForm courseId={getCourseId(props)} />
-    </App>
-  );
+  return <CourseForm courseId={getCourseId(props)} />;
 };
 
 export default contribCourse;

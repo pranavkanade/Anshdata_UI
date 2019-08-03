@@ -1,14 +1,23 @@
 import React, { Component } from "react";
 import css from "./course.scss";
 import Form from "../../../Generic/Forms/course";
+import Auth from "../../../Generic/Auth/Auth";
 
 class CourseForm extends Component {
   state = {
-    courseId: 0
+    courseId: 0,
+    askToJoin: false
+  };
+
+  closeAuthForm = () => {
+    this.setState({ askToJoin: false });
+  };
+
+  askUserToJoin = () => {
+    this.setState({ askToJoin: true });
   };
 
   courseSaveHandler = course => {
-    console.log("[Contrib/Course.js] Course has been saved");
     this.setState({
       courseId: course.id
     });
@@ -17,7 +26,11 @@ class CourseForm extends Component {
   renderCourseForm = () => {
     return (
       <div className={css.courseForm}>
-        <Form onSaveHandler={this.courseSaveHandler} closeHandler={() => {}} />
+        <Form
+          onSaveHandler={this.courseSaveHandler}
+          askToJoin={this.askUserToJoin}
+          closeHandler={() => {}}
+        />
       </div>
     );
   };
@@ -25,17 +38,18 @@ class CourseForm extends Component {
   render() {
     return (
       <div className={css.container}>
+        {this.state.askToJoin ? (
+          <Auth hideAuthFormHandler={this.closeAuthForm} authOption="signup" />
+        ) : null}
+        <div />
         <div className={css.page}>
           <span className={css.heading}>Create New Course</span>
           <div className={css.courseCreationPlane}>
             {this.renderCourseForm()}
-            <div className={css.sidebar}>
-              <button>
-                <span>Save</span>
-              </button>
-            </div>
+            <div />
           </div>
         </div>
+        <div />
       </div>
     );
   }

@@ -1,0 +1,12 @@
+@import "../../../../static/styles/globals.scss";
+.ribbon {
+  height: 50px;
+  background: $Yellow-10;
+  padding: 8px;
+  text-align: center;
+
+  span {
+    color: $White-0;
+    font-size: 20px;
+  }
+}

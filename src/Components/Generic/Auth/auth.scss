@@ -1,0 +1,68 @@
+@import "../../../../static/styles/globals.scss";
+
+.authForm {
+  position: relative;
+  z-index: 1024;
+}
+
+.ad_nav_tab_title {
+  text-align: center;
+
+  span {
+    @extend %BtnFont-1;
+    color: $Black-1;
+  }
+}
+
+.ad_auth_form_pane {
+  margin: 2rem;
+}
+
+.ad_authBtn {
+  width: 100%;
+  @extend %BtnFont-1;
+  font-weight: bold;
+  border: 0px;
+  height: 48px;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: $shadow-2;
+    color: $White-0;
+  }
+}
+
+.ad_signupBtn {
+  background: #931eec;
+  transition: 0.2s ease;
+  &:hover {
+    background: #6714a7;
+    cursor: pointer;
+  }
+}
+
+.ad_signinBtn {
+  background: $Base-primary;
+  transition: 0.2s ease;
+  &:hover {
+    cursor: pointer;
+    background: $Base-secondary;
+  }
+}
+
+.ad_auth_form_input {
+  height: 56px;
+  font-family: Lato, Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 29px;
+}
+
+.label {
+  font-family: Lato, Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 29px;
+}

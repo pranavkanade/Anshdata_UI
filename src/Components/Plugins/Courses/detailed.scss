@@ -2,8 +2,9 @@
 
 .container {
   width: 100%;
-  padding: 0rem 10% 0rem 10%;
-  background-color: $White-2;
+
+  background-color: $White-4;
+  padding: 0rem 0 2rem 0;
 }
 
 @media (max-width: 1024px) {
@@ -12,11 +13,32 @@
   }
 }
 
+.warningRibbon {
+  margin-top: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
+  background: $Yellow-10;
+  color: $White-0;
+  font-weight: 900;
+  text-align: center;
+
+  span {
+    font-size: 32px;
+    font-weight: 900;
+    background: $Base-primary;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 5px;
+  }
+}
+
 .courseInfo {
-  padding: 2rem 0 2rem 0;
+  margin: 0rem 5% 0rem 5%;
+  padding: 1rem 2rem 1rem 2rem;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 2rem;
+  background: #9c92f8;
+  border-radius: 0 0 10px 10px;
+  box-shadow: $shadow-2;
 
   .primaryInfo {
     display: flex;
@@ -25,13 +47,13 @@
     .courseTitle {
       width: 710px;
       height: 110px;
-      font-family: Scope One;
+      font-family: Scope One, Roboto;
       font-style: normal;
-      font-weight: normal;
-      font-size: 40px;
+      font-weight: bold;
+      font-size: 32px;
       line-height: 55px;
 
-      color: #000000;
+      color: $White-0;
     }
 
     .courseDetails {
@@ -42,19 +64,19 @@
 
       .courseDescription {
         padding: 1rem;
-        font-family: Lato;
+        font-family: Lato, Roboto;
         font-style: normal;
         font-weight: normal;
         font-size: 20px;
         line-height: 24px;
-
-        color: #3f3e3e;
+        background: $White-0b;
+        color: $Black-1;
 
         height: 210px;
 
         border: 1px solid $White-3;
         box-sizing: border-box;
-        border-radius: 2px;
+        border-radius: 5px;
       }
 
       .advance {
@@ -62,17 +84,18 @@
         flex-direction: row;
         justify-content: space-between;
         margin-top: 2rem;
+        place-items: center;
 
         %actionBtn {
           width: 200px;
           height: 60px;
 
-          border-radius: 2px;
+          border-radius: 5px;
           border: 0px;
 
-          font-family: Barlow;
+          font-family: Barlow, Roboto;
           font-style: normal;
-          font-weight: normal;
+          font-weight: bold;
           font-size: 20px;
           line-height: 24px;
           /* identical to box height */
@@ -83,14 +106,13 @@
 
         .attend {
           @extend %actionBtn;
-
+          font-weight: bolder;
           background: $Blue-3;
-
+          transition: 0.2s ease;
           &:hover {
             cursor: pointer;
-            background: #ffffff;
-            color: $Blue-3;
-            border: 1px solid $Blue-3;
+            transform: scale(1.1);
+            box-shadow: $shadow-all-1;
           }
         }
 
@@ -98,12 +120,11 @@
           @extend %actionBtn;
           font-weight: bolder;
           background: $Yellow-2;
-
+          transition: 0.2s ease;
           &:hover {
             cursor: pointer;
-            background: #ffffff;
-            color: $Yellow-2;
-            border: 2px solid $Yellow-2;
+            transform: scale(1.1);
+            box-shadow: $shadow-all-1;
           }
         }
 
@@ -112,12 +133,15 @@
           flex-direction: row;
           justify-content: space-around;
 
-          width: 480px;
-          height: 60px;
+          // width: 480px;
+          // height: 60px;
 
-          border: 1px solid $White-3;
+          // border: 1px solid $White-3;
           box-sizing: border-box;
           border-radius: 2px;
+          background: $White-0b;
+          border-radius: 5px;
+          padding: 1rem;
 
           .stat {
             width: 160px;
@@ -127,7 +151,7 @@
             justify-self: center;
 
             .value {
-              font-family: Barlow;
+              font-family: Barlow, Roboto;
               font-style: normal;
               font-weight: 500;
               font-size: 24px;
@@ -139,7 +163,7 @@
             }
 
             .label {
-              font-family: Barlow;
+              font-family: Barlow, Roboto;
               font-style: normal;
               font-weight: 500;
               font-size: 16px;
@@ -155,12 +179,26 @@
     }
 
     .tagBox {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       height: 72px;
+      background: $White-0b;
+      border-radius: 5px;
+      padding: 1rem;
+      border: 0px;
+      display: flex;
+      flex-direction: row;
+      place-items: center;
 
-      border: 1px solid $White-3;
-      box-sizing: border-box;
-      border-radius: 2px;
+      .tag {
+        padding: 0.3rem 1rem 0.3rem 1rem;
+        background: $Base-primary;
+        color: $White-0;
+        margin-right: 0.5rem;
+        border-radius: 5rem;
+        box-shadow: $shadow-all-1;
+        font-weight: normal;
+        font-size: 20px;
+      }
     }
   }
 
@@ -182,13 +220,13 @@
 
     .extraInfo {
       margin-top: 2rem;
-      padding: 1rem 0 1rem 0;
-      width: 380px;
-      height: 161px;
+      padding: 1rem;
+      // width: 380px;
+      // height: 161px;
+      background: $White-0b;
+      border-radius: 5px;
 
-      border: 1px solid $White-3;
       box-sizing: border-box;
-      border-radius: 2px;
 
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -196,9 +234,9 @@
 
       .info {
         width: 160px;
-        height: 60px;
-
-        border: 1px solid $White-3;
+        // height: 6px;
+        padding: 0.5rem 0 0.5rem 0;
+        // border: 1px solid $White-3;
         box-sizing: border-box;
         border-radius: 2px;
 
@@ -206,27 +244,53 @@
         justify-self: center;
 
         .value {
-          font-family: Barlow;
+          font-family: Lato, Roboto;
           font-style: normal;
           font-weight: 500;
-          font-size: 24px;
+          font-size: 20px;
           line-height: 29px;
           /* identical to box height */
           text-align: center;
-
-          color: #000000;
         }
 
         .label {
-          font-family: Barlow;
+          font-family: Barlow, Roboto;
           font-style: normal;
-          font-weight: 500;
+          font-weight: normal;
           font-size: 16px;
           line-height: 24px;
           /* identical to box height */
           text-align: center;
+        }
+      }
 
-          color: #000000;
+      .author {
+        background: #c2506c;
+        border-radius: 5px;
+        span {
+          color: $White-0;
+        }
+      }
+
+      .sub {
+        background: #ff6f62;
+        border-radius: 5px;
+        span {
+          color: $White-0;
+        }
+      }
+      .lsn {
+        background: #bcbe40;
+        border-radius: 5px;
+        span {
+          color: $White-0;
+        }
+      }
+      .asign {
+        background: #0888af;
+        border-radius: 5px;
+        span {
+          color: $White-0;
         }
       }
     }
@@ -234,10 +298,10 @@
 }
 
 .courseContent {
-  padding: 2rem 0 2rem 0;
+  padding: 2rem 10% 2rem 10%;
 
   .sectionTitle {
-    font-family: Lato;
+    font-family: Lato, Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 32px;
@@ -253,4 +317,15 @@
     place-items: center;
     grid-auto-flow: dense;
   }
+}
+
+.section {
+  margin-top: 2rem;
+}
+
+.assignmentList {
+  margin: 2rem 1rem 1rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1rem;
 }

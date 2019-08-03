@@ -8,10 +8,11 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 3rem;
-
-  span {
-    padding-left: 4rem;
-    font-family: Scope One;
+  place-content: center;
+  justify-content: center;
+  .title {
+    // padding-left: 1rem;
+    font-family: Scope One, Roboto;
     font-style: normal;
     font-weight: bolder;
     font-size: 48px;
@@ -25,38 +26,49 @@
     width: 100%;
     height: 370px;
 
-    background: $grad-2;
+    background: #ffffffe3;
+
     /* mild */
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: $shadow-1;
     border-radius: 10px;
+
+    span {
+      padding: 2rem;
+      font-style: normal;
+      font-weight: bolder;
+      font-size: 28px;
+      line-height: 56px;
+    }
+    .list {
+      padding: 1rem 1rem 2rem 1rem;
+
+      p {
+        padding-left: 2rem;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 40px;
+      }
+
+      span {
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        margin-right: 1rem;
+        font-style: normal;
+        font-weight: bolder;
+        font-size: 28px;
+      }
+    }
   }
-  .introClip {
-    height: 320px;
-    width: 470px;
-    justify-self: right;
-  }
-  iframe {
-    height: 100%;
-    width: 100%;
-  }
 
-  button {
-    margin-top: 4.5rem;
-    align-self: end;
-    width: 470px;
-    height: 80px;
-
-    background: $Blue-3;
-    border-radius: 2px;
-    border: 0px;
-
-    font-family: Barlow;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 34px;
-    text-align: center;
-
-    color: $White-0;
+  .secondary {
+    display: flex;
+    flex-direction: column-reverse;
+    // justify-content: space-between;
+    .introClip {
+      height: 370px;
+      width: 470px;
+      justify-self: right;
+      box-shadow: $shadow-all-3;
+    }
   }
 }

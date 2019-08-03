@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-
 import css from "./Footer.scss";
 
 const footer = props => {
@@ -8,19 +7,19 @@ const footer = props => {
     <div className={css.footer}>
       <div className={css.top}>
         <div>
-          <span>About us</span>
-          <span>Blog</span>
-          <span>Forum</span>
+          <span className={css.footer_links}>About us</span>
+          <span className={css.footer_links}>Blog</span>
+          <span className={css.footer_links}>Forum</span>
         </div>
         <div>
-          <span>Support us</span>
-          <span>Contact</span>
-          <span>Contribute</span>
+          <span className={css.footer_links}>Support us</span>
+          <span className={css.footer_links}>Contact</span>
+          <span className={css.footer_links}>Contribute</span>
         </div>
         <div>
-          <span>Facebook</span>
-          <span>Twitter</span>
-          <span>Youtube</span>
+          <Link href="/platform">
+            <span className={css.footer_links}>Platform</span>
+          </Link>
         </div>
       </div>
       <div className={css.bottom}>
