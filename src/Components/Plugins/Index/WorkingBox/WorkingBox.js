@@ -1,91 +1,61 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import css from "./WorkingBox.scss";
 import ReactPlayer from "react-player";
-import { Nav } from "rsuite";
 
 const renderLearnInstructions = () => {
   return (
-    <React.Fragment>
-      <p>
-        <span>1.</span>Join "Anshdata"!
-      </p>
-      <p>
-        <span>2.</span>Explore our course catalog.
-      </p>
-      <p>
-        <span>3.</span>Enroll in a course you like...
-      </p>
-      <p>
-        <span>4.</span>Easy .. Peasy .. 🤩!
-      </p>
-    </React.Fragment>
+    <div className={css.list}>
+      <p>1. Join "Anshdata"!</p>
+      <p>2. Explore our course catalog.</p>
+      <p>3. Enroll in a course you like...</p>
+      <p>4. Easy .. Peasy .. 🤩!</p>
+    </div>
   );
 };
 
 const renderConributeInstructions = () => {
   return (
-    <React.Fragment>
-      <p>
-        <span>1.</span>Join "Anshdata"!
-      </p>
-      <p>
-        <span>2.</span>Create new course...
-      </p>
-      <p>
-        <span>3.</span>Publish your awsome course.
-      </p>
-      <p>
-        <span>4.</span>Done n Dusted 😎!
-      </p>
-    </React.Fragment>
+    <div className={css.list}>
+      <p>1. Join "Anshdata"!</p>
+      <p>2. Create new course...</p>
+      <p>3. Publish your awsome course.</p>
+      <p>4. Done n Dusted 😎!</p>
+    </div>
   );
 };
 
 export default props => {
-  const [tab, setTab] = useState("learn");
   return (
     <div className={css.container}>
+      <span className={css.title}>How It Works?</span>
       <div className={css.grid}>
-        <div className={css.primary}>
-          <span className={css.title}>How It Works?</span>
-          <div className={css.actions}>
-            <Nav
-              activeKey={tab}
-              onSelect={e => setTab(e)}
-              justified
-              appearance="subtle">
-              <Nav.Item eventKey="learn" className={css.ad_nav_tab_title}>
-                Learn
-              </Nav.Item>
-              <Nav.Item eventKey="contribute" className={css.ad_nav_tab_title}>
-                Contribute
-              </Nav.Item>
-            </Nav>
-
-            <div className={css.list}>
-              {tab === "learn"
-                ? renderLearnInstructions()
-                : renderConributeInstructions()}
-            </div>
-
-            <div />
-          </div>
+        <div className={css.introClip}>
+          <ReactPlayer
+            url={"https://www.youtube.com/embed/RKLKib4bHhA"}
+            controls
+            pip={true}
+            height="100%"
+            width="100%"
+          />
         </div>
-        <div className={css.secondary}>
-          <div className={css.introClip}>
-            <ReactPlayer
-              url={"https://www.youtube.com/embed/RKLKib4bHhA"}
-              controls
-              pip={true}
-              height="100%"
-              width="100%"
-            />
+        <div className={css.actionCards}>
+          <div className={css.primary + " " + css.learn}>
+            <h1 className={css.cardTitle}>Learn</h1>
+            {renderLearnInstructions()}
+            <Link>
+              <a className={css.more}>Learn More...</a>
+            </Link>
+          </div>
+          <div className={css.primary + " " + css.contrib}>
+            <h2 className={css.cardTitle}>Contribute</h2>
+            {renderConributeInstructions()}
+            <Link>
+              <a className={css.more}>Learn More...</a>
+            </Link>
           </div>
         </div>
       </div>
-
-      <div />
     </div>
   );
 };

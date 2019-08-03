@@ -7,15 +7,14 @@
 
   display: grid;
   grid-template-columns: auto 1fr;
-  // grid-template-rows: 1fr;
-  place-items: center;
+  align-items: center;
 }
 
 .navbar {
   width: 100%;
-  height: 72px;
 
-  background: $Base-secondary;
+  background: #FAFAFA;
+  //border: 1px solid black;
 }
 
 .feedback {
@@ -27,7 +26,7 @@
   bottom: 2rem;
   right: 1rem;
   z-index: 20;
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-style: normal;
   font-weight: normal;
   border: 0px;
@@ -39,7 +38,7 @@
 
   &:hover {
     cursor: pointer;
-    transform: scale(1.2);
+    transform: scale(1.05);
     box-shadow: $shadow-all-3;
   }
 }
@@ -50,13 +49,12 @@
   right: 1rem;
   z-index: 20;
   text-align: center;
-  padding: 0 2rem 0 2rem;
+  //padding: 0 2rem 0 2rem;
   background: $Blue-3;
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-style: normal;
   font-weight: normal;
   border: 0px;
-  border-radius: 10px;
   font-size: 20px;
   color: #ffffff;
   padding: 0.5rem 1rem 0.5rem 1rem;
@@ -66,7 +64,6 @@
   width: 6rem;
   box-shadow: 10px 10px 20px #00000026;
 
-  transition: 0.3s ease;
   &:hover {
     text-decoration: none;
     cursor: pointer;
@@ -79,7 +76,6 @@
 .brandLogo {
   button {
     background: inherit;
-    color: #ffffff;
     border: 0px;
 
     &:hover {
@@ -90,13 +86,12 @@
     }
   }
 
-  font-family: Barlow, Roboto;
+  font-family: Acme, serif;
   font-style: normal;
-  font-weight: 600;
-  font-size: 40px;
-  line-height: 48px;
+  font-weight: 500;
+  font-size: 56px;
 
-  color: #ffffff;
+  color: $Base-primary;
 }
 
 .item {
@@ -120,13 +115,11 @@
   border-radius: 2px;
   border: 0px;
 
-  // font-family: lato;
-
-  font-family: Roboto;
+  font-family: Barlow, Roboto, serif;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
-  color: #ffffff;
+  color: $Base-secondary;
 
   &:focus {
     outline: none;
@@ -138,8 +131,9 @@
   transition: 0.2s ease-in;
   &:hover {
     cursor: pointer;
-    color: $Base-secondary;
-    background: #ffffff;
+    border-radius: 5px;
+    color: $White-0;
+    background: $Base-primary-c;
   }
 }
 
@@ -154,11 +148,14 @@
   padding: 0 2rem 0 2rem;
   transition: 0.4s ease;
   margin-left: 1rem;
-  border-radius: 2px;
+  font-size: 24px;
+  border-radius: 5px;
 
   background: $Base-primary;
   &:hover {
-    border-radius: 20px;
+    box-shadow: $shadow-all-2;
+    background: $Base-primary;
+    transform: scale(1.1);
     cursor: pointer;
   }
 }
@@ -190,15 +187,16 @@
 }
 
 .join {
+  background: $Base-primary-b;
   @extend %nav;
+  font-size: 24px;
   padding: 0 2rem 0 2rem;
-  border: 2px solid $White-0;
+  border: 1px solid $Base-primary-c;
   transition: 0.3s ease;
-  border-radius: 2px;
-  background: $Base-secondary;
+  border-radius: 5px;
   &:hover {
-    border: 2px solid $Blue-3b;
-    background: $Blue-3b;
+    background: $Base-primary-c;
     cursor: pointer;
+    color: $White-0;
   }
 }

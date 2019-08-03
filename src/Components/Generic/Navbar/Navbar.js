@@ -49,14 +49,16 @@ const renderAuthBtns = ({ showAuthFormHandler }) => {
       <div>
         <button
           className={css.join}
-          onClick={() => showAuthFormHandler("signup")}>
+          onClick={() => showAuthFormHandler("signup")}
+        >
           Join
         </button>
       </div>
       <div>
         <button
           className={css.signIn}
-          onClick={() => showAuthFormHandler("signin")}>
+          onClick={() => showAuthFormHandler("signin")}
+        >
           Sign In
         </button>
       </div>
@@ -79,16 +81,7 @@ const navbar = props => {
           {isAuthenticated ? renderUserPopup(props) : renderAuthBtns(props)}
         </div>
         <div>
-          {!isAuthenticated ? (
-            <a
-              className={css.float_join}
-              onClick={() => props.showAuthFormHandler("signup")}>
-              Join
-            </a>
-          ) : null}
-          <button
-            className={css.feedback}
-            onClick={props.shouldToggleFeedback}>
+          <button className={css.feedback} onClick={props.shouldToggleFeedback}>
             feedback 🤓
           </button>
         </div>

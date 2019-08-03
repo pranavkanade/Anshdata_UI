@@ -18,5 +18,9 @@ export default props => (
       href="https://fonts.googleapis.com/css?family=Barriecito&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css?family=Acme&display=swap"
+      rel="stylesheet"
+    />
   </Head>
 );

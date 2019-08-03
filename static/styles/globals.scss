@@ -1,5 +1,7 @@
 // Theme
 $Base-primary: #5143d3;
+$Base-primary-b: rgba(108, 99, 255, 0.11);
+$Base-primary-c: rgba(108, 99, 255, 0.8);
 $Base-primary-1: #2e229e;
 $Base-secondary: #100c30;
 
@@ -44,7 +46,7 @@ $Red-4: #eb2b2b31;
 $Black-1: #3f3e3e;
 
 // Gradients
-$grad-card-1: linear-gradient(205.09deg, #dd13dd -12.19%, #2469de 101.17%);
+$grad-1: linear-gradient(205.09deg, #dd13dd -12.19%, #2469de 101.17%);
 $grad-2: linear-gradient(27.72deg, #9843ff 0%, #ffa26c 98.34%);
 $grad-3: linear-gradient(204.02deg, #70ff6b -20.48%, #1389f7 101.17%);
 $grad-4: linear-gradient(250.54deg, #0779eb -32.44%, #c9ffd8 100%);

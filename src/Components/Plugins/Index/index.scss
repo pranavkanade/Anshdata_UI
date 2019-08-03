@@ -2,15 +2,9 @@
 
 .landing {
   position: relative;
-  background-color: $White-1;
+  background-color: #FAFAFA;
   z-index: 1;
 
-  .backWorking {
-    position: absolute;
-    width: 100%;
-    margin-top: -14rem;
-    z-index: -1;
-  }
 
   .topCourses {
     margin: 3rem 0 1rem 0;
