@@ -1,49 +1,18 @@
 @import "../../../../static/styles/globals.scss";
 
-span {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: lighter;
-  font-size: 16px;
-  line-height: 29px;
-  /* identical to box height */
-
-  color: #a3a3a3;
-}
-
 h3 {
   @extend %heading-2;
 }
 
-.header {
-  display: flex;
-  flex-direction: row;
-
-  span {
-    @extend %heading-1;
-  }
-  button {
-    border: 0px;
-    float: right;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.inp {
-  font-family: Lato;
+.ad_inp {
+  font-family: Lato, Roboto;
   font-style: normal;
-  font-weight: 600;
+  font-weight: normal;
   font-size: 16px;
   line-height: 29px;
 }
 
-.drpDn {
-  margin-bottom: 1rem;
-}
-
-.reverse {
+.ad_reverse {
   margin-top: 1rem;
   display: flex;
   flex-direction: row-reverse;
@@ -66,7 +35,7 @@ h3 {
 
     span {
       margin-right: 3rem;
-      font-family: Barlow;
+      font-family: Barlow, Roboto;
       font-style: normal;
       font-weight: 500;
       font-size: 20px;

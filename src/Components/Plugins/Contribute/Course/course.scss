@@ -2,64 +2,40 @@
 
 .container {
   @extend %containerLg;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  background: $White-2;
+  // grid-gap: 2rem;
+  justify-content: center;
 }
 
 .page {
-  margin-top: 2rem;
+  margin-top: 1rem;
+  background: $White-0;
+  box-shadow: $shadow-all-1;
+  border-radius: 10px;
+  // width: auto;
+  padding: 1rem 3rem 0rem 3rem;
 }
 
 .heading {
   @extend %heading-1;
+  text-align: center;
+  background: $Base-primary;
+  color: $White-0;
+  text-align: center;
+  font-weight: 600;
+  padding: 1rem 2rem 0.5rem 2rem;
+  border-radius: 0 0 10px 10px;
 }
 
 .courseCreationPlane {
   margin: 2rem;
   display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 5rem;
+  grid-template-columns: auto;
   justify-content: center;
 }
 
 .courseForm {
   width: 700px;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column-reverse;
-  align-content: flex-start;
-  margin-top: 2rem;
-  padding: 2rem;
-  width: 280px;
-  height: 380px;
-
-  background: #eff0f1;
-  border-radius: 5px;
-
-  place-items: center;
-
-  button {
-    width: 220px;
-    height: 54px;
-    left: 0px;
-    top: 0px;
-
-    background: #2e96d3;
-    border-radius: 5px;
-
-    color: $White-0;
-
-    span {
-      font-family: Barlow;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 29px;
-      /* identical to box height */
-
-      text-align: center;
-
-      color: #ffffff;
-    }
-  }
 }

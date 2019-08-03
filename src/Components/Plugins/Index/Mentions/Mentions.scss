@@ -1,11 +1,12 @@
 @import "../../../../../static/styles/globals.scss";
 
 .container {
-  padding: 5rem 8rem 6rem 8rem;
+  padding: 2rem 5% 2rem 5%;
+  border-bottom: 0.2px solid;
 
   span {
     padding-left: 4rem;
-    font-family: Scope One;
+    font-family: Scope One, Roboto;
     font-style: normal;
     font-weight: bolder;
     font-size: 48px;
@@ -16,15 +17,31 @@
 }
 
 .partners {
-  margin-top: 3rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  align-items: center;
-  justify-items: center;
-  grid-gap: auto;
+  grid-template-columns: repeat(3, 1fr);
+  place-content: center;
+  place-items: center;
+  grid-gap: 1rem;
+
+  .dummy {
+    width: 330px;
+    height: 130px;
+
+    background: $White-0b;
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    /* mild */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+  }
 
   div {
-    align-self: center;
-    justify-content: center;
+    transition: 0.2s ease;
+    &:hover {
+      cursor: pointer;
+      transform: translateY(-5px);
+    }
   }
 }

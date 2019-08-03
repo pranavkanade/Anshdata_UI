@@ -1,7 +1,7 @@
 @import "../../../../static/styles/globals.scss";
 .footer {
   width: 100%;
-  height: 300px;
+  height: 320px;
   max-height: 600px;
 
   display: flex;
@@ -18,26 +18,31 @@
   padding: 2rem 10% 1rem 10%;
   background: $Base-secondary;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: auto auto auto 1fr;
   align-content: center;
+  grid-gap: 10rem;
 
   div {
     display: flex;
     flex-direction: column;
 
-    span {
-      margin: 0.5rem;
+    .footer_links {
+      padding: 0.5rem 1rem 0.5rem 1rem;
       color: #d4d0ff;
       border: 0px;
+      width: auto;
 
-      font-family: Lato;
+      font-family: Lato, Roboto;
       font-style: normal;
-      font-weight: 300;
+      font-weight: 400;
       font-size: 20px;
       line-height: 24px;
-
+      transition: 0.1s ease;
       &:hover {
         cursor: pointer;
+        background: $Base-primary;
+        color: $White-0;
+        border-radius: 5px;
       }
     }
   }
@@ -56,7 +61,7 @@
       color: #ffffff;
       border: 0px;
 
-      font-family: Lato;
+      font-family: Lato, Roboto;
       font-style: normal;
       font-weight: 900;
       font-size: 48px;
@@ -76,7 +81,7 @@
       color: #ffffff;
       border: 0px;
 
-      font-family: Lato;
+      font-family: Lato, Roboto;
       font-style: normal;
       font-weight: 300;
       font-size: 20px;
@@ -88,14 +93,14 @@
     margin-left: 40%;
     border: 1px solid $White-0;
     border-radius: 5px;
-    padding: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     span {
       background: inherit;
       // background: #4a3ebe;
       color: #ffffff;
       border: 0px;
 
-      font-family: Lato;
+      font-family: Lato, Roboto;
       font-style: normal;
       font-weight: lighter;
       font-size: 20px;

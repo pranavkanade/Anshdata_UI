@@ -7,11 +7,15 @@ import { getCourse } from "../../../../Requests/Courses";
 import { cardType } from "../../../../globals";
 
 const renderHead = (id, title, closeHandler, activeTab) => {
-  console.log("[draft card ] active tab ", activeTab);
   return (
     <div className={css.head}>
       <Link
         href={
+          activeTab === "drafts"
+            ? "/contribute/draft/[crsId]"
+            : "/courses/[crsId]"
+        }
+        as={
           activeTab === "drafts" ? `/contribute/draft/${id}` : `/courses/${id}`
         }>
         <span>{title}</span>
@@ -74,38 +78,24 @@ const renderTags = course => {
 };
 
 const renderSecondaryInfo = (cardType, course) => {
-  return (
-    <>
-      {renderStats(cardType, course)}
-      {renderTags()}
-    </>
-  );
+  return <>{renderStats(cardType, course)}</>;
 };
 
 const renderActionBar = props => {
   if (props.activeTab === "communityDrafts") {
-    return null;
+    return <div className={css.actionBar}>{renderTags()}</div>;
   }
   return (
     <div className={css.actionBar}>
-      <button className={css.publish}>
-        <span>Publish</span>
-        <img src="./../../../../../static/assets/icon/upload_24px_outlined.svg" />
-      </button>
-      <button className={css.review}>
-        <span>Send for Review</span>
-        <img src="./../../../../../static/assets/icon/done_all_24px_outlined.svg" />
-      </button>
-      <button className={css.delete}>
-        <span>Delete</span>
-        <img src="./../../../../../static/assets/icon/delete_sweep_24px_outlined.svg" />
-      </button>
-      <Link href={`/contribute/draft/${props.course.id}`}>
+      <Link
+        href="/contribute/draft/[crsId]"
+        as={`/contribute/draft/${props.course.id}`}>
         <button className={css.modify}>
           <span>Modify</span>
           <img src="./../../../../../static/assets/icon/create_24px_outlined.svg" />
         </button>
       </Link>
+      {renderTags()}
     </div>
   );
 };
@@ -125,7 +115,6 @@ class LgDrafedCourseCard extends Component {
 
   render() {
     const course = this.state.course;
-    console.log("active tab : ", this.props.activeTab);
     if (course === null) {
       return (
         <div className={css.draftedCourseCardLg}>{this.renderLoader()}</div>

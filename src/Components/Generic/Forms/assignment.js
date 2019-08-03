@@ -1,99 +1,89 @@
 import React, { Component } from "react";
+import FormModal from "./formmodal";
 import {
-  Modal,
-  Button,
-  Segment,
-  Header,
   Form,
-  Divider,
-  Grid,
-  Dropdown
-} from "semantic-ui-react";
-
+  Input,
+  SelectPicker,
+  InputNumber,
+  Schema,
+  Button,
+  ButtonToolbar
+} from "rsuite";
+import CustomField from "./customformfield";
 import Router from "next/router";
 
 import { createAssignmentHandler } from "../../../Requests/courseCreation";
 
 import css from "./assignment.scss";
 
+import { connect } from "react-redux";
+import { updateDetailedDraftCourse } from "../../../store/actions";
+
+const { StringType } = Schema.Types;
+
 class AssignmentForm extends Component {
   state = {
     shouldOpen: false,
-    title: "",
-    instruction: "",
-    reference: "",
-    moduleId: this.props.moduleId,
-    lessonId: this.props.lessonId,
     modList: this.props.course.modules,
-    creditPoints: "0",
-    type: "create"
+    type: "create",
+    assignmentForm: {
+      title: "",
+      instruction: "",
+      reference: "",
+      lesson: "",
+      module: this.props.moduleId === 0 ? "" : this.props.moduleId,
+      course: this.props.course.id,
+      credit_points: 0
+    }
   };
 
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+  assignmentFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required."),
+    instruction: StringType().isRequired("This field is required.")
+  });
 
-    this.setState(prevstate => {
-      const newState = { ...prevstate };
-      newState[name] = value;
-      return newState;
+  handleChange = value => {
+    this.setState({
+      assignmentForm: value
     });
   };
 
-  createAssignment = () => {
-    console.log("[Assignment/Form.js] Create Assignment clicked");
-    const assignmentData = {
-      title: this.state.title,
-      instruction: this.state.instruction,
-      reference: this.state.reference,
-      lesson:
-        this.state.lessonId === null || this.state.lessonId === 0
-          ? ""
-          : this.state.lessonId,
-      module:
-        this.state.moduleId === null || this.state.moduleId === 0
-          ? ""
-          : this.state.moduleId,
-      course: this.props.course.id,
-      credit_points: this.state.creditPoints
-    };
-    createAssignmentHandler(assignmentData, this.props.assignmentId);
-    const page = window.location.pathname;
-    Router.push(page);
+  createAssignment = async () => {
+    const resp = await createAssignmentHandler({
+      assignmentData: this.state.assignmentForm,
+      exId: this.props.assignmentId
+    });
+    if (!resp.ok) {
+      this.props.updateDetailedDraftCourse(resp);
+    } else {
+      const modResp = {
+        ...resp,
+        data: {
+          id: this.props.course.id
+        }
+      };
+      this.props.updateDetailedDraftCourse(modResp);
+    }
     this.props.closeHandler();
   };
 
   creditSelectionHandler = (event, { value }) => {
-    // console.log("[Assignment/Form.js] creaditSelection ", value);
     this.setState({ creditPoints: value });
   };
 
   renderCreditPointsChoise = () => {
-    console.log("THe credit point choise : ", this.state.creditPoints);
     return (
-      <div>
-        <span>Credit Points</span>
-        <div className={css.creditPoints}>
-          <button
-            className={css.sub}
-            onClick={() => {
-              let creds = Math.ceil(parseInt(this.state.creditPoints));
-              creds = creds <= 0 ? 0 : creds - 1;
-              this.setState({ creditPoints: creds });
-            }}>
-            <img src="../../../../../static/assets/icon/remove_24px_outlined.svg" />
-          </button>
-          <span>{String(this.state.creditPoints)}</span>
-          <button
-            className={css.add}
-            onClick={() => {
-              let creds = Math.ceil(parseInt(this.state.creditPoints));
-              creds = creds >= 10 ? 10 : creds + 1;
-              this.setState({ creditPoints: creds });
-            }}>
-            <img src="../../../../../static/assets/icon/add_24px_outlined.svg" />
-          </button>
-        </div>
+      <div className={css.ad_credits_choise}>
+        <CustomField
+          style={{ width: 100 }}
+          defaultValue={0}
+          max={10}
+          min={0}
+          size="lg"
+          name="credit_points"
+          label="Credit Points"
+          accepter={InputNumber}
+        />
       </div>
     );
   };
@@ -103,38 +93,26 @@ class AssignmentForm extends Component {
   };
 
   renderModuleChoise = () => {
-    console.log("[Assignment/Form.js] List the modules");
     let modOptions = [];
     try {
       modOptions = this.state.modList.map(mod => {
         return {
-          id: mod.id,
-          text: mod.title,
+          label: mod.title,
           value: mod.id
         };
       });
-    } catch (err) {
-      console.log("did not pull up the mod list yet");
-    }
+    } catch (err) {}
 
     return (
-      <>
-        <span>Module</span>
-        <Dropdown
-          options={modOptions}
-          fluid
-          selection
-          clearable
-          disabled={
-            this.state.moduleId === 0 || this.state.moduleId === null
-              ? true
-              : false
-          }
-          className={css.inp + " " + css.drpDn}
-          defaultValue={this.state.moduleId}
-          onChange={this.moduleSelectionHandler}
-        />
-      </>
+      <CustomField
+        className={css.ad_mod_choise}
+        size="lg"
+        name="module"
+        label="Module"
+        accepter={SelectPicker}
+        block
+        data={modOptions}
+      />
     );
   };
 
@@ -144,114 +122,95 @@ class AssignmentForm extends Component {
 
   renderLessonChoise = () => {
     // TODO: This function is not working properly
-    // console.log("[Assignment/Form.js] List the lessons,", this.state.modList);
     let lessonOptions = [];
     try {
       const mod = {
         ...this.state.modList.find(mod => {
-          return mod.id === this.state.moduleId;
+          return mod.id === this.props.moduleId;
         })
       };
 
-      console.log(mod);
       lessonOptions = mod.lessons.map(each_lesson => {
         return {
-          id: each_lesson.id,
-          text: each_lesson.title,
+          label: each_lesson.title,
           value: each_lesson.id
         };
       });
-    } catch (err) {
-      console.log("Failed to get the list of lessons");
-    }
-
-    // console.log("lesson options", lessonOptions);
-
+    } catch (err) {}
     return (
-      <>
-        <span>Lesson</span>
-        <Dropdown
-          options={lessonOptions}
-          fluid
-          selection
-          clearable
-          disabled={
-            this.state.moduleId === 0 || this.state.moduleId === null
-              ? true
-              : false
-          }
-          className={css.inp + " " + css.drpDn}
-          defaultValue={this.state.lessonId}
-          onChange={this.lessonSelectionHandler}
-        />
-      </>
+      <CustomField
+        className={css.ad_mod_choise}
+        size="lg"
+        name="lesson"
+        label="Lesson"
+        accepter={SelectPicker}
+        block
+        data={lessonOptions}
+      />
     );
   };
 
   render() {
     const open = this.state.shouldOpen;
+
     return (
-      <Modal
+      <FormModal
         open={open}
-        onClose={this.props.closeHandler}
-        closeOnDimmerClick={false}
-        closeOnEscape={false}
-        centered={false}>
-        <Modal.Header className={css.header}>
-          <span>
-            {this.state.type === "create" ? "Add New" : "Modify"} Assignment
-          </span>
-          <button onClick={this.props.closeHandler}>
-            <img src="./../../../../static/assets/icon/clear_24px_outlined_dark.svg" />
-          </button>
-        </Modal.Header>
-        <Modal.Content>
-          <Segment basic>
-            <h3>{this.props.course.title}</h3>
-            <Form>
-              {this.renderModuleChoise()}
-              {this.renderLessonChoise()}
-              <span>Assignment Title</span>
-              <Form.Input
-                placeholder="Assignment 1: Basics of Computer Science"
-                value={this.state.title}
-                name="title"
-                size="large"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <span>Assignment Instructions</span>
-              <Form.TextArea
-                rows={6}
-                placeholder="Describe purpose of this module in short..."
-                value={this.state.instruction}
-                name="instruction"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              {this.renderCreditPointsChoise()}
-              <span>Reference (Help)</span>
-              <Form.TextArea
-                rows={6}
-                placeholder="May add pointers for the user to solve the assignment ..."
-                value={this.state.reference}
-                name="reference"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <Divider hidden />
-              <div className={css.reverse}>
-                <button type="submit" onClick={this.createAssignment}>
-                  <span>
-                    {this.state.type === "create" ? "Create" : "Save"}
-                  </span>
-                  <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-                </button>
-              </div>
-            </Form>
-          </Segment>
-        </Modal.Content>
-      </Modal>
+        title={
+          this.state.type === "create" ? "Add New Course" : "Modify Course"
+        }
+        closeHandler={this.props.closeHandler}>
+        <h3>{this.props.course.title}</h3>
+        <Form
+          fluid
+          ref={ref => (this.assignmentForm = ref)}
+          model={this.assignmentFormModel}
+          onChange={this.handleChange}
+          formValue={this.state.assignmentForm}>
+          {this.renderModuleChoise()}
+          {this.renderLessonChoise()}
+          <CustomField
+            className={css.ad_inp}
+            name="title"
+            label="Assignment Title"
+            placeholder="Assignment 1: Basics of Computer Science"
+            message="required"
+            accepter={Input}
+          />
+          <CustomField
+            className={css.ad_inp}
+            label="Assignment Instructions"
+            name="instruction"
+            placeholder="Describe this assignment in short .."
+            rows={6}
+            componentClass="textarea"
+          />
+          {this.renderCreditPointsChoise()}
+          <CustomField
+            className={css.ad_inp}
+            label="Reference (Extra)"
+            name="reference"
+            placeholder="Add references .."
+            rows={6}
+            componentClass="textarea"
+          />
+          <div className={css.reverse}>
+            <ButtonToolbar>
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (!this.assignmentForm.check()) {
+                    return;
+                  }
+                  this.createAssignment();
+                }}>
+                <span>{this.state.type === "create" ? "Create" : "Save"}</span>
+                <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+              </Button>
+            </ButtonToolbar>
+          </div>
+        </Form>
+      </FormModal>
     );
   }
 
@@ -263,7 +222,6 @@ class AssignmentForm extends Component {
       this.props.lessonId === null ||
       this.props.assignmentId === 0
     ) {
-      console.log("Creating new assignment");
       return null;
     }
     const course = this.props.course;
@@ -273,24 +231,31 @@ class AssignmentForm extends Component {
       })
     };
 
-    console.log("assignment to update", assignment);
     this.setState({
       assingToUpdate: assignment,
-      title: assignment.title,
-      instruction: assignment.instruction,
-      reference: assignment.reference,
-      lesson: assignment.lessonId,
-      module: assignment.moduleId,
-      creditPoints: assignment.credit_points,
+      assignmentForm: {
+        title: assignment.title,
+        instruction: assignment.instruction,
+        reference: assignment.reference,
+        lesson: assignment.lesson,
+        module: assignment.module,
+        credit_points: assignment.credit_points
+      },
       type: "edit"
     });
   };
 
   componentDidMount() {
-    console.log("[Contrib/Assignment/Form.js] component did mount");
     this.getaAssignmentToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
 }
 
-export default AssignmentForm;
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AssignmentForm);

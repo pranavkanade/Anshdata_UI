@@ -1,89 +1,78 @@
 import React, { Component } from "react";
-import Head from "next/head";
-
+import dynamic from "next/dynamic";
+import Ribbon from "../Components/Generic/Ribbon/ribbon";
 import Navbar from "../Components/Generic/Navbar/Navbar";
 import Footer from "../Components/Generic/Footer/Footer";
 import Auth from "../Components/Generic/Auth/Auth";
-import Router from "next/router";
-import { refreshUserToken } from "../Requests/Authorization";
-
+import Feedback from "../Components/Generic/Feedback/feedback";
+import { connect } from "react-redux";
+import { makeUserVerify, getTopCourses } from "../store/actions";
+const DynamicNotification = dynamic(
+  () => import("../Components/Generic/Notifications/notification"),
+  { ssr: false }
+);
 class App extends Component {
   state = {
     page: this.props.page,
-    isAuthenticated: false,
-    AnshdataUser: null,
+    isAuthenticated: this.props.isAuthenticated,
     attemptingSignIn: false,
-    authOption: null
+    authOption: "signup",
+    showFeedback: false
+  };
+
+  shouldToggleFeedback = () => {
+    this.setState({ showFeedback: !this.state.showFeedback });
   };
 
   hideAuthFormHandler = () => {
     this.setState({ attemptingSignIn: false });
   };
 
-  authEventHandler = () => {
-    console.log("[App.js] auth Event handler");
-    const rawUserData = localStorage.getItem("AnshdataUser");
-    let isAuthenticated = !!rawUserData;
-    let user;
-    try {
-      user = JSON.parse(rawUserData);
-    } catch (err) {
-      user = null;
-      isAuthenticated = false;
-    }
-    this.setState({
-      isAuthenticated: isAuthenticated,
-      AnshdataUser: user
-    });
-  };
-
-  signOutHandler = () => {
-    localStorage.removeItem("AnshdataUser");
-    this.setState({ isAuthenticated: false, attemptingSignIn: false });
-    this.authEventHandler();
-    Router.push("/");
-  };
-
   showAuthFormHandler = authOption => {
     this.setState({ attemptingSignIn: true, authOption });
   };
 
+  renderChildren = () => {
+    const children = React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        showAuthFormHandler: this.showAuthFormHandler
+      });
+    });
+
+    return <>{children}</>;
+  };
+
   render() {
-    console.log(
-      "[App.js] render\n-------------------------------------------"
-    );
     return (
       <div className={"App"}>
-        <Head>
-          <title>Anshdata</title>
-          <link
-            rel="stylesheet"
-            href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-          />
-          <link
-            href="https://fonts.googleapis.com/css?family=Scope+One&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
-        <Navbar
-          isAuthenticated={this.state.isAuthenticated}
-          showAuthFormHandler={this.showAuthFormHandler}
-          user={this.state.AnshdataUser}
-          activeMenu={this.state.page}
-          signOutHandler={this.signOutHandler}
+        <Ribbon
+          text={
+            "Welcome! and thank you for visiting Anshdata. The platform is currently in Alpha testing phase. We appreciate your support!"
+          }
         />
+
+        <Navbar
+          showAuthFormHandler={this.showAuthFormHandler}
+          activeMenu={this.state.page}
+          shouldToggleFeedback={this.shouldToggleFeedback}
+        />
+        <DynamicNotification />
+
         {this.state.attemptingSignIn ? (
           <Auth
-            reloadOnAuthEvent={this.authEventHandler}
             hideAuthFormHandler={this.hideAuthFormHandler}
             authOption={this.state.authOption}
           />
         ) : null}
-        <div>{this.props.children}</div>
+        {this.state.showFeedback ? (
+          <Feedback shouldToggleFeedback={this.shouldToggleFeedback} />
+        ) : null}
+        <div>{this.renderChildren()}</div>
+        <Ribbon
+          text={
+            "Welcome! and thank you for visiting Anshdata. The platform is currently in Alpha testing phase. We appreciate your support!"
+          }
+        />
         <Footer />
       </div>
     );
@@ -91,25 +80,21 @@ class App extends Component {
 
   // Lifecycle methods
   componentDidMount() {
-    console.log("[App.js] component did mount", this.state);
-    refreshUserToken();
-    if (!this.state.isAuthenticated) {
-      this.authEventHandler();
+    if (this.props.isAuthenticated) {
+      this.props.makeUserVerify();
     }
-  }
-
-  componentWillUnmount() {
-    console.log("[App.js] component will unmount");
-  }
-
-  shouldComponentUpdate() {
-    console.log("[App.js] should component Update");
-    return true;
-  }
-
-  componentDidUpdate() {
-    console.log("[App.js] component did update");
+    this.props.getTopCourses();
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  return { isAuthenticated };
+}
+
+const mapDispatchToProps = { makeUserVerify, getTopCourses };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

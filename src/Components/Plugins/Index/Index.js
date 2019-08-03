@@ -13,32 +13,24 @@ const index = props => {
   return (
     <div className={"IndexPlugin"}>
       <div className={css.landing}>
-        <Hero explore="/courses" contribute="/contribute" />
+        <Hero />
         <img
           className={css.backWorking}
           src="../../../../static/assets/back/howWorks.svg"
         />
         <WorkingBox />
         <div className={css.topCourses}>
-          <TopCourses />
+          <TopCourses askToJoin={props.showAuthFormHandler} />
         </div>
-        <div>
-          <img
-            className={css.partners}
-            src="../../../../static/assets/back/partners.svg"
-          />
+        <div className={css.partners}>
           <Partners />
         </div>
 
         <div className={css.testimonials}>
-          <Testimonials explore="/courses" contribute="/contribute" />
+          <Testimonials />
         </div>
 
-        <div>
-          <img
-            className={css.mentions}
-            src="../../../../static/assets/back/mentions.png"
-          />
+        <div className={css.mentions}>
           <Mentions />
         </div>
       </div>

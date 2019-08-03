@@ -13,30 +13,30 @@
   }
 
   .topCourses {
-    margin: 5rem 0 3rem 0;
-
-    height: 580px;
-    background: $Blue-10;
+    margin: 3rem 0 1rem 0;
+    background: $White-2b;
   }
 
   .partners {
-    position: absolute;
+    margin: 1rem 0 1rem 0;
     width: 100%;
-    z-index: -1;
+    padding-bottom: 1rem;
   }
 
   .testimonials {
-    margin: 5rem 2.5% 4rem 2.5%;
-    height: 510px;
+    margin: 2rem 2.5% 2rem 2.5%;
+    // height: 510px;
+    box-shadow: $shadow-all-1;
 
-    background: $grad-3;
+    background: #ffae6c;
     border-radius: 10px;
+    padding-bottom: 1rem;
   }
 
   .mentions {
-    position: absolute;
+    // position: absolute;
+    background: $Blue-11;
     width: 100%;
-    z-index: -1;
     max-height: 500px;
   }
 }

@@ -1,0 +1,68 @@
+@import "../../../../static/styles/globals.scss";
+
+.action_btns {
+  padding: 2rem 5% 2rem 5%;
+  text-align: center;
+  button {
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    place-items: center;
+
+    img {
+      margin-right: 1rem;
+      height: 3rem;
+      width: 3rem;
+      transition: 0.3s ease-out;
+    }
+    span {
+      font-size: 32px;
+    }
+
+    &:hover {
+      img {
+        transform: translateX(-20px);
+      }
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.not_found {
+  padding: 2rem 5% 2rem 5%;
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+
+  img {
+    height: 600px;
+  }
+
+  div {
+    margin: 2rem;
+    padding: 2rem;
+
+    // background: #f5e6e6;
+    span {
+      font-family: "Barriecito", cursive;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 64px;
+      line-height: 4rem;
+
+      color: $Base-primary;
+    }
+
+    p {
+      margin-top: 4rem;
+      font-family: Scope One, Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 32px;
+
+      color: $Base-primary-1;
+    }
+  }
+}

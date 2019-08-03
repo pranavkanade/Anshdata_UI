@@ -1,44 +1,65 @@
 import React, { Component } from "react";
 import {
-  Modal,
-  Grid,
   Form,
-  Dropdown,
-  Divider,
-  Segment,
-  Header,
-  Button
-} from "semantic-ui-react";
-import Link from "next/link";
+  SelectPicker,
+  TagPicker,
+  InputNumber,
+  Input,
+  Schema,
+  Button,
+  ButtonToolbar
+} from "rsuite";
+import FormModal from "./formmodal";
+import CustomField from "./customformfield";
 import { getCategoryList } from "../../../Requests/Category";
+import { getTagList } from "../../../Requests/Tag";
 import { createCourseHandler } from "../../../Requests/courseCreation";
 import css from "./course.scss";
 import Router from "next/router";
+import { connect } from "react-redux";
+import { Whisper, Tooltip } from "rsuite";
+import { updateDetailedDraftCourse } from "../../../store/actions";
 
+const { StringType, NumberType } = Schema.Types;
 class CourseForm extends Component {
   state = {
     courseId: null,
-    title: "",
-    subject: "",
-    category: "",
-    tag: "",
-    isPublished: false,
-    credit_points: 0,
-    description: "",
-    shouldOpen: false
+    shouldOpen: false,
+    courseForm: {
+      title: "",
+      subject: "",
+      category: "",
+      credit_points: 0,
+      tagged_to: [],
+      description: "",
+      isPublished: false
+    }
   };
+
+  courseFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required."),
+    subject: StringType().isRequired("This field is required."),
+    category: NumberType().isRequired("This field is required.")
+  });
 
   catSaveHandler = data => {
     this.setState({ catList: data });
   };
 
+  tagSaveHandler = data => {
+    this.setState({ tagList: data });
+  };
+
   creditSelectionHandler = (event, { value }) => {
-    console.log("[Course/Form.js] creaditSelection ", value);
     this.setState({ creditPoints: value });
   };
 
   categorySelectionHandler = (event, { value }) => {
     this.setState({ category: value });
+  };
+
+  tagSelectionHandler = (event, { value }) => {
+    this.setState({ tagged_to: value });
   };
 
   changeHandler = event => {
@@ -51,27 +72,30 @@ class CourseForm extends Component {
     });
   };
 
-  getNewCourseData = () => {
-    return {
-      title: this.state.title,
-      subject: this.state.subject,
-      category: this.state.category,
-      isPublished: this.state.isPublished,
-      credit_points: this.state.credit_points,
-      description: this.state.description
-    };
+  handleChange = value => {
+    this.setState({
+      courseForm: value
+    });
   };
 
   createCourse = async () => {
-    console.log("[Course/Form.js] Create Course clicked");
-    const courseData = this.getNewCourseData();
-    console.log(courseData);
-    const courseId = await createCourseHandler(
-      courseData,
-      this.state.courseId
-    );
-    console.log("Course Created : ", courseId);
-    Router.push(`/contribute/draft/${courseId}`);
+    const resp = await createCourseHandler({
+      courseData: this.state.courseForm,
+      courseId: this.state.courseId
+    });
+    const courseId = resp.data.id;
+    if (!!this.state.courseId) {
+      this.props.updateDetailedDraftCourse(resp);
+    } else {
+      Router.push(
+        `/contribute/draft/${
+          courseId !== undefined && courseId !== null
+            ? courseId
+            : this.state.courseId
+        }`
+      );
+    }
+
     if (
       this.props.closeHandler !== null ||
       this.props.closeHandler !== undefined
@@ -85,137 +109,147 @@ class CourseForm extends Component {
     try {
       catOptions = this.state.catList.map(cat => {
         return {
-          id: cat.id,
-          text: cat.title,
+          label: cat.title,
           value: cat.id
         };
       });
-      // console.log(catOptions);
-    } catch (err) {
-      console.log("did not pull up the cat list yet");
-    }
+    } catch (err) {}
 
     return (
-      <>
-        <span>Category</span>
-        <Dropdown
-          className={css.category}
-          clearable
-          fluid
-          options={catOptions}
-          selection
-          defaultValue={this.state.category}
-          onChange={this.categorySelectionHandler}
-        />
-      </>
+      <CustomField
+        className={css.ad_cat_choise}
+        size="lg"
+        name="category"
+        label="Category"
+        accepter={SelectPicker}
+        style={{ display: "inline-block", width: 200 }}
+        data={catOptions}
+      />
     );
   };
 
   renderTagsChoise = () => {
     let tagsOptions = [];
     try {
-      tagsOptions = this.state.catList.map(cat => {
+      tagsOptions = this.state.tagList.map(tag => {
         return {
-          id: cat.id,
-          text: cat.title,
-          value: cat.id
+          label: tag.title,
+          value: tag.id
         };
       });
-      // console.log(catOptions);
     } catch (err) {
-      console.log("did not pull up the cat list yet");
     }
+
     return (
-      <div className={css.tags}>
-        <span>Tags</span>
-        <Dropdown
-          clearable
-          fluid
-          options={tagsOptions}
-          selection
-          multiple
-          defaultValue={this.state.tag}
-        />
-      </div>
+      <CustomField
+        className={css.ad_tag_choise}
+        placeholder="Select or Search .."
+        size="lg"
+        name="tagged_to"
+        label="Tags"
+        accepter={TagPicker}
+        data={tagsOptions}
+        block
+      />
     );
   };
 
   renderCreditPointsChoise = () => {
     return (
-      <>
-        <span>Credit Points</span>
-        <div className={css.creditPoints}>
-          <button
-            className={css.sub}
-            onClick={() => {
-              let creds = Math.ceil(parseInt(this.state.credit_points));
-              creds = creds <= 0 ? 0 : creds - 1;
-              this.setState({ credit_points: creds });
-            }}>
-            <img src="../../../../../static/assets/icon/remove_24px_outlined.svg" />
-          </button>
-
-          <span>{this.state.credit_points}</span>
-          <button
-            className={css.add}
-            onClick={() => {
-              let creds = Math.ceil(parseInt(this.state.credit_points));
-              creds = creds >= 10 ? 10 : creds + 1;
-              this.setState({ credit_points: creds });
-            }}>
-            <img src="../../../../../static/assets/icon/add_24px_outlined.svg" />
-          </button>
-        </div>
-      </>
+      <div className={css.ad_credits_choise}>
+        <CustomField
+          style={{ width: 100 }}
+          defaultValue={0}
+          max={10}
+          min={0}
+          size="lg"
+          name="credit_points"
+          label="Credit Points"
+          accepter={InputNumber}
+        />
+      </div>
     );
+  };
+
+  renderCreateBtn = () => {
+    if (this.props.isAuthenticated) {
+      return (
+        <ButtonToolbar>
+          <Button
+            type="submit"
+            onClick={() => {
+              if (!this.courseForm.check()) {
+                return;
+              }
+              this.createCourse();
+            }}>
+            <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
+            <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+          </Button>
+        </ButtonToolbar>
+      );
+    } else {
+      return (
+        <Whisper
+          trigger="hover"
+          placement="top"
+          speaker={
+            <Tooltip>
+              User should be logged in to Enroll to this course.
+            </Tooltip>
+          }>
+          <button type="submit" onClick={this.props.askToJoin}>
+            <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
+            <img
+              src="/static/assets/icon/lock_24px_outlined.svg"
+              alt="locked"
+            />
+          </button>
+        </Whisper>
+      );
+    }
   };
 
   renderForm() {
     // TODO: Add button to send it for review
     // TODO: Add a muted button to publish the courses
     return (
-      <Form>
-        <span>Course Title</span>
-        <Form.Input
-          className={css.inp}
-          placeholder="Zero to 'HERO' !!"
-          value={this.state.title}
+      <Form
+        fluid
+        ref={ref => (this.courseForm = ref)}
+        model={this.courseFormModel}
+        onChange={this.handleChange}
+        formValue={this.state.courseForm}>
+        <CustomField
+          className={css.ad_course_form_input}
           name="title"
-          size="large"
-          onChange={event => this.changeHandler(event)}
+          label="Title"
+          placeholder="Zero to 'Hero' !"
+          message="required"
+          accepter={Input}
         />
-        <span>Subject</span>
-        <Form.Input
-          className={css.inp}
-          placeholder="Computer Science"
-          size="large"
-          value={this.state.subject}
+        <CustomField
+          className={css.ad_course_form_input}
           name="subject"
-          onChange={event => this.changeHandler(event)}
+          label="Subject"
+          placeholder="Computer Science"
+          message="required"
+          accepter={Input}
         />
-        <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column>{this.renderCategoryChoise()}</Grid.Column>
-            <Grid.Column>{this.renderCreditPointsChoise()}</Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <div className={css.ad_cat_n_credit_pickers}>
+          {this.renderCategoryChoise()}
+          {this.renderCreditPointsChoise()}
+        </div>
         {this.renderTagsChoise()}
-        <div className={css.desc}>
-          <span>Course Description</span>
-          <Form.TextArea
-            rows={10}
-            placeholder="Describe your course in short..."
-            value={this.state.description}
-            name="description"
-            onChange={event => this.changeHandler(event)}
-          />
-        </div>
-        <div className={css.reverse}>
-          <button type="submit" onClick={this.createCourse}>
-            <span>{this.props.edit === undefined ? "Create" : "Save"}</span>
-            <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-          </button>
-        </div>
+        <CustomField
+          className={css.ad_course_form_input}
+          label="Description"
+          name="description"
+          placeholder="Describe your course in short..."
+          rows={10}
+          componentClass="textarea"
+        />
+        <div className={css.ad_reverse}>{this.renderCreateBtn()}</div>
       </Form>
     );
   }
@@ -226,22 +260,14 @@ class CourseForm extends Component {
     } else {
       const open = this.state.shouldOpen;
       return (
-        <Modal
+        <FormModal
           open={open}
-          onClose={this.props.closeHandler}
-          closeOnDimmerClick={false}
-          closeOnEscape={false}
-          centered={false}>
-          <Modal.Header className={css.header}>
-            <span>
-              {this.state.type === "create" ? "Add New" : "Modify"} Course
-            </span>
-            <button onClick={this.props.closeHandler}>
-              <img src="./../../../../static/assets/icon/clear_24px_outlined_dark.svg" />
-            </button>
-          </Modal.Header>
-          <Modal.Content>{this.renderForm()}</Modal.Content>
-        </Modal>
+          title={
+            this.state.type === "create" ? "Add New Course" : "Modify Course"
+          }
+          closeHandler={this.props.closeHandler}>
+          <div className={css.ad_form_pane}>{this.renderForm()}</div>
+        </FormModal>
       );
     }
   }
@@ -251,22 +277,35 @@ class CourseForm extends Component {
       return null;
     }
     const course = this.props.course;
-    this.setState({
-      courseId: course.id,
+    this.handleChange({
       title: course.title,
       subject: course.subject,
       category: course.category.id,
-      creditPoints: course.credit_points,
-      description: course.description
+      credit_points: course.credit_points,
+      description: course.description,
+      tagged_to: course.tagged_to.map(tag => tag.id)
     });
+    this.setState({ courseId: course.id });
   };
 
   componentDidMount() {
-    console.log("[Course/Form.js] component did mount");
     getCategoryList(this.catSaveHandler);
+    getTagList(this.tagSaveHandler);
     this.getCourseToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
 }
 
-export default CourseForm;
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  return { isAuthenticated };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CourseForm);

@@ -6,11 +6,12 @@ import {
   DetailedModuleCardDraft
 } from "../../../Generic/Cards/ModuleCard";
 
-import AssignmentCard from "../../../Generic/Cards/AssignmentCard";
+import { draftAssignmentCard as AssignmentCard } from "../../../Generic/Cards/AssignmentCard";
 
 import ModuleForm from "../../../Generic/Forms/module";
 import LessonForm from "../../../Generic/Forms/lesson";
 import AssignmentForm from "../../../Generic/Forms/assignment";
+import { connect } from "react-redux";
 
 class CourseContent extends Component {
   state = {
@@ -41,10 +42,7 @@ class CourseContent extends Component {
       shouldOpenAddModule: false,
       shouldOpenAddLesson: false,
       shouldOpenAddAssignment: false,
-      elementBeingAdded: "",
-      activeModule: 0,
-      activeLesson: 0,
-      activeAssignment: 0
+      elementBeingAdded: ""
     });
   };
 
@@ -54,7 +52,6 @@ class CourseContent extends Component {
     lessonId = null,
     assignmentId = null
   ) => {
-    console.log("[Contrib/Course.js] Add New Clicked : ", btn);
     if (btn === "assignment") {
       this.setState({
         shouldOpenAddAssignment: true,
@@ -81,12 +78,11 @@ class CourseContent extends Component {
 
   renderAddNewForm = () => {
     const btn = this.state.elementBeingAdded;
-    console.log("[Contrib/Course.js] render add new form : ", btn);
     if (this.state.shouldOpenAddModule) {
       return (
         <ModuleForm
           open={true}
-          course={this.state.course}
+          course={this.props.course}
           closeHandler={this.closeHandler}
           edit={true}
           moduleId={this.state.activeModule}
@@ -99,7 +95,7 @@ class CourseContent extends Component {
           closeHandler={this.closeHandler}
           moduleId={this.state.activeModule}
           lessonId={this.state.activeLesson}
-          course={this.state.course}
+          course={this.props.course}
         />
       );
     } else if (this.state.shouldOpenAddAssignment) {
@@ -110,7 +106,7 @@ class CourseContent extends Component {
           moduleId={this.state.activeModule}
           lessonId={this.state.activeLesson}
           assignmentId={this.state.activeAssignment}
-          course={this.state.course}
+          course={this.props.course}
         />
       );
     }
@@ -124,12 +120,12 @@ class CourseContent extends Component {
         <span>Add New Module</span>
       </div>
     );
-    const Modules = this.state.course.modules.map(mod => {
+    const Modules = this.props.course.modules.map(mod => {
       return (
-        <>
+        <React.Fragment key={`fragment_mod_${mod.id}`}>
           <ModuleCardDraft
             module={mod}
-            key={mod.id}
+            key={`module_draft_${mod.id}`}
             select={this.setSelectedModule}
             modify={this.modifySelectedModule}
           />
@@ -137,12 +133,12 @@ class CourseContent extends Component {
           !this.state.shouldOpenAddModule ? (
             <DetailedModuleCardDraft
               module={mod}
-              key={`detailed_${mod.id}`}
+              key={`mod_detailed_${mod.id}`}
               close={this.closeSelectedModule}
               addNewBtn={this.addHandler}
             />
           ) : null}
-        </>
+        </React.Fragment>
       );
     });
 
@@ -162,6 +158,7 @@ class CourseContent extends Component {
       return (
         <AssignmentCard
           assignment={asgnmt}
+          key={asgnmt.id}
           id={asgnmt.id}
           modify={this.addHandler}
         />
@@ -195,7 +192,7 @@ class CourseContent extends Component {
           </div>
           <div className={css.section}>
             <span className={css.sectionTitle}>Assignments</span>
-            {this.renderCourseLevelAssignments(this.state.course.assignments)}
+            {this.renderCourseLevelAssignments(this.props.course.assignments)}
           </div>
           {this.renderAddNewForm()}
         </div>
@@ -204,4 +201,10 @@ class CourseContent extends Component {
   }
 }
 
-export default CourseContent;
+function mapStateToProps(state) {
+  return {
+    course: state.crs.draftCourse
+  };
+}
+
+export default connect(mapStateToProps)(CourseContent);

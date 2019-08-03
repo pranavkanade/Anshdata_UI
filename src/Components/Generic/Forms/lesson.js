@@ -1,153 +1,149 @@
 import React, { Component } from "react";
+import FormModal from "./formmodal";
 import {
-  Modal,
-  Button,
-  Segment,
-  Header,
   Form,
-  Divider,
-  Grid,
-  Dropdown
-} from "semantic-ui-react";
+  Input,
+  SelectPicker,
+  Schema,
+  Button,
+  ButtonToolbar
+} from "rsuite";
+import CustomField from "./customformfield";
 import Router from "next/router";
 
 import { createLessonHandler } from "../../../Requests/courseCreation";
 import css from "./lesson.scss";
+import { connect } from "react-redux";
+import { updateDetailedDraftCourse } from "../../../store/actions";
+
+const { StringType, NumberType } = Schema.Types;
 
 class LessonForm extends Component {
   state = {
     shouldOpen: false,
-    title: "",
-    description: "",
-    lecture: "",
     module: this.props.moduleId,
     modList: this.props.course.modules,
-    type: "create"
+    type: "create",
+    lessonForm: {
+      title: "",
+      description: "",
+      lecture: "",
+      module: this.props.moduleId
+    }
   };
 
-  changeHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    // console.log("[Lesson/Form.js] onChangeHandler");
-    // console.log(name, value);
-    this.setState(prevstate => {
-      const newState = { ...prevstate };
-      newState[name] = value;
-      return newState;
+  lessonFormModel = Schema.Model({
+    title: StringType().isRequired("This field is required."),
+    module: NumberType().isRequired("This field is required.")
+  });
+
+  handleChange = value => {
+    this.setState({
+      lessonForm: value
     });
   };
 
-  createLesson = () => {
-    console.log("[Lesson/Form.js] Create Lesson clicked");
-    const lessonData = {
-      title: this.state.title,
-      description: this.state.description,
-      lecture: this.state.lecture,
-      module: this.state.module
-    };
-    createLessonHandler(lessonData, this.props.lessonId);
-    const page = window.location.pathname;
-    Router.push(page);
+  createLesson = async () => {
+    const resp = await createLessonHandler({
+      lsnData: this.state.lessonForm,
+      lsnId: this.props.lessonId
+    });
+    if (!resp.ok) {
+      this.props.updateDetailedDraftCourse(resp);
+    } else {
+      const modResp = {
+        ...resp,
+        data: {
+          id: this.props.course.id
+        }
+      };
+      this.props.updateDetailedDraftCourse(modResp);
+    }
     this.props.closeHandler();
   };
 
-  moduleSelectionHandler = (event, { value }) => {
-    this.setState({ module: value });
-  };
-
   renderModuleChoise = () => {
-    console.log("[Lesson/Form.js] List the modules");
     let modOptions = [];
     try {
       modOptions = this.state.modList.map(mod => {
         return {
-          id: mod.idm,
-          text: mod.title,
+          label: mod.title,
           value: mod.id
         };
       });
-    } catch (err) {
-      console.log("did not pull up the mod list yet");
-    }
+    } catch (err) {}
 
     return (
-      <>
-        <span>Module</span>
-        <Dropdown
-          options={modOptions}
-          fluid
-          selection
-          className={css.inp + " " + css.drpDn}
-          defaultValue={this.state.module}
-          onChange={this.moduleSelectionHandler}
-        />
-      </>
+      <CustomField
+        className={css.ad_mod_choise}
+        size="lg"
+        name="module"
+        label="Module"
+        accepter={SelectPicker}
+        block
+        data={modOptions}
+      />
     );
   };
 
   render() {
     const open = this.state.shouldOpen;
     return (
-      <Modal
+      <FormModal
         open={open}
-        onClose={this.props.closeHandler}
-        closeOnDimmerClick={false}
-        closeOnEscape={false}
-        centered={false}>
-        <Modal.Header className={css.header}>
-          <span>
-            {this.state.type === "create" ? "Add New" : "Modify"} Lesson
-          </span>
-          <button onClick={this.props.closeHandler}>
-            <img src="./../../../../static/assets/icon/clear_24px_outlined_dark.svg" />
-          </button>
-        </Modal.Header>
-
-        <Modal.Content>
-          <Segment basic>
-            <h3>{this.props.course.title}</h3>
-            <Form onSubmit={this.createLesson}>
-              {this.renderModuleChoise()}
-              <span>Lesson Title</span>
-              <Form.Input
-                placeholder="Lesson 1: Basics of Computer Science"
-                value={this.state.title}
-                name="title"
-                size="large"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <span>{"Lecture Video Link (URL)"}</span>
-              <Form.Input
-                placeholder="https://"
-                type="url"
-                value={this.state.lecture}
-                name="lecture"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <span>Lesson Description</span>
-              <Form.TextArea
-                rows={6}
-                placeholder="Describe purpose of this module in short..."
-                value={this.state.description}
-                name="description"
-                className={css.inp}
-                onChange={event => this.changeHandler(event)}
-              />
-              <Divider hidden />
-              <div className={css.reverse}>
-                <button type="submit">
-                  <span>
-                    {this.state.type === "create" ? "Create" : "Save"}
-                  </span>
-                  <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
-                </button>
-              </div>
-            </Form>
-          </Segment>
-        </Modal.Content>
-      </Modal>
+        closeHandler={this.props.closeHandler}
+        title={
+          this.state.type === "create" ? "Add New Lesson" : "Modify Lesson"
+        }>
+        <h3>{this.props.course.title}</h3>
+        <Form
+          fluid
+          ref={ref => (this.lessonForm = ref)}
+          model={this.lessonFormModel}
+          onChange={this.handleChange}
+          formValue={this.state.lessonForm}>
+          {this.renderModuleChoise()}
+          <CustomField
+            className={css.ad_inp}
+            name="title"
+            label="Lesson Title"
+            placeholder="Lesson 1: Basics of Computer Science"
+            message="required"
+            accepter={Input}
+          />
+          <CustomField
+            className={css.ad_inp}
+            name="lecture"
+            label="Lecture Video Link (URL)"
+            placeholder="https://"
+            accepter={Input}
+            type="url"
+          />
+          <CustomField
+            className={css.ad_inp}
+            label="Lesson Description"
+            name="description"
+            placeholder="Describe purpose of this lesson in short..."
+            rows={6}
+            componentClass="textarea"
+          />
+          <div className={css.ad_reverse}>
+            <ButtonToolbar>
+              <Button
+                type="submit"
+                onClick={() => {
+                  if (!this.lessonForm.check()) {
+                    return;
+                  }
+                  this.createLesson();
+                }}>
+                <span>{this.state.type === "create" ? "Create" : "Save"}</span>
+                <img src="../../../../../static/assets/icon/arrow_forward_24px_outlined.svg" />
+              </Button>
+            </ButtonToolbar>
+          </div>
+        </Form>
+      </FormModal>
     );
   }
 
@@ -159,7 +155,6 @@ class LessonForm extends Component {
       this.props.lessonId === undefined ||
       this.props.lessonId === 0
     ) {
-      console.log("Creating new lesson");
       this.setState({ type: "create" });
       return null;
     }
@@ -175,22 +170,29 @@ class LessonForm extends Component {
         return lsn.id === this.props.lessonId;
       })
     };
-    console.log("lesson to update", lesson);
     this.setState({
       lsnToUpdate: lesson,
-      title: lesson.title,
-      description: lesson.description,
-      lecture: lesson.lecture,
-      module: lesson.module,
+      lessonForm: {
+        title: lesson.title,
+        description: lesson.description,
+        lecture: lesson.lecture,
+        module: lesson.module
+      },
       type: "edit"
     });
   };
 
   componentDidMount() {
-    console.log("[Contrib/Lesson/Form.js] component did mount");
     this.getLessonToUpdate();
     this.setState({ shouldOpen: this.props.open });
   }
 }
 
-export default LessonForm;
+const mapDispatchToProps = {
+  updateDetailedDraftCourse
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LessonForm);

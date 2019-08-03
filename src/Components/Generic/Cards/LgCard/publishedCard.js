@@ -7,6 +7,8 @@ import { ModuleCardMd } from "../ModuleCard";
 import { getCourse } from "../../../../Requests/Courses";
 import { enrollEventHandler } from "../../../../Requests/Enrollment";
 import { courseListType } from "../../../../globals";
+import { connect } from "react-redux";
+import { Whisper, Tooltip } from "rsuite";
 
 class DetailedCourseCard extends Component {
   state = {
@@ -33,27 +35,36 @@ class DetailedCourseCard extends Component {
   };
 
   renderActionBtn = courseId => {
-    if (this.props.courseListType === courseListType.ENROLLED) {
+    if (this.props.isAuthenticated) {
       return (
-        <Link href={`/courses/attend/${courseId}`}>
-          <button className={css.attend}>
-            <span>Attend</span>
+        <Link
+          href="/courses/attend/[crsId]"
+          as={`/courses/attend/${courseId}`}>
+          <button
+            className={css.enroll}
+            onClick={() => enrollEventHandler(courseId)}>
+            <span>Enroll</span>
             <img
-              src={
-                "../../../../static/assets/icon/play_circle_outline_24px_outlined.svg"
-              }
+              src={"../../../../static/assets/icon/add_24px_outlined.svg"}
             />
           </button>
         </Link>
       );
     } else {
       return (
-        <button
-          className={css.enroll}
-          onClick={() => enrollEventHandler(courseId)}>
-          <span>Enroll</span>
-          <img src={"../../../../static/assets/icon/add_24px_outlined.svg"} />
-        </button>
+        <Whisper
+          trigger="hover"
+          placement="top"
+          speaker={
+            <Tooltip>
+              User should be logged in to Enroll to this course.
+            </Tooltip>
+          }>
+          <button className={css.enroll} onClick={this.props.askToJoin}>
+            <span>Enroll</span>
+            <img src={"/static/assets/icon/lock_24px_outlined.svg"} />
+          </button>
+        </Whisper>
       );
     }
   };
@@ -106,7 +117,7 @@ class DetailedCourseCard extends Component {
     return (
       <div className={css.detailedCourse}>
         <div className={css.head}>
-          <Link href={`/courses/${course.id}`}>
+          <Link href="/courses/[crsId]" as={`/courses/${course.id}`}>
             <span>{course.title}</span>
           </Link>
           <button
@@ -138,14 +149,16 @@ class DetailedCourseCard extends Component {
               </button>
             </div>
           </div>
+          {/* TODO: Add the video here
           <div className={css.introClip}>
-            <iframe
-              src="https://www.youtube.com/embed/RKLKib4bHhA"
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+            <ReactPlayer
+              url={"https://www.youtube.com/embed/RKLKib4bHhA"}
+              controls
+              pip={true}
+              height="100%"
+              width="100%"
             />
-          </div>
+          </div>*/}
         </div>
       </div>
     );
@@ -156,4 +169,9 @@ class DetailedCourseCard extends Component {
   }
 }
 
-export default DetailedCourseCard;
+function mapStateToProps(state) {
+  const { isAuthenticated } = state.user;
+  return { isAuthenticated };
+}
+
+export default connect(mapStateToProps)(DetailedCourseCard);
