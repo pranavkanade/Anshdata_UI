@@ -7,19 +7,7 @@ export default props => (
     <link rel="stylesheet" href="/static/styles/rsuite.css" />
     <link rel="stylesheet" href="/static/styles/nprogress.css" />
     <link
-      href="https://fonts.googleapis.com/css?family=Scope+One&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Barlow&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Barriecito&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Acme&display=swap"
+      href="https://fonts.googleapis.com/css?family=Acme|B612|Barriecito|Faustina&display=swap"
       rel="stylesheet"
     />
   </Head>

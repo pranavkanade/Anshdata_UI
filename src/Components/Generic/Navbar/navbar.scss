@@ -11,8 +11,9 @@
 }
 
 .navbar {
+  position: relative;
   width: 100%;
-
+  z-index: 10;
   background: #FAFAFA;
   //border: 1px solid black;
 }
@@ -113,12 +114,12 @@
 
   background: inherit;
   border-radius: 2px;
-  border: 0px;
+  border: 0;
 
-  font-family: Barlow, Roboto, serif;
+  font-family: B612, Barlow, Roboto, serif;
   font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
+  font-weight: bold;
+  font-size: 24px;
   color: $Base-secondary;
 
   &:focus {
@@ -129,6 +130,7 @@
 .navLink {
   @extend %nav;
   transition: 0.2s ease-in;
+  padding-top: 0.5rem;
   &:hover {
     cursor: pointer;
     border-radius: 5px;
@@ -164,10 +166,11 @@
   @extend %nav;
   transition: 0.2s ease-in;
   padding: 0.4rem 0.6rem 0 0.6rem;
-
+  background: $Base-primary;
+  border-radius: 6rem;
   &:hover {
     cursor: pointer;
-    background: $Base-primary;
+    transform: scale(1.1);
   }
 }
 

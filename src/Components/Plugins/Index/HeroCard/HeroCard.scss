@@ -1,12 +1,6 @@
 @import "../../../../../static/styles/globals.scss";
 
 .container {
-  //padding: 20px 0 20px 0;
-  //display: grid;
-  //grid-template-columns: 12.5% 70% 12.5%;
-  //grid-template-rows: 80% auto;
-  //grid-gap: 2.5% 2.5%;
-  //height: 70%;
   padding: 0 2rem 2rem 2rem;
 }
 
@@ -29,7 +23,7 @@
 
     h1 {
       text-align: left;
-      font-family: Scope One, Roboto;
+      font-family: B612, Scope One, Roboto, serif;
       font-style: normal;
       font-weight: bold;
       font-size: 64px;
@@ -39,9 +33,9 @@
 
     span {
       text-align: left;
-      font-family: Scope One, Roboto;
+      font-family: Acme, Scope One, Roboto, serif;
       font-style: normal;
-      font-weight: bold;
+      font-weight: normal;
       font-size: 64px;
       line-height: 89px;
       color: $White-0;
@@ -63,12 +57,11 @@
   .bg {
     position: absolute;
     right: 1rem;
-    top: 0rem;
+    top: -2rem;
     transform: rotateZ(-5deg);
     width: 640px;
     height: 640px;
-    z-index: 1;
-
+    z-index: -1;
   }
 
 }
@@ -81,9 +74,9 @@
   border: 0px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
 
-  font-family: Barlow, Roboto;
+  font-family: B612, Roboto, serif;
   font-style: normal;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 24px;
   line-height: 29px;
   /* identical to box height */
@@ -96,7 +89,7 @@
 
 .heroBtns {
   justify-self: center;
-  margin-top: 4rem;
+  margin-top: 2rem;
   .exploreBtn {
     @extend %lgBtn;
     background: $Blue-1;
